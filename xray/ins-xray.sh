@@ -91,14 +91,14 @@ clear
 cd
 rm /etc/nginx/sites-enabled/default
 rm /etc/nginx/sites-available/default
-wget -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/rullpqh/lite/main/xray/nginx.conf"
+wget -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/nginx.conf"
 mkdir -p /home/vps/public_html
 #/etc/init.d/nginx restart
 echo "<?php phpinfo() ?>" > /home/vps/public_html/info.php
 chown -R www-data:www-data /home/vps/public_html
 chmod -R g+rw /home/vps/public_html
 cd /home/vps/public_html
-wget -O /home/vps/public_html/index.html "https://raw.githubusercontent.com/rullpqh/lite/main/xray/index.html"
+wget -O /home/vps/public_html/index.html "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/index.html"
 /etc/init.d/nginx restart
 cd
 clear
@@ -531,7 +531,7 @@ sed -i '$ i}' /etc/nginx/conf.d/xray.conf
 
 sleep 1
 echo -e "[ ${green}INFO$NC ] Installing bbr.."
-#wget -q -O /usr/bin/bbr "wget -q https://raw.githubusercontent.com/rullpqh/lite/main/xray/bbr.sh"
+#wget -q -O /usr/bin/bbr "wget -q https://raw.githubusercontent.com/arfprsty810/lite/main/xray/bbr.sh"
 #chmod +x /usr/bin/bbr
 #bbr >/dev/null 2>&1
 #rm /usr/bin/bbr >/dev/null 2>&1
@@ -547,21 +547,21 @@ systemctl enable runn
 systemctl restart runn
 clear
 sleep 1
-wget -q -O /usr/bin/add-tr "https://raw.githubusercontent.com/rullpqh/lite/main/xray/add-tr.sh" && chmod +x /usr/bin/add-tr
-wget -q -O /usr/bin/add-vless "https://raw.githubusercontent.com/rullpqh/lite/main/xray/add-vless.sh" && chmod +x /usr/bin/add-vless
-wget -q -O /usr/bin/add-ws "https://raw.githubusercontent.com/rullpqh/lite/main/xray/add-ws.sh" && chmod +x /usr/bin/add-ws
-wget -q -O /usr/bin/cek-tr "https://raw.githubusercontent.com/rullpqh/lite/main/xray/cek-tr.sh" && chmod +x /usr/bin/cek-tr
-wget -q -O /usr/bin/cek-vless "https://raw.githubusercontent.com/rullpqh/lite/main/xray/cek-vless.sh" && chmod +x /usr/bin/cek-vless
-wget -q -O /usr/bin/cek-ws "https://raw.githubusercontent.com/rullpqh/lite/main/xray/cek-ws.sh" && chmod +x /usr/bin/cek-ws
-wget -q -O /usr/bin/del-tr "https://raw.githubusercontent.com/rullpqh/lite/main/xray/del-tr.sh" && chmod +x /usr/bin/del-tr
-wget -q -O /usr/bin/del-vless "https://raw.githubusercontent.com/rullpqh/lite/main/xray/del-vless.sh" && chmod +x /usr/bin/del-vless
-wget -q -O /usr/bin/del-ws "https://raw.githubusercontent.com/rullpqh/lite/main/xray/del-ws.sh" && chmod +x /usr/bin/del-ws
-wget -q -O /usr/bin/renew-tr "https://raw.githubusercontent.com/rullpqh/lite/main/xray/renew-tr.sh" && chmod +x /usr/bin/renew-tr
-wget -q -O /usr/bin/renew-vless "https://raw.githubusercontent.com/rullpqh/lite/main/xray/renew-vless.sh" && chmod +x /usr/bin/renew-vless
-wget -q -O /usr/bin/renew-ws "https://raw.githubusercontent.com/rullpqh/lite/main/xray/renew-ws.sh" && chmod +x /usr/bin/renew-ws
-wget -q -O /usr/bin/menu "https://raw.githubusercontent.com/rullpqh/lite/main/xray/menu.sh" && chmod +x /usr/bin/menu
-wget -q -O /usr/bin/cert "https://raw.githubusercontent.com/rullpqh/lite/main/xray/cert.sh" && chmod +x /usr/bin/cert
-wget -q -O /usr/bin/speedtest "https://raw.githubusercontent.com/rullpqh/lite/main/xray/speedtest_cli.py" && chmod +x /usr/bin/speedtest
+wget -q -O /usr/bin/add-tr "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/add-tr.sh" && chmod +x /usr/bin/add-tr
+wget -q -O /usr/bin/add-vless "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/add-vless.sh" && chmod +x /usr/bin/add-vless
+wget -q -O /usr/bin/add-ws "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/add-ws.sh" && chmod +x /usr/bin/add-ws
+wget -q -O /usr/bin/cek-tr "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/cek-tr.sh" && chmod +x /usr/bin/cek-tr
+wget -q -O /usr/bin/cek-vless "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/cek-vless.sh" && chmod +x /usr/bin/cek-vless
+wget -q -O /usr/bin/cek-ws "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/cek-ws.sh" && chmod +x /usr/bin/cek-ws
+wget -q -O /usr/bin/del-tr "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/del-tr.sh" && chmod +x /usr/bin/del-tr
+wget -q -O /usr/bin/del-vless "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/del-vless.sh" && chmod +x /usr/bin/del-vless
+wget -q -O /usr/bin/del-ws "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/del-ws.sh" && chmod +x /usr/bin/del-ws
+wget -q -O /usr/bin/renew-tr "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/renew-tr.sh" && chmod +x /usr/bin/renew-tr
+wget -q -O /usr/bin/renew-vless "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/renew-vless.sh" && chmod +x /usr/bin/renew-vless
+wget -q -O /usr/bin/renew-ws "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/renew-ws.sh" && chmod +x /usr/bin/renew-ws
+wget -q -O /usr/bin/menu "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/menu.sh" && chmod +x /usr/bin/menu
+wget -q -O /usr/bin/cert "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/cert.sh" && chmod +x /usr/bin/cert
+wget -q -O /usr/bin/speedtest "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/speedtest_cli.py" && chmod +x /usr/bin/speedtest
 sleep 1
 
 

@@ -131,6 +131,10 @@ menu-ss
 5)
 clear
 speedtest
+sleep 5
+echo ""
+read -n 1 -s -r -p "Press any key to back on menu"
+menu
 ;;
 
 6)

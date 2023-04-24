@@ -71,7 +71,7 @@ echo -e "□ 🔰\e[32;1mCurrent Domain\e[0m    : $( cat /etc/xray/domain )"
 echo -e "□ 🔰\e[32;1mCurrent Isp Name\e[0m  : $ISP"
 echo -e "□ 🔰\e[32;1mServer IP\e[0m         : ${IP}"
 echo -e "□ 🔰\e[32;1mTime Reboot VPS\e[0m   : 00:00 ( Jam 12 Malam )"
-echo -e "□ 🔰\e[32;1mLicense SC Limit\e[0m  : Lifetime"
+#echo -e "□ 🔰\e[32;1mLicense SC Limit\e[0m  : Lifetime"
 echo -e "□ 🔰\e[32;1mAutoScript By Dev\e[0m : @arf.prsty_"
 
 echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
@@ -87,15 +87,15 @@ echo -e ""
 
 echo -e " ${BICyan}[${BIWhite}01${BICyan}]${RED} •${NC} ${CYAN}VMESS MENU      $NC  ${BICyan}[${BIWhite}7${BICyan}]${RED} • ${NC}${CYAN}BANNER CHANGE $NC"
 
-echo -e " ${BICyan}[${BIWhite}02${BICyan}]${RED} •${NC} ${CYAN}VLESS MENU       $NC  ${BICyan}[${BIWhite}8${BICyan}]${RED} • ${NC}${CYAN}CEK RUNNING SERVICE $NC"
+echo -e " ${BICyan}[${BIWhite}02${BICyan}]${RED} •${NC} ${CYAN}VLESS MENU      $NC  ${BICyan}[${BIWhite}8${BICyan}]${RED} • ${NC}${CYAN}CEK RUNNING SERVICE $NC"
 
 echo -e " ${BICyan}[${BIWhite}03${BICyan}]${RED} •${NC} ${CYAN}TROJAN MENU     $NC  ${BICyan}[${BIWhite}9${BICyan}]${RED} • ${NC}${CYAN}SCRIPT INFO $NC"
 
 echo -e " ${BICyan}[${BIWhite}04${BICyan}]${RED} •${NC} ${CYAN}S-SOCK MENU     $NC  ${BICyan}[${BIWhite}10${BICyan}]${RED} • ${NC}${CYAN}UPDATE SCRIPT  $NC"
 
-echo -e " ${BICyan}[${BIWhite}05${BICyan}]${RED} •${NC} ${CYAN}SPEEDTEST        $NC  ${BICyan}[${BIWhite}11${BICyan}]${RED} • ${NC}${CYAN}RESTART SERVICE $NC"
+echo -e " ${BICyan}[${BIWhite}05${BICyan}]${RED} •${NC} ${CYAN}SPEEDTEST       $NC  ${BICyan}[${BIWhite}11${BICyan}]${RED} • ${NC}${CYAN}RESTART SERVICE $NC"
 
-echo -e " ${BICyan}[${BIWhite}06${BICyan}]${RED} •${NC} ${CYAN}REBOOT            $NC  ${BICyan}[${BIWhite}x${BICyan}]${RED} • ${NC}${CYAN}Ketik x to exit $NC"
+echo -e " ${BICyan}[${BIWhite}06${BICyan}]${RED} •${NC} ${CYAN}REBOOT          $NC  ${BICyan}[${BIWhite}x${BICyan}]${RED} • ${NC}${CYAN}Ketik x to exit $NC"
 
 echo -e " ${RED}"
 echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"

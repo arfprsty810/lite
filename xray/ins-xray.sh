@@ -548,6 +548,7 @@ systemctl restart runn
 clear
 sleep 1
 
+wget -q -O /usr/bin/add-ssws "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/add-ssws.sh" && chmod +x /usr/bin/add-ssws
 wget -q -O /usr/bin/menu-vmess "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/menu-vmess.sh" && chmod +x /usr/bin/menu-vmess
 wget -q -O /usr/bin/menu-vless "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/menu-vless.sh" && chmod +x /usr/bin/menu-vless
 wget -q -O /usr/bin/menu-trojan "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/menu-trojan.sh" && chmod +x /usr/bin/menu-trojan

@@ -94,7 +94,7 @@ echo -e " ${BICyan}[${BIWhite}04${BICyan}]${RED} •${NC} ${CYAN}S-SOCK MENU    
 
 echo -e " ${BICyan}[${BIWhite}05${BICyan}]${RED} •${NC} ${CYAN}SPEEDTEST       $NC  ${BICyan}[${BIWhite}11${BICyan}]${RED} • ${NC}${CYAN}RESTART SERVICE $NC"
 
-echo -e " ${BICyan}[${BIWhite}06${BICyan}]${RED} •${NC} ${CYAN}REBOOT          $NC  ${BICyan}[${BIWhite}.x${BICyan}]${RED} • ${NC}${CYAN}Ketik x to exit $NC"
+echo -e " ${BICyan}[${BIWhite}06${BICyan}]${RED} •${NC} ${CYAN}REBOOT          $NC  ${BICyan}[${BIWhite}xx${BICyan}]${RED} • ${NC}${CYAN}Ketik x to exit $NC"
 
 echo -e " ${RED}"
 echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
@@ -129,7 +129,6 @@ menu-ss
 ;;
 
 5)
-sed -i -e 's/\r$//' /bin/speedtest
 clear
 speedtest
 ;;
@@ -153,6 +152,9 @@ running
 9)
 clear
 cat /root/log-install.txt
+echo ""
+read -n 1 -s -r -p "Press any key to back on menu"
+menu
 ;;
 
 10)

@@ -17,6 +17,7 @@ green() { echo -e "\\033[32;1m${*}\\033[0m"; }
 red() { echo -e "\\033[31;1m${*}\\033[0m"; }
 clear
 echo -e "[ ${green}INFO$NC ] Remove old file"
+sleep 1
 rm -rvf /usr/bin/add-tr
 rm -rvf /usr/bin/add-vless
 rm -rvf /usr/bin/add-ws
@@ -33,6 +34,7 @@ rm -rvf /usr/bin/menu
 rm -rvf /usr/bin/cert
 rm -rvf /usr/bin/speedtest
 rm -rvf /usr/bin/update
+clear
 echo -e "[ ${green}INFO$NC ] Update Script"
 sleep 1
 wget -q -O /usr/bin/add-tr "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/add-tr.sh" && chmod +x /usr/bin/add-tr
@@ -54,5 +56,7 @@ wget -q -O /usr/bin/update "https://raw.githubusercontent.com/arfprsty810/lite/m
 sleep 1
 clear
 echo -e "[ ${green}INFO$NC ] Update successfully!"
+sleep 1
 echo -e "[ ${green}INFO$NC ] Reboot VPS ..."
+sleep 5
 reboot

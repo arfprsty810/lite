@@ -86,8 +86,8 @@ echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━�
 echo -e ""
 echo -e " [${GREEN}01${NC}]${RED} • ${NC}Membuat Akun Trojan  $NC"
 echo -e " [${GREEN}02${NC}]${RED} • ${NC}Menghapus Akun Trojan $NC"  
-echo -e " [${GREEN}03${NC}]${RED} • ${NC}Merenew Akun Trojan$NC"  
-echo -e " [${GREEN}04${NC}]${RED} • ${NC}Cek Akun Trojan$NC"
+echo -e " [${GREEN}03${NC}]${RED} • ${NC}Merenew Akun Trojan $NC"  
+echo -e " [${GREEN}04${NC}]${RED} • ${NC}Cek Akun Trojan $NC"
 echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
 echo -e " [${GREEN}05${NC}]${RED} • ${NC}Membuat Akun vless $NC"  
 echo -e " [${GREEN}06${NC}]${RED} • ${NC}Menghapus Akun vless $NC"
@@ -102,6 +102,7 @@ echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━�
 echo -e " [${GREEN}13${NC}]${RED} • ${NC}SpeedTest Ookla $NC"
 echo -e " [${GREEN}14${NC}]${RED} • ${NC}Reboot server $NC"
 echo -e " [${GREEN}15${NC}]${RED} • ${NC}Update Script $NC"
+echo -e " [${GREEN}15${NC}]${RED} • ${NC}Exit Menu $NC"
 echo -e ""
 echo -e " ${RED}"
 echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
@@ -110,71 +111,107 @@ echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━�
 
 echo -e ""
 
-read -p "Select From Options [ 1 - 15 ] : " menu
+read -p "Select From Options [ 1 - 16 ] : " menu
 case $menu in
+
 1)
+sed -i -e 's/\r$//' /bin/add-tr
 clear
 add-tr
 ;;
+
 2)
+sed -i -e 's/\r$//' /bin/del-tr
 clear
 del-tr
 ;;
+
 3)
+sed -i -e 's/\r$//' /bin/renew-tr
 clear
 renew-tr
 ;;
+
 4)
+sed -i -e 's/\r$//' /bin/cek-tr
 clear
 cek-tr
 ;;
+
 5)
+sed -i -e 's/\r$//' /bin/add-vless
 clear
 add-vless
 ;;
+
 6)
+sed -i -e 's/\r$//' /bin/del-vless
 clear
 del-vless
 ;;
+
 7)
+sed -i -e 's/\r$//' /bin/renew-vless
 clear
 renew-vless
 ;;
+
 8)
+sed -i -e 's/\r$//' /bin/cek-vless
 clear
 cek-vless
 ;;
+
 9)
+sed -i -e 's/\r$//' /bin/add-ws
 clear
 add-ws
 ;;
+
 10)
+sed -i -e 's/\r$//' /bin/del-ws
 clear
 del-ws
 ;;
+
 11)
+sed -i -e 's/\r$//' /bin/renew-ws
 clear
 renew-ws
 ;;
+
 12)
+sed -i -e 's/\r$//' /bin/cek-ws
 clear
 cek-ws
 ;;
+
 13)
+sed -i -e 's/\r$//' /bin/speedtest
 clear
 speedtest
 ;;
+
 14)
 reboot
 exit
 ;;
+
 15)
+sed -i -e 's/\r$//' /bin/update
 clear
 update
 ;;
+
+16)
+clear
+exit
+;;
+
 *)
+sed -i -e 's/\r$//' /bin/menu
 clear
 menu
 ;;
-esac
 
+esac

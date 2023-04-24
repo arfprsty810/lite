@@ -102,7 +102,7 @@ echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━�
 echo -e " [${GREEN}13${NC}]${RED} • ${NC}SpeedTest Ookla $NC"
 echo -e " [${GREEN}14${NC}]${RED} • ${NC}Reboot server $NC"
 echo -e " [${GREEN}15${NC}]${RED} • ${NC}Update Script $NC"
-echo -e " [${GREEN}15${NC}]${RED} • ${NC}Exit Menu $NC"
+echo -e " [${GREEN}16${NC}]${RED} • ${NC}Exit Menu $NC"
 echo -e ""
 echo -e " ${RED}"
 echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"

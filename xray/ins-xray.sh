@@ -528,7 +528,6 @@ sed -i '$ igrpc_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
 sed -i '$ igrpc_pass grpc://127.0.0.1:30310;' /etc/nginx/conf.d/xray.conf
 sed -i '$ i}' /etc/nginx/conf.d/xray.conf
 
-
 sleep 1
 echo -e "[ ${green}INFO$NC ] Installing bbr.."
 #wget -q -O /usr/bin/bbr "wget -q https://raw.githubusercontent.com/arfprsty810/lite/main/xray/bbr.sh"
@@ -556,7 +555,6 @@ wget -q -O /usr/bin/menu-ss "https://raw.githubusercontent.com/arfprsty810/lite/
 wget -q -O /usr/bin/restart "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/restart.sh" && chmod +x /usr/bin/restart
 wget -q -O /usr/bin/running "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/running.sh" && chmod +x /usr/bin/running
 wget -q -O /etc/issue.net "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/issue.net" && chmod +x /etc/issue.net
-
 wget -q -O /usr/bin/add-tr "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/add-tr.sh" && chmod +x /usr/bin/add-tr
 wget -q -O /usr/bin/add-vless "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/add-vless.sh" && chmod +x /usr/bin/add-vless
 wget -q -O /usr/bin/add-ws "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/add-ws.sh" && chmod +x /usr/bin/add-ws
@@ -575,14 +573,12 @@ wget -q -O /usr/bin/speedtest "https://raw.githubusercontent.com/arfprsty810/lit
 wget -q -O /usr/bin/update "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/update.sh" && chmod +x /usr/bin/update
 sleep 1
 
-
 yellow() { echo -e "\\033[33;1m${*}\\033[0m"; }
 yellow "xray/Vmess"
 yellow "xray/Vless"
 clear
 echo -e "[ ${green}INFO$NC ] SETTING SERVER SUKSES"
 sleep 2
-
 
 mv /root/domain /etc/xray/ 
 if [ -f /root/scdomain ];then

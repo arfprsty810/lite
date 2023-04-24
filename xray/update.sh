@@ -34,6 +34,15 @@ rm -rvf /usr/bin/menu
 rm -rvf /usr/bin/cert
 rm -rvf /usr/bin/speedtest
 rm -rvf /usr/bin/update
+rm -rvf /usr/bin/add-ssws
+rm -rvf /usr/bin/menu-vmess
+rm -rvf /usr/bin/menu-vless
+rm -rvf /usr/bin/menu-trojan
+rm -rvf /usr/bin/menu-ss
+rm -rvf /usr/bin/restart
+rm -rvf /usr/bin/running
+rm -rvf /usr/bin/issue.net
+
 clear
 echo -e "[ ${green}INFO$NC ] Update Script"
 sleep 1
@@ -46,7 +55,6 @@ wget -q -O /usr/bin/menu-ss "https://raw.githubusercontent.com/arfprsty810/lite/
 wget -q -O /usr/bin/restart "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/restart.sh" && chmod +x /usr/bin/restart
 wget -q -O /usr/bin/running "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/running.sh" && chmod +x /usr/bin/running
 wget -q -O /etc/issue.net "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/issue.net" && chmod +x /etc/issue.net
-
 wget -q -O /usr/bin/add-tr "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/add-tr.sh" && chmod +x /usr/bin/add-tr
 wget -q -O /usr/bin/add-vless "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/add-vless.sh" && chmod +x /usr/bin/add-vless
 wget -q -O /usr/bin/add-ws "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/add-ws.sh" && chmod +x /usr/bin/add-ws

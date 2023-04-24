@@ -32,6 +32,7 @@ rm -rvf /usr/bin/renew-ws
 rm -rvf /usr/bin/menu
 rm -rvf /usr/bin/cert
 rm -rvf /usr/bin/speedtest
+rm -rvf /usr/bin/update
 echo -e "[ ${green}INFO$NC ] Update Script"
 sleep 1
 wget -q -O /usr/bin/add-tr "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/add-tr.sh" && chmod +x /usr/bin/add-tr
@@ -49,9 +50,9 @@ wget -q -O /usr/bin/renew-ws "https://raw.githubusercontent.com/arfprsty810/lite
 wget -q -O /usr/bin/menu "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/menu.sh" && chmod +x /usr/bin/menu
 wget -q -O /usr/bin/cert "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/cert.sh" && chmod +x /usr/bin/cert
 wget -q -O /usr/bin/speedtest "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/speedtest_cli.py" && chmod +x /usr/bin/speedtest
+wget -q -O /usr/bin/update "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/update.sh" && chmod +x /usr/bin/update
 sleep 1
 clear
 echo -e "[ ${green}INFO$NC ] Update successfully!"
 echo -e "[ ${green}INFO$NC ] Reboot VPS ..."
-rm -f update.sh  
 reboot

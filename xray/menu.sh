@@ -33,11 +33,11 @@ export WARNING="${RED}\e[5m"
 export UNDERLINE="\e[4m"
 
 # // Exporting URL Host
-export Server_URL="autosc.me/aio"
+export Server_URL="https://github.com/arfprsty810/lite"
 export Server_Port="443"
 export Server_IP="underfined"
 export Script_Mode="Stable"
-export Auther="Bhoikfostyahya"
+export Auther="@arf.prsty_"
 
 # // Root Checking
 if [ "${EUID}" -ne 0 ]; then
@@ -72,13 +72,13 @@ echo -e "□ 🔰\e[32;1mCurrent Isp Name\e[0m  : $ISP"
 echo -e "□ 🔰\e[32;1mServer IP\e[0m         : ${IP}"
 echo -e "□ 🔰\e[32;1mTime Reboot VPS\e[0m   : 00:00 ( Jam 12 Malam )"
 echo -e "□ 🔰\e[32;1mLicense SC Limit\e[0m  : Lifetime"
-echo -e "□ 🔰\e[32;1mAutoScript By Dev\e[0m : Bhoikfost Yahya"
+echo -e "□ 🔰\e[32;1mAutoScript By Dev\e[0m : @arf.prsty_"
 
 echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
 echo -e "\E[44;1;39m             ⇱ STATUS LAYANAN ⇲                                  \E[0m"
 echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
 echo -e ""
-echo -e "       🟢🟡🔴  [ ${GREEN}SERVER XRAY VPN${NC} : ${status_nginx} ]  🔴🟡🟢"
+echo -e "       🟢🟡🔴  [ ${GREEN}SERVER XRAY STATUS${NC} : ${status_nginx} ]  🔴🟡🟢"
 echo -e ""
 echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
 echo -e "\E[44;1;39m              ⇱ MENU LAYANAN ⇲                                   \E[0m"
@@ -99,8 +99,9 @@ echo -e " [${GREEN}10${NC}]${RED} • ${NC}Menghapus akun vmess $NC"
 echo -e " [${GREEN}11${NC}]${RED} • ${NC}Merenew Akun vmess $NC"
 echo -e " [${GREEN}12${NC}]${RED} • ${NC}Cek Akun vmess $NC"
 echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
-echo -e " [${GREEN}13${NC}]${RED} • ${NC}Test kecepatan server $NC"
+echo -e " [${GREEN}13${NC}]${RED} • ${NC}SpeedTest Ookla $NC"
 echo -e " [${GREEN}14${NC}]${RED} • ${NC}Reboot server $NC"
+echo -e " [${GREEN}15${NC}]${RED} • ${NC}Update Script $NC"
 echo -e ""
 echo -e " ${RED}"
 echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
@@ -109,7 +110,7 @@ echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━�
 
 echo -e ""
 
-read -p "Select From Options [ 1 - 14 ] : " menu
+read -p "Select From Options [ 1 - 15 ] : " menu
 case $menu in
 1)
 clear
@@ -166,6 +167,10 @@ speedtest
 14)
 reboot
 exit
+;;
+15)
+clear
+update
 ;;
 *)
 clear

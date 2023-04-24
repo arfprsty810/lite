@@ -81,129 +81,94 @@ echo -e ""
 echo -e "       🟢🟡🔴  [ ${GREEN}SERVER XRAY STATUS${NC} : ${status_nginx} ]  🔴🟡🟢"
 echo -e ""
 echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
-echo -e "\E[44;1;39m              ⇱ MENU LAYANAN ⇲                                   \E[0m"
+echo -e "\E[39;1;92m                     ⇱ MENU SERVICE ⇲                         \E[0m"
 echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
 echo -e ""
-echo -e " [${GREEN}01${NC}]${RED} • ${NC}Membuat Akun Trojan  $NC"
-echo -e " [${GREEN}02${NC}]${RED} • ${NC}Menghapus Akun Trojan $NC"  
-echo -e " [${GREEN}03${NC}]${RED} • ${NC}Merenew Akun Trojan $NC"  
-echo -e " [${GREEN}04${NC}]${RED} • ${NC}Cek Akun Trojan $NC"
-echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
-echo -e " [${GREEN}05${NC}]${RED} • ${NC}Membuat Akun vless $NC"  
-echo -e " [${GREEN}06${NC}]${RED} • ${NC}Menghapus Akun vless $NC"
-echo -e " [${GREEN}07${NC}]${RED} • ${NC}Merenew Akun vless $NC"
-echo -e " [${GREEN}08${NC}]${RED} • ${NC}Cek Akun vless $NC"
-echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
-echo -e " [${GREEN}09${NC}]${RED} • ${NC}Membuat akun vmess $NC"
-echo -e " [${GREEN}10${NC}]${RED} • ${NC}Menghapus akun vmess $NC"
-echo -e " [${GREEN}11${NC}]${RED} • ${NC}Merenew Akun vmess $NC"
-echo -e " [${GREEN}12${NC}]${RED} • ${NC}Cek Akun vmess $NC"
-echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
-echo -e " [${GREEN}13${NC}]${RED} • ${NC}SpeedTest Ookla $NC"
-echo -e " [${GREEN}14${NC}]${RED} • ${NC}Reboot server $NC"
-echo -e " [${GREEN}15${NC}]${RED} • ${NC}Update Script $NC"
-echo -e " [${GREEN}16${NC}]${RED} • ${NC}Exit Menu $NC"
-echo -e ""
+
+echo -e " ${BICyan}[${BIWhite}01${BICyan}]${RED} •${NC} ${CYAN}VMESS MENU      $NC  ${BICyan}[${BIWhite}7${BICyan}]${RED} • ${NC}${CYAN}BANNER CHANGE $NC"
+
+echo -e " ${BICyan}[${BIWhite}02${BICyan}]${RED} •${NC} ${CYAN}VLESS MENU      $NC  ${BICyan}[${BIWhite}8${BICyan}]${RED} • ${NC}${CYAN}CEK RUNNING SERVICE $NC"
+
+echo -e " ${BICyan}[${BIWhite}03${BICyan}]${RED} •${NC} ${CYAN}TROJAN MENU     $NC  ${BICyan}[${BIWhite}9${BICyan}]${RED} • ${NC}${CYAN}SCRIPT INFO $NC"
+
+echo -e " ${BICyan}[${BIWhite}04${BICyan}]${RED} •${NC} ${CYAN}S-SOCK MENU     $NC  ${BICyan}[${BIWhite}10${BICyan}]${RED} • ${NC}${CYAN}UPDATE SCRIPT  $NC"
+
+echo -e " ${BICyan}[${BIWhite}05${BICyan}]${RED} •${NC} ${CYAN}SPEEDTEST         $NC  ${BICyan}[${BIWhite}11${BICyan}]${RED} • ${NC}${CYAN}RESTART SERVICE $NC"
+
+echo -e " ${BICyan}[${BIWhite}06${BICyan}]${RED} •${NC} ${CYAN}REBOOT     $NC  ${BICyan}[${BIWhite}12${BICyan}]${RED} • ${NC}${CYAN}Ketik x to exit $NC"
+
 echo -e " ${RED}"
 echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
-echo -e "\E[44;1;39m              ⇱ XRAY-VPN OFFICIAL ⇲                              \E[0m"
-echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
 
 echo -e ""
 
-read -p "Select From Options [ 1 - 16 ] : " menu
+read -p "Select From Options [ 1 - 12 ] : " menu
 case $menu in
 
 1)
-sed -i -e 's/\r$//' /bin/add-tr
+sed -i -e 's/\r$//' /bin/menu-vmess
 clear
-add-tr
+menu-vmess
 ;;
 
 2)
-sed -i -e 's/\r$//' /bin/del-tr
+sed -i -e 's/\r$//' /bin/menu-vless
 clear
-del-tr
+menu-vless
 ;;
 
 3)
-sed -i -e 's/\r$//' /bin/renew-tr
+sed -i -e 's/\r$//' /bin/menu-trojan
 clear
-renew-tr
+menu-trojan
 ;;
 
 4)
-sed -i -e 's/\r$//' /bin/cek-tr
+sed -i -e 's/\r$//' /bin/menu-ss
 clear
-cek-tr
+menu-ss
 ;;
 
 5)
-sed -i -e 's/\r$//' /bin/add-vless
-clear
-add-vless
-;;
-
-6)
-sed -i -e 's/\r$//' /bin/del-vless
-clear
-del-vless
-;;
-
-7)
-sed -i -e 's/\r$//' /bin/renew-vless
-clear
-renew-vless
-;;
-
-8)
-sed -i -e 's/\r$//' /bin/cek-vless
-clear
-cek-vless
-;;
-
-9)
-sed -i -e 's/\r$//' /bin/add-ws
-clear
-add-ws
-;;
-
-10)
-sed -i -e 's/\r$//' /bin/del-ws
-clear
-del-ws
-;;
-
-11)
-sed -i -e 's/\r$//' /bin/renew-ws
-clear
-renew-ws
-;;
-
-12)
-sed -i -e 's/\r$//' /bin/cek-ws
-clear
-cek-ws
-;;
-
-13)
 sed -i -e 's/\r$//' /bin/speedtest
 clear
 speedtest
 ;;
 
-14)
+6)
 reboot
 exit
 ;;
 
-15)
+7)
+clear
+nano /etc/issue.net
+;;
+
+8)
+sed -i -e 's/\r$//' /bin/running
+clear
+running
+;;
+
+9)
+clear
+cat /root/log-install.txt
+;;
+
+10)
 sed -i -e 's/\r$//' /bin/update
 clear
 update
 ;;
 
-16)
+11)
+sed -i -e 's/\r$//' /bin/restart
+clear
+restart
+;;
+
+x)
 clear
 exit
 ;;

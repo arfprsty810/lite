@@ -49,7 +49,7 @@ sed -i '/#vmess$/a\### '"$user $exp"'\
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#vmessgrpc$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
-asu=`cat<<EOF
+tls=`cat<<EOF
       {
       "v": "2",
       "ps": "${user}",
@@ -60,11 +60,11 @@ asu=`cat<<EOF
       "net": "ws",
       "path": "/vmess",
       "type": "none",
-      "host": "",
+      "host": "bug.com",
       "tls": "tls"
 }
 EOF`
-ask=`cat<<EOF
+notls=`cat<<EOF
       {
       "v": "2",
       "ps": "${user}",
@@ -75,7 +75,7 @@ ask=`cat<<EOF
       "net": "ws",
       "path": "/vmess",
       "type": "none",
-      "host": "",
+      "host": "bug.com",
       "tls": "none"
 }
 EOF`
@@ -90,15 +90,15 @@ grpc=`cat<<EOF
       "net": "grpc",
       "path": "vmess-grpc",
       "type": "none",
-      "host": "",
+      "host": "bug.com",
       "tls": "tls"
 }
 EOF`
 vmess_base641=$( base64 -w 0 <<< $vmess_json1)
 vmess_base642=$( base64 -w 0 <<< $vmess_json2)
 vmess_base643=$( base64 -w 0 <<< $vmess_json3)
-vmesslink1="vmess://$(echo $asu | base64 -w 0)"
-vmesslink2="vmess://$(echo $ask | base64 -w 0)"
+vmesslink1="vmess://$(echo $tls | base64 -w 0)"
+vmesslink2="vmess://$(echo $notls | base64 -w 0)"
 vmesslink3="vmess://$(echo $grpc | base64 -w 0)"
 systemctl restart xray > /dev/null 2>&1
 service cron restart > /dev/null 2>&1

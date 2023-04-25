@@ -98,7 +98,7 @@ wget -q -O /usr/bin/update "https://raw.githubusercontent.com/arfprsty810/lite/m
 
 clear
 echo -e "[ ${green}INFO$NC ] Install New Script ..."
-sleep 1
+sleep 5
 
 sed -i -e 's/\r$//' /bin/menu
 sed -i -e 's/\r$//' /bin/cert

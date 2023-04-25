@@ -97,6 +97,7 @@ wget -q -O /usr/bin/speedtest "https://raw.githubusercontent.com/arfprsty810/lit
 wget -q -O /usr/bin/update "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/update.sh" && chmod +x /usr/bin/update
 
 clear
+echo -e "[ ${green}INFO$NC ] Install New Script ..."
 sleep 1
 
 sed -i -e 's/\r$//' /bin/menu

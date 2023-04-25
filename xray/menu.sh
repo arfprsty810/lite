@@ -64,14 +64,14 @@ echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━�
 echo -e "\E[44;1;39m             ⇱ INFORMASI VPS ⇲                                   \E[0m"
 echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
 
-echo -e "□ 🔰\e[32;1mSever Uptime\e[0m      : $( uptime -p  | cut -d " " -f 2-10000 ) "
-echo -e "□ 🔰\e[32;1mCurrent Time\e[0m      : $( date -d "0 days" +"%d-%m-%Y | %X" )"
-echo -e "□ 🔰\e[32;1mOperating System\e[0m  : $( cat /etc/os-release | grep -w PRETTY_NAME | sed 's/PRETTY_NAME//g' | sed 's/=//g' | sed 's/"//g' ) ( $( uname -m) )"
-echo -e "□ 🔰\e[32;1mCurrent Domain\e[0m    : $( cat /etc/xray/domain )"
-echo -e "□ 🔰\e[32;1mCurrent Isp Name\e[0m  : $ISP"
-echo -e "□ 🔰\e[32;1mServer IP\e[0m         : ${IP}"
-echo -e "□ 🔰\e[32;1mTime Reboot VPS\e[0m   : 00:00 ( Jam 12 Malam )"
-echo -e "□ 🔰\e[32;1mAutoScript By Dev\e[0m : @arf.prsty_"
+echo -e "□ ✴️\e[32;1mSever Uptime\e[0m      : $( uptime -p  | cut -d " " -f 2-10000 ) "
+echo -e "□ ✴️\e[32;1mCurrent Time\e[0m      : $( date -d "0 days" +"%d-%m-%Y | %X" )"
+echo -e "□ ✴️\e[32;1mOperating System\e[0m  : $( cat /etc/os-release | grep -w PRETTY_NAME | sed 's/PRETTY_NAME//g' | sed 's/=//g' | sed 's/"//g' ) ( $( uname -m) )"
+echo -e "□ ✴️\e[32;1mCurrent Domain\e[0m    : $( cat /etc/xray/domain )"
+echo -e "□ ✴️\e[32;1mCurrent Isp Name\e[0m  : $ISP"
+echo -e "□ ✴️\e[32;1mServer IP\e[0m         : ${IP}"
+echo -e "□ ✴️\e[32;1mTime Reboot VPS\e[0m   : 00:00 ( Jam 12 Malam )"
+echo -e "□ ✴️\e[32;1mAutoScript By Dev\e[0m : @arf.prsty_"
 
 echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
 echo -e "\E[44;1;39m             ⇱ STATUS LAYANAN ⇲                                  \E[0m"
@@ -101,38 +101,35 @@ echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━�
 
 echo -e ""
 
-read -p "Select From Options [ 1 - 12 ] : " menu
+read -p "Select Menu Service : " menu
 case $menu in
 
 1)
-sed -i -e 's/\r$//' /bin/menu-vmess
 clear
 menu-vmess
 ;;
 
 2)
-sed -i -e 's/\r$//' /bin/menu-vless
 clear
 menu-vless
 ;;
 
 3)
-sed -i -e 's/\r$//' /bin/menu-trojan
 clear
 menu-trojan
 ;;
 
 4)
-sed -i -e 's/\r$//' /bin/menu-ssws
 clear
-menu-ss
+menu-ssws
 ;;
 
 5)
 clear
 speedtest
+sleep 2
+echo "please wait ... "
 sleep 5
-echo ""
 read -n 1 -s -r -p "Press any key to back on menu"
 menu
 ;;
@@ -162,13 +159,11 @@ menu
 ;;
 
 10)
-sed -i -e 's/\r$//' /bin/update
 clear
 update
 ;;
 
 11)
-sed -i -e 's/\r$//' /bin/restart
 clear
 restart
 ;;
@@ -179,7 +174,6 @@ exit
 ;;
 
 *)
-sed -i -e 's/\r$//' /bin/menu
 clear
 menu
 ;;

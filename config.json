@@ -30,7 +30,7 @@
        "streamSettings":{
          "network": "ws",
             "wsSettings": {
-                "path": ""
+                "path": "/vless"
           }
         }
      },
@@ -54,7 +54,7 @@
        "streamSettings":{
          "network": "ws",
             "wsSettings": {
-                "path": ""
+                "path": "/vmess"
           }
         }
      },
@@ -75,7 +75,7 @@
        "streamSettings":{
            "network": "ws",
            "wsSettings": {
-                "path": ""
+               "path": "/trojan-ws"
             }
          }
      },
@@ -96,7 +96,7 @@
        "streamSettings":{
           "network": "ws",
              "wsSettings": {
-                "path": ""
+               "path": "/ss-ws"
            }
         }
      },
@@ -257,3 +257,4 @@
     }
   }
 }
+

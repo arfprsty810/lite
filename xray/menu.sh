@@ -84,7 +84,7 @@ echo -e "\E[39;1;92m                     ⇱ MENU SERVICE ⇲                   
 echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
 echo -e ""
 
-echo -e " ${BICyan}[${BIWhite}01${BICyan}]${RED} •${NC} ${CYAN}VMESS MENU      $NC  ${BICyan}[${BIWhite}07${BICyan}]${RED} • ${NC}${CYAN}BANNER CHANGE $NC"
+echo -e " ${BICyan}[${BIWhite}01${BICyan}]${RED} •${NC} ${CYAN}VMESS MENU      $NC  ${BICyan}[${BIWhite}07${BICyan}]${RED} • ${NC}${CYAN}CEK BANDWIDTH $NC"
 
 echo -e " ${BICyan}[${BIWhite}02${BICyan}]${RED} •${NC} ${CYAN}VLESS MENU      $NC  ${BICyan}[${BIWhite}08${BICyan}]${RED} • ${NC}${CYAN}CEK RUNNING SERVICE $NC"
 
@@ -141,7 +141,7 @@ exit
 
 7)
 clear
-nano /etc/issue.net
+cek-bandwidth
 ;;
 
 8)

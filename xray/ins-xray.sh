@@ -589,7 +589,7 @@ wget -q -O /usr/bin/renew-tr "https://raw.githubusercontent.com/arfprsty810/lite
 #--
 wget -q -O /usr/bin/restart "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/restart.sh" && chmod +x /usr/bin/restart
 wget -q -O /usr/bin/running "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/running.sh" && chmod +x /usr/bin/running
-wget -q -O /etc/issue.net "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/issue.net" && chmod +x /etc/issue.net
+wget -q -O /usr/bin/cek-bandwidth "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/cek-bandwidth.sh" && chmod +x /usr/bin/cek-bandwidth
 wget -q -O /usr/bin/menu "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/menu.sh" && chmod +x /usr/bin/menu
 wget -q -O /usr/bin/cert "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/cert.sh" && chmod +x /usr/bin/cert
 wget -q -O /usr/bin/speedtest "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/speedtest_cli.py" && chmod +x /usr/bin/speedtest
@@ -601,6 +601,7 @@ echo -e "[ ${green}INFO$NC ] Install Script ..."
 sleep 5
 
 sed -i -e 's/\r$//' /bin/menu
+sed -i -e 's/\r$//' /bin/cek-bandwidth
 sed -i -e 's/\r$//' /bin/cert
 sed -i -e 's/\r$//' /bin/update
 sed -i -e 's/\r$//' /bin/restart

@@ -35,14 +35,14 @@ export NC='\033[0m'
 }
 clear
 echo -e "${BICyan} ┌─────────────────────────────────────────────────────┐${NC}"
-echo -e "       ${BIWhite}${UWhite}Sodosok${NC}"
+echo -e "       ${BIWhite}${UWhite}SODOSOK${NC}"
 echo -e ""
 echo -e "     ${BICyan}[${BIWhite}1${BICyan}] Add Account Sodosok     "
 echo -e "     ${BICyan}[${BIWhite}2${BICyan}] Delete Account Sodosok     "
 echo -e "     ${BICyan}[${BIWhite}3${BICyan}] Renew Account Sodosok     "
 echo -e "     ${BICyan}[${BIWhite}4${BICyan}] Cek User XRAY     "
+echo -e "     ${BICyan}[${BIWhite}0${BICyan}] Back to Menu"
 echo -e " ${BICyan}└─────────────────────────────────────────────────────┘${NC}"
-echo -e "     ${BIYellow}Press x or [ Ctrl+C ] • To-${BIWhite}Exit${NC}"
 echo ""
 read -p " Select menu : " opt
 echo -e ""

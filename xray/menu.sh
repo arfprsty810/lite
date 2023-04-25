@@ -123,7 +123,7 @@ menu-trojan
 ;;
 
 4)
-sed -i -e 's/\r$//' /bin/menu-ss
+sed -i -e 's/\r$//' /bin/menu-ssws
 clear
 menu-ss
 ;;

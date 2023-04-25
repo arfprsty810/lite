@@ -21,7 +21,6 @@ touch /etc/v2ray/domain
 touch /etc/xray/scdomain
 touch /etc/v2ray/scdomain
 
-
 secs_to_human() {
     echo "Installation time : $(( ${1} / 3600 )) hours $(( (${1} / 60) % 60 )) minute's $(( ${1} % 60 )) seconds"
 }
@@ -51,14 +50,7 @@ echo "IP=" >> /var/lib/scrz-prem/ipvps.conf
 if [ -f "/etc/xray/domain" ]; then
 clear
 echo ""
-echo -e "$green┌─┐┬ ┬┌┬┐┌─┐┌─┐┌─┐┬─┐┬┌─┐┌┬┐  ┬  ┬┌┬┐┌─┐$NC"
-echo -e "$green├─┤│ │ │ │ │└─┐│  ├┬┘│├─┘ │   │  │ │ ├┤ $NC"
-echo -e "$green┴ ┴└─┘ ┴ └─┘└─┘└─┘┴└─┴┴   ┴   ┴─┘┴ ┴ └─┘$NC"
-echo -e "[ ${red}INFO${NC} ] Autoscript xray vpn lite (multi port)"
-echo -e "[ ${red}INFO${NC} ] no licence script (free lifetime)"
-echo -e "[ ${red}INFO${NC} ] Pastikan internet lancar saat insatll script"
-echo -e "[ ${red}INFO${NC} ] Hubungkan terlebih dahulu IP VPS anda ke Domain"
-echo -ne "[ ${yell}WARNING${NC} ] MELANJUTKAN UNTUK INSTALL AUTOSCRIPT  (y/n)? "
+echo -ne "[ ${yell}WARNING${NC} ] INSTALL AUTOSCRIPT VPS XRAY v.1.0   ?  (y/n)? "
 read answer
 if [ "$answer" == "${answer#[Yy]}" ] ;then
 rm setup.sh
@@ -70,13 +62,14 @@ fi
 fi
 echo ""
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "$green                  AUTOSCRIPT VPS                          $NC"
-echo -e "$green            MULTI PORT XRAY 443 + 80                       $NC"
+echo -e "$green                         AUTOSCRIPT VPS XRAY v.1.0                          $NC"
+echo -e "$green                         MULTI PORT XRAY 443 + 80                       $NC"
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 sleep 3
 clear
-
-yellow "Add Domain for XRAY VPN"
+echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "$green              Add Domain for XRAY VPN              $NC"
+echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo " "
 read -rp "Input ur domain : " -e pp
     if [ -z $pp ]; then
@@ -94,9 +87,9 @@ read -rp "Input ur domain : " -e pp
     
 #Instal Xray
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "$green          Install XRAY              $NC"
+echo -e "$green                   Install XRAY              $NC"
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "[ ${green}SCRIPT${NC} ] free no licence (lifetime) "
+echo -e "[ ${green}SCRIPT${NC} ] install .... "
 sleep 2
 clear
 wget https://raw.githubusercontent.com/arfprsty810/lite/main/xray/ins-xray.sh && chmod +x ins-xray.sh && ./ins-xray.sh
@@ -145,9 +138,9 @@ echo ""
 echo "" | tee -a log-install.txt
 rm /root/setup.sh >/dev/null 2>&1
 secs_to_human "$(($(date +%s) - ${start}))" | tee -a log-install.txt
-echo -e "
-"
-echo -ne "[ ${yell}WARNING${NC} ] Silahkan Reboot Ulang Vps Anda ? (y/n)? "
+echo -e ""
+
+echo -ne "[ ${yell}WARNING${NC} ] Reboot ur VPS ? (y/n)? "
 read answer
 if [ "$answer" == "${answer#[Yy]}" ] ;then
 exit 0

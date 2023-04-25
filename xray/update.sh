@@ -96,8 +96,41 @@ wget -q -O /usr/bin/cert "https://raw.githubusercontent.com/arfprsty810/lite/mai
 wget -q -O /usr/bin/speedtest "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/speedtest_cli.py" && chmod +x /usr/bin/speedtest
 wget -q -O /usr/bin/update "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/update.sh" && chmod +x /usr/bin/update
 
-sleep 1
 clear
+sleep 1
+
+sed -i -e 's/\r$//' /bin/menu
+sed -i -e 's/\r$//' /bin/cert
+sed -i -e 's/\r$//' /bin/update
+sed -i -e 's/\r$//' /bin/restart
+sed -i -e 's/\r$//' /bin/running
+
+sed -i -e 's/\r$//' /bin/menu-vmess
+sed -i -e 's/\r$//' /bin/add-ws
+sed -i -e 's/\r$//' /bin/cek-ws
+sed -i -e 's/\r$//' /bin/del-vmess
+sed -i -e 's/\r$//' /bin/renew-ws
+
+sed -i -e 's/\r$//' /bin/menu-vless
+sed -i -e 's/\r$//' /bin/add-vless
+sed -i -e 's/\r$//' /bin/cek-vless
+sed -i -e 's/\r$//' /bin/del-vless
+sed -i -e 's/\r$//' /bin/renew-ws
+
+sed -i -e 's/\r$//' /bin/menu-trojan
+sed -i -e 's/\r$//' /bin/add-tr
+sed -i -e 's/\r$//' /bin/cek-tr
+sed -i -e 's/\r$//' /bin/del-tr
+sed -i -e 's/\r$//' /bin/renew-tr
+
+sed -i -e 's/\r$//' /bin/menu-ssws
+sed -i -e 's/\r$//' /bin/add-ssws
+sed -i -e 's/\r$//' /bin/cek-ssws
+sed -i -e 's/\r$//' /bin/del-ssws
+sed -i -e 's/\r$//' /bin/renew-ssws
+
+clear
+sleep 1
 echo -e "[ ${green}INFO$NC ] Update successfully!"
 sleep 1
 echo -e "[ ${green}INFO$NC ] Reboot VPS ..."

@@ -61,7 +61,7 @@ clear
 clear
 clear
 echo -e "\033[0;34m┌─────────────────────────────────────────────────────┐${NC}"
-echo -e "\033[0;34m|             ⇱ INFORMASI VPS ⇲                         |\E[0m"
+echo -e "\033[0;34m|             ⇱ INFORMASI VPS ⇲                       \033[0;34m|"
 echo -e "\033[0;34m└─────────────────────────────────────────────────────┘${NC}"
 
 echo -e "\033[0;34m| ❇️ \e[32;1mSever Uptime\e[0m      : $( uptime -p  | cut -d " " -f 2-10000 ) |"
@@ -74,28 +74,26 @@ echo -e "\033[0;34m| ❇️ \e[32;1mTime Reboot VPS\e[0m   : 00:00 ( Jam 12 Mala
 echo -e "\033[0;34m| ❇️ \e[32;1mAutoScript By Dev\e[0m : @arf.prsty_ |"
 echo -e "\033[0;34m└─────────────────────────────────────────────────────┘${NC}"
 echo -e "\033[0;34m┌─────────────────────────────────────────────────────┐${NC}"
-echo -e "\033[0;34m|             ⇱ STATUS LAYANAN ⇲                       |\E[0m"
+echo -e "\033[0;34m|             ⇱ STATUS LAYANAN ⇲                       \033[0;34m|"
 echo -e "\033[0;34m└─────────────────────────────────────────────────────┘${NC}"
-echo -e "\033[0;34m|       🟢🟡🔴  [ ${GREEN}SERVER XRAY STATUS${NC} : ${status_nginx} ]  🔴🟡🟢 |"
+echo -e "\033[0;34m|       🟢🟡🔴  [ ${GREEN}SERVER XRAY STATUS${NC} : ${status_nginx}   🔴🟡🟢    \033[0;34m|"
 echo -e "\033[0;34m└─────────────────────────────────────────────────────┘${NC}"
 echo -e "\033[0;34m┌─────────────────────────────────────────────────────┐${NC}"
-echo -e "\033[0;34m|                     ⇱ MENU SERVICE ⇲                        |\E[0m"
+echo -e "\033[0;34m|                     ⇱ MENU SERVICE ⇲                   |\E[0m"
 echo -e "\033[0;34m└─────────────────────────────────────────────────────┘${NC}"
-echo -e ""
 
-echo -e "\033[0;34m| ${BICyan}[${BIWhite}01| ${BICyan}]${RED} •${NC} ${CYAN}VMESS MENU   $NC  | ${BICyan}[${BIWhite}07| ${BICyan}]${RED} • ${NC}${CYAN}CEK BANDWIDTH | $NC"
+echo -e "\033[0;34m| ${BICyan}[${BIWhite}01${BICyan}]${RED} •${NC} ${CYAN}VMESS MENU   $NC  | ${BICyan}[${BIWhite}07${BICyan}]${RED} • ${NC}${CYAN}CEK BANDWIDTH \033[0;34m| $NC"
 
-echo -e "\033[0;34m| ${BICyan}[${BIWhite}02| ${BICyan}]${RED} •${NC} ${CYAN}VLESS MENU   $NC  | ${BICyan}[${BIWhite}08| ${BICyan}]${RED} • ${NC}${CYAN}CEK RUNNING SERVICE | $NC"
+echo -e "\033[0;34m| ${BICyan}[${BIWhite}02${BICyan}]${RED} •${NC} ${CYAN}VLESS MENU   $NC  | ${BICyan}[${BIWhite}08${BICyan}]${RED} • ${NC}${CYAN}CEK RUNNING SERVICE \033[0;34m| $NC"
 
-echo -e "\033[0;34m| ${BICyan}[${BIWhite}03| ${BICyan}]${RED} •${NC} ${CYAN}TROJAN MENU  $NC  | ${BICyan}[${BIWhite}09| ${BICyan}]${RED} • ${NC}${CYAN}SCRIPT INFO | $NC"
+echo -e "\033[0;34m| ${BICyan}[${BIWhite}03${BICyan}]${RED} •${NC} ${CYAN}TROJAN MENU  $NC  | ${BICyan}[${BIWhite}09${BICyan}]${RED} • ${NC}${CYAN}SCRIPT INFO \033[0;34m| $NC"
 
-echo -e "\033[0;34m| ${BICyan}[${BIWhite}04| ${BICyan}]${RED} •${NC} ${CYAN}S-SOCK MENU  $NC  | ${BICyan}[${BIWhite}10| ${BICyan}]${RED} • ${NC}${CYAN}UPDATE SCRIPT  | $NC"
+echo -e "\033[0;34m| ${BICyan}[${BIWhite}04${BICyan}]${RED} •${NC} ${CYAN}S-SOCK MENU  $NC  | ${BICyan}[${BIWhite}10${BICyan}]${RED} • ${NC}${CYAN}UPDATE SCRIPT  \033[0;34m| $NC"
 
-echo -e "\033[0;34m| ${BICyan}[${BIWhite}05| ${BICyan}]${RED} •${NC} ${CYAN}SPEEDTEST    $NC  | ${BICyan}[${BIWhite}11| ${BICyan}]${RED} • ${NC}${CYAN}RESTART SERVICE | $NC"
+echo -e "\033[0;34m| ${BICyan}[${BIWhite}05${BICyan}]${RED} •${NC} ${CYAN}SPEEDTEST    $NC  | ${BICyan}[${BIWhite}11${BICyan}]${RED} • ${NC}${CYAN}RESTART SERVICE \033[0;34m| $NC"
 
-echo -e "\033[0;34m| ${BICyan}[${BIWhite}06| ${BICyan}]${RED} •${NC} ${CYAN}REBOOT      $NC  | ${BICyan}[${BIWhite}xx| ${BICyan}]${RED} • ${NC}${CYAN}Ketik x to exit | $NC"
+echo -e "\033[0;34m| ${BICyan}[${BIWhite}06${BICyan}]${RED} •${NC} ${CYAN}REBOOT      $NC  | ${BICyan}[${BIWhite}xx${BICyan}]${RED} • ${NC}${CYAN} x TO EXIT \033[0;34m| $NC"
 
-echo -e " ${RED}"
 echo -e "\033[0;34m└─────────────────────────────────────────────────────┘${NC}"
 
 echo -e ""

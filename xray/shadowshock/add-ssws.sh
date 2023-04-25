@@ -285,9 +285,9 @@ END
 systemctl restart xray > /dev/null 2>&1
 service cron restart > /dev/null 2>&1
 clear
-echo -e "\033[0;34mג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”\033[0m" | tee -a /etc/log-create-user.log
+echo -e "----------------------------------" | tee -a /etc/log-create-user.log
 echo -e "\\E[0;41;36m        Sodosok WS/GRPC Account    \E[0m" | tee -a /etc/log-create-user.log
-echo -e "\033[0;34mג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”\033[0m" | tee -a /etc/log-create-user.log
+echo -e "----------------------------------" | tee -a /etc/log-create-user.log
 echo -e "Remarks : ${user}" | tee -a /etc/log-create-user.log
 echo -e "Domain : ${domain}" | tee -a /etc/log-create-user.log
 echo -e "Port WS : ${tls}/80" | tee -a /etc/log-create-user.log
@@ -297,21 +297,21 @@ echo -e "Cipers : aes-128-gcm" | tee -a /etc/log-create-user.log
 echo -e "Network : ws/grpc" | tee -a /etc/log-create-user.log
 echo -e "Path : /ss-ws" | tee -a /etc/log-create-user.log
 echo -e "ServiceName : ss-grpc" | tee -a /etc/log-create-user.log
-echo -e "\033[0;34mג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”\033[0m" | tee -a /etc/log-create-user.log
+echo -e "----------------------------------" | tee -a /etc/log-create-user.log
 echo -e "Link WS TLS : ${sslinkws}" | tee -a /etc/log-create-user.log
-echo -e "\033[0;34mג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”\033[0m" | tee -a /etc/log-create-user.log
+echo -e "----------------------------------" | tee -a /etc/log-create-user.log
 echo -e "Link WS None TLS : ${nonsslinkws}" | tee -a /etc/log-create-user.log
-echo -e "\033[0;34mג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”\033[0m" | tee -a /etc/log-create-user.log
+echo -e "----------------------------------" | tee -a /etc/log-create-user.log
 echo -e "Link GRPC TLS : ${sslinkgrpc}" | tee -a /etc/log-create-user.log
-echo -e "\033[0;34mג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”\033[0m" | tee -a /etc/log-create-user.log
+echo -e "----------------------------------" | tee -a /etc/log-create-user.log
 echo -e "Link GRPC None TLS : ${nonsslinkgrpc}" | tee -a /etc/log-create-user.log
-echo -e "\033[0;34mג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”\033[0m" | tee -a /etc/log-create-user.log
+echo -e "----------------------------------" | tee -a /etc/log-create-user.log
 echo -e "Link JSON WS : http://${domain}:81/sodosokws-$user.txt" | tee -a /etc/log-create-user.log
-echo -e "\033[0;34mג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”\033[0m" | tee -a /etc/log-create-user.log
+echo -e "----------------------------------" | tee -a /etc/log-create-user.log
 echo -e "Link JSON gRPC : http://${domain}:81/sodosokgrpc-$user.txt" | tee -a /etc/log-create-user.log
-echo -e "\033[0;34mג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”\033[0m" | tee -a /etc/log-create-user.log
+echo -e "----------------------------------" | tee -a /etc/log-create-user.log
 echo -e "Expired On : $exp" | tee -a /etc/log-create-user.log
-echo -e "\033[0;34mג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”ג”\033[0m" | tee -a /etc/log-create-user.log
+echo -e "----------------------------------" | tee -a /etc/log-create-user.log
 echo "" | tee -a /etc/log-create-user.log
 read -n 1 -s -r -p "Press any key to back on menu"
 

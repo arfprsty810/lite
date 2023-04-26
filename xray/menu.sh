@@ -64,14 +64,14 @@ echo -e "\033[0;34m┌───────────────────�
 echo -e "\033[0;34m|             ⇱ INFORMASI VPS ⇲                       \033[0;34m|"
 echo -e "\033[0;34m└─────────────────────────────────────────────────────┘${NC}"
 
-echo -e "\033[0;34m| ❇️ \e[32;1mSever Uptime\e[0m      : $( uptime -p  | cut -d " " -f 2-10000 ) |"
-echo -e "\033[0;34m| ❇️ \e[32;1mCurrent Time\e[0m      : $( date -d "0 days" +"%d-%m-%Y | %X" ) |"
-echo -e "\033[0;34m| ❇️ \e[32;1mOperating System\e[0m  : $( cat /etc/os-release | grep -w PRETTY_NAME | sed 's/PRETTY_NAME//g' | sed 's/=//g' | sed 's/"//g' ) ( $( uname -m) ) |"
-echo -e "\033[0;34m| ❇️ \e[32;1mCurrent Domain\e[0m    : $( cat /etc/xray/domain ) |"
-echo -e "\033[0;34m| ❇️ \e[32;1mCurrent Isp Name\e[0m  : $ISP |"
-echo -e "\033[0;34m| ❇️ \e[32;1mServer IP\e[0m         : ${IP} |"
-echo -e "\033[0;34m| ❇️ \e[32;1mTime Reboot VPS\e[0m   : 00:00 ( Jam 12 Malam ) |"
-echo -e "\033[0;34m| ❇️ \e[32;1mAutoScript By Dev\e[0m : @arf.prsty_ |"
+echo -e "\033[0;34m| ❇️ \e[32;1mSever Uptime\e[0m      : $( uptime -p  | cut -d " " -f 2-10000 ) \033[0;34m|"
+echo -e "\033[0;34m| ❇️ \e[32;1mCurrent Time\e[0m      : $( date -d "0 days" +"%d-%m-%Y | %X" ) \033[0;34m|"
+echo -e "\033[0;34m| ❇️ \e[32;1mOperating System\e[0m  : $( cat /etc/os-release | grep -w PRETTY_NAME | sed 's/PRETTY_NAME//g' | sed 's/=//g' | sed 's/"//g' ) ( $( uname -m) ) \033[0;34m|"
+echo -e "\033[0;34m| ❇️ \e[32;1mCurrent Domain\e[0m    : $( cat /etc/xray/domain ) \033[0;34m|"
+echo -e "\033[0;34m| ❇️ \e[32;1mCurrent Isp Name\e[0m  : $ISP \033[0;34m|"
+echo -e "\033[0;34m| ❇️ \e[32;1mServer IP\e[0m         : ${IP} \033[0;34m|"
+echo -e "\033[0;34m| ❇️ \e[32;1mTime Reboot VPS\e[0m   : 00:00 ( Jam 12 Malam ) \033[0;34m|"
+echo -e "\033[0;34m| ❇️ \e[32;1mAutoScript By Dev\e[0m : @arf.prsty_ \033[0;34m|"
 echo -e "\033[0;34m└─────────────────────────────────────────────────────┘${NC}"
 echo -e "\033[0;34m┌─────────────────────────────────────────────────────┐${NC}"
 echo -e "\033[0;34m|             ⇱ STATUS LAYANAN ⇲                       \033[0;34m|"
@@ -82,17 +82,17 @@ echo -e "\033[0;34m┌───────────────────�
 echo -e "\033[0;34m|                     ⇱ MENU SERVICE ⇲                   |\E[0m"
 echo -e "\033[0;34m└─────────────────────────────────────────────────────┘${NC}"
 
-echo -e "\033[0;34m| ${BICyan}[${BIWhite}01${BICyan}]${RED} •${NC} ${CYAN}VMESS MENU   $NC  | ${BICyan}[${BIWhite}07${BICyan}]${RED} • ${NC}${CYAN}CEK BANDWIDTH \033[0;34m| $NC"
+echo -e "\033[0;34m| ${BICyan}[${BIWhite}01${BICyan}]${RED} •${NC} ${CYAN}VMESS MENU   $NC  ${BICyan}[${BIWhite}07${BICyan}]${RED} • ${NC}${CYAN}CEK BANDWIDTH \033[0;34m| $NC"
 
-echo -e "\033[0;34m| ${BICyan}[${BIWhite}02${BICyan}]${RED} •${NC} ${CYAN}VLESS MENU   $NC  | ${BICyan}[${BIWhite}08${BICyan}]${RED} • ${NC}${CYAN}CEK RUNNING SERVICE \033[0;34m| $NC"
+echo -e "\033[0;34m| ${BICyan}[${BIWhite}02${BICyan}]${RED} •${NC} ${CYAN}VLESS MENU   $NC  ${BICyan}[${BIWhite}08${BICyan}]${RED} • ${NC}${CYAN}CEK RUNNING SERVICE \033[0;34m| $NC"
 
-echo -e "\033[0;34m| ${BICyan}[${BIWhite}03${BICyan}]${RED} •${NC} ${CYAN}TROJAN MENU  $NC  | ${BICyan}[${BIWhite}09${BICyan}]${RED} • ${NC}${CYAN}SCRIPT INFO \033[0;34m| $NC"
+echo -e "\033[0;34m| ${BICyan}[${BIWhite}03${BICyan}]${RED} •${NC} ${CYAN}TROJAN MENU  $NC  ${BICyan}[${BIWhite}09${BICyan}]${RED} • ${NC}${CYAN}SCRIPT INFO \033[0;34m| $NC"
 
-echo -e "\033[0;34m| ${BICyan}[${BIWhite}04${BICyan}]${RED} •${NC} ${CYAN}S-SOCK MENU  $NC  | ${BICyan}[${BIWhite}10${BICyan}]${RED} • ${NC}${CYAN}UPDATE SCRIPT  \033[0;34m| $NC"
+echo -e "\033[0;34m| ${BICyan}[${BIWhite}04${BICyan}]${RED} •${NC} ${CYAN}S-SOCK MENU  $NC  ${BICyan}[${BIWhite}10${BICyan}]${RED} • ${NC}${CYAN}UPDATE SCRIPT  \033[0;34m| $NC"
 
-echo -e "\033[0;34m| ${BICyan}[${BIWhite}05${BICyan}]${RED} •${NC} ${CYAN}SPEEDTEST    $NC  | ${BICyan}[${BIWhite}11${BICyan}]${RED} • ${NC}${CYAN}RESTART SERVICE \033[0;34m| $NC"
+echo -e "\033[0;34m| ${BICyan}[${BIWhite}05${BICyan}]${RED} •${NC} ${CYAN}SPEEDTEST    $NC  ${BICyan}[${BIWhite}11${BICyan}]${RED} • ${NC}${CYAN}RESTART SERVICE \033[0;34m| $NC"
 
-echo -e "\033[0;34m| ${BICyan}[${BIWhite}06${BICyan}]${RED} •${NC} ${CYAN}REBOOT      $NC  | ${BICyan}[${BIWhite}xx${BICyan}]${RED} • ${NC}${CYAN} x TO EXIT \033[0;34m| $NC"
+echo -e "\033[0;34m| ${BICyan}[${BIWhite}06${BICyan}]${RED} •${NC} ${CYAN}REBOOT      $NC  ${BICyan}[${BIWhite}xx${BICyan}]${RED} • ${NC}${CYAN} x TO EXIT \033[0;34m| $NC"
 
 echo -e "\033[0;34m└─────────────────────────────────────────────────────┘${NC}"
 

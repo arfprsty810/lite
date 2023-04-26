@@ -13,9 +13,10 @@ red() { echo -e "\\033[31;1m${*}\\033[0m"; }
 clear
 echo -n > /tmp/other.txt
 data=( `cat /etc/xray/config.json | grep '^#!' | cut -d ' ' -f 2 | sort | uniq`);
-echo "------------------------------------";
+
+echo "------------------------------------------------";
 echo "-----=[ XRAY User Login ]=-----";
-echo "------------------------------------";
+echo "------------------------------------------------";
 for akun in "${data[@]}"
 do
 if [[ -z "$akun" ]]; then
@@ -48,7 +49,6 @@ fi
 rm -rf /tmp/ipxray.txt
 done
 rm -rf /tmp/other.txt
-
 echo ""
 read -n 1 -s -r -p "Press any key to back on menu"
 menu

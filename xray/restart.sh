@@ -19,12 +19,12 @@ echo -e ""
 echo -e "    [1] Restart All Services"
 echo -e "    [2] Restart OpenSSH"
 echo -e "    [3] Restart Dropbear"
-echo -e "    [4] Restart Stunnel5"
-echo -e "    [5] Restart Nginx"
-echo -e "    [6] Restart Badvpn"
+#echo -e "    [4] Restart Stunnel5"
+echo -e "    [4] Restart Nginx"
+echo -e "    [5] Restart Badvpn"
 echo -e "    [x] Menu"
 echo -e ""
-read -p "    Select From Options [1-6 or x] :  " Restart
+read -p "    Select From Options [1-5 or x] :  " Restart
 echo -e ""
 echo -e "======================================"
 sleep 1
@@ -37,7 +37,7 @@ case $Restart in
                 systemctl restart xray.service >/dev/null 2>&1
                 /etc/init.d/ssh restart
                 /etc/init.d/dropbear restart
-                /etc/init.d/stunnel5 restart
+#                /etc/init.d/stunnel5 restart
                 /etc/init.d/fail2ban restart
                 /etc/init.d/cron restart
                 /etc/init.d/nginx restart
@@ -72,17 +72,17 @@ case $Restart in
                 echo -e ""
                 echo -e "======================================"
                 ;;
+#                4)
+#                clear
+#                /etc/init.d/stunnel5 restart
+#                echo -e ""
+#                echo -e "======================================"
+#                echo -e ""
+#                echo -e "        Stunnel5 Service Restarted    "
+#                echo -e ""
+#                echo -e "======================================"
+#                ;;
                 4)
-                clear
-                /etc/init.d/stunnel5 restart
-                echo -e ""
-                echo -e "======================================"
-                echo -e ""
-                echo -e "        Stunnel5 Service Restarted    "
-                echo -e ""
-                echo -e "======================================"
-                ;;
-                5)
                 clear
                 /etc/init.d/nginx restart
                 echo -e ""
@@ -92,7 +92,7 @@ case $Restart in
                 echo -e ""
                 echo -e "======================================"
                 ;;
-                6)
+                5)
                 clear
                 screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 500
                 screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 500

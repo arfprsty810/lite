@@ -53,14 +53,14 @@ export ISP=$(curl -s ipinfo.io/org/ )
 # // nginx
 nginx=$( systemctl status nginx | grep Active | awk '{print $3}' | sed 's/(//g' | sed 's/)//g' )
 if [[ $nginx == "running" ]]; then
- status_nginx="${GREEN}ON${NC}"
+ status_nginx="${GREEN}ACTIVE${NC}"
 else
  status_nginx="${RED}OFF${NC}"
 fi
 
 clear
 echo -e "\033[0;34m┌─────────────────────────────────────────────────────┐${NC}"
-echo -e "                  ⇱ [ ${GREEN}INFORMASI VPS${NC} ⇲"
+echo -e "                  ⇱ ${GREEN}INFORMASI VPS${NC} ⇲ "
 echo -e "\033[0;34m└─────────────────────────────────────────────────────┘${NC}"
 echo -e "  ❇️ \e[32;1m Sever Uptime\e[0m      : $( uptime -p  | cut -d " " -f 2-10000 ) "
 echo -e "  ❇️ \e[32;1m Current Time\e[0m      : $( date -d "0 days" +"%d-%m-%Y | %X" ) "
@@ -72,26 +72,26 @@ echo -e "  ❇️ \e[32;1m Time Reboot VPS\e[0m   : 00:00 ( Jam 12 Malam ) "
 echo -e "\033[0;34m└─────────────────────────────────────────────────────┘${NC}"
 echo -e ""
 echo -e "\033[0;34m┌─────────────────────────────────────────────────────┐${NC}"
-echo -e "                  ⇱ [ ${GREEN}STATUS LAYANAN${NC} ⇲ "
+echo -e "                  ⇱ ${GREEN}STATUS LAYANAN${NC} ⇲ "
 echo -e "\033[0;34m└─────────────────────────────────────────────────────┘${NC}"
 echo -e "        🟢🟡🔴  SERVER XRAY STATUS : ${status_nginx}   🔴🟡🟢"
 echo -e "\033[0;34m└─────────────────────────────────────────────────────┘${NC}"
 echo -e ""
 echo -e "\033[0;34m┌─────────────────────────────────────────────────────┐${NC}"
-echo -e "                   ⇱ [ ${GREEN}MENU SERVICE${NC} ⇲ "
+echo -e "                   ⇱ ${GREEN}MENU SERVICE${NC} ⇲ "
 echo -e "\033[0;34m└─────────────────────────────────────────────────────┘${NC}"
 
-echo -e "   ${BICyan}[${BIWhite}01${BICyan}]${RED} •${NC} ${CYAN}VMESS MENU   $NC  ${BICyan}[${BIWhite}07${BICyan}]${RED} • ${NC}${CYAN}CEK BANDWIDTH $NC"
+echo -e "    ${BICyan}[${BIWhite}01${BICyan}]${RED} •${NC} ${CYAN}VMESS MENU   $NC  ${BICyan}[${BIWhite}07${BICyan}]${RED} • ${NC}${CYAN}CEK BANDWIDTH $NC"
 
-echo -e "   ${BICyan}[${BIWhite}02${BICyan}]${RED} •${NC} ${CYAN}VLESS MENU   $NC  ${BICyan}[${BIWhite}08${BICyan}]${RED} • ${NC}${CYAN}CEK RUNNING SERVICE $NC"
+echo -e "    ${BICyan}[${BIWhite}02${BICyan}]${RED} •${NC} ${CYAN}VLESS MENU   $NC  ${BICyan}[${BIWhite}08${BICyan}]${RED} • ${NC}${CYAN}CEK RUNNING SERVICE $NC"
 
-echo -e "   ${BICyan}[${BIWhite}03${BICyan}]${RED} •${NC} ${CYAN}TROJAN MENU  $NC  ${BICyan}[${BIWhite}09${BICyan}]${RED} • ${NC}${CYAN}SCRIPT INFO $NC"
+echo -e "    ${BICyan}[${BIWhite}03${BICyan}]${RED} •${NC} ${CYAN}TROJAN MENU  $NC  ${BICyan}[${BIWhite}09${BICyan}]${RED} • ${NC}${CYAN}SCRIPT INFO $NC"
 
-echo -e "   ${BICyan}[${BIWhite}04${BICyan}]${RED} •${NC} ${CYAN}S-SOCK MENU  $NC  ${BICyan}[${BIWhite}10${BICyan}]${RED} • ${NC}${CYAN}UPDATE SCRIPT $NC"
+echo -e "    ${BICyan}[${BIWhite}04${BICyan}]${RED} •${NC} ${CYAN}S-SOCK MENU  $NC  ${BICyan}[${BIWhite}10${BICyan}]${RED} • ${NC}${CYAN}UPDATE SCRIPT $NC"
 
-echo -e "   ${BICyan}[${BIWhite}05${BICyan}]${RED} •${NC} ${CYAN}SPEEDTEST    $NC  ${BICyan}[${BIWhite}11${BICyan}]${RED} • ${NC}${CYAN}RESTART SERVICE $NC"
+echo -e "    ${BICyan}[${BIWhite}05${BICyan}]${RED} •${NC} ${CYAN}SPEEDTEST    $NC  ${BICyan}[${BIWhite}11${BICyan}]${RED} • ${NC}${CYAN}RESTART SERVICE $NC"
 
-echo -e "   ${BICyan}[${BIWhite}06${BICyan}]${RED} •${NC} ${CYAN}REBOOT       $NC  ${BICyan}[${BIWhite}xx${BICyan}]${RED} • ${NC}${CYAN}x TO EXIT $NC"
+echo -e "    ${BICyan}[${BIWhite}06${BICyan}]${RED} •${NC} ${CYAN}REBOOT       $NC  ${BICyan}[${BIWhite}xx${BICyan}]${RED} • ${NC}${CYAN}x TO EXIT $NC"
 
 echo -e "\033[0;34m└─────────────────────────────────────────────────────┘${NC}"
 

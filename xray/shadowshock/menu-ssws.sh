@@ -46,7 +46,7 @@ echo ""
 read -p " Select menu : " opt
 echo -e ""
 case $opt in
-1) clear ; add-socks ;;
+1) clear ; add-ssws ;;
 2) clear ; del-ssws ;;
 3) clear ; renew-ssws ;;
 4) clear ; cek-ssws ;;

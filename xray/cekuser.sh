@@ -63,7 +63,7 @@ echo "-------------------------------";
 token=6233747947:AAFDo-lXjoiw5BN1ysK-K5g8v-RjFktO99A
 chatid=1761935484
 
-curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" -d chat_id="$chatid" -d text="Info Online User-XRAY : ${akun} | ${lastlogin} WIB | $jum2" > /dev/null 2>&1
+curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" -d chat_id="$chatid" -d text="${lastlogin} WIB |  • Info Online User-XRAY : ${akun}                             $jum2" > /dev/null 2>&1
 
 clear
 fi

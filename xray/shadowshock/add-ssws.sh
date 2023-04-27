@@ -85,6 +85,8 @@ menu
 		fi
 	done
 
+openssl rand -base64 16 > /etc/xray/passwd
+bijikk=$(openssl rand -base64 16 )
 pwd=$(cat /etc/xray/passwd)
 #read -rp "Password: " -e pwd
 read -p "Expired (days): " masaaktif

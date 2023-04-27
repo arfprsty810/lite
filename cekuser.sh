@@ -66,5 +66,5 @@ done
 rm -rf /tmp/other.txt
 
 echo ""
-read -n 1 -s -r -p "Press any key to back on menu"
-menu
+read -n 1 -s -r -p "Press any key to Exit"
+exit 1

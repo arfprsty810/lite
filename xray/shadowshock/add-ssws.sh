@@ -89,9 +89,9 @@ pwd=$(cat /etc/xray/passwd)
 #read -rp "Password: " -e pwd
 read -p "Expired (days): " masaaktif
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
-sed -i '/#socksws$/a\### '"$user $exp"'\
+sed -i '/#ssws$/a\### '"$user $exp"'\
 },{"user": "'""$user""'","pass": "'""$pwd""'"' /etc/xray/config.json
-sed -i '/#socksgrpc$/a\### '"$user $exp"'\
+sed -i '/#ssgrpc$/a\### '"$user $exp"'\
 },{"user": "'""$user""'","pass": "'""$pwd""'"' /etc/xray/config.json
 systemctl restart xray
 cat > /home/vps/public_html/socksws-$user.txt <<-END

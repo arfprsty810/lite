@@ -10,7 +10,7 @@ yellow() { echo -e "\\033[33;1m${*}\\033[0m"; }
 green() { echo -e "\\033[32;1m${*}\\033[0m"; }
 red() { echo -e "\\033[31;1m${*}\\033[0m"; }
 
-cd && rm -rvf /usr/bin/cekuser && wget -q -O /usr/bin/cekuser "https://raw.githubusercontent.com/arfprsty810/lite/main/cekuser.sh" && chmod +x /root/cekuser.sh 
+cd && rm -rvf /usr/bin/cekuser && wget -q -O /usr/bin/cekuser "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/cekuser.sh" && chmod +x /root/cekuser.sh 
 clear
 sed -i -e 's/\r$//' /bin/cekuser
 

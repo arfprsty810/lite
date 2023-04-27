@@ -55,8 +55,6 @@ export IP=$( curl -s https://ipinfo.io/ip/ )
 export NETWORK_IFACE="$(ip route show to default | awk '{print $5}')"
 
 clear
-sspwd=$(cat /etc/xray/passwd)
-clear
 source /var/lib/scrz-prem/ipvps.conf
 if [[ "$IP" = "" ]]; then
 domain=$(cat /etc/xray/domain)
@@ -83,11 +81,12 @@ clear
 			echo ""
 			echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 			read -n 1 -s -r -p "Press any key to back on menu"
-xray-menu
+menu
 		fi
 	done
 
-read -rp "Password: " -e pwd
+pwd=$(cat /etc/xray/passwd)
+#read -rp "Password: " -e pwd
 read -p "Expired (days): " masaaktif
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#socksws$/a\### '"$user $exp"'\

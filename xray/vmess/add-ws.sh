@@ -47,10 +47,10 @@ read -p "Expired (days): " masaaktif
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#vmess$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
-#sed -i '/#vmessworry$/a\### '"$user $exp"'\
-#},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
-#sed -i '/#vmesskuota$/a\### '"$user $exp"'\
-#},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
+sed -i '/#vmessworry$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
+sed -i '/#vmesskuota$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
 sed -i '/#vmessgrpc$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
 asu=`cat<<EOF
@@ -83,36 +83,36 @@ ask=`cat<<EOF
       "tls": "none"
 }
 EOF`
-#asi=`cat<<EOF
-#      {
-#      "v": "2",
-#      "ps": "${user}",
-#      "add": "${domain}",
-#      "port": "80",
-#      "id": "${uuid}",
-#      "aid": "0",
-#      "net": "ws",
-#      "path": "/worryfree",
-#      "type": "none",
-#      "host": "bug.com",
-#      "tls": "none"
-#}
-#EOF`
-#aso=`cat<<EOF
-#      {
-#      "v": "2",
-#      "ps": "${user}",
-#      "add": "${domain}",
-#      "port": "80",
-#      "id": "${uuid}",
-#      "aid": "0",
-#      "net": "ws",
-#      "path": "/chat",
-#      "type": "none",
-#      "host": "bug.com",
-#      "tls": "none"
-#}
-#EOF`
+asi=`cat<<EOF
+      {
+      "v": "2",
+      "ps": "${user}",
+      "add": "${domain}",
+      "port": "80",
+      "id": "${uuid}",
+      "aid": "0",
+      "net": "ws",
+      "path": "/worryfree",
+      "type": "none",
+      "host": "bug.com",
+      "tls": "none"
+}
+EOF`
+aso=`cat<<EOF
+      {
+      "v": "2",
+      "ps": "${user}",
+      "add": "${domain}",
+      "port": "80",
+      "id": "${uuid}",
+      "aid": "0",
+      "net": "ws",
+      "path": "/chat",
+      "type": "none",
+      "host": "bug.com",
+      "tls": "none"
+}
+EOF`
 grpc=`cat<<EOF
       {
       "v": "2",
@@ -128,36 +128,36 @@ grpc=`cat<<EOF
       "tls": "tls"
 }
 EOF`
-#ama=`cat<<EOF
-#      {
-#      "v": "2",
-#      "ps": "${user}",
-#      "add": "${domain}",
-#      "port": "443",
-#      "id": "${uuid}",
-#      "aid": "0",
-#      "net": "ws",
-#      "path": "/worryfree",
-#      "type": "none",
-#      "host": "bug.com",
-#      "tls": "tls"
-#}
-#EOF`
-#ami=`cat<<EOF
-#      {
-#      "v": "2",
-#      "ps": "${user}",
-#      "add": "${domain}",
-#      "port": "443",
-#      "id": "${uuid}",
-#      "aid": "0",
-#      "net": "ws",
-#      "path": "/chat",
-#      "type": "none",
-#      "host": "bug.com",
-#      "tls": "tls"
-#}
-#EOF`
+ama=`cat<<EOF
+      {
+      "v": "2",
+      "ps": "${user}",
+      "add": "${domain}",
+      "port": "443",
+      "id": "${uuid}",
+      "aid": "0",
+      "net": "ws",
+      "path": "/worryfree",
+      "type": "none",
+      "host": "bug.com",
+      "tls": "tls"
+}
+EOF`
+ami=`cat<<EOF
+      {
+      "v": "2",
+      "ps": "${user}",
+      "add": "${domain}",
+      "port": "443",
+      "id": "${uuid}",
+      "aid": "0",
+      "net": "ws",
+      "path": "/chat",
+      "type": "none",
+      "host": "bug.com",
+      "tls": "tls"
+}
+EOF`
 vmess_base641=$( base64 -w 0 <<< $vmess_json1)
 vmess_base642=$( base64 -w 0 <<< $vmess_json2)
 vmess_base643=$( base64 -w 0 <<< $vmess_json3)
@@ -167,11 +167,11 @@ vmess_base646=$( base64 -w 0 <<< $vmess_json6)
 vmess_base647=$( base64 -w 0 <<< $vmess_json7)
 vmesslink1="vmess://$(echo $asu | base64 -w 0)"
 vmesslink2="vmess://$(echo $ask | base64 -w 0)"
-#vmesslink3="vmess://$(echo $asi | base64 -w 0)"
-#vmesslink4="vmess://$(echo $aso | base64 -w 0)"
+vmesslink3="vmess://$(echo $asi | base64 -w 0)"
+vmesslink4="vmess://$(echo $aso | base64 -w 0)"
 vmesslink5="vmess://$(echo $grpc | base64 -w 0)"
-#vmesslink6="vmess://$(echo $ama | base64 -w 0)"
-#vmesslink7="vmess://$(echo $ami | base64 -w 0)"
+vmesslink6="vmess://$(echo $ama | base64 -w 0)"
+vmesslink7="vmess://$(echo $ami | base64 -w 0)"
 systemctl restart xray > /dev/null 2>&1
 service cron restart > /dev/null 2>&1
 clear
@@ -188,18 +188,18 @@ echo -e "alterId   : 0" | tee -a /etc/log-create-user.log
 echo -e "Security  : auto" | tee -a /etc/log-create-user.log
 echo -e "Network   : ws/grpc" | tee -a /etc/log-create-user.log
 echo -e "Path      : /vmess" | tee -a /etc/log-create-user.log
-#echo -e "Path      : /worryfree" | tee -a /etc/log-create-user.log
-#echo -e "Path     : /kuota-habis" | tee -a /etc/log-create-user.log
+echo -e "Path      : /worryfree" | tee -a /etc/log-create-user.log
+echo -e "Path     : /kuota-habis" | tee -a /etc/log-create-user.log
 echo -e "SerName   : vmess-grpc" | tee -a /etc/log-create-user.log
 echo -e "----------------------------------" | tee -a /etc/log-create-user.log
 echo -e "Link TLS : ${vmesslink1}" | tee -a /etc/log-create-user.log
 echo -e "----------------------------------" | tee -a /etc/log-create-user.log
 echo -e "Link none TLS : ${vmesslink2}" | tee -a /etc/log-create-user.log
 echo -e "----------------------------------" | tee -a /etc/log-create-user.log
-#echo -e "Link (WORRYFREE) : ${vmesslink3}" | tee -a /etc/log-create-user.log
-#echo -e "----------------------------------" | tee -a /etc/log-create-user.log
-#echo -e "Link none (FLEX) : ${vmesslink4}" | tee -a /etc/log-create-user.log
-#echo -e "----------------------------------" | tee -a /etc/log-create-user.log
+echo -e "Link (WORRYFREE) : ${vmesslink3}" | tee -a /etc/log-create-user.log
+echo -e "----------------------------------" | tee -a /etc/log-create-user.log
+echo -e "Link none (FLEX) : ${vmesslink4}" | tee -a /etc/log-create-user.log
+echo -e "----------------------------------" | tee -a /etc/log-create-user.log
 echo -e "Link GRPC : ${vmesslink5}" | tee -a /etc/log-create-user.log
 echo -e "----------------------------------" | tee -a /etc/log-create-user.log
 echo -e "Expired On : $exp" | tee -a /etc/log-create-user.log

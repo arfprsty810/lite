@@ -40,9 +40,9 @@ echo > /dev/null
 else
 jum2=$(cat /tmp/ipxray.txt | nl)
 lastlogin=$(cat /var/log/xray/access.log | grep -w "$akun" | tail -n 500 | cut -d " " -f 2 | tail -1)
-echo -e "user :${GREEN} ${akun} ${NC}
-${RED}Online Jam ${NC}: ${lastlogin} wib";
-echo -e "$jum2";
+#echo -e "user :${GREEN} ${akun} ${NC}
+#${RED}Online Jam ${NC}: ${lastlogin} wib";
+#echo -e "$jum2";
 
 #curl "https://api.telegram.org/bot6233747947:AAFDo-lXjoiw5BN1ysK-K5g8v-RjFktO99A/getUpdates"
 
@@ -54,7 +54,7 @@ echo -e "$jum2";
 token=6233747947:AAFDo-lXjoiw5BN1ysK-K5g8v-RjFktO99A
 chatid=1761935484
 
-curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" -d chat_id="$chatid" -d text="${akun} Login jam ${lastlogin} WIB dengan IP : $jum2" > /dev/null 2>&1
+curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" -d chat_id="$chatid" -d text="Info Online ${akun} ${lastlogin} WIB $jum2" > /dev/null 2>&1
 
 echo "Berhasil mengirim info Login ke Telegram !";
 echo "-------------------------------"

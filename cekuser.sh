@@ -43,6 +43,7 @@ lastlogin=$(cat /var/log/xray/access.log | grep -w "$akun" | tail -n 500 | cut -
 #echo -e "user :${GREEN} ${akun} ${NC}
 #${RED}Online Jam ${NC}: ${lastlogin} wib";
 #echo -e "$jum2";
+echo "-------------------------------"
 
 #curl "https://api.telegram.org/bot6233747947:AAFDo-lXjoiw5BN1ysK-K5g8v-RjFktO99A/getUpdates"
 
@@ -56,9 +57,6 @@ chatid=1761935484
 
 curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" -d chat_id="$chatid" -d text="Info Online User-XRAY :${akun} ${lastlogin} WIB     $jum2" > /dev/null 2>&1
 
-echo "Berhasil mengirim info Login ke Telegram !";
-echo "-------------------------------"
-
 clear
 fi
 rm -rf /tmp/ipxray.txt
@@ -66,5 +64,6 @@ done
 rm -rf /tmp/other.txt
 
 echo ""
+echo "Berhasil mengirim info Login ke Telegram !";
 read -n 1 -s -r -p "Press any key to Exit"
 exit 1

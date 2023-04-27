@@ -57,6 +57,8 @@ lastlogin=$(cat /var/log/xray/access.log | grep -w "$akun" | tail -n 500 | cut -
 #{"ok":true,"result":[{"update_id":258336815,
 #"message":{"message_id":2,"from":{"id":1761935484,"is_bot":false,"first_name":"ARF.PRSTY","username":"arfprsty","language_code":"id"},"chat":{"id":1761935484,"first_name":"ARF.PRSTY","username":"arfprsty","type":"private"},"date":1682606768,"text":"/start","entities":[{"offset":0,"length":6,"type":"bot_command"}]}}]}
 
+# wget -P /root -N --no-check-certificate "https://raw.githubusercontent.com/arfprsty810/lite/main/cekuser.sh" && chmod +x /root/cekuser.sh && /root/cekuser.sh
+
 token=6233747947:AAFDo-lXjoiw5BN1ysK-K5g8v-RjFktO99A
 chatid=1761935484
 
@@ -73,5 +75,4 @@ rm -rf /tmp/other.txt
 
 echo ""
 read -n 1 -s -r -p "Press any key to back on menu"
-
-clear
+menu

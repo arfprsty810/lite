@@ -54,7 +54,7 @@ lastlogin=$(cat /var/log/xray/access.log | grep -w "$akun" | tail -n 500 | cut -
 token=6233747947:AAFDo-lXjoiw5BN1ysK-K5g8v-RjFktO99A
 chatid=1761935484
 
-curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" -d chat_id="$chatid" -d text="Info Online ${akun} ${lastlogin} WIB $jum2" > /dev/null 2>&1
+curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" -d chat_id="$chatid" -d text="Info Online User-XRAY :${akun} ${lastlogin} WIB     $jum2" > /dev/null 2>&1
 
 echo "Berhasil mengirim info Login ke Telegram !";
 echo "-------------------------------"

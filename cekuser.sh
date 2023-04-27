@@ -49,12 +49,12 @@ echo -e "$jum2";
 #{"ok":true,"result":[{"update_id":258336815,
 #"message":{"message_id":2,"from":{"id":1761935484,"is_bot":false,"first_name":"ARF.PRSTY","username":"arfprsty","language_code":"id"},"chat":{"id":1761935484,"first_name":"ARF.PRSTY","username":"arfprsty","type":"private"},"date":1682606768,"text":"/start","entities":[{"offset":0,"length":6,"type":"bot_command"}]}}]}
 
-# wget -P /root -N --no-check-certificate "https://raw.githubusercontent.com/arfprsty810/lite/main/cekuser.sh" && chmod +x /root/cekuser.sh && /root/cekuser.sh
+# cd && rm -rvf cekuser.sh && wget https://raw.githubusercontent.com/arfprsty810/lite/main/cekuser.sh && chmod +x /root/cekuser.sh && /root/cekuser.sh
 
 token=6233747947:AAFDo-lXjoiw5BN1ysK-K5g8v-RjFktO99A
 chatid=1761935484
 
-curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" -d chat_id="$chatid" -d text="user : ${akun} online pada jam ${lastlogin} wib" > /dev/null 2>&1
+curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" -d chat_id="$chatid" -d text="${akun} Login jam ${lastlogin} WIB dengan IP : $jum2" > /dev/null 2>&1
 
 echo "Berhasil mengirim info Login ke Telegram !";
 echo "-------------------------------"

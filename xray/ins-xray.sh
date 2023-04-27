@@ -23,6 +23,7 @@ echo -e "
 date
 echo ""
 domain=$(cat /root/domain)
+curl -s ipinfo.io/org/ > /etc/xray/ISP
 sleep 1
 mkdir -p /etc/xray
 cd /root/

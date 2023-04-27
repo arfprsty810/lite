@@ -47,8 +47,7 @@ fi
 
 # // Exporting IP Address
 export IP=$( curl -s https://ipinfo.io/ip/ )
-export ISP=$(curl -s ipinfo.io/org/ )
-
+ISP=$( cat /etc/xray/ISP  )
 
 # // nginx
 nginx=$( systemctl status nginx | grep Active | awk '{print $3}' | sed 's/(//g' | sed 's/)//g' )

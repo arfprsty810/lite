@@ -256,41 +256,41 @@ rm -rf /root/vnstat-2.6
 clear
 
 # install stunnel 5 
-cd /root/
-wget -q -O stunnel5.zip "https://https://raw.githubusercontent.com/arfprsty810/lite/main/stunnel5/stunnel5.zip"
-unzip -o stunnel5.zip
-cd /root/stunnel
-chmod +x configure
-./configure
-make
-make install
-cd /root
-rm -r -f stunnel
-rm -f stunnel5.zip
-mkdir -p /etc/stunnel5
-chmod 644 /etc/stunnel5
+#cd /root/
+#wget -q -O stunnel5.zip "https://https://raw.githubusercontent.com/arfprsty810/lite/main/stunnel5/stunnel5.zip"
+#unzip -o stunnel5.zip
+#cd /root/stunnel
+#chmod +x configure
+#./configure
+#make
+#make install
+#cd /root
+#rm -r -f stunnel
+#rm -f stunnel5.zip
+#mkdir -p /etc/stunnel5
+#chmod 644 /etc/stunnel5
 
 # Download Config Stunnel5
-cat > /etc/stunnel5/stunnel5.conf <<-END
-cert = /etc/stunnel5/stunnel5.pem
-client = no
-socket = a:SO_REUSEADDR=1
-socket = l:TCP_NODELAY=1
-socket = r:TCP_NODELAY=1
+#cat > /etc/stunnel5/stunnel5.conf <<-END
+#cert = /etc/stunnel5/stunnel5.pem
+#client = no
+#socket = a:SO_REUSEADDR=1
+#socket = l:TCP_NODELAY=1
+#socket = r:TCP_NODELAY=1
 
-[dropbear]
-accept = 445
-connect = 127.0.0.1:109
+#[dropbear]
+#accept = 445
+#connect = 127.0.0.1:109
 
-[openssh]
-accept = 777
-connect = 127.0.0.1:443
+#[openssh]
+#accept = 777
+#connect = 127.0.0.1:443
 
-[openvpn]
-accept = 990
-connect = 127.0.0.1:1194
+#[openvpn]
+#accept = 990
+#connect = 127.0.0.1:1194
 
-END
+#END
 
 # make a certificate
 #openssl genrsa -out key.pem 2048
@@ -299,46 +299,46 @@ END
 #cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
 
 # Service Stunnel5 systemctl restart stunnel5
-cat > /etc/systemd/system/stunnel5.service << END
-[Unit]
-Description=Stunnel5 Service
-Documentation=https://stunnel.org
-Documentation=https://github.com/arfprsty810
-After=syslog.target network-online.target
+#cat > /etc/systemd/system/stunnel5.service << END
+#[Unit]
+#Description=Stunnel5 Service
+#Documentation=https://stunnel.org
+#Documentation=https://github.com/arfprsty810
+#After=syslog.target network-online.target
 
-[Service]
-ExecStart=/usr/local/bin/stunnel5 /etc/stunnel5/stunnel5.conf
-Type=forking
+#[Service]
+#ExecStart=/usr/local/bin/stunnel5 /etc/stunnel5/stunnel5.conf
+#Type=forking
 
-[Install]
-WantedBy=multi-user.target
-END
+#[Install]
+#WantedBy=multi-user.target
+#END
 
 # Service Stunnel5 /etc/init.d/stunnel5
-wget -q -O /etc/init.d/stunnel5 "https://raw.githubusercontent.com/arfprsty810/lite/main/stunnel5/stunnel5.init"
+#wget -q -O /etc/init.d/stunnel5 "https://raw.githubusercontent.com/arfprsty810/lite/main/stunnel5/stunnel5.init"
 
 # Ubah Izin Akses
-chmod 600 /etc/stunnel5/stunnel5.pem
-chmod +x /etc/init.d/stunnel5
-cp /usr/local/bin/stunnel /usr/local/bin/stunnel5
+#chmod 600 /etc/stunnel5/stunnel5.pem
+#chmod +x /etc/init.d/stunnel5
+#cp /usr/local/bin/stunnel /usr/local/bin/stunnel5
 
 # Remove File
-rm -r -f /usr/local/share/doc/stunnel/
-rm -r -f /usr/local/etc/stunnel/
-rm -f /usr/local/bin/stunnel
-rm -f /usr/local/bin/stunnel3
-rm -f /usr/local/bin/stunnel4
-rm -f /usr/local/bin/stunnel5
+#rm -r -f /usr/local/share/doc/stunnel/
+#rm -r -f /usr/local/etc/stunnel/
+#rm -f /usr/local/bin/stunnel
+#rm -f /usr/local/bin/stunnel3
+#rm -f /usr/local/bin/stunnel4
+#rm -f /usr/local/bin/stunnel5
 
 # Restart Stunnel 5
-systemctl stop stunnel5
-systemctl enable stunnel5
-systemctl start stunnel5
-systemctl restart stunnel5
-/etc/init.d/stunnel5 restart
-/etc/init.d/stunnel5 status
-/etc/init.d/stunnel5 restart
-clear
+#systemctl stop stunnel5
+#systemctl enable stunnel5
+#systemctl start stunnel5
+#systemctl restart stunnel5
+#/etc/init.d/stunnel5 restart
+#/etc/init.d/stunnel5 status
+#/etc/init.d/stunnel5 restart
+#clear
 
 #OpenVPN
 wget https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/vpn.sh &&  chmod +x vpn.sh && ./vpn.sh
@@ -347,6 +347,7 @@ wget https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/vpn.sh &&  chmo
 apt -y install fail2ban
 
 # Instal DDOS Flate
+rm -rvf /usr/local/ddos
 if [ -d '/usr/local/ddos' ]; then
 	echo; echo; echo "Please un-install the previous version first"
 	exit 0
@@ -378,7 +379,7 @@ echo "Banner /etc/issue.net" >>/etc/ssh/sshd_config
 sed -i 's@DROPBEAR_BANNER=""@DROPBEAR_BANNER="/etc/issue.net"@g' /etc/default/dropbear
 
 # Install BBR
-wget https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/bbr.sh && chmod +x bbr.sh && ./bbr.sh
+#wget https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/bbr.sh && chmod +x bbr.sh && ./bbr.sh
 
 # Ganti Banner
 wget -O /etc/issue.net "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/issue.net"
@@ -519,7 +520,7 @@ chown -R www-data:www-data /home/vps/public_html
 /etc/init.d/dropbear restart
 /etc/init.d/fail2ban restart
 /etc/init.d/sslh restart
-/etc/init.d/stunnel5 restart
+#/etc/init.d/stunnel5 restart
 /etc/init.d/vnstat restart
 /etc/init.d/fail2ban restart
 /etc/init.d/squid restart
@@ -547,7 +548,7 @@ clear
 date
 echo ""
 domain=$(cat /root/domain)
-curl -s ipinfo.io/org/ > /etc/xray/ISP
+curl -s ipinfo.io/org/ > /root/ISP
 sleep 1
 mkdir -p /etc/xray
 cd /root/

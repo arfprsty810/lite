@@ -11,23 +11,30 @@ green() { echo -e "\\033[32;1m${*}\\033[0m"; }
 red() { echo -e "\\033[31;1m${*}\\033[0m"; }
 clear
 
-# --- cek akun --- #
+# --- delete  akun --- #
 # vless
 datavl=( `cat /etc/xray/config.json | grep '#vl#' | cut -d ' ' -f 2 | sort | uniq`);
 for akun in "${datavl[@]}"
 do
+exp=$(grep -wE "^#& $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+sed -i "/^#& $akun $exp/,/^},{/d" /etc/xray/config.json
+done
+
 # vmess
 datavm=( `cat /etc/xray/config.json | grep '#vm#' | cut -d ' ' -f 2 | sort | uniq`);
 for akun in "${datavm[@]}"
 do
+exp=$(grep -wE "^#& $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+sed -i "/^#& $akun $exp/,/^},{/d" /etc/xray/config.json
+done
+
 # trojan
 datatr=( `cat /etc/xray/config.json | grep '#tr#' | cut -d ' ' -f 2 | sort | uniq`);
 for akun in "${datatr[@]}"
 do
-
-# --- delete akun --- #
 exp=$(grep -wE "^#& $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
 sed -i "/^#& $akun $exp/,/^},{/d" /etc/xray/config.json
+done
 
 # --- tambah akun --- #
 # vless
@@ -52,7 +59,6 @@ sed -i '/#vmessgrpc$/a\#vl# '"$AKUN_VMESS_1 $EXP_VMESS_1"'\
 systemctl restart xray
 sleep 1
 
-done
 rm -rvf /usr/bin/backup-user
 echo ""
 echo ""

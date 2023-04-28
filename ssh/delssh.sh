@@ -20,3 +20,6 @@ if getent passwd $Pengguna > /dev/null 2>&1; then
 else
         echo -e "Failure: Username $Pengguna Tidak Ada"
 fi
+read -n 1 -s -r -p "Press any key to back on menu"
+clear
+menu

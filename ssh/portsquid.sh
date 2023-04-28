@@ -58,6 +58,7 @@ echo "Port $squid is used"
 fi
 ;;
 3)
+clear
 exit
 menu
 ;;

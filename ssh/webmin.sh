@@ -90,7 +90,7 @@ restart
 elif [[ "$num" = "3" ]]; then
 uninstall
 else
+read -n 1 -s -r -p "Press any key to back on menu"
 clear
-echo " You Entered The Wrong Number"
 menu
 fi

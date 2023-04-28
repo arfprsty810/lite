@@ -48,3 +48,6 @@ echo -e "Restart All Service Berhasil"
 sleep 2
 clear
 info
+read -n 1 -s -r -p "Press any key to back on menu"
+clear
+menu

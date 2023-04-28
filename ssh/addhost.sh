@@ -24,4 +24,6 @@ systemctl start xray.service
 echo Done
 sleep 1.5
 clear
-neofetch
+read -n 1 -s -r -p "Press any key to back on menu"
+
+menu

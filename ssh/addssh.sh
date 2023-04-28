@@ -68,3 +68,6 @@ echo -e "Payload Websocket No TLS"
 echo -e "=============================="
 echo -e "GET / HTTP/1.1[crlf]Host: ${domain}[crlf]Upgrade: websocket[crlf][crlf]"
 echo -e "=============================="
+read -n 1 -s -r -p "Press any key to back on menu"
+clear
+menu

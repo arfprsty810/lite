@@ -78,6 +78,7 @@ echo "Port $none1 is used"
 fi
 ;;
 3)
+clear
 exit
 menu
 ;;

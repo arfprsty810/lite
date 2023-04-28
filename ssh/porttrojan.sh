@@ -41,3 +41,6 @@ echo -e "\e[032;1mPort $tr2 modified successfully\e[0m"
 else
 echo "Port $tr2 is used"
 fi
+read -n 1 -s -r -p "Press any key to back on menu"
+clear
+menu

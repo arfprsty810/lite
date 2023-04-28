@@ -99,6 +99,6 @@ case $AutoKill in
                 ;;
                 x)
                 clear
-                exit
+                menu
                 ;;
         esac

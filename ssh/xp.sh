@@ -158,3 +158,6 @@ sed -i "/^#### $user $exp/,/^},{/d" /etc/xray/config.json
 fi
 done
 systemctl restart xray.service
+read -n 1 -s -r -p "Press any key to back on menu"
+clear
+menu

@@ -44,3 +44,6 @@ echo -e "        Username Doesnt Exist        "
 echo -e ""
 echo -e "======================================"
 fi
+read -n 1 -s -r -p "Press any key to back on menu"
+clear
+menu

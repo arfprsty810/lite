@@ -30,16 +30,10 @@ organizationalunit=™D-JumPer™
 commonname=™D-JumPer™
 email=arief.prsty@gmail.com
 
-
-
-
-
-
-
 # simple password minimal
 wget -O /etc/pam.d/common-password "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/password"
 chmod +x /etc/pam.d/common-password
-
+clear
 # go to root
 cd
 
@@ -77,6 +71,7 @@ systemctl start rc-local.service
 # disable ipv6
 echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6
 sed -i '$ i\echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6' /etc/rc.local
+clear
 
 #update
 apt update -y
@@ -87,6 +82,7 @@ apt-get remove --purge exim4 -y
 
 # install wget and curl
 apt -y install wget curl
+clear
 
 # Install Requirements Tools
 apt install ruby -y
@@ -120,7 +116,7 @@ apt install zlib1g-dev -y
 apt install libssl-dev -y
 apt install libssl1.0-dev -y
 apt install dos2unix -y
-
+clear
 # set time GMT +7
 ln -fs /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
 
@@ -131,6 +127,7 @@ sed -i 's/AcceptEnv/#AcceptEnv/g' /etc/ssh/sshd_config
 apt-get --reinstall --fix-missing install -y bzip2 gzip coreutils wget screen rsyslog iftop htop net-tools zip unzip wget net-tools curl nano sed screen gnupg gnupg1 bc apt-transport-https build-essential dirmngr libxml-parser-perl neofetch git lsof
 echo "clear" >> .profile
 echo "neofetch" >> .profile
+clear
 
 # install webserver
 #apt -y install nginx php php-fpm php-cli php-mysql libxml-parser-perl
@@ -165,6 +162,7 @@ screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7600 --max-clients 500
 screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7700 --max-clients 500
 screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7800 --max-clients 500
 screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7900 --max-clients 500
+clear
 
 # setting port ssh
 sed -i 's/Port 22/Port 22/g' /etc/ssh/sshd_config
@@ -177,12 +175,14 @@ sed -i 's/DROPBEAR_EXTRA_ARGS=/DROPBEAR_EXTRA_ARGS="-p 109"/g' /etc/default/drop
 echo "/bin/false" >> /etc/shells
 echo "/usr/sbin/nologin" >> /etc/shells
 /etc/init.d/dropbear restart
+clear
 
 # install squid
 cd
 apt -y install squid3
 wget -O /etc/squid/squid.conf "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/squid3.conf"
 sed -i $MYIP2 /etc/squid/squid.conf
+clear
 
 # Install SSLH
 apt -y install sslh
@@ -217,6 +217,7 @@ systemctl restart sslh
 /etc/init.d/sslh restart
 /etc/init.d/sslh status
 /etc/init.d/sslh restart
+clear
 
 # setting vnstat
 apt -y install vnstat
@@ -234,6 +235,7 @@ systemctl enable vnstat
 /etc/init.d/vnstat restart
 rm -f /root/vnstat-2.6.tar.gz
 rm -rf /root/vnstat-2.6
+clear
 
 # install stunnel 5 
 cd /root/
@@ -318,6 +320,7 @@ systemctl restart stunnel5
 /etc/init.d/stunnel5 restart
 /etc/init.d/stunnel5 status
 /etc/init.d/stunnel5 restart
+clear
 
 #OpenVPN
 wget https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/vpn.sh &&  chmod +x vpn.sh && ./vpn.sh
@@ -383,7 +386,7 @@ netfilter-persistent reload
 cd /usr/bin
 wget -O addhost "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/addhost.sh"
 wget -O about "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/about.sh"
-wget -O menu "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/menu.sh"
+wget -O menu-ssh "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/menu.sh"
 wget -O addssh "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/addssh.sh"
 wget -O trialssh "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/trialssh.sh"
 wget -O delssh "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/delssh.sh"
@@ -391,7 +394,7 @@ wget -O member "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/memb
 wget -O delexp "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/delexp.sh"
 wget -O cekssh "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/cekssh.sh"
 wget -O restart "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/restart.sh"
-wget -O speedtest "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/speedtest_cli.py"
+#wget -O speedtest "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/speedtest_cli.py"
 wget -O info "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/info.sh"
 wget -O ram "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ram.sh"
 wget -O renewssh "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/renewssh.sh"
@@ -426,8 +429,10 @@ wget -O addtrgo "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/tr
 wget -O deltrgo "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/trojan/deltrgo.sh"
 wget -O renewtrgo "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/trojan/renewtrgo.sh"
 wget -O cektrgo "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/trojan/cektrgo.sh"
+clear
+
 chmod +x addhost
-chmod +x menu
+chmod +x menu-ssh
 chmod +x addssh
 chmod +x trialssh
 chmod +x delssh
@@ -435,7 +440,7 @@ chmod +x member
 chmod +x delexp
 chmod +x cekssh
 chmod +x restart
-chmod +x speedtest
+#chmod +x speedtest
 chmod +x info
 chmod +x about
 chmod +x autokill
@@ -473,6 +478,8 @@ chmod +x renewtrgo
 chmod +x cektrgo
 echo "0 5 * * * root clearlog && reboot" >> /etc/crontab
 echo "0 0 * * * root xp" >> /etc/crontab
+clear
+
 # remove unnecessary files
 cd
 apt autoclean -y
@@ -482,6 +489,8 @@ apt-get -y --purge remove apache2*;
 apt-get -y --purge remove bind9*;
 apt-get -y remove sendmail*
 apt autoremove -y
+clear
+
 # finishing
 cd
 chown -R www-data:www-data /home/vps/public_html
@@ -507,6 +516,7 @@ screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7800 --max-clients 500
 screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7900 --max-clients 500
 history -c
 echo "unset HISTFILE" >> /etc/profile
+clear
 
 cd
 rm -f /root/key.pem
@@ -515,120 +525,3 @@ rm -f /root/ssh-vpn.sh
 
 # finihsing
 clear
-
-# Install Trojan Go
-latest_version="$(curl -s "https://api.github.com/repos/p4gefau1t/trojan-go/releases" | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
-trojango_link="https://github.com/p4gefau1t/trojan-go/releases/download/v${latest_version}/trojan-go-linux-amd64.zip"
-mkdir -p "/usr/bin/trojan-go"
-mkdir -p "/etc/trojan-go"
-cd `mktemp -d`
-curl -sL "${trojango_link}" -o trojan-go.zip
-unzip -q trojan-go.zip && rm -rf trojan-go.zip
-mv trojan-go /usr/local/bin/trojan-go
-chmod +x /usr/local/bin/trojan-go
-mkdir /var/log/trojan-go/
-touch /etc/trojan-go/akun.conf
-touch /var/log/trojan-go/trojan-go.log
-
-# Buat Config Trojan Go
-cat > /etc/trojan-go/config.json << END
-{
-  "run_type": "server",
-  "local_addr": "0.0.0.0",
-  "local_port": 2087,
-  "remote_addr": "127.0.0.1",
-  "remote_port": 89,
-  "log_level": 1,
-  "log_file": "/var/log/trojan-go/trojan-go.log",
-  "password": [
-      "$uuid"
-  ],
-  "disable_http_check": true,
-  "udp_timeout": 60,
-  "ssl": {
-    "verify": false,
-    "verify_hostname": false,
-    "cert": "/etc/xray/xray.crt",
-    "key": "/etc/xray/xray.key",
-    "key_password": "",
-    "cipher": "",
-    "curves": "",
-    "prefer_server_cipher": false,
-    "sni": "$domain",
-    "alpn": [
-      "http/1.1"
-    ],
-    "session_ticket": true,
-    "reuse_session": true,
-    "plain_http_response": "",
-    "fallback_addr": "127.0.0.1",
-    "fallback_port": 0,
-    "fingerprint": "firefox"
-  },
-  "tcp": {
-    "no_delay": true,
-    "keep_alive": true,
-    "prefer_ipv4": true
-  },
-  "mux": {
-    "enabled": false,
-    "concurrency": 8,
-    "idle_timeout": 60
-  },
-  "websocket": {
-    "enabled": true,
-    "path": "/trojango",
-    "host": "$domain"
-  },
-    "api": {
-    "enabled": false,
-    "api_addr": "",
-    "api_port": 0,
-    "ssl": {
-      "enabled": false,
-      "key": "",
-      "cert": "",
-      "verify_client": false,
-      "client_cert": []
-    }
-  }
-}
-END
-
-# Installing Trojan Go Service
-cat > /etc/systemd/system/trojan-go.service << END
-[Unit]
-Description=Trojan-Go Service
-Documentation=https://t.me/arfprsty810
-After=network.target nss-lookup.target
-
-[Service]
-User=root
-CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-NoNewPrivileges=true
-ExecStart=/usr/local/bin/trojan-go -config /etc/trojan-go/config.json
-Restart=on-failure
-RestartPreventExitStatus=23
-
-[Install]
-WantedBy=multi-user.target
-END
-
-# Trojan Go Uuid
-cat > /etc/trojan-go/uuid.txt << END
-$uuid
-END
-
-# restart
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2086 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2087 -j ACCEPT
-iptables-save > /etc/iptables.up.rules
-iptables-restore -t < /etc/iptables.up.rules
-netfilter-persistent save
-netfilter-persistent reload
-systemctl daemon-reload
-systemctl stop trojan-go
-systemctl start trojan-go
-systemctl enable trojan-go
-systemctl restart trojan-go

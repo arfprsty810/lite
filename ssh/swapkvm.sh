@@ -28,3 +28,6 @@ sed -i '$ i\swapon /swapfile2' /etc/rc.local
 sed -i '$ i\/swapfile1      swap swap   defaults    0 0' /etc/fstab
 sed -i '$ i\/swapfile2      swap swap   defaults    0 0' /etc/fstab
 rm -f swapkvm.sh
+read -n 1 -s -r -p "Press any key to back on menu"
+clear
+menu

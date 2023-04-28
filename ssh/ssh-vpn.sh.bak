@@ -13,6 +13,19 @@ LIGHT='\033[0;37m'
 # ==========================================
 
 clear
+# ==================================================
+# Link Hosting Kalian
+akbarvpn="raw.githubusercontent.com/arfprsty810/lite/main/ssh"
+
+# Link Hosting Kalian Untuk Xray
+akbarvpnn="raw.githubusercontent.com/arfprsty810/lite/main/xray"
+
+# Link Hosting Kalian Untuk Trojan Go
+akbarvpnnn="raw.githubusercontent.com/arfprsty810/lite/main/xray/trojan"
+
+# Link Hosting Kalian Untuk Stunnel5
+akbarvpnnnn="raw.githubusercontent.com/arfprsty810/lite/main/ssh/stunnel5"
+
 # initializing var
 export DEBIAN_FRONTEND=noninteractive
 MYIP=$(wget -qO- ipinfo.io/ip);
@@ -31,7 +44,7 @@ commonname=akbarstorevpn
 email=akbarssh21@gmail.com
 
 # simple password minimal
-wget -O /etc/pam.d/common-password "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/password"
+wget -O /etc/pam.d/common-password "https://${akbarvpn}/password"
 chmod +x /etc/pam.d/common-password
 
 # go to root
@@ -127,25 +140,25 @@ echo "clear" >> .profile
 echo "neofetch" >> .profile
 
 # install webserver
-#apt -y install nginx php php-fpm php-cli php-mysql libxml-parser-perl
-#rm /etc/nginx/sites-enabled/default
-#rm /etc/nginx/sites-available/default
-#curl https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/nginx.conf > /etc/nginx/nginx.conf
-#curl https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/vps.conf > /etc/nginx/conf.d/vps.conf
-#sed -i 's/listen = \/var\/run\/php-fpm.sock/listen = 127.0.0.1:9000/g' /etc/php/fpm/pool.d/www.conf
-#useradd -m vps;
-#mkdir -p /home/vps/public_html
-#echo "<?php phpinfo() ?>" > /home/vps/public_html/info.php
-#chown -R www-data:www-data /home/vps/public_html
-#chmod -R g+rw /home/vps/public_html
-#cd /home/vps/public_html
-#wget -O /home/vps/public_html/index.html "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/index.html1"
-#/etc/init.d/nginx restart
-#cd
+apt -y install nginx php php-fpm php-cli php-mysql libxml-parser-perl
+rm /etc/nginx/sites-enabled/default
+rm /etc/nginx/sites-available/default
+curl https://${akbarvpn}/nginx.conf > /etc/nginx/nginx.conf
+curl https://${akbarvpn}/vps.conf > /etc/nginx/conf.d/vps.conf
+sed -i 's/listen = \/var\/run\/php-fpm.sock/listen = 127.0.0.1:9000/g' /etc/php/fpm/pool.d/www.conf
+useradd -m vps;
+mkdir -p /home/vps/public_html
+echo "<?php phpinfo() ?>" > /home/vps/public_html/info.php
+chown -R www-data:www-data /home/vps/public_html
+chmod -R g+rw /home/vps/public_html
+cd /home/vps/public_html
+wget -O /home/vps/public_html/index.html "https://${akbarvpn}/index.html1"
+/etc/init.d/nginx restart
+cd
 
 # install badvpn
 cd
-wget -O /usr/bin/badvpn-udpgw "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/badvpn-udpgw64"
+wget -O /usr/bin/badvpn-udpgw "https://${akbarvpn}/badvpn-udpgw64"
 chmod +x /usr/bin/badvpn-udpgw
 sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 500' /etc/rc.local
 sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 500' /etc/rc.local
@@ -175,7 +188,7 @@ echo "/usr/sbin/nologin" >> /etc/shells
 # install squid
 cd
 apt -y install squid3
-wget -O /etc/squid/squid.conf "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/squid3.conf"
+wget -O /etc/squid/squid.conf "https://${akbarvpn}/squid3.conf"
 sed -i $MYIP2 /etc/squid/squid.conf
 
 # Install SSLH
@@ -314,7 +327,7 @@ systemctl restart stunnel5
 /etc/init.d/stunnel5 restart
 
 #OpenVPN
-wget https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/vpn.sh &&  chmod +x vpn.sh && ./vpn.sh
+wget https://${akbarvpn}/vpn.sh &&  chmod +x vpn.sh && ./vpn.sh
 
 # install fail2ban
 apt -y install fail2ban
@@ -351,10 +364,10 @@ echo "Banner /etc/issue.net" >>/etc/ssh/sshd_config
 sed -i 's@DROPBEAR_BANNER=""@DROPBEAR_BANNER="/etc/issue.net"@g' /etc/default/dropbear
 
 # Install BBR
-wget https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/bbr.sh && chmod +x bbr.sh && ./bbr.sh
+wget https://${akbarvpn}/bbr.sh && chmod +x bbr.sh && ./bbr.sh
 
 # Ganti Banner
-wget -O /etc/issue.net "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/issue.net"
+wget -O /etc/issue.net "https://${akbarvpn}/issue.net"
 
 # blockir torrent
 iptables -A FORWARD -m string --string "get_peers" --algo bm -j DROP
@@ -375,51 +388,51 @@ netfilter-persistent reload
 
 # download script
 cd /usr/bin
-wget -O addhost "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/addhost.sh"
-wget -O about "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/about.sh"
-wget -O menu "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/menu.sh"
-wget -O addssh "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/addssh.sh"
-wget -O trialssh "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/trialssh.sh"
-wget -O delssh "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/delssh.sh"
-wget -O member "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/member.sh"
-wget -O delexp "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/delexp.sh"
-wget -O cekssh "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/cekssh.sh"
-wget -O restart "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/restart.sh"
-wget -O speedtest "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/speedtest_cli.py"
-wget -O info "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/info.sh"
-wget -O ram "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ram.sh"
-wget -O renewssh "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/renewssh.sh"
-wget -O autokill "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/autokill.sh"
-wget -O ceklim "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ceklim.sh"
-wget -O tendang "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/tendang.sh"
-wget -O clearlog "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/clearlog.sh"
-wget -O changeport "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/changeport.sh"
-wget -O portovpn "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/portovpn.sh"
-wget -O portwg "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/portwg.sh"
-wget -O porttrojan "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/porttrojan.sh"
-wget -O portsstp "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/portsstp.sh"
-wget -O portsquid "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/portsquid.sh"
-wget -O portvlm "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/portvlm.sh"
-wget -O wbmn "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/webmin.sh"
-wget -O xp "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/xp.sh"
-wget -O swapkvm "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/swapkvm.sh"
-#wget -O addvmess "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/vmess/addv2ray.sh"
-#wget -O addvless "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/vless/addvless.sh"
-#wget -O addtrojan "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/trojan/addtrojan.sh"
-#wget -O delvmess "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/vmess/delv2ray.sh"
-#wget -O delvless "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/vless/delvless.sh"
-#wget -O deltrojan "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/trojan/deltrojan.sh"
-#wget -O cekvmess "https://${akbarvpnn}/cekv2ray.sh"
-#wget -O cekvless "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/vless/cekvless.sh"
-#wget -O cektrojan "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/trojan/cektrojan.sh"
-#wget -O renewvmess "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/vmess/renewv2ray.sh"
-#wget -O renewvless "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/vless/renewvless.sh"
-#wget -O renewtrojan "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/trojan/renewtrojan.sh"
-#wget -O certv2ray "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/certv2ray.sh"
-wget -O addtrgo "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/trojan/addtrgo.sh"
-wget -O deltrgo "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/trojan/deltrgo.sh"
-wget -O renewtrgo "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/trojan/renewtrgo.sh"
-wget -O cektrgo "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/trojan/cektrgo.sh"
+wget -O addhost "https://${akbarvpn}/addhost.sh"
+wget -O about "https://${akbarvpn}/about.sh"
+wget -O menu "https://${akbarvpn}/menu.sh"
+wget -O addssh "https://${akbarvpn}/addssh.sh"
+wget -O trialssh "https://${akbarvpn}/trialssh.sh"
+wget -O delssh "https://${akbarvpn}/delssh.sh"
+wget -O member "https://${akbarvpn}/member.sh"
+wget -O delexp "https://${akbarvpn}/delexp.sh"
+wget -O cekssh "https://${akbarvpn}/cekssh.sh"
+wget -O restart "https://${akbarvpn}/restart.sh"
+wget -O speedtest "https://${akbarvpn}/speedtest_cli.py"
+wget -O info "https://${akbarvpn}/info.sh"
+wget -O ram "https://${akbarvpn}/ram.sh"
+wget -O renewssh "https://${akbarvpn}/renewssh.sh"
+wget -O autokill "https://${akbarvpn}/autokill.sh"
+wget -O ceklim "https://${akbarvpn}/ceklim.sh"
+wget -O tendang "https://${akbarvpn}/tendang.sh"
+wget -O clearlog "https://${akbarvpn}/clearlog.sh"
+wget -O changeport "https://${akbarvpn}/changeport.sh"
+wget -O portovpn "https://${akbarvpn}/portovpn.sh"
+wget -O portwg "https://${akbarvpn}/portwg.sh"
+wget -O porttrojan "https://${akbarvpn}/porttrojan.sh"
+wget -O portsstp "https://${akbarvpn}/portsstp.sh"
+wget -O portsquid "https://${akbarvpn}/portsquid.sh"
+wget -O portvlm "https://${akbarvpn}/portvlm.sh"
+wget -O wbmn "https://${akbarvpn}/webmin.sh"
+wget -O xp "https://${akbarvpn}/xp.sh"
+wget -O swapkvm "https://${akbarvpn}/swapkvm.sh"
+wget -O addvmess "https://${akbarvpnn}/addv2ray.sh"
+wget -O addvless "https://${akbarvpnn}/addvless.sh"
+wget -O addtrojan "https://${akbarvpnn}/addtrojan.sh"
+wget -O delvmess "https://${akbarvpnn}/delv2ray.sh"
+wget -O delvless "https://${akbarvpnn}/delvless.sh"
+wget -O deltrojan "https://${akbarvpnn}/deltrojan.sh"
+wget -O cekvmess "https://${akbarvpnn}/cekv2ray.sh"
+wget -O cekvless "https://${akbarvpnn}/cekvless.sh"
+wget -O cektrojan "https://${akbarvpnn}/cektrojan.sh"
+wget -O renewvmess "https://${akbarvpnn}/renewv2ray.sh"
+wget -O renewvless "https://${akbarvpnn}/renewvless.sh"
+wget -O renewtrojan "https://${akbarvpnn}/renewtrojan.sh"
+wget -O certv2ray "https://${akbarvpnn}/certv2ray.sh"
+wget -O addtrgo "https://${akbarvpnnn}/addtrgo.sh"
+wget -O deltrgo "https://${akbarvpnnn}/deltrgo.sh"
+wget -O renewtrgo "https://${akbarvpnnn}/renewtrgo.sh"
+wget -O cektrgo "https://${akbarvpnnn}/cektrgo.sh"
 chmod +x addhost
 chmod +x menu
 chmod +x addssh
@@ -448,19 +461,19 @@ chmod +x portvlm
 chmod +x wbmn
 chmod +x xp
 chmod +x swapkvm
-#chmod +x addvmess
-#chmod +x addvless
-#chmod +x addtrojan
-#chmod +x delv2ray
-#chmod +x delvless
-#chmod +x deltrojan
-#chmod +x cekvmess
-#chmod +x cekvless
-#chmod +x cektrojan
-#chmod +x renewvmess
-#chmod +x renewvless
-#chmod +x renewtrojan
-#chmod +x certv2ray
+chmod +x addvmess
+chmod +x addvless
+chmod +x addtrojan
+chmod +x delv2ray
+chmod +x delvless
+chmod +x deltrojan
+chmod +x cekvmess
+chmod +x cekvless
+chmod +x cektrojan
+chmod +x renewvmess
+chmod +x renewvless
+chmod +x renewtrojan
+chmod +x certv2ray
 chmod +x addtrgo
 chmod +x deltrgo
 chmod +x renewtrgo

@@ -49,18 +49,38 @@ done
 clear
 
 # -------------------------------------- tambah akun -------------------------------------- #
+# vmess
+AKUN_VMESS_1="vmess_test01"
+UID_VMESS_1="f1a53fef-8533-457b-ab2f-aa915f167519"
+EXP_VMESS_1="2030-01-01"
+sed -i '/#vmess$/a\#vm# '"$AKUN_VMESS_1 $EXP_VMESS_1"'\
+},{"id": "'""$UID_VMESS_1""'","email": "'""$AKUN_VMESS_1""'"' /etc/xray/config.json
+sed -i '/#vmessworry$/a\#vm# '"$AKUN_VMESS_1 $EXP_VMESS_1"'\
+},{"id": "'""$UID_VMESS_1""'","alterId": '"0"',"email": "'""$AKUN_VMESS_1""'"' /etc/xray/config.json
+sed -i '/#vmesskuota$/a\#vm# '"$AKUN_VMESS_1 $EXP_VMESS_1"'\
+},{"id": "'""$UID_VMESS_1""'","alterId": '"0"',"email": "'""$AKUN_VMESS_1""'"' /etc/xray/config.json
+sed -i '/#vmessgrpc$/a\#vm# '"$AKUN_VMESS_1 $EXP_VMESS_1"'\
+},{"id": "'""$UID_VMESS_1""'","email": "'""$AKUN_VMESS_1""'"' /etc/xray/config.json
+clear
+
 # vless
-AKUN_VLESS_1="vmess_test01"
-UID_VLESS_1="f1a53fef-8533-457b-ab2f-aa915f167519"
+AKUN_VLESS_1="vless_arf"
+UID_VLESS_1="77f6e656-649b-4caf-9beb-6e9f32290aac"
 EXP_VLESS_1="2030-01-01"
-sed -i '/#vmess$/a\#vm# '"$AKUN_VLESS_1 $EXP_VLESS_1"'\
+sed -i '/#vless$/a\#vl# '"$AKUN_VLESS_1 $EXP_VLESS_1"'\
 },{"id": "'""$UID_VLESS_1""'","email": "'""$AKUN_VLESS_1""'"' /etc/xray/config.json
-sed -i '/#vmessworry$/a\#vm# '"$AKUN_VLESS_1 $EXP_VLESS_1"'\
-},{"id": "'""$UID_VLESS_1""'","alterId": '"0"',"email": "'""$AKUN_VLESS_1""'"' /etc/xray/config.json
-sed -i '/#vmesskuota$/a\#vm# '"$AKUN_VLESS_1 $EXP_VLESS_1"'\
-},{"id": "'""$UID_VLESS_1""'","alterId": '"0"',"email": "'""$AKUN_VLESS_1""'"' /etc/xray/config.json
-sed -i '/#vmessgrpc$/a\#vm# '"$AKUN_VLESS_1 $EXP_VLESS_1"'\
+sed -i '/#vlessgrpc$/a\#vl# '"$AKUN_VLESS_1 $EXP_VLESS_1"'\
 },{"id": "'""$UID_VLESS_1""'","email": "'""$AKUN_VLESS_1""'"' /etc/xray/config.json
+clear
+
+# trojan
+AKUN_TROJAN_1="trojan_arf"
+UID_TROJAN_1="8394ff55-d075-4d1d-a65a-c82f16dc62d1"
+EXP_TROJAN_1="2030-01-01"
+sed -i '/#trojanws$/a\#tr# '"$AKUN_TROJAN_1 $EXP_TROJAN_1"'\
+},{"password": "'""$UID_TROJAN_1""'","email": "'""$AKUN_TROJAN_1""'"' /etc/xray/config.json
+sed -i '/#trojangrpc$/a\#tr# '"$AKUN_TROJAN_1 $EXP_TROJAN_1"'\
+},{"password": "'""$UID_TROJAN_1""'","email": "'""$AKUN_TROJAN_1""'"' /etc/xray/config.json
 clear
 
 # -------------------------------------- restart service -------------------------------------- #

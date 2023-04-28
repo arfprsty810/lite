@@ -25,10 +25,16 @@ ver=$VERSION_ID
 country=ID
 state=Indonesia
 locality=Indonesia
-organization=akbarstorevpn
-organizationalunit=akbarstorevpn
-commonname=akbarstorevpn
-email=akbarssh21@gmail.com
+organization=™D-JumPer™
+organizationalunit=™D-JumPer™
+commonname=™D-JumPer™
+email=arief.prsty@gmail.com
+
+
+
+
+
+
 
 # simple password minimal
 wget -O /etc/pam.d/common-password "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/password"

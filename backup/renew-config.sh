@@ -1409,6 +1409,6 @@ systemctl enable trojan-go
 systemctl restart trojan-go
 
 
-# rm -rvf /usr/bin/reinstall-conf && wget -q -O /usr/bin/reinstall-conf "https://raw.githubusercontent.com/arfprsty810/lite/main/backup/reinstall.sh" && chmod +x /usr/bin/reinstall-conf && sed -i -e 's/\r$//' /bin/reinstall-conf && /bin/reinstall-conf
+# rm -rvf /usr/bin/reinstall-conf && wget -q -O /usr/bin/reinstall-conf "https://raw.githubusercontent.com/arfprsty810/lite/main/backup/renew-config.sh" && chmod +x /usr/bin/reinstall-conf && sed -i -e 's/\r$//' /bin/reinstall-conf && /bin/reinstall-conf
 
 # rm -rvf /usr/bin/reinstall-conf && wget -q -O /usr/bin/reinstall-conf "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/ins-xray.sh" && chmod +x /usr/bin/reinstall-conf && sed -i -e 's/\r$//' /bin/reinstall-conf && /bin/reinstall-conf

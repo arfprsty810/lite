@@ -694,7 +694,8 @@ wget -q -O /usr/bin/menu "https://raw.githubusercontent.com/arfprsty810/lite/mai
 wget -q -O /usr/bin/cert "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/cert.sh" && chmod +x /usr/bin/cert
 wget -q -O /usr/bin/speedtest "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/speedtest_cli.py" && chmod +x /usr/bin/speedtest
 wget -q -O /usr/bin/update "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/update.sh" && chmod +x /usr/bin/update
-wget -q -O /usr/bin/backup "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/backup.sh" && chmod +x /usr/bin/backup
+wget -q -O /usr/bin/renew-config "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/renew-config.sh" && chmod +x /usr/bin/renew-config
+wget -q -O /usr/bin/backup-user "https://raw.githubusercontent.com/arfprsty810/lite/main/backup/backup-user.sh" && chmod +x /usr/bin/backup-user
 
 sleep 1
 clear
@@ -707,7 +708,8 @@ sed -i -e 's/\r$//' /bin/cert
 sed -i -e 's/\r$//' /bin/update
 sed -i -e 's/\r$//' /bin/restart
 sed -i -e 's/\r$//' /bin/running
-sed -i -e 's/\r$//' /bin/backup
+sed -i -e 's/\r$//' /bin/renew-config
+sed -i -e 's/\r$//' /bin/backup-user
 
 sed -i -e 's/\r$//' /bin/menu-vmess
 sed -i -e 's/\r$//' /bin/add-ws

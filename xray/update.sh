@@ -55,49 +55,88 @@ rm -rvf /usr/bin/update
 rm -rvf /usr/bin/restart
 rm -rvf /usr/bin/running
 rm -rvf /bin/cek-bandwidth
-rm -rvf /usr/bin/backup-config
+rm -rvf /usr/bin/renew-config
+rm -rvf /usr/bin/backup-user
 
 clear
 echo -e "[ ${green}INFO$NC ] Update Script"
 sleep 1
 
 #shadowshock
-wget -q -O /usr/bin/menu-ssws "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/shadowshock/menu-ssws.sh" && chmod +x /usr/bin/menu-ssws
-wget -q -O /usr/bin/add-ssws "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/shadowshock/add-ssws.sh" && chmod +x /usr/bin/add-ssws
-wget -q -O /usr/bin/cek-ssws "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/shadowshock/cek-ssws.sh" && chmod +x /usr/bin/cek-ssws
-wget -q -O /usr/bin/del-ssws "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/shadowshock/del-ssws.sh" && chmod +x /usr/bin/del-ssws
-wget -q -O /usr/bin/renew-ssws "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/shadowshock/renew-ssws.sh" && chmod +x /usr/bin/renew-ssws
+wget -q -O /usr/bin/menu-ssws "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/shadowshock/menu-ssws.sh"
+chmod +x /usr/bin/menu-ssws
+wget -q -O /usr/bin/add-ssws "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/shadowshock/add-ssws.sh"
+chmod +x /usr/bin/add-ssws
+wget -q -O /usr/bin/cek-ssws "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/shadowshock/cek-ssws.sh"
+chmod +x /usr/bin/cek-ssws
+wget -q -O /usr/bin/del-ssws "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/shadowshock/del-ssws.sh"
+chmod +x /usr/bin/del-ssws
+wget -q -O /usr/bin/renew-ssws "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/shadowshock/renew-ssws.sh"
+chmod +x /usr/bin/renew-ssws
 
 #vmess
-wget -q -O /usr/bin/menu-vmess "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/vmess/menu-vmess.sh" && chmod +x /usr/bin/menu-vmess
-wget -q -O /usr/bin/add-ws "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/vmess/add-ws.sh" && chmod +x /usr/bin/add-ws
-wget -q -O /usr/bin/cek-ws "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/vmess/cek-ws.sh" && chmod +x /usr/bin/cek-ws
-wget -q -O /usr/bin/del-ws "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/vmess/del-ws.sh" && chmod +x /usr/bin/del-ws
-wget -q -O /usr/bin/renew-ws "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/vmess/renew-ws.sh" && chmod +x /usr/bin/renew-ws
+wget -q -O /usr/bin/menu-vmess "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/vmess/menu-vmess.sh"
+chmod +x /usr/bin/menu-vmess
+wget -q -O /usr/bin/add-ws "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/vmess/add-ws.sh"
+chmod +x /usr/bin/add-ws
+wget -q -O /usr/bin/cek-ws "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/vmess/cek-ws.sh"
+chmod +x /usr/bin/cek-ws
+wget -q -O /usr/bin/del-ws "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/vmess/del-ws.sh"
+chmod +x /usr/bin/del-ws
+wget -q -O /usr/bin/renew-ws "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/vmess/renew-ws.sh"
+chmod +x /usr/bin/renew-ws
 
 #vless
-wget -q -O /usr/bin/menu-vless "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/vless/menu-vless.sh" && chmod +x /usr/bin/menu-vless
-wget -q -O /usr/bin/add-vless "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/vless/add-vless.sh" && chmod +x /usr/bin/add-vless
-wget -q -O /usr/bin/cek-vless "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/vless/cek-vless.sh" && chmod +x /usr/bin/cek-vless
-wget -q -O /usr/bin/del-vless "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/vless/del-vless.sh" && chmod +x /usr/bin/del-vless
-wget -q -O /usr/bin/renew-vless "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/vless/renew-vless.sh" && chmod +x /usr/bin/renew-vless
+wget -q -O /usr/bin/menu-vless "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/vless/menu-vless.sh"
+chmod +x /usr/bin/menu-vless
+wget -q -O /usr/bin/add-vless "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/vless/add-vless.sh"
+chmod +x /usr/bin/add-vless
+wget -q -O /usr/bin/cek-vless "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/vless/cek-vless.sh"
+chmod +x /usr/bin/cek-vless
+wget -q -O /usr/bin/del-vless "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/vless/del-vless.sh"
+chmod +x /usr/bin/del-vless
+wget -q -O /usr/bin/renew-vless "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/vless/renew-vless.sh"
+chmod +x /usr/bin/renew-vless
 
 #trojan
-wget -q -O /usr/bin/menu-trojan "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/trojan/menu-trojan.sh" && chmod +x /usr/bin/menu-trojan
-wget -q -O /usr/bin/add-tr "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/trojan/add-tr.sh" && chmod +x /usr/bin/add-tr
-wget -q -O /usr/bin/cek-tr "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/trojan/cek-tr.sh" && chmod +x /usr/bin/cek-tr
-wget -q -O /usr/bin/del-tr "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/trojan/del-tr.sh" && chmod +x /usr/bin/del-tr
-wget -q -O /usr/bin/renew-tr "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/trojan/renew-tr.sh" && chmod +x /usr/bin/renew-tr
+wget -q -O /usr/bin/menu-trojan "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/trojan/menu-trojan.sh"
+chmod +x /usr/bin/menu-trojan
+wget -q -O /usr/bin/add-tr "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/trojan/add-tr.sh"
+chmod +x /usr/bin/add-tr
+wget -q -O /usr/bin/cek-tr "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/trojan/cek-tr.sh"
+chmod +x /usr/bin/cek-tr
+wget -q -O /usr/bin/del-tr "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/trojan/del-tr.sh"
+chmod +x /usr/bin/del-tr
+wget -q -O /usr/bin/renew-tr "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/trojan/renew-tr.sh"
+chmod +x /usr/bin/renew-tr
 
 #--
-wget -q -O /usr/bin/restart "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/restart.sh" && chmod +x /usr/bin/restart
-wget -q -O /usr/bin/running "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/running.sh" && chmod +x /usr/bin/running
-wget -q -O /usr/bin/cek-bandwidth "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/cek-bandwidth.sh" && chmod +x /usr/bin/cek-bandwidth
-wget -q -O /usr/bin/menu "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/menu.sh" && chmod +x /usr/bin/menu
-wget -q -O /usr/bin/cert "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/cert.sh" && chmod +x /usr/bin/cert
-wget -q -O /usr/bin/speedtest "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/speedtest_cli.py" && chmod +x /usr/bin/speedtest
-wget -q -O /usr/bin/update "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/update.sh" && chmod +x /usr/bin/update
-wget -q -O /usr/bin/backup-config "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/backup-config.sh" && chmod +x /usr/bin/backup-config
+wget -q -O /usr/bin/restart "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/restart.sh"
+chmod +x /usr/bin/restart
+
+wget -q -O /usr/bin/running "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/running.sh"
+chmod +x /usr/bin/running
+
+wget -q -O /usr/bin/cek-bandwidth "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/cek-bandwidth.sh"
+chmod +x /usr/bin/cek-bandwidth
+
+wget -q -O /usr/bin/menu "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/menu.sh"
+chmod +x /usr/bin/menu
+
+wget -q -O /usr/bin/cert "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/cert.sh"
+chmod +x /usr/bin/cert
+
+wget -q -O /usr/bin/speedtest "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/speedtest_cli.py"
+chmod +x /usr/bin/speedtest
+
+wget -q -O /usr/bin/update "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/update.sh"
+chmod +x /usr/bin/update
+
+wget -q -O /usr/bin/renew-config "https://raw.githubusercontent.com/arfprsty810/lite/main/backup/renew-config.sh"
+chmod +x /usr/bin/renew-config
+
+wget -q -O /usr/bin/backup-user "https://raw.githubusercontent.com/arfprsty810/lite/main/backup/backup-user.sh"
+chmod +x /usr/bin/backup-user
 
 clear
 echo -e "[ ${green}INFO$NC ] Install New Script ..."
@@ -109,7 +148,8 @@ sed -i -e 's/\r$//' /bin/update
 sed -i -e 's/\r$//' /bin/restart
 sed -i -e 's/\r$//' /bin/running
 sed -i -e 's/\r$//' /bin/cek-bandwidth
-sed -i -e 's/\r$//' /bin/backup-config
+sed -i -e 's/\r$//' /bin/renew-config
+sed -i -e 's/\r$//' /bin/backup-user
 
 sed -i -e 's/\r$//' /bin/menu-vmess
 sed -i -e 's/\r$//' /bin/add-ws

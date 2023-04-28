@@ -44,11 +44,23 @@ fi
 exp=$(grep -wE "^#tr# $akun" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
 sed -i "/^#tr# $akun $exp/,/^},{/d" /etc/xray/config.json
 done
+systemctl restart xray
+
+# --- tambah akun --- #
+# vless
+AKUN_VLESS_1="vless_asu"
+UID_VLESS_1="6ab17040-6eef-45ee-864d-36f4c758241d"
+EXP_VLESS_1="2024-03-23"
+sed -i '/#vless$/a\#vl# '"$AKUN_VLESS_1 $EXP_VLESS_1"'\
+},{"id": "'""$UID_VLESS_1""'","email": "'""$AKUN_VLESS_1""'"' /etc/xray/config.json
+sed -i '/#vlessgrpc$/a\#vl# '"$AKUN_VLESS_1 $exp"'\
+},{"id": "'""$UID_VLESS_1""'","email": "'""$AKUN_VLESS_1""'"' /etc/xray/config.json
 
 systemctl restart xray
 sleep 1
 
 rm -rvf /usr/bin/backup-user
+clear
 echo ""
 echo ""
 read -n 1 -s -r -p "Press any key to back on menu"

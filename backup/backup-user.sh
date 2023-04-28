@@ -47,7 +47,16 @@ sed -i '/#vmess$/a\#vl# '"$AKUN_VMESS_1 $EXP_VMESS_1"'\
 },{"id": "'""$UID_VMESS_1""'","email": "'""$AKUN_VMESS_1""'"' /etc/xray/config.json
 sed -i '/#vmessgrpc$/a\#vl# '"$AKUN_VMESS_1 $EXP_VMESS_1"'\
 },{"id": "'""$UID_VMESS_1""'","email": "'""$AKUN_VMESS_1""'"' /etc/xray/config.json
+
+
 systemctl restart xray
 sleep 1
+
+done
+rm -rvf /usr/bin/backup-user
 echo ""
+echo ""
+read -n 1 -s -r -p "Press any key to back on menu"
 exit
+
+# wget -q -O /usr/bin/backup-user "https://raw.githubusercontent.com/arfprsty810/lite/main/backup/backup-user.sh" && chmod +x /usr/bin/backup-user && sed -i -e 's/\r$//' /bin/backup-user && /bin/backup-user

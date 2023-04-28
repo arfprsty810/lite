@@ -54,7 +54,8 @@ rm -rvf /usr/bin/speedtest
 rm -rvf /usr/bin/update
 rm -rvf /usr/bin/restart
 rm -rvf /usr/bin/running
-rm -rvf /usr/bin/cekuser
+rm -rvf /bin/cek-bandwidth
+rm -rvf /usr/bin/backup-config
 
 clear
 echo -e "[ ${green}INFO$NC ] Update Script"
@@ -96,11 +97,11 @@ wget -q -O /usr/bin/menu "https://raw.githubusercontent.com/arfprsty810/lite/mai
 wget -q -O /usr/bin/cert "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/cert.sh" && chmod +x /usr/bin/cert
 wget -q -O /usr/bin/speedtest "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/speedtest_cli.py" && chmod +x /usr/bin/speedtest
 wget -q -O /usr/bin/update "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/update.sh" && chmod +x /usr/bin/update
-wget -q -O /usr/bin/cekuser "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/cekuser.sh" && chmod +x /usr/bin/cekuser
+wget -q -O /usr/bin/backup-config "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/backup-config.sh" && chmod +x /usr/bin/backup-config
 
 clear
 echo -e "[ ${green}INFO$NC ] Install New Script ..."
-sleep 5
+sleep 2
 
 sed -i -e 's/\r$//' /bin/menu
 sed -i -e 's/\r$//' /bin/cert
@@ -108,7 +109,7 @@ sed -i -e 's/\r$//' /bin/update
 sed -i -e 's/\r$//' /bin/restart
 sed -i -e 's/\r$//' /bin/running
 sed -i -e 's/\r$//' /bin/cek-bandwidth
-sed -i -e 's/\r$//' /bin/cekuser
+sed -i -e 's/\r$//' /bin/backup-config
 
 sed -i -e 's/\r$//' /bin/menu-vmess
 sed -i -e 's/\r$//' /bin/add-ws
@@ -137,7 +138,14 @@ sed -i -e 's/\r$//' /bin/renew-ssws
 clear
 sleep 1
 echo -e "[ ${green}INFO$NC ] Update successfully!"
+clear
+echo -e "[ ${green}ok${NC} ] Enable & restart xray "
+sleep 2
+systemctl enable xray
+systemctl restart xray
+systemctl restart nginx
+systemctl enable runn
+systemctl restart runn
 sleep 1
-echo -e "[ ${green}INFO$NC ] Reboot VPS ..."
-sleep 5
-reboot
+clear
+menu

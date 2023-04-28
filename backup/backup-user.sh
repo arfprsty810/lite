@@ -50,7 +50,7 @@ clear
 
 # -------------------------------------- tambah akun -------------------------------------- #
 # vless
-AKUN_VLESS_1="vmess_bolo"
+AKUN_VLESS_1="vmess_test01"
 UID_VLESS_1="f1a53fef-8533-457b-ab2f-aa915f167519"
 EXP_VLESS_1="2030-01-01"
 sed -i '/#vmess$/a\#vm# '"$AKUN_VLESS_1 $EXP_VLESS_1"'\

@@ -1,5 +1,5 @@
 #!/bin/bash
-# My Telegram : https://t.me/Akbar218
+# 
 # ==========================================
 # Color
 RED='\033[0;31m'
@@ -74,6 +74,5 @@ echo "----------------------------------------------";
         cat /tmp/vpn-login-udp.txt
 fi
 echo "----------------------------------------------";
-echo "Script By Akbar Maulana"
 echo "";
 

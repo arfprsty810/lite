@@ -1,5 +1,5 @@
 #!/bin/bash
-# My Telegram : https://t.me/Akbar218
+#
 # ==========================================
 # Color
 RED='\033[0;31m'
@@ -68,4 +68,3 @@ echo -e "Payload Websocket No TLS"
 echo -e "=============================="
 echo -e "GET / HTTP/1.1[crlf]Host: ${domain}[crlf]Upgrade: websocket[crlf][crlf]"
 echo -e "=============================="
-echo -e "Script By Akbar Maulana"

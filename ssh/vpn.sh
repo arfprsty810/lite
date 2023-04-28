@@ -1,5 +1,5 @@
 #!/bin/bash
-# My Telegram : https://t.me/Akbar218
+# 
 # ==========================================
 # Color
 RED='\033[0;31m'
@@ -13,11 +13,6 @@ LIGHT='\033[0;37m'
 # ==========================================
 
 clear
-# By Akbar Maulana
-# ==================================================
-# Link Hosting Kalian
-akbarvpn="raw.githubusercontent.com/AkbarStoreVPN/scriptvps/main/ssh"
-
 # initialisasi var
 export DEBIAN_FRONTEND=noninteractive
 OS=`uname -m`;
@@ -30,7 +25,7 @@ apt install openvpn easy-rsa unzip -y
 apt install openssl iptables iptables-persistent -y
 mkdir -p /etc/openvpn/server/easy-rsa/
 cd /etc/openvpn/
-wget https://${akbarvpn}/vpn.zip
+wget https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/vpn.zip
 unzip vpn.zip
 rm -f vpn.zip
 chown -R root:root /etc/openvpn/server/easy-rsa/

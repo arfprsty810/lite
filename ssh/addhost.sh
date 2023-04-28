@@ -1,5 +1,5 @@
 #!/bin/bash
-# My Telegram : https://t.me/Akbar218
+#
 # ==========================================
 # Color
 RED='\033[0;31m'
@@ -14,7 +14,7 @@ LIGHT='\033[0;37m'
 
 clear
 read -rp "Domain/Host : " -e domain
-echo "IP=$domain" >>/var/lib/akbarstorevpn/ipvps.conf
+echo "IP=$domain" >>/var/lib/ipvps/ipvps.conf
 echo $domain > /etc/xray/domain
 echo start
 systemctl stop xray.service

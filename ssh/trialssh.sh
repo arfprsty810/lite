@@ -1,5 +1,5 @@
 #!/bin/bash
-# My Telegram : https://t.me/Akbar218
+# 
 # ==========================================
 # Color
 RED='\033[0;31m'
@@ -13,7 +13,7 @@ LIGHT='\033[0;37m'
 # ==========================================
 
 clear
-source /var/lib/akbarstorevpn/ipvps.conf
+source /var/lib/ipvps/ipvps.conf
 if [[ "$IP2" = "" ]]; then
 domain=$(cat /etc/xray/domain)
 else
@@ -74,4 +74,3 @@ echo -e "Payload Websocket No TLS"
 echo -e "=============================="
 echo -e "GET / HTTP/1.1[crlf]Host: ${domain}[crlf]Upgrade: websocket[crlf][crlf]"
 echo -e "=============================="
-echo -e "Script By Akbar Maulana"

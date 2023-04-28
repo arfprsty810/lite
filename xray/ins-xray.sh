@@ -134,8 +134,6 @@ apt install libssl-dev -y
 apt install libssl1.0-dev -y
 apt install dos2unix -y
 clear
-# set time GMT +7
-ln -fs /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
 
 # set locale
 sed -i 's/AcceptEnv/#AcceptEnv/g' /etc/ssh/sshd_config
@@ -148,7 +146,7 @@ clear
 
 # install webserver
 #apt -y install nginx
-apt -y install php php-fpm php-cli php-mysql libxml-parser-perl
+#apt -y install php php-fpm php-cli php-mysql libxml-parser-perl
 #rm /etc/nginx/sites-enabled/default
 #rm /etc/nginx/sites-available/default
 #curl https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/nginx.conf > /etc/nginx/nginx.conf
@@ -187,13 +185,13 @@ sed -i 's/Port 22/Port 22/g' /etc/ssh/sshd_config
 
 # install dropbear
 apt -y install dropbear
-sed -i 's/NO_START=1/NO_START=0/g' /etc/default/dropbear
-sed -i 's/DROPBEAR_PORT=22/DROPBEAR_PORT=143/g' /etc/default/dropbear
-sed -i 's/DROPBEAR_EXTRA_ARGS=/DROPBEAR_EXTRA_ARGS="-p 109"/g' /etc/default/dropbear
-echo "/bin/false" >> /etc/shells
-echo "/usr/sbin/nologin" >> /etc/shells
-/etc/init.d/dropbear restart
-clear
+#sed -i 's/NO_START=1/NO_START=0/g' /etc/default/dropbear
+#sed -i 's/DROPBEAR_PORT=22/DROPBEAR_PORT=143/g' /etc/default/dropbear
+#sed -i 's/DROPBEAR_EXTRA_ARGS=/DROPBEAR_EXTRA_ARGS="-p 109"/g' /etc/default/dropbear
+#echo "/bin/false" >> /etc/shells
+#echo "/usr/sbin/nologin" >> /etc/shells
+#/etc/init.d/dropbear restart
+#clear
 
 # install squid
 cd

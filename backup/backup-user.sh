@@ -49,4 +49,5 @@ sed -i '/#vmessgrpc$/a\#vl# '"$AKUN_VMESS_1 $EXP_VMESS_1"'\
 },{"id": "'""$UID_VMESS_1""'","email": "'""$AKUN_VMESS_1""'"' /etc/xray/config.json
 systemctl restart xray
 sleep 1
-clear
+echo ""
+exit

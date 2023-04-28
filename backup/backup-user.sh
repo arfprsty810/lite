@@ -22,7 +22,7 @@ for akun in "${datavm[@]}"
 do
 # trojan
 datatr=( `cat /etc/xray/config.json | grep '#tr#' | cut -d ' ' -f 2 | sort | uniq`);
-for akun in "${datavm[@]}"
+for akun in "${datatr[@]}"
 do
 
 # --- delete akun --- #

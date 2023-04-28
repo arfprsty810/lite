@@ -15,39 +15,39 @@
       "tag": "api"
     },
    {
-     "listen": "127.0.0.1",
-     "port": "23244",
+     "listen": "127.0.0.1",                                             
+     "port": "39208",
      "protocol": "vless",
       "settings": {
           "decryption":"none",
             "clients": [
                {
-                 "id": "d457b537-3e6f-4400-8d6b-f1064543d555"
-#vless
-### vless_test 2023-04-29
-},{"id": "dcbc0c41-6a25-4e93-8b22-0410e9f0d2af","email": "vless_test"
-             }
-          ]
-       },
-       "streamSettings":{
-         "network": "ws",
+                 "id": "3168bab8-be4d-4d75-8b7a-d5d116a75586"      
+#vless                                                             
+#### vless_arf 2024-03-22                                           
+},{"id": "77f6e656-649b-4caf-9beb-6e9f32290aac","email": "vless_arf"
+              }
+           ]                                                               
+        },                                                                 
+       "streamSettings":{     
+         "network": "ws",       
             "wsSettings": {
                 "path": "/vless"
           }
-        }
-     },
+        }           
+     },                                                                 
      {
      "listen": "127.0.0.1",
-     "port": "10027",
+     "port": "28785",
      "protocol": "vmess",
       "settings": {
             "clients": [
                {
-                 "id": "d457b537-3e6f-4400-8d6b-f1064543d555",
+                 "id": "3168bab8-be4d-4d75-8b7a-d5d116a75586",
                  "alterId": 0
 #vmess
-### vmess_arf1 2024-03-20
-},{"id": "5e7a34e4-f335-4517-b5a7-dc9eb196655b","alterId": 0,"email": "vmess_arf1"
+### vmess_arf 2024-03-22
+},{"id": "0b4c2e0d-442c-43f1-9b55-808e5c005291","alterId": 0,"email": "vmess_arf"
              }
           ]
        },
@@ -60,16 +60,16 @@
      },
      {
      "listen": "127.0.0.1",
-     "port": "36446",
+     "port": "31335",
      "protocol": "vmess",
       "settings": {
             "clients": [
                {
-                 "id": "d457b537-3e6f-4400-8d6b-f1064543d555",
+                 "id": "3168bab8-be4d-4d75-8b7a-d5d116a75586",
                  "alterId": 0
 #vmessworry
-### vmess_arf1 2024-03-20
-},{"id": "5e7a34e4-f335-4517-b5a7-dc9eb196655b","alterId": 0,"email": "vmess_arf1"
+### vmess_arf 2024-03-22
+},{"id": "0b4c2e0d-442c-43f1-9b55-808e5c005291","alterId": 0,"email": "vmess_arf"
              }
           ]
        },
@@ -82,16 +82,16 @@
      },
      {
      "listen": "127.0.0.1",
-     "port": "41863",
+     "port": "18458",
      "protocol": "vmess",
       "settings": {
             "clients": [
                {
-                 "id": "d457b537-3e6f-4400-8d6b-f1064543d555",
+                 "id": "3168bab8-be4d-4d75-8b7a-d5d116a75586",
                  "alterId": 0
 #vmesskuota
-### vmess_arf1 2024-03-20
-},{"id": "5e7a34e4-f335-4517-b5a7-dc9eb196655b","alterId": 0,"email": "vmess_arf1"
+### vmess_arf 2024-03-22
+},{"id": "0b4c2e0d-442c-43f1-9b55-808e5c005291","alterId": 0,"email": "vmess_arf"
              }
           ]
        },
@@ -104,16 +104,16 @@
      },
     {
       "listen": "127.0.0.1",
-      "port": "35934",
+      "port": "14572",
       "protocol": "trojan",
       "settings": {
           "decryption":"none",
            "clients": [
               {
-                 "password": "c7c407e8-c4d8-4a91-8a51-43e753da0561"
+                 "password": "3168bab8-be4d-4d75-8b7a-d5d116a75586"
 #trojanws
-### trojan_test 2023-04-29
-},{"password": "c7c407e8-c4d8-4a91-8a51-43e753da0561","email": "trojan_test"
+##### trojan_arf 2024-03-22
+},{"password": "8394ff55-d075-4d1d-a65a-c82f16dc62d1","email": "trojan_arf"
               }
           ],
          "udp": true
@@ -127,13 +127,13 @@
      },
     {
          "listen": "127.0.0.1",
-        "port": "21379",
+        "port": "21253",
         "protocol": "shadowsocks",
         "settings": {
            "clients": [
            {
            "method": "aes-128-gcm",
-          "password": "c7c407e8-c4d8-4a91-8a51-43e753da0561"
+          "password": "vloxzLD15zy+nRij9NZ5HQ=="
 #ssws
            }
           ],
@@ -148,16 +148,16 @@
      },
       {
         "listen": "127.0.0.1",
-        "port": "15907",
+        "port": "26486",
         "protocol": "vless",
         "settings": {
          "decryption":"none",
            "clients": [
              {
-               "id": "d457b537-3e6f-4400-8d6b-f1064543d555"
+               "id": "3168bab8-be4d-4d75-8b7a-d5d116a75586"
 #vlessgrpc
-### vless_test 2023-04-29
-},{"id": "dcbc0c41-6a25-4e93-8b22-0410e9f0d2af","email": "vless_test"
+#### vless_arf 2024-03-22
+},{"id": "77f6e656-649b-4caf-9beb-6e9f32290aac","email": "vless_arf"
              }
           ]
        },
@@ -170,16 +170,16 @@
      },
      {
       "listen": "127.0.0.1",
-      "port": "22129",
+      "port": "22070",
      "protocol": "vmess",
       "settings": {
             "clients": [
                {
-                 "id": "d457b537-3e6f-4400-8d6b-f1064543d555",
+                 "id": "3168bab8-be4d-4d75-8b7a-d5d116a75586",
                  "alterId": 0
 #vmessgrpc
-### vmess_arf1 2024-03-20
-},{"id": "5e7a34e4-f335-4517-b5a7-dc9eb196655b","alterId": 0,"email": "vmess_arf1"
+### vmess_arf 2024-03-22
+},{"id": "0b4c2e0d-442c-43f1-9b55-808e5c005291","alterId": 0,"email": "vmess_arf"
              }
           ]
        },
@@ -192,16 +192,16 @@
      },
      {
         "listen": "127.0.0.1",
-        "port": "16069",
+        "port": "37961",
         "protocol": "trojan",
         "settings": {
           "decryption":"none",
              "clients": [
                {
-                 "password": "c7c407e8-c4d8-4a91-8a51-43e753da0561"
+                 "password": "3168bab8-be4d-4d75-8b7a-d5d116a75586"
 #trojangrpc
-### trojan_test 2023-04-29
-},{"password": "c7c407e8-c4d8-4a91-8a51-43e753da0561","email": "trojan_test"
+##### trojan_arf 2024-03-22
+},{"password": "8394ff55-d075-4d1d-a65a-c82f16dc62d1","email": "trojan_arf"
                }
            ]
         },
@@ -214,13 +214,13 @@
    },
    {
     "listen": "127.0.0.1",
-    "port": "15927",
+    "port": "27665",
     "protocol": "shadowsocks",
     "settings": {
         "clients": [
           {
              "method": "aes-128-gcm",
-             "password": "c7c407e8-c4d8-4a91-8a51-43e753da0561"
+             "password": "vloxzLD15zy+nRij9NZ5HQ=="
 #ssgrpc
            }
          ],

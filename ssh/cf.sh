@@ -14,11 +14,11 @@ LIGHT='\033[0;37m'
 
 clear
 apt install jq curl -y
-DOMAIN=vpnku.tech
+DOMAIN=d-jumper.me
 sub=$(</dev/urandom tr -dc a-z0-9 | head -c4)
-SUB_DOMAIN=${sub}.vpnku.tech
-CF_ID=akbarstore21@yahoo.com
-CF_KEY=1170c2d87638adb12ad8f0f4b8c599c545ada
+SUB_DOMAIN=${sub}.d-jumper.me
+CF_ID=arief.prsty@gmail.com
+CF_KEY=3a3ac5ccc9e764de9129fbbb177c161b9dfbd
 set -euo pipefail
 IP=$(wget -qO- ipinfo.io/ip);
 echo "Updating DNS for ${SUB_DOMAIN}..."

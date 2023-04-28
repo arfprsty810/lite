@@ -24,8 +24,6 @@
                {
                  "id": "3168bab8-be4d-4d75-8b7a-d5d116a75586"      
 #vless                                                             
-#### vless_arf 2024-03-22                                           
-},{"id": "77f6e656-649b-4caf-9beb-6e9f32290aac","email": "vless_arf"
               }
            ]                                                               
         },                                                                 
@@ -46,8 +44,6 @@
                  "id": "3168bab8-be4d-4d75-8b7a-d5d116a75586",
                  "alterId": 0
 #vmess
-### vmess_arf 2024-03-22
-},{"id": "0b4c2e0d-442c-43f1-9b55-808e5c005291","alterId": 0,"email": "vmess_arf"
              }
           ]
        },
@@ -68,8 +64,6 @@
                  "id": "3168bab8-be4d-4d75-8b7a-d5d116a75586",
                  "alterId": 0
 #vmessworry
-### vmess_arf 2024-03-22
-},{"id": "0b4c2e0d-442c-43f1-9b55-808e5c005291","alterId": 0,"email": "vmess_arf"
              }
           ]
        },
@@ -90,8 +84,6 @@
                  "id": "3168bab8-be4d-4d75-8b7a-d5d116a75586",
                  "alterId": 0
 #vmesskuota
-### vmess_arf 2024-03-22
-},{"id": "0b4c2e0d-442c-43f1-9b55-808e5c005291","alterId": 0,"email": "vmess_arf"
              }
           ]
        },
@@ -112,8 +104,6 @@
               {
                  "password": "3168bab8-be4d-4d75-8b7a-d5d116a75586"
 #trojanws
-##### trojan_arf 2024-03-22
-},{"password": "8394ff55-d075-4d1d-a65a-c82f16dc62d1","email": "trojan_arf"
               }
           ],
          "udp": true
@@ -156,8 +146,6 @@
              {
                "id": "3168bab8-be4d-4d75-8b7a-d5d116a75586"
 #vlessgrpc
-#### vless_arf 2024-03-22
-},{"id": "77f6e656-649b-4caf-9beb-6e9f32290aac","email": "vless_arf"
              }
           ]
        },
@@ -178,8 +166,6 @@
                  "id": "3168bab8-be4d-4d75-8b7a-d5d116a75586",
                  "alterId": 0
 #vmessgrpc
-### vmess_arf 2024-03-22
-},{"id": "0b4c2e0d-442c-43f1-9b55-808e5c005291","alterId": 0,"email": "vmess_arf"
              }
           ]
        },
@@ -200,8 +186,6 @@
                {
                  "password": "3168bab8-be4d-4d75-8b7a-d5d116a75586"
 #trojangrpc
-##### trojan_arf 2024-03-22
-},{"password": "8394ff55-d075-4d1d-a65a-c82f16dc62d1","email": "trojan_arf"
                }
            ]
         },

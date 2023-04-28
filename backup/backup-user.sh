@@ -22,76 +22,11 @@ echo -e "
 
 date
 echo ""
-domain=$(cat /root/domain)
+domain="sg.d-jumper.me
 curl -s ipinfo.io/org/ > /etc/xray/ISP
 sleep 1
 mkdir -p /etc/xray
 cd /root/
-apt update -y
-apt clean all && apt update
-
-apt install iptables iptables-persistent -y
-apt install curl socat xz-utils wget apt-transport-https gnupg gnupg2 gnupg1 dnsutils lsb-release -y
-apt install socat cron bash-completion ntpdate -y
-#ntpdate pool.ntp.org
-ntpdate -u pool.ntp.org
-apt -y install chrony
-timedatectl set-ntp true
-#systemctl enable chronyd && systemctl restart chronyd
-systemctl enable chrony && systemctl restart chrony
-timedatectl set-timezone Asia/Jakarta
-#chronyc sourcestats -v
-#chronyc tracking -v
-apt install curl pwgen openssl netcat cron -y
-
-apt install curl socat xz-utils wget apt-transport-https gnupg gnupg2 gnupg1 dnsutils lsb-release -y 
-apt install socat cron bash-completion ntpdate -y
-ntpdate pool.ntp.org
-apt -y install chrony
-apt install zip -y
-apt install net-tools -y
-apt install curl pwgen openssl netcat cron -y
-apt-get --reinstall --fix-missing install -y sudo dpkg psmisc socat jq ruby wondershaper python2 tmux nmap bzip2 gzip coreutils wget screen rsyslog iftop htop net-tools zip unzip wget vim net-tools curl nano sed screen gnupg gnupg1 bc apt-transport-https build-essential gcc g++ automake make autoconf perl m4 dos2unix dropbear libreadline-dev zlib1g-dev libssl-dev dirmngr libxml-parser-perl neofetch git lsof iptables iptables-persistent
-apt-get --reinstall --fix-missing install -y libreadline-dev zlib1g-dev libssl-dev python2 screen curl jq bzip2 gzip coreutils rsyslog iftop htop zip unzip net-tools sed gnupg gnupg1 bc sudo apt-transport-https build-essential dirmngr libxml-parser-perl neofetch screenfetch git lsof openssl easy-rsa fail2ban tmux vnstat dropbear libsqlite3-dev socat cron bash-completion ntpdate xz-utils sudo apt-transport-https gnupg2 gnupg1 dnsutils lsb-release chrony
-gem install lolcat
-sleep 1
-echo -e "[ ${green}INFO$NC ] Disable ipv6"
-echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6 >/dev/null 2>&1
-sed -i '$ i\echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6' /etc/rc.local >/dev/null 2>&1
-apt update -y
-apt upgrade -y
-apt dist-upgrade -y
-clear
-
-echo -e "[ ${green}INFO${NC} ] Checking... "
-apt install iptables iptables-persistent -y
-sleep 1
-clear
-echo -e "[ ${green}INFO$NC ] Setting ntpdate"
-ntpdate pool.ntp.org 
-timedatectl set-ntp true
-sleep 1
-clear
-echo -e "[ ${green}INFO$NC ] Enable chronyd"
-systemctl enable chronyd
-systemctl restart chronyd
-sleep 1
-clear
-echo -e "[ ${green}INFO$NC ] Enable chrony"
-systemctl enable chrony
-systemctl restart chrony
-clear
-timedatectl set-timezone Asia/Jakarta
-sleep 1
-clear
-echo -e "[ ${green}INFO$NC ] Setting chrony tracking"
-chronyc sourcestats -v
-chronyc tracking -v
-clear
-echo -e "[ ${green}INFO$NC ] Setting service"
-clear
-yellow "XRAY VPN MULTI PORT"
-echo " "
 
 # install xray
 sleep 1

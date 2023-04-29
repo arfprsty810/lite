@@ -10,6 +10,7 @@ yellow() { echo -e "\\033[33;1m${*}\\033[0m"; }
 green() { echo -e "\\033[32;1m${*}\\033[0m"; }
 red() { echo -e "\\033[31;1m${*}\\033[0m"; }
 
+clear
 echo " Vmess / Vless Trojan "
 echo "IN Progress ..."
 sleep 3
@@ -18,9 +19,8 @@ echo -e ""
 secs_to_human() {
     echo "Installation time : $(( ${1} / 3600 )) hours $(( (${1} / 60) % 60 )) minute's $(( ${1} % 60 )) seconds"
 }
-start=$(date +%s)
-clear
 
+start=$(date +%s)
 trgo="/etc/arf/trojango"
 ipvps="/var/lib/arf"
 logtrgo="/var/log/arf/trojango"
@@ -30,12 +30,7 @@ openssl rand -base64 16 > /etc/xray/passwd
 pwd=$(cat /etc/xray/passwd)
 # set random uuid
 uuid=$(cat /proc/sys/kernel/random/uuid)
-
-mkdir -p /etc/xray
-mkdir -p $ipvps >/dev/null 2>&1
-echo "IP=" >> $ipvps/ipvps.conf
-touch /etc/xray/domain
-touch /etc/xray/scdomain
+clear
 
 date
 echo ""
@@ -56,31 +51,6 @@ read -rp "Input ur domain : " -e pp
 domain=$(cat /etc/xray/domain)
 sleep 1
 
-cd /root/
-apt update && apt upgrade -y
-clear
-apt clean all && apt update
-clear
-apt install iptables iptables-persistent -y
-clear
-apt install cron bash-completion -y
-clear
-apt install pwgen openssl netcat -y
-clear
-apt install lsb-release -y 
-clear
-apt install zip -y
-clear
-apt install net-tools -y
-clear
-apt install curl socat xz-utils wget apt-transport-https gnupg gnupg2 gnupg1 dnsutils -y
-clear
-apt-get --reinstall --fix-missing install -y sudo dpkg psmisc jq ruby wondershaper python2 tmux nmap bzip2 gzip coreutils iftop htop unzip vim nano gcc g++ automake make autoconf perl m4 dos2unix libreadline-dev zlib1g-dev git
-clear
-apt-get --reinstall --fix-missing install -y libssl-dev screen rsyslog sed bc build-essential dirmngr libxml-parser-perl neofetch screenfetch lsof easy-rsa fail2ban vnstat libsqlite3-dev dropbear openvpn squid
-gem install lolcat
-clear
-
 echo -e "[ ${green}INFO$NC ] Disable ipv6"
 sleep 1
 echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6 >/dev/null 2>&1
@@ -90,11 +60,9 @@ apt upgrade -y
 apt dist-upgrade -y
 clear
 echo -e "[ ${green}INFO${NC} ] Checking... "
-apt install iptables iptables-persistent -y
 sleep 1
 clear
 echo -e "[ ${green}INFO$NC ] Setting ntpdate"
-apt install ntpdate -y
 ntpdate -u pool.ntp.org
 ntpdate pool.ntp.org 
 timedatectl set-ntp true
@@ -102,7 +70,6 @@ timedatectl set-timezone Asia/Jakarta
 sleep 1
 clear
 echo -e "[ ${green}INFO$NC ] Enable chronyd"
-apt -y install chrony
 systemctl enable chronyd
 systemctl restart chronyd
 sleep 1
@@ -123,30 +90,13 @@ apt upgrade -y
 clear
 echo " "
 
-# install xray
-sleep 1
-echo -e "[ ${green}INFO$NC ] Downloading & Installing xray core"
-domainSock_dir="/run/xray";! [ -d $domainSock_dir ] && mkdir  $domainSock_dir
-chown www-data.www-data $domainSock_dir
-clear
-
-# Make Folder XRay
-mkdir -p /var/log/xray
-chown www-data.www-data /var/log/xray
-chmod +x /var/log/xray
-touch /var/log/xray/access.log
-touch /var/log/xray/error.log
-touch /var/log/xray/access2.log
-touch /var/log/xray/error2.log
-# / / Ambil Xray Core Version Terbaru
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.5.6
-
-echo -e "[ ${green}INFO$NC ] INSATLL NGINX SERVER"
 # install webserver
 cd
-apt -y install nginx
 rm /etc/nginx/sites-enabled/default
 rm /etc/nginx/sites-available/default
+rm -rvf /etc/nginx/nginx.conf
+rm -rvf /home/vps/public_html
+rm -rvf /home/vps/public_html/index.html
 wget -O /etc/nginx/nginx.conf "$github/xray/nginx.conf"
 mkdir -p /home/vps/public_html
 echo "<?php phpinfo() ?>" > /home/vps/public_html/info.php
@@ -161,9 +111,8 @@ clear
 echo -e "[ ${green}INFO$NC ] INSATLL CERT SSL"
 ## crt xray
 systemctl stop nginx
-mkdir /root/.acme.sh
-curl https://acme-install.netlify.app/acme.sh -o /root/.acme.sh/acme.sh
-chmod +x /root/.acme.sh/acme.sh
+rm -rvf /etc/xray/xray.crt
+rm -rvf /etc/xray/xray.key
 /root/.acme.sh/acme.sh --upgrade --auto-upgrade
 /root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
 /root/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-256
@@ -194,6 +143,7 @@ vmessgrpc=$((RANDOM + 10000))
 trojangrpc=$((RANDOM + 10000))
 
 # xray config
+rm -rvf /etc/xray/config.json
 cat > /etc/xray/config.json << END
 {
   "log" : {
@@ -445,8 +395,9 @@ cat > /etc/xray/config.json << END
   }
 }
 END
+clear
 
-rm -rf /etc/systemd/system/xray.service.d
+rm -rvf /etc/systemd/system/xray.service
 cat <<EOF> /etc/systemd/system/xray.service
 Description=Xray Service
 Documentation=https://github.com/xtls
@@ -466,6 +417,7 @@ LimitNOFILE=1000000
 WantedBy=multi-user.target
 
 EOF
+rm -rvf /etc/systemd/system/runn.service
 cat > /etc/systemd/system/runn.service <<EOF
 [Unit]
 Description=Mampus-Anjeng
@@ -483,6 +435,7 @@ EOF
 clear
 
 #nginx config
+rm -rvf /etc/nginx/conf.d/xray.conf
 cat >/etc/nginx/conf.d/xray.conf <<EOF
     server {
              listen 80;
@@ -701,6 +654,9 @@ sleep 2
 # Install Trojan Go
 latest_version="$(curl -s "https://api.github.com/repos/p4gefau1t/trojan-go/releases" | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
 trojango_link="https://github.com/p4gefau1t/trojan-go/releases/download/v${latest_version}/trojan-go-linux-amd64.zip"
+rm -rvf /usr/bin/trojan-go
+rm -rvf $trgo
+rm -rvf $logtrgo
 mkdir -p "/usr/bin/trojan-go"
 mkdir -p "$trgo"
 cd `mktemp -d`
@@ -713,11 +669,9 @@ touch $trgo/akun.conf
 touch $logtrgo/trojan-go.log
 
 # Trojan Go Uuid
-cat /proc/sys/kernel/random/uuid > $trgo/uuid
-uuidtrgo=$(cat $trgo/uuid)
-#cat > $trgo/uuid << END
-#$uuid
-#END
+cat > $trgo/uuid << END
+$uuid
+END
 
 # Buat Config Trojan Go
 cat > $trgo/config.json << END
@@ -803,6 +757,7 @@ RestartPreventExitStatus=23
 [Install]
 WantedBy=multi-user.target
 END
+clear
 
 # restart
 iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2086 -j ACCEPT
@@ -811,18 +766,6 @@ iptables-save > /etc/iptables.up.rules
 iptables-restore -t < /etc/iptables.up.rules
 netfilter-persistent save
 netfilter-persistent reload
-systemctl daemon-reload
-systemctl stop trojan-go
-systemctl start trojan-go
-systemctl enable trojan-go
-systemctl restart trojan-go
-clear
-
-secs_to_human "$(($(date +%s) - ${start}))" | tee -a log-install.txt
-echo -e "[ ${green}INFO$NC ] Re-INSTALL FINISHED !"
-read -n 1 -s -r -p "Press any key to Reboot System..."
-clear
-rm -f ins-xray.sh
 systemctl daemon-reload
 systemctl enable xray
 systemctl restart xray
@@ -833,6 +776,11 @@ systemctl stop trojan-go
 systemctl start trojan-go
 systemctl enable trojan-go
 systemctl restart trojan-go
+clear
+
+secs_to_human "$(($(date +%s) - ${start}))" | tee -a log-install.txt
+echo -e "[ ${green}INFO$NC ] Re-INSTALL FINISHED !"
+read -n 1 -s -r -p "Press any key to Reboot System..."
 clear
 reboot
 

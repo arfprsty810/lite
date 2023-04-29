@@ -63,7 +63,7 @@ rm -rf /tmp/other.txt
 
 
 echo -n > /tmp/other.txt
-data=( `cat /etc/trojan-go/akun.conf | grep '^###' | cut -d ' ' -f 2`);
+data=( `cat $trgo/akun.conf | grep '^###' | cut -d ' ' -f 2`);
 echo "------------------------------------";
 echo "-----=[ Trojan-Go User Login ]=-----";
 echo "------------------------------------";

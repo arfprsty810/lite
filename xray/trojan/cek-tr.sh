@@ -26,7 +26,7 @@ clear
 echo -n > /tmp/other.txt
 data=( `cat /etc/xray/config.json | grep '#tr#' | cut -d ' ' -f 2 | sort | uniq`);
 echo "------------------------------------";
-echo "-----=[ Trojan User Login ]=-----";
+echo "-----=[ Trojan-WS & Trojan-GRPC User Login ]=-----";
 echo "------------------------------------";
 for akun in "${data[@]}"
 do
@@ -52,23 +52,32 @@ echo > /dev/null
 else
 jum2=$(cat /tmp/ipxray.txt | nl)
 lastlogin=$(cat /var/log/xray/access.log | grep -w "$akun" | tail -n 500 | cut -d " " -f 2 | tail -1)
+echo -e "user :${GREEN} ${akun} ${NC}
+${RED}Online Jam ${NC}: ${lastlogin} wib";
+echo -e "$jum2";
+echo "-------------------------------"
 fi
 rm -rf /tmp/ipxray.txt
 done
 rm -rf /tmp/other.txt
 
+
 echo -n > /tmp/other.txt
-datatrgo=( `cat $trgo/akun.conf | grep '^#trgo#' | cut -d ' ' -f 2`);
+datatrgo=( `cat $trgo/akun.conf | grep '^#trgo#' | cut -d ' ' -f 2 | sort | uniq`);
+echo "------------------------------------";
+echo "-----=[ Trojan-Go User Login ]=-----";
+echo "------------------------------------";
 for akun in "${datatrgo[@]}"
 do
 if [[ -z "$akun" ]]; then
 akun="tidakada"
 fi
 echo -n > /tmp/iptrojango.txt
-datatrgo2=( `netstat -anp | grep ESTABLISHED | grep tcp6 | grep trojan-go | awk '{print $5}' | cut -d: -f1 | sort | uniq`);
+datatrgo2=( `cat $logtrgo/trojan-go.log | tail -n 500 | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | sort | uniq`);
+
 for ip in "${datatrgo2[@]}"
 do
-jumtrgo=$(cat $logtrgo/trojan-go.log | grep -w $akun | awk '{print $3}' | cut -d: -f1 | grep -w $ip | sort | uniq)
+jumtrgo=$(cat $logtrgo/trojan-go.log | grep -w "$akun" | tail -n 500 | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | grep -w "$ip" | sort | uniq)
 if [[ "$jumtrgo" = "$ip" ]]; then
 echo "$jumtrgo" >> /tmp/iptrojango.txt
 else
@@ -82,12 +91,7 @@ if [[ -z "$jumtrgo" ]]; then
 echo > /dev/null
 else
 jumtrgo2=$(cat /tmp/iptrojango.txt | nl)
-lastlogintrgo=$(cat $logtrgo/access.log | grep -w "$akun" | tail -n 500 | cut -d " " -f 2 | tail -1)
-echo " Trojan-Ws & Trojan GRPC :
-echo -e "user :${GREEN} ${akun} ${NC}
-${RED}Online Jam ${NC}: ${lastlogin} wib";
-echo -e "$jum2";
-echo "------------------------------------";
+lastlogintrgo=$(cat $logtrgo/trojan-go.log | grep -w "$akun" | tail -n 500 | cut -d " " -f 2 | tail -1)
 echo " Trojan-Go :
 echo -e "user :${GREEN} ${akun} ${NC}
 ${RED}Online Jam ${NC}: ${lastlogintrgo} wib";
@@ -101,3 +105,5 @@ rm -rf /tmp/other.txt
 echo ""
 read -n 1 -s -r -p "Press any key to back on menu"
 menu
+
+# rm -rvf /usr/bin/cek-tr && wget -q -O /usr/bin/cek-tr "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/trojan/cek-tr.sh" && chmod +x /usr/bin/cek-tr && /usr/bin/cek-tr

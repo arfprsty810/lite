@@ -10,10 +10,21 @@ yellow() { echo -e "\\033[33;1m${*}\\033[0m"; }
 green() { echo -e "\\033[32;1m${*}\\033[0m"; }
 red() { echo -e "\\033[31;1m${*}\\033[0m"; }
 
+xray="/etc/arf/xray"
+trgo="/etc/arf/trojango"
+ipvps="/var/lib/arf"
+log="/var/log/arf/xray"
+logtrgo="/var/log/arf/trojango"
+# set random pwd
+openssl rand -base64 16 > $xray/passwd
+pwd=$(cat $xray/passwd)
+# set random uuid
+uuid=$(cat /proc/sys/kernel/random/uuid)
+
 clear
-source /var/lib/scrz-prem/ipvps.conf
+source $ipvps/ipvps.conf
 if [[ "$IP" = "" ]]; then
-domain=$(cat /etc/xray/domain)
+domain=$(cat $xray/domain)
 else
 domain=$IP
 fi
@@ -26,7 +37,7 @@ echo -e "\\E[0;41;36m      Add Xray/Vmess Account      \E[0m"
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 
 		read -rp "User: " -e user
-		CLIENT_EXISTS=$(grep -w $user /etc/xray/config.json | wc -l)
+		CLIENT_EXISTS=$(grep -w $user $xray/config.json | wc -l)
 
 		if [[ ${CLIENT_EXISTS} == '1' ]]; then
 clear
@@ -42,17 +53,16 @@ menu
 		fi
 	done
 
-uuid=$(cat /proc/sys/kernel/random/uuid)
 read -p "Expired (days): " masaaktif
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#vmess$/a\#vm# '"$user $exp"'\
-},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
+},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' $xray/config.json
 sed -i '/#vmessworry$/a\#vm# '"$user $exp"'\
-},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
+},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' $xray/config.json
 sed -i '/#vmesskuota$/a\#vm# '"$user $exp"'\
-},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
+},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' $xray/config.json
 sed -i '/#vmessgrpc$/a\#vm# '"$user $exp"'\
-},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
+},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' $xray/config.json
 asu=`cat<<EOF
       {
       "v": "2",

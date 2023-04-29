@@ -43,8 +43,6 @@ export BOLD="\e[1m"
 export WARNING="${RED}\e[5m"
 export UNDERLINE="\e[4m"
 
-# // Exporting URL Host
-
 # // Root Checking
 if [ "${EUID}" -ne 0 ]; then
 		echo -e "${EROR} Please Run This Script As Root User !"
@@ -52,12 +50,12 @@ if [ "${EUID}" -ne 0 ]; then
 fi
 
 # // Exporting IP Address
-export IP=$( curl -s https://ipinfo.io/ip/ )
+xray="/etc/arf/xray"
+IP=$(cat $xray/IP)
+DOMAIN=$(cat $xray/domain)
 
 # // Exporting Network Interface
 export NETWORK_IFACE="$(ip route show to default | awk '{print $5}')"
-
-
 clear
 
 GREEN='\033[0;32m'
@@ -81,8 +79,6 @@ color3='\e[0m'
 dateFromServer=$(curl -v --insecure --silent https://google.com/ 2>&1 | grep Date | sed -e 's/< Date: //')
 biji=`date +"%Y-%m-%d" -d "$dateFromServer"`
 #########################
-
-MYIP=$(curl -sS ipinfo.io/ip)
 
 red='\e[1;31m'
 green='\e[1;32m'
@@ -311,10 +307,9 @@ kernelku=$(uname -r)
 
 # DNS PATCH
 #tipeos2=$(uname -m)
-#Name=$(curl -sS https://raw.githubusercontent.com/Fahmiiiiiiii/anjim/main/anjay/allow | grep $MYIP | awk '{print $2}')
-#Exp=$(curl -sS https://raw.githubusercontent.com/Fahmiiiiiiii/anjim/main/anjay/allow | grep $MYIP | awk '{print $3}')
-# GETTING DOMAIN NAME
-Domen="$(cat /etc/xray/domain)"
+#Name=$(curl -sS https://raw.githubusercontent.com/Fahmiiiiiiii/anjim/main/anjay/allow | grep $IP | awk '{print $2}')
+#Exp=$(curl -sS https://raw.githubusercontent.com/Fahmiiiiiiii/anjim/main/anjay/allow | grep $IP | awk '{print $3}')
+
 echo -e ""
 echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
 echo -e "\E[39;1;92m              ⇱ Sytem Information ⇲             \E[0m"
@@ -326,8 +321,8 @@ echo -e "❇️ OS Name     : $Tipe"
 # echo -e "Virtual     :$typevps"
 # echo -e "Cpu Usage   :$cpu_usage"
 echo -e "❇️ Total RAM   : ${totalram}MB"
-echo -e "❇️ Public IP   : $MYIP"
-echo -e "❇️ Domain      : $Domen"
+echo -e "❇️ Public IP   : $IP"
+echo -e "❇️ Domain      : $DOMAIN"
 #echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
 #echo -e "\E[44;1;39m          ⇱ Subscription Information ⇲          \E[0m"
 #echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"

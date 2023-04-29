@@ -10,6 +10,18 @@ yellow() { echo -e "\\033[33;1m${*}\\033[0m"; }
 green() { echo -e "\\033[32;1m${*}\\033[0m"; }
 red() { echo -e "\\033[31;1m${*}\\033[0m"; }
 
+trgo="/etc/arf/trojango"
+ipvps="/var/lib/arf"
+logtrgo="/var/log/arf/trojango"
+
+clear
+source $ipvps/ipvps.conf
+if [[ "$IP" = "" ]]; then
+domain=$(cat $xray/domain)
+else
+domain=$IP
+fi
+
 NUMBER_OF_CLIENTS=$(grep -c -E "^#tr# " "/etc/xray/config.json")
 	if [[ ${NUMBER_OF_CLIENTS} == '0' ]]; then
 		clear
@@ -47,6 +59,7 @@ NUMBER_OF_CLIENTS=$(grep -c -E "^#tr# " "/etc/xray/config.json")
     exp3=$(($exp2 + $masaaktif))
     exp4=`date -d "$exp3 days" +"%Y-%m-%d"`
     sed -i "/#tr# $user/c\#tr# $user $exp4" /etc/xray/config.json
+    sed -i "s/#trgo# $user $exp/#tr# $user $exp4/g" $trgo/akun.conf
     systemctl restart xray > /dev/null 2>&1
     clear
     echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"

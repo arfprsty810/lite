@@ -10,6 +10,18 @@ yellow() { echo -e "\\033[33;1m${*}\\033[0m"; }
 green() { echo -e "\\033[32;1m${*}\\033[0m"; }
 red() { echo -e "\\033[31;1m${*}\\033[0m"; }
 
+trgo="/etc/arf/trojango"
+ipvps="/var/lib/arf"
+logtrgo="/var/log/arf/trojango"
+
+clear
+source $ipvps/ipvps.conf
+if [[ "$IP" = "" ]]; then
+domain=$(cat $xray/domain)
+else
+domain=$IP
+fi
+
 clear
 NUMBER_OF_CLIENTS=$(grep -c -E "^#tr# " "/etc/xray/config.json")
 	if [[ ${NUMBER_OF_CLIENTS} == '0' ]]; then
@@ -40,6 +52,8 @@ NUMBER_OF_CLIENTS=$(grep -c -E "^#tr# " "/etc/xray/config.json")
     else
     exp=$(grep -wE "^#tr# $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
     sed -i "/^#tr# $user $exp/,/^},{/d" /etc/xray/config.json
+    sed -i "/^#trgo# $user $exp/d" $trgo/akun.conf
+    sed -i '/^,"'"$user"'"$/d' $trgo/config.json
     systemctl restart xray > /dev/null 2>&1
     clear
     echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
@@ -50,6 +64,5 @@ NUMBER_OF_CLIENTS=$(grep -c -E "^#tr# " "/etc/xray/config.json")
     echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
     echo ""
     read -n 1 -s -r -p "Press any key to back on menu"
-    
     menu
     fi

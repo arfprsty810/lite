@@ -14,12 +14,13 @@ green() { echo -e "\\033[32;1m${*}\\033[0m"; }
 red() { echo -e "\\033[31;1m${*}\\033[0m"; }
 cd /root
 
-mkdir -p /etc/xray
-mkdir -p /etc/v2ray
-touch /etc/xray/domain
-touch /etc/v2ray/domain
-touch /etc/xray/scdomain
-touch /etc/v2ray/scdomain
+xray="/etc/arf/xray"
+ipvps="/var/lib/arf"
+mkdir -p $xray
+mkdir -p $ipvps >/dev/null 2>&1
+echo "IP=" >> $ipvps/ipvps.conf
+touch $xray/domain
+touch $xray/scdomain
 
 secs_to_human() {
     echo "Installation time : $(( ${1} / 3600 )) hours $(( (${1} / 60) % 60 )) minute's $(( ${1} % 60 )) seconds"
@@ -44,13 +45,10 @@ clear
 END
 chmod 644 /root/.profile
 
-mkdir -p /var/lib/scrz-prem >/dev/null 2>&1
-echo "IP=" >> /var/lib/scrz-prem/ipvps.conf
-
-if [ -f "/etc/xray/domain" ]; then
+if [ -f "$xray/domain" ]; then
 clear
 echo ""
-echo -ne "[ ${yell}WARNING${NC} ] INSTALL AUTOSCRIPT VPS XRAY v.1.0   ?  (y/n)? "
+echo -ne "[ ${yell}INFO${NC} ] INSTALL AUTOSCRIPT VPS XRAY v.1.0   ?  (y/n)? "
 read answer
 if [ "$answer" == "${answer#[Yy]}" ] ;then
 rm setup.sh
@@ -62,13 +60,13 @@ fi
 fi
 echo ""
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "$green                         AUTOSCRIPT VPS XRAY v.1.0                          $NC"
-echo -e "$green                         MULTI PORT XRAY 443 + 80                       $NC"
+echo -e "$green           AUTOSCRIPT VPS XRAY v.1.0                          $NC"
+echo -e "$green           MULTI PORT XRAY 443 + 80                       $NC"
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 sleep 3
 clear
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "$green              Add Domain for XRAY VPN              $NC"
+echo -e "$green      Add Domain for XRAY VPN              $NC"
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo " "
 read -rp "Input ur domain : " -e pp
@@ -77,17 +75,18 @@ read -rp "Input ur domain : " -e pp
         Nothing input for domain!
         Then a random domain will be created"
     else
-        echo "$pp" > /root/scdomain
-	echo "$pp" > /etc/xray/scdomain
-	echo "$pp" > /etc/xray/domain
-	echo "$pp" > /etc/v2ray/domain
-	echo $pp > /root/domain
-        echo "IP=$pp" > /var/lib/scrz-prem/ipvps.conf
+	echo "$pp" > $xray/domain
+	echo "$pp" > $xray/scdomain
+	echo "$pp" > /root/domain
+    echo "$pp" > /root/scdomain
+    echo "IP=$pp" > $ipvps/ipvps.conf
+    curl -s ipinfo.io/org/ > $xray/ISP
+    curl -s https://ipinfo.io/ip/ > $xray/IP
     fi
     
 #Instal Xray
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "$green                   Install XRAY              $NC"
+echo -e "$green          Install XRAY              $NC"
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "[ ${green}SCRIPT${NC} ] install .... "
 sleep 2

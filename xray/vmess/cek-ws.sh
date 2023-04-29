@@ -10,28 +10,9 @@ yellow() { echo -e "\\033[33;1m${*}\\033[0m"; }
 green() { echo -e "\\033[32;1m${*}\\033[0m"; }
 red() { echo -e "\\033[31;1m${*}\\033[0m"; }
 
-xray="/etc/arf/xray"
-trgo="/etc/arf/trojango"
-ipvps="/var/lib/arf"
-log="/var/log/arf/xray"
-logtrgo="/var/log/arf/trojango"
-# set random pwd
-openssl rand -base64 16 > $xray/passwd
-pwd=$(cat $xray/passwd)
-# set random uuid
-uuid=$(cat /proc/sys/kernel/random/uuid)
-
-clear
-source $ipvps/ipvps.conf
-if [[ "$IP" = "" ]]; then
-domain=$(cat $xray/domain)
-else
-domain=$IP
-fi
-
 clear
 echo -n > /tmp/other.txt
-data=( `cat $xray/config.json | grep '#vm#' | cut -d ' ' -f 2 | sort | uniq`);
+data=( `cat /etc/xray/config.json | grep '#vm#' | cut -d ' ' -f 2 | sort | uniq`);
 echo "------------------------------------";
 echo "-----=[ XRAY User Login ]=-----";
 echo "------------------------------------";
@@ -41,10 +22,10 @@ if [[ -z "$akun" ]]; then
 akun="tidakada"
 fi
 echo -n > /tmp/ipxray.txt
-data2=( `cat $log/access.log | tail -n 500 | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | sort | uniq`);
+data2=( `cat /var/log/xray/access.log | tail -n 500 | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | sort | uniq`);
 for ip in "${data2[@]}"
 do
-jum=$(cat $log/access.log | grep -w "$akun" | tail -n 500 | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | grep -w "$ip" | sort | uniq)
+jum=$(cat /var/log/xray/access.log | grep -w "$akun" | tail -n 500 | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | grep -w "$ip" | sort | uniq)
 if [[ "$jum" = "$ip" ]]; then
 echo "$jum" >> /tmp/ipxray.txt
 else
@@ -58,7 +39,7 @@ if [[ -z "$jum" ]]; then
 echo > /dev/null
 else
 jum2=$(cat /tmp/ipxray.txt | nl)
-lastlogin=$(cat $log/access.log | grep -w "$akun" | tail -n 500 | cut -d " " -f 2 | tail -1)
+lastlogin=$(cat /var/log/xray/access.log | grep -w "$akun" | tail -n 500 | cut -d " " -f 2 | tail -1)
 echo -e "user :${GREEN} ${akun} ${NC}
 ${RED}Online Jam ${NC}: ${lastlogin} wib";
 echo -e "$jum2";

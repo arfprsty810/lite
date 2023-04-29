@@ -712,6 +712,13 @@ mkdir $logtrgo
 touch $trgo/akun.conf
 touch $logtrgo/trojan-go.log
 
+# Trojan Go Uuid
+cat /proc/sys/kernel/random/uuid > $trgo/uuid
+uuidtrgo=$(cat $trgo/uuid)
+#cat > $trgo/uuid << END
+#$uuid
+#END
+
 # Buat Config Trojan Go
 cat > $trgo/config.json << END
 {
@@ -723,7 +730,7 @@ cat > $trgo/config.json << END
   "log_level": 1,
   "log_file": "$logtrgo/trojan-go.log",
   "password": [
-      "$uuid"
+      "$uuidtrgo"
   ],
   "disable_http_check": true,
   "udp_timeout": 60,
@@ -795,11 +802,6 @@ RestartPreventExitStatus=23
 
 [Install]
 WantedBy=multi-user.target
-END
-
-# Trojan Go Uuid
-cat > $trgo/uuid << END
-$uuid
 END
 
 # restart

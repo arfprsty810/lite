@@ -11,9 +11,9 @@ green() { echo -e "\\033[32;1m${*}\\033[0m"; }
 red() { echo -e "\\033[31;1m${*}\\033[0m"; }
 clear
 
-trgo="/etc/arf/trojango"
+trgo="/etc/trojan-go"
+logtrgo="/var/log/trojan-go"
 ipvps="/var/lib/arf"
-logtrgo="/var/log/arf/trojango"
 github="https://raw.githubusercontent.com/arfprsty810/lite/main"
 
 clear
@@ -43,7 +43,6 @@ rm -rvf /usr/bin/renew-tr
 
 #--
 rm -rvf /usr/bin/menu
-rm -rvf /usr/bin/cert
 rm -rvf /usr/bin/speedtest
 rm -rvf /usr/bin/update
 rm -rvf /usr/bin/restart
@@ -105,9 +104,6 @@ chmod +x /usr/bin/cek-bandwidth
 wget -q -O /usr/bin/menu "$github/xray/menu.sh"
 chmod +x /usr/bin/menu
 
-wget -q -O /usr/bin/cert "$github/xray/cert.sh"
-chmod +x /usr/bin/cert
-
 wget -q -O /usr/bin/speedtest "$github/xray/speedtest_cli.py"
 chmod +x /usr/bin/speedtest
 
@@ -125,7 +121,6 @@ echo -e "[ ${green}INFO$NC ] Install New Script ..."
 sleep 2
 
 sed -i -e 's/\r$//' /bin/menu
-sed -i -e 's/\r$//' /bin/cert
 sed -i -e 's/\r$//' /bin/update
 sed -i -e 's/\r$//' /bin/restart
 sed -i -e 's/\r$//' /bin/running

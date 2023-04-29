@@ -63,7 +63,7 @@ rm -rf /tmp/other.txt
 
 
 echo -n > /tmp/other.txt
-data=( `cat $trgo/akun.conf | grep '^###' | cut -d ' ' -f 2`);
+data=( `cat $trgo/akun.conf | grep '^#tr#' | cut -d ' ' -f 2`);
 echo "------------------------------------";
 echo "-----=[ Trojan-Go User Login ]=-----";
 echo "------------------------------------";
@@ -76,7 +76,7 @@ echo -n > /tmp/iptrojango.txt
 data2=( `netstat -anp | grep ESTABLISHED | grep tcp6 | grep trojan-go | awk '{print $5}' | cut -d: -f1 | sort | uniq`);
 for ip in "${data2[@]}"
 do
-jum=$(cat /var/log/trojan-go/trojan-go.log | grep -w $akun | awk '{print $3}' | cut -d: -f1 | grep -w $ip | sort | uniq)
+jum=$(cat $logtrgo/trojan-go.log | grep -w $akun | awk '{print $3}' | cut -d: -f1 | grep -w $ip | sort | uniq)
 if [[ "$jum" = "$ip" ]]; then
 echo "$jum" >> /tmp/iptrojango.txt
 else

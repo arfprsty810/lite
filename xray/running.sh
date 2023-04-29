@@ -143,7 +143,8 @@ ohq=$(systemctl status openvpn-ohp | grep Active | awk '{print $3}' | cut -d "("
 
 # DROPBEAR
 dropbear_status=$(/etc/init.d/dropbear status | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
-dober=$(echo "${dropbear_status}" | grep 'ActiveState=' | cut -f2 -d=)  
+dober_service="$(systemctl show /etc/init.d/dropbear.service --no-page)"
+dober=$(echo "${dober_service}" | grep 'ActiveState=' | cut -f2 -d=)  
 #wsdrop=$(systemctl status ws-dropbear.service | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
 #ohp=$(systemctl status dropbear-ohp | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
 

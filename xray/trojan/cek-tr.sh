@@ -59,7 +59,7 @@ echo -e "$jum2";
 echo "-------------------------------"
 fi
 rm -rf /tmp/ipxray.txt
-#done
+done
 rm -rf /tmp/other.txt
 
 echo -n > /tmp/other.txt
@@ -96,7 +96,6 @@ echo "$jumtrgo2";
 echo "------------------------------------";
 fi
 rm -rf /tmp/iptrojango.txt
-done
 done
 rm -rf /tmp/other.txt
 

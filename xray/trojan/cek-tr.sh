@@ -105,5 +105,3 @@ rm -rf /tmp/other.txt
 echo ""
 read -n 1 -s -r -p "Press any key to back on menu"
 menu
-
-# rm -rvf /usr/bin/cek-tr && wget -q -O /usr/bin/cek-tr "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/trojan/cek-tr.sh" && chmod +x /usr/bin/cek-tr && /usr/bin/cek-tr

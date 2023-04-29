@@ -16,15 +16,6 @@ ipvps="/var/lib/arf"
 logtrgo="/var/log/arf/trojango"
 github="https://raw.githubusercontent.com/arfprsty810/lite/main"
 
-cat> /root/.profile << END
-# ~/.profile: executed by Bourne-compatible login shells.
-
-if [ "$BASH" ]; then
-  if [ -f ~/.bashrc ]; then
-    . ~/.bashrc
-  fi
-fi
-
 clear
 echo -e "[ ${green}INFO$NC ] Remove old file"
 sleep 1
@@ -185,5 +176,12 @@ if [ "$BASH" ]; then
     . ~/.bashrc
   fi
 fi
+
+mesg n || true
+clear
+menu
+END
+chmod 644 /root/.profile
+
 clear
 menu

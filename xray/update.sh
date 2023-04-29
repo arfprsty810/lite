@@ -10,12 +10,20 @@ yellow() { echo -e "\\033[33;1m${*}\\033[0m"; }
 green() { echo -e "\\033[32;1m${*}\\033[0m"; }
 red() { echo -e "\\033[31;1m${*}\\033[0m"; }
 clear
-sleep 3
 
 trgo="/etc/arf/trojango"
 ipvps="/var/lib/arf"
 logtrgo="/var/log/arf/trojango"
 github="https://raw.githubusercontent.com/arfprsty810/lite/main"
+
+cat> /root/.profile << END
+# ~/.profile: executed by Bourne-compatible login shells.
+
+if [ "$BASH" ]; then
+  if [ -f ~/.bashrc ]; then
+    . ~/.bashrc
+  fi
+fi
 
 clear
 echo -e "[ ${green}INFO$NC ] Remove old file"
@@ -169,5 +177,13 @@ systemctl start trojan-go
 systemctl enable trojan-go
 systemctl restart trojan-go
 sleep 1
+cat> /root/.profile << END
+# ~/.profile: executed by Bourne-compatible login shells.
+
+if [ "$BASH" ]; then
+  if [ -f ~/.bashrc ]; then
+    . ~/.bashrc
+  fi
+fi
 clear
 menu

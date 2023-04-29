@@ -25,44 +25,42 @@ fi
 clear
 
 echo -n > /tmp/other.txt
-datatrgo=( `cat $trgo/akun.conf | grep '^#trgo#' | cut -d ' ' -f 2 | sort | uniq`);
-echo "------------------------------------";
-echo "-----=[ Trojan-Go User Login ]=-----";
-echo "------------------------------------";
-for akun in "${datatrgo[@]}"
+data=( `cat /etc/xray/config.json | grep '#tr#' | cut -d ' ' -f 2 | sort | uniq`);
+echo "-----------------------------------------";
+echo "-----=[ Trojan-WS & Trojan-GRPC User Login ]=-----";
+echo "-----------------------------------------";
+for akun in "${data[@]}"
 do
 if [[ -z "$akun" ]]; then
 akun="tidakada"
 fi
-echo -n > /tmp/iptrojango.txt
-datatrgo2=( `cat $logtrgo/trojan-go.log | tail -n 500 | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | sort | uniq`);
-for ip in "${datatrgo2[@]}"
+echo -n > /tmp/ipxray.txt
+data2=( `cat /var/log/xray/access.log | tail -n 500 | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | sort | uniq`);
+for ip in "${data2[@]}"
 do
-jumtrgo=$(cat $logtrgo/trojan-go.log | grep -w "$akun" | tail -n 500 | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | grep -w "$ip" | sort | uniq)
-if [[ "$jumtrgo" = "$ip" ]]; then
-echo "$jumtrgo" >> /tmp/iptrojango.txt
+jum=$(cat /var/log/xray/access.log | grep -w "$akun" | tail -n 500 | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | grep -w "$ip" | sort | uniq)
+if [[ "$jum" = "$ip" ]]; then
+echo "$jum" >> /tmp/ipxray.txt
 else
 echo "$ip" >> /tmp/other.txt
 fi
-jumtrgo2=$(cat /tmp/iptrojango.txt)
-sed -i "/$jumtrgo2/d" /tmp/other.txt > /dev/null 2>&1
+jum2=$(cat /tmp/ipxray.txt)
+sed -i "/$jum2/d" /tmp/other.txt > /dev/null 2>&1
 done
-jumtrgo=$(cat /tmp/iptrojango.txt)
-if [[ -z "$jumtrgo" ]]; then
+jum=$(cat /tmp/ipxray.txt)
+if [[ -z "$jum" ]]; then
 echo > /dev/null
 else
-jumtrgo2=$(cat /tmp/iptrojango.txt | nl)
-lastlogintrgo=$(cat $logtrgo/trojan-go.log | grep -w "$akun" | tail -n 500 | cut -d " " -f 2 | tail -1)
-echo " Trojan-Go :
+jum2=$(cat /tmp/ipxray.txt | nl)
+lastlogin=$(cat /var/log/xray/access.log | grep -w "$akun" | tail -n 500 | cut -d " " -f 2 | tail -1)
 echo -e "user :${GREEN} ${akun} ${NC}
-${RED}Online Jam ${NC}: ${lastlogintrgo} wib";
-echo "$jumtrgo2";
-echo "------------------------------------";
+${RED}Online Jam ${NC}: ${lastlogin} wib";
+echo -e "$jum2";
+echo "-------------------------------"
 fi
-rm -rf /tmp/iptrojango.txt
+rm -rf /tmp/ipxray.txt
 done
 rm -rf /tmp/other.txt
 
-echo ""
-read -n 1 -s -r -p "Press any key to back on menu"
+
 menu

@@ -10,10 +10,21 @@ yellow() { echo -e "\\033[33;1m${*}\\033[0m"; }
 green() { echo -e "\\033[32;1m${*}\\033[0m"; }
 red() { echo -e "\\033[31;1m${*}\\033[0m"; }
 
+xray="/etc/arf/xray"
+trgo="/etc/arf/trojango"
+ipvps="/var/lib/arf"
+log="/var/log/arf/xray"
+logtrgo="/var/log/arf/trojango"
+# set random pwd
+openssl rand -base64 16 > $xray/passwd
+pwd=$(cat $xray/passwd)
+# set random uuid
+uuid=$(cat /proc/sys/kernel/random/uuid)
+
 clear
-source /var/lib/scrz-prem/ipvps.conf
+source $ipvps/ipvps.conf
 if [[ "$IP" = "" ]]; then
-domain=$(cat /etc/xray/domain)
+domain=$(cat $xray/domain)
 else
 domain=$IP
 fi
@@ -26,7 +37,7 @@ echo -e "\\E[0;41;36m      Add Xray/Vless Account      \E[0m"
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 
 		read -rp "User: " -e user
-		CLIENT_EXISTS=$(grep -w $user /etc/xray/config.json | wc -l)
+		CLIENT_EXISTS=$(grep -w $user $xray/config.json | wc -l)
 
 		if [[ ${CLIENT_EXISTS} == '1' ]]; then
 clear
@@ -42,13 +53,12 @@ menu
 		fi
 	done
 
-uuid=$(cat /proc/sys/kernel/random/uuid)
 read -p "Expired (days): " masaaktif
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#vless$/a\#vl# '"$user $exp"'\
-},{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
+},{"id": "'""$uuid""'","email": "'""$user""'"' $xray/config.json
 sed -i '/#vlessgrpc$/a\#vl# '"$user $exp"'\
-},{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
+},{"id": "'""$uuid""'","email": "'""$user""'"' $xray/config.json
 vlesslink1="vless://${uuid}@${domain}:$tls?path=/vless&security=tls&encryption=none&type=ws#${user}"
 vlesslink2="vless://${uuid}@${domain}:$none?path=/vless&encryption=none&type=ws#${user}"
 vlesslink3="vless://${uuid}@${domain}:$tls?mode=gun&security=tls&encryption=none&type=grpc&serviceName=vless-grpc&sni=bug.com#${user}"

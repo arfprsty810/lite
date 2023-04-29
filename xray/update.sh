@@ -44,13 +44,6 @@ rm -rvf /usr/bin/cek-tr
 rm -rvf /usr/bin/del-tr
 rm -rvf /usr/bin/renew-tr
 
-#shadowshocks
-rm -rvf /usr/bin/menu-ssws
-rm -rvf /usr/bin/add-ssws
-rm -rvf /usr/bin/cek-ssws
-rm -rvf /usr/bin/del-ssws
-rm -rvf /usr/bin/renew-ssws
-
 #--
 rm -rvf /usr/bin/menu
 rm -rvf /usr/bin/cert
@@ -65,18 +58,6 @@ rm -rvf /usr/bin/backup-user
 clear
 echo -e "[ ${green}INFO$NC ] Update Script"
 sleep 1
-
-#shadowshock
-wget -q -O /usr/bin/menu-ssws "$github/xray/shadowshock/menu-ssws.sh"
-chmod +x /usr/bin/menu-ssws
-wget -q -O /usr/bin/add-ssws "$github/xray/shadowshock/add-ssws.sh"
-chmod +x /usr/bin/add-ssws
-wget -q -O /usr/bin/cek-ssws "$github/xray/shadowshock/cek-ssws.sh"
-chmod +x /usr/bin/cek-ssws
-wget -q -O /usr/bin/del-ssws "$github/xray/shadowshock/del-ssws.sh"
-chmod +x /usr/bin/del-ssws
-wget -q -O /usr/bin/renew-ssws "$github/xray/shadowshock/renew-ssws.sh"
-chmod +x /usr/bin/renew-ssws
 
 #vmess
 wget -q -O /usr/bin/menu-vmess "$github/xray/vmess/menu-vmess.sh"
@@ -172,12 +153,6 @@ sed -i -e 's/\r$//' /bin/add-tr
 sed -i -e 's/\r$//' /bin/cek-tr
 sed -i -e 's/\r$//' /bin/del-tr
 sed -i -e 's/\r$//' /bin/renew-tr
-
-sed -i -e 's/\r$//' /bin/menu-ssws
-sed -i -e 's/\r$//' /bin/add-ssws
-sed -i -e 's/\r$//' /bin/cek-ssws
-sed -i -e 's/\r$//' /bin/del-ssws
-sed -i -e 's/\r$//' /bin/renew-ssws
 
 clear
 sleep 1

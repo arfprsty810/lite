@@ -10,22 +10,18 @@ yellow() { echo -e "\\033[33;1m${*}\\033[0m"; }
 green() { echo -e "\\033[32;1m${*}\\033[0m"; }
 red() { echo -e "\\033[31;1m${*}\\033[0m"; }
 
-xray="/etc/arf/xray"
-trgo="/etc/arf/trojango"
-ipvps="/var/lib/arf"
-
 clear
 cekray=`cat /root/log-install.txt | grep -ow "XRAY" | sort | uniq`
 if [ "$cekray" = "XRAY" ]; then
-domainlama=`cat $xray/domain`
+domainlama=`cat /etc/xray/domain`
 else
-domainlama=`cat $xray/domain`
+domainlama=`cat /etc/v2ray/domain`
 fi
 
 clear
 echo -e "[ ${green}INFO${NC} ] Start " 
 sleep 0.5
-domain=$(cat $ipvps/ipvps.conf | cut -d'=' -f2)
+domain=$(cat /var/lib/scrz-prem/ipvps.conf | cut -d'=' -f2)
 Cek=$(lsof -i:80 | cut -d' ' -f1 | awk 'NR==2 {print $1}')
 if [[ ! -z "$Cek" ]]; then
 sleep 1
@@ -42,10 +38,10 @@ echo -e "[ ${green}INFO${NC} ] Renew cert done... "
 sleep 2
 echo -e "[ ${green}INFO${NC} ] Starting service $Cek " 
 sleep 2
-sed -i "s/$domainlama/$domain/g" $xray/config.json
+sed -i "s/$domainlama/$domain/g" /etc/xray/config.json
 sed -i "s/$domainlama/$domain/g" /usr/local/etc/xtls/config.json
-sed -i "s/$domainlama/$domain/g" $trgo/config.json
-echo $domain > $xray/domain
+sed -i "s/$domainlama/$domain/g" /etc/trojan-go/config.json
+echo $domain > /etc/xray/domain
 systemctl restart $Cek
 systemctl restart trojan-go
 systemctl restart xtls

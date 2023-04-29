@@ -12,9 +12,28 @@ CYAN='\033[0;36m'
 LIGHT='\033[0;37m'
 # ==========================================
 
+xray="/etc/arf/xray"
+trgo="/etc/arf/trojango"
+ipvps="/var/lib/arf"
+log="/var/log/arf/xray"
+logtrgo="/var/log/arf/trojango"
+# set random pwd
+openssl rand -base64 16 > $xray/passwd
+pwd=$(cat $xray/passwd)
+# set random uuid
+uuid=$(cat /proc/sys/kernel/random/uuid)
+
+clear
+source $ipvps/ipvps.conf
+if [[ "$IP" = "" ]]; then
+domain=$(cat $xray/domain)
+else
+domain=$IP
+fi
+
 clear
 echo -n > /tmp/other.txt
-data=( `cat /etc/trojan-go/akun.conf | grep '^###' | cut -d ' ' -f 2`);
+data=( `cat $trgo/akun.conf | grep '^#tr#' | cut -d ' ' -f 2`);
 echo "------------------------------------";
 echo "-----=[ Trojan-Go User Login ]=-----";
 echo "------------------------------------";
@@ -27,7 +46,7 @@ echo -n > /tmp/iptrojango.txt
 data2=( `netstat -anp | grep ESTABLISHED | grep tcp6 | grep trojan-go | awk '{print $5}' | cut -d: -f1 | sort | uniq`);
 for ip in "${data2[@]}"
 do
-jum=$(cat /var/log/trojan-go/trojan-go.log | grep -w $akun | awk '{print $3}' | cut -d: -f1 | grep -w $ip | sort | uniq)
+jum=$(cat $logtrgo/trojan-go.log | grep -w $akun | awk '{print $3}' | cut -d: -f1 | grep -w $ip | sort | uniq)
 if [[ "$jum" = "$ip" ]]; then
 echo "$jum" >> /tmp/iptrojango.txt
 else

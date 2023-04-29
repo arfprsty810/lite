@@ -12,18 +12,29 @@ CYAN='\033[0;36m'
 LIGHT='\033[0;37m'
 # ==========================================
 
+xray="/etc/arf/xray"
+trgo="/etc/arf/trojango"
+ipvps="/var/lib/arf"
+log="/var/log/arf/xray"
+logtrgo="/var/log/arf/trojango"
+# set random pwd
+openssl rand -base64 16 > $xray/passwd
+pwd=$(cat $xray/passwd)
+# set random uuid
+uuid=$(cat $trgo/uuid)
+
 clear
-uuid=$(cat /etc/trojan-go/uuid.txt)
-source /var/lib/akbarstorevpn/ipvps.conf
+source $ipvps/ipvps.conf
 if [[ "$IP" = "" ]]; then
-domain=$(cat /etc/xray/domain)
+domain=$(cat $xray/domain)
 else
 domain=$IP
 fi
+
 trgo="$(cat ~/log-install.txt | grep -w "Tr Go" | cut -d: -f2|sed 's/ //g')"
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${user_EXISTS} == '0' ]]; do
 		read -rp "Password : " -e user
-		user_EXISTS=$(grep -w $user /etc/trojan-go/akun.conf | wc -l)
+		user_EXISTS=$(grep -w $user $trgo/akun.conf | wc -l)
 
 		if [[ ${user_EXISTS} == '1' ]]; then
 			echo ""
@@ -32,10 +43,10 @@ until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${user_EXISTS} == '0' ]]; do
 		fi
 	done
 read -p "Expired (Days) : " masaaktif
-sed -i '/"'""$uuid""'"$/a\,"'""$user""'"' /etc/trojan-go/config.json
+sed -i '/"'""$uuid""'"$/a\,"'""$user""'"' $trgo/config.json
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 hariini=`date -d "0 days" +"%Y-%m-%d"`
-echo -e "### $user $exp" >> /etc/trojan-go/akun.conf
+echo -e "#tr# $user $exp" >> $trgo/akun.conf
 systemctl restart trojan-go.service
 link="trojan-go://${user}@${domain}:${trgo}/?sni=${domain}&type=ws&host=${domain}&path=/trojango&encryption=none#$user"
 clear

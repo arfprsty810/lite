@@ -143,6 +143,7 @@ ohq=$(systemctl status openvpn-ohp | grep Active | awk '{print $3}' | cut -d "("
 
 # DROPBEAR
 dropbear_status=$(/etc/init.d/dropbear status | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+dober=$(echo "${dropbear_status}" | grep 'ActiveState=' | cut -f2 -d=)  
 #wsdrop=$(systemctl status ws-dropbear.service | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
 #ohp=$(systemctl status dropbear-ohp | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
 
@@ -274,7 +275,7 @@ else
    status_virus_trojangfw="${RED}  Not Running ${NC}  ( Error )${NC}"
 fi
 # STATUS SERVICE DROPBEAR
-if [[ $dropbear_status == "running" ]]; then 
+if [[ $dober == "running" ]]; then 
    status_beruangjatuh=" ${GREEN}Running${NC} ( No Error )${NC}"
 else
    status_beruangjatuh="${RED}  Not Running ${NC}  ( Error )${NC}"

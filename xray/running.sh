@@ -1,4 +1,9 @@
 #!/bin/bash
+red='\e[1;31m'
+green='\e[1;32m'
+NC='\e[0m'
+green() { echo -e "\\033[32;1m${*}\\033[0m"; }
+red() { echo -e "\\033[31;1m${*}\\033[0m"; }
 BIBlack='\033[1;90m'      # Black
 BIRed='\033[1;91m'        # Red
 BIGreen='\033[1;92m'      # Green
@@ -43,23 +48,6 @@ export BOLD="\e[1m"
 export WARNING="${RED}\e[5m"
 export UNDERLINE="\e[4m"
 
-# // Exporting URL Host
-
-# // Root Checking
-if [ "${EUID}" -ne 0 ]; then
-		echo -e "${EROR} Please Run This Script As Root User !"
-		exit 1
-fi
-
-# // Exporting IP Address
-export IP=$( curl -s https://ipinfo.io/ip/ )
-
-# // Exporting Network Interface
-export NETWORK_IFACE="$(ip route show to default | awk '{print $5}')"
-
-
-clear
-
 GREEN='\033[0;32m'
 PURPLE='\033[0;35m'
 CYAN='\033[0;36m'
@@ -76,21 +64,33 @@ bd='\e[1m'
 color1='\e[031;1m'
 color2='\e[34;1m'
 color3='\e[0m'
+
+# // Root Checking
+if [ "${EUID}" -ne 0 ]; then
+		echo -e "${EROR} Please Run This Script As Root User !"
+		exit 1
+fi
+
+# // Exporting Network Interface
+export NETWORK_IFACE="$(ip route show to default | awk '{print $5}')"
+
 # Getting
 # IP Validation
 dateFromServer=$(curl -v --insecure --silent https://google.com/ 2>&1 | grep Date | sed -e 's/< Date: //')
 biji=`date +"%Y-%m-%d" -d "$dateFromServer"`
 #########################
-
+# VPS ISP INFORMATION
+#ITAM='\033[0;30m'
+echo -e "$ITAM"
+REGION=$( curl -s ipinfo.io/region )
+#clear
+COUNTRY=$( curl -s ipinfo.io/country )
+#clear
+WAKTU=$( curl -s ipinfo.ip/timezone )
+#clear
+CITY=$( curl -s ipinfo.io/city )
+#clear
 MYIP=$(curl -sS ipinfo.io/ip)
-
-red='\e[1;31m'
-green='\e[1;32m'
-NC='\e[0m'
-green() { echo -e "\\033[32;1m${*}\\033[0m"; }
-red() { echo -e "\\033[31;1m${*}\\033[0m"; }
-PERMISSION
-clear
 
 # GETTING OS INFORMATION
 source /etc/os-release
@@ -100,61 +100,74 @@ Tipe=$NAME
 URL_SUPPORT=$HOME_URL
 basedong=$ID
 
-# VPS ISP INFORMATION
-#ITAM='\033[0;30m'
-echo -e "$ITAM"
-REGION=$( curl -s ipinfo.io/region )
-#clear
-#COUNTRY=$( curl -s ipinfo.io/country )
-#clear
-#WAKTU=$( curl -s ipinfo.ip/timezone )
-#clear
-CITY=$( curl -s ipinfo.io/city )
-#clear
-#REGION=$( curl -s ipinfo.io/region )
-#clear
-
-# CHEK STATUS 
-#openvpn_service="$(systemctl show openvpn.service --no-page)"
-#oovpn=$(echo "${openvpn_service}" | grep 'ActiveState=' | cut -f2 -d=)
-#status_openvp=$(/etc/init.d/openvpn status | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
-#status_ss_tls="$(systemctl show shadowsocks-libev-server@tls.service --no-page)"
-#ss_tls=$(echo "${status_ss_tls}" | grep 'ActiveState=' | cut -f2 -d=)
-#sst_status=$(systemctl status shadowsocks-libev-server@tls | grep Active | awk '{print $0}' | cut -d "(" -f2 | cut -d ")" -f1) 
-#ssh_status=$(systemctl status shadowsocks-libev-server@http | grep Active | awk '{print $0}' | cut -d "(" -f2 | cut -d ")" -f1) 
-#status_ss_http="$(systemctl show shadowsocks-libev-server@http.service --no-page)"
-#ss_http=$(echo "${status_ss_http}" | grep 'ActiveState=' | cut -f2 -d=)
-#sssohtt=$(systemctl status shadowsocks-libev-server@*-http | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
-#status="$(systemctl show shadowsocks-libev.service --no-page)"
-#status_text=$(echo "${status}" | grep 'ActiveState=' | cut -f2 -d=)
+# CHECK STATUS 
+# XRAY VMESS - VLESS - TROJAN
 tls_v2ray_status=$(systemctl status xray | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
 nontls_v2ray_status=$(systemctl status xray | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
 vless_tls_v2ray_status=$(systemctl status xray | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
 vless_nontls_v2ray_status=$(systemctl status xray | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
-#ssr_status=$(systemctl status ssrmu | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
 trojan_server=$(systemctl status xray | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+
+# TROJAN-GFW
 #trojangfw_server=$(systemctl status trojan | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+
+# TROJAN-GO
+trojango=$(systemctl status trojan-go | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+#trgo="$(systemctl show trojan-go.service --no-page)"
+#strgo=$(echo "${trgo}" | grep 'ActiveState=' | cut -f2 -d=)  
+
+# SHADOWSHOCK-R
+#ssr_status=$(systemctl status ssrmu | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+
+# SHADOWSHOCK
+#ss_tls=$(echo "${status_ss_tls}" | grep 'ActiveState=' | cut -f2 -d=)
+#ss_http=$(echo "${status_ss_http}" | grep 'ActiveState=' | cut -f2 -d=)
+#status_ss_http="$(systemctl show shadowsocks-libev-server@http.service --no-page)"
+#status_ss_tls="$(systemctl show shadowsocks-libev-server@tls.service --no-page)"
+#sst_status=$(systemctl status shadowsocks-libev-server@tls | grep Active | awk '{print $0}' | cut -d "(" -f2 | cut -d ")" -f1) 
+#sssohtt=$(systemctl status shadowsocks-libev-server@*-http | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+#status="$(systemctl show shadowsocks-libev.service --no-page)"
+#ssh_status=$(systemctl status shadowsocks-libev-server@http | grep Active | awk '{print $0}' | cut -d "(" -f2 | cut -d ")" -f1) 
+
+# SSH
+ssh_service=$(/etc/init.d/ssh status | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+#wsopen=$(systemctl status ws-openssh | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+#ohr=$(systemctl status ssh-ohp | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+
+# OPENVPN
+openvpn_service="$(systemctl show openvpn.service --no-page)"
+oovpn=$(echo "${openvpn_service}" | grep 'ActiveState=' | cut -f2 -d=)
+status_openvp=$(/etc/init.d/openvpn status | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+wsovpn=$(systemctl status ws-ovpn | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+ohq=$(systemctl status openvpn-ohp | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+
+# DROPBEAR
 dropbear_status=$(/etc/init.d/dropbear status | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
-#stunnel_service=$(/etc/init.d/stunnel5 status | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
-#sstp_service=$(systemctl status accel-ppp | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
-#squid_service=$(/etc/init.d/squid status | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
-#ssh_service=$(/etc/init.d/ssh status | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
-vnstat_service=$(/etc/init.d/vnstat status | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
-cron_service=$(/etc/init.d/cron status | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+#wsdrop=$(systemctl status ws-dropbear.service | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+#ohp=$(systemctl status dropbear-ohp | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+
+# STUNNEL
+wstls=$(systemctl status ws-stunnel.service | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+stunnel_service=$(/etc/init.d/stunnel5 status | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+
+# SQUID
+squid_service=$(/etc/init.d/squid status | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+
+# FAIL2BAN
 fail2ban_service=$(/etc/init.d/fail2ban status | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+
+# CRON
+cron_service=$(/etc/init.d/cron status | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+
+# VNSTAT
+vnstat_service=$(/etc/init.d/vnstat status | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+
+#status_text=$(echo "${status}" | grep 'ActiveState=' | cut -f2 -d=)
+#sstp_service=$(systemctl status accel-ppp | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
 #wg="$(systemctl show wg-quick@wg0.service --no-page)"
 #swg=$(echo "${wg}" | grep 'ActiveState=' | cut -f2 -d=)
-trgo="$(systemctl show trojan-go.service --no-page)"                                      
-strgo=$(echo "${trgo}" | grep 'ActiveState=' | cut -f2 -d=)  
 #sswg=$(systemctl status wg-quick@wg0 | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
-wstls=$(systemctl status ws-stunnel.service | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
-#wsdrop=$(systemctl status ws-dropbear.service | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
-#wsovpn=$(systemctl status ws-ovpn | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
-#wsopen=$(systemctl status ws-openssh | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
 #osslh=$(systemctl status sslh | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
-#ohp=$(systemctl status dropbear-ohp | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
-#ohq=$(systemctl status openvpn-ohp | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
-#ohr=$(systemctl status ssh-ohp | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
 
 # COLOR VALIDATION
 RED='\033[0;31m'
@@ -168,7 +181,7 @@ LIGHT='\033[0;37m'
 clear
 
 # STATUS SERVICE OPENVPN
-if [[ $oovpn == "active" ]]; then
+if [[ $status_openvp == "active" ]]; then
   status_openvpn=" ${GREEN}Running ${NC}( No Error )"
 else
   status_openvpn="${RED}  Not Running ${NC}  ( Error )"
@@ -243,11 +256,17 @@ else
    status_virus_trojan="${RED}  Not Running ${NC}  ( Error )${NC}"
 fi
 # Status Service Trojan GO
-if [[ $strgo == "active" ]]; then
-  status_trgo=" ${GREEN}Running ${NC}( No Error )${NC}"
+if [[ $trojango == "active" ]]; then
+  status_trojan_go=" ${GREEN}Running ${NC}( No Error )${NC}"
 else
-  status_trgo="${RED}  Not Running ${NC}  ( Error )${NC}"
+  status_trojan_go="${RED}  Not Running ${NC}  ( Error )${NC}"
 fi
+# Status Service Trojan GO
+#if [[ $strgo == "active" ]]; then
+#  status_trgo=" ${GREEN}Running ${NC}( No Error )${NC}"
+#else
+#  status_trgo="${RED}  Not Running ${NC}  ( Error )${NC}"
+#fi
 # STATUS SERVICE TROJAN GFW
 if [[ $trojangfw_server == "running" ]]; then 
    status_virus_trojangfw=" ${GREEN}Running ${NC}( No Error )${NC}"
@@ -275,7 +294,7 @@ else
 fi
 
 # STATUS SERVICE WEBSOCKET DROPBEAR
-if [[ $wsdrop == "running" ]]; then 
+if [[ $dropbear_status == "running" ]]; then 
    swsdrop=" ${GREEN}Running ${NC}( No Error )${NC}"
 else
    swsdrop="${RED}  Not Running ${NC}  ( Error )${NC}"
@@ -286,28 +305,28 @@ total_ram=` grep "MemTotal: " /proc/meminfo | awk '{ print $2}'`
 totalram=$(($total_ram/1024))
 
 # TIPE PROCESSOR
-#totalcore="$(grep -c "^processor" /proc/cpuinfo)" 
-#totalcore+=" Core"
-#corediilik="$(grep -c "^processor" /proc/cpuinfo)" 
-#tipeprosesor="$(awk -F ': | @' '/model name|Processor|^cpu model|chip type|^cpu type/ {
-  #                      printf $2;
-      #                  exit
-    #                    }' /proc/cpuinfo)"
+totalcore="$(grep -c "^processor" /proc/cpuinfo)" 
+totalcore+=" Core"
+corediilik="$(grep -c "^processor" /proc/cpuinfo)" 
+tipeprosesor="$(awk -F ': | @' '/model name|Processor|^cpu model|chip type|^cpu type/ {
+                        printf $2;
+                        exit
+                        }' /proc/cpuinfo)"
 
 # GETTING CPU INFORMATION
-#cpu_usage1="$(ps aux | awk 'BEGIN {sum=0} {sum+=$3}; END {print sum}')"
-#cpu_usage="$((${cpu_usage1/\.*} / ${corediilik:-1}))"
-#cpu_usage+=" %"
+cpu_usage1="$(ps aux | awk 'BEGIN {sum=0} {sum+=$3}; END {print sum}')"
+cpu_usage="$((${cpu_usage1/\.*} / ${corediilik:-1}))"
+cpu_usage+=" %"
 
 # OS UPTIME
-#uptime="$(uptime -p | cut -d " " -f 2-10)"
+uptime="$(uptime -p | cut -d " " -f 2-10)"
 
 # KERNEL TERBARU
 kernelku=$(uname -r)
 
 # WAKTU SEKARANG 
-#harini=`date -d "0 days" +"%d-%m-%Y"`
-#jam=`date -d "0 days" +"%X"`
+harini=`date -d "0 days" +"%d-%m-%Y"`
+jam=`date -d "0 days" +"%X"`
 
 # DNS PATCH
 #tipeos2=$(uname -m)
@@ -321,28 +340,22 @@ echo -e "\E[39;1;92m              ⇱ Sytem Information ⇲             \E[0m"
 echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
 echo -e "❇️ Hostname    : $HOSTNAME"
 echo -e "❇️ OS Name     : $Tipe"
-# echo -e "Processor   : $tipeprosesor"
-# echo -e "Proc Core   :$totalcore"
-# echo -e "Virtual     :$typevps"
-# echo -e "Cpu Usage   :$cpu_usage"
+echo -e "Processor   : $tipeprosesor"
+echo -e "Proc Core   :$totalcore"
+echo -e "Virtual     :$typevps"
+echo -e "Cpu Usage   :$cpu_usage"
 echo -e "❇️ Total RAM   : ${totalram}MB"
 echo -e "❇️ Public IP   : $MYIP"
 echo -e "❇️ Domain      : $Domen"
-#echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
-#echo -e "\E[44;1;39m          ⇱ Subscription Information ⇲          \E[0m"
-#echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
-#echo -e "❇️ Client Name : $Name"
-#echo -e "❇️ Exp Script  : $Exp"
-#echo -e "❇️ Version     : Latest Version"
 echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
 echo -e "\E[39;1;92m             ⇱ Service Information ⇲             \E[0m"
 echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
-#echo -e "❇️ SSH / TUN               :$status_ssh"
-#echo -e "❇️ OpenVPN                 :$status_openvpn"
-#echo -e "❇️ Dropbear                :$status_beruangjatuh"
+echo -e "❇️ SSH / TUN               :$status_ssh"
+echo -e "❇️ OpenVPN                 :$status_openvpn"
+echo -e "❇️ Dropbear                :$status_beruangjatuh"
 #echo -e "❇️ Stunnel5                :$status_stunnel"
-#echo -e "❇️ Squid                   :$status_squid"
-#echo -e "❇️ Fail2Ban                :$status_fail2ban"
+echo -e "❇️ Squid                   :$status_squid"
+echo -e "❇️ Fail2Ban                :$status_fail2ban"
 echo -e "❇️ Crons                   :$status_cron"
 echo -e "❇️ Vnstat                  :$status_vnstat"
 echo -e "❇️ XRAYS Vmess TLS         :$status_tls_v2ray"
@@ -350,7 +363,7 @@ echo -e "❇️ XRAYS Vmess None TLS    :$status_nontls_v2ray"
 echo -e "❇️ XRAYS Vless TLS         :$status_tls_vless"
 echo -e "❇️ XRAYS Vless None TLS    :$status_nontls_vless"
 echo -e "❇️ XRAYS Trojan            :$status_virus_trojan"
-echo -e "❇️ Trojan GO               :$status_virus_trojan"
+echo -e "❇️ Trojan GO               :$status_trojan_go"
 #echo -e "❇️ Trojan GFW              :$status_virus_trojangfw"
 #echo -e "❇️ Websocket TLS           :$swstls"
 #echo -e "❇️ Websocket None TLS      :$swstls"

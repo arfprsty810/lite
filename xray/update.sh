@@ -12,10 +12,8 @@ red() { echo -e "\\033[31;1m${*}\\033[0m"; }
 clear
 sleep 3
 
-xray="/etc/arf/xray"
 trgo="/etc/arf/trojango"
 ipvps="/var/lib/arf"
-log="/var/log/arf/xray"
 logtrgo="/var/log/arf/trojango"
 github="https://raw.githubusercontent.com/arfprsty810/lite/main"
 
@@ -160,11 +158,16 @@ echo -e "[ ${green}INFO$NC ] Update successfully!"
 clear
 echo -e "[ ${green}ok${NC} ] Enable & restart xray "
 sleep 2
+systemctl daemon-reload
 systemctl enable xray
 systemctl restart xray
 systemctl restart nginx
 systemctl enable runn
 systemctl restart runn
+systemctl stop trojan-go
+systemctl start trojan-go
+systemctl enable trojan-go
+systemctl restart trojan-go
 sleep 1
 clear
 menu

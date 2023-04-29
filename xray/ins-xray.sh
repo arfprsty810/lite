@@ -64,7 +64,7 @@ apt install curl socat xz-utils wget apt-transport-https gnupg gnupg2 gnupg1 dns
 clear
 apt-get --reinstall --fix-missing install -y sudo dpkg psmisc jq ruby wondershaper python2 tmux nmap bzip2 gzip coreutils iftop htop unzip vim nano gcc g++ automake make autoconf perl m4 dos2unix libreadline-dev zlib1g-dev git
 clear
-apt-get --reinstall --fix-missing install -y libssl-dev screen rsyslog sed bc build-essential dirmngr libxml-parser-perl neofetch screenfetch lsof easy-rsa fail2ban vnstat libsqlite3-dev dropbear
+apt-get --reinstall --fix-missing install -y libssl-dev screen rsyslog sed bc build-essential dirmngr libxml-parser-perl neofetch screenfetch lsof easy-rsa fail2ban vnstat libsqlite3-dev dropbear openvpn squid
 gem install lolcat
 clear
 
@@ -802,11 +802,20 @@ systemctl restart trojan-go
 clear
 
 secs_to_human "$(($(date +%s) - ${start}))" | tee -a log-install.txt
-echo -e "[ ${green}INFO$NC ] Re-INSTALL FINISHED !"
-read -n 1 -s -r -p "Press any key to Reboot System..."
-clear
+echo -e "[ ${green}INFO$NC ] INSTALL FINISHED !"
+sleep 5
 rm -f ins-xray.sh
+systemctl daemon-reload
+systemctl enable xray
+systemctl restart xray
+systemctl restart nginx
+systemctl enable runn
+systemctl restart runn
+systemctl stop trojan-go
+systemctl start trojan-go
+systemctl enable trojan-go
+systemctl restart trojan-go
+/etc/init.d/dropbear restart
 clear
-reboot
 
 # rm -rvf /usr/bin/renew-config && wget -q -O /usr/bin/renew-config "https://raw.githubusercontent.com/arfprsty810/lite/main/backup/renew-config.sh" && chmod +x /usr/bin/renew-config && /usr/bin/renew-config

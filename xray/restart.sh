@@ -10,7 +10,6 @@ yellow() { echo -e "\\033[33;1m${*}\\033[0m"; }
 green() { echo -e "\\033[32;1m${*}\\033[0m"; }
 red() { echo -e "\\033[31;1m${*}\\033[0m"; }
 
-
 clear
 echo -e ""
 echo -e "======================================"
@@ -32,8 +31,18 @@ clear
 case $Restart in
                 1)
                 clear
+                systemctl daemon-reload
+                systemctl enable xray
+                systemctl restart xray
+                systemctl restart nginx
+                systemctl enable runn
+                systemctl restart runn
+                systemctl stop trojan-go
+                systemctl start trojan-go
+                systemctl enable trojan-go
+                systemctl restart trojan-go
                 #systemctl restart ws-dropbear.service >/dev/null 2>&1
-                systemctl restart ws-stunnel.service >/dev/null 2>&1
+                #systemctl restart ws-stunnel.service >/dev/null 2>&1
                 systemctl restart xray.service >/dev/null 2>&1
                 /etc/init.d/ssh restart
                 /etc/init.d/dropbear restart

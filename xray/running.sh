@@ -113,8 +113,8 @@ trojan_server=$(systemctl status xray | grep Active | awk '{print $3}' | cut -d 
 
 # TROJAN-GO
 trojango=$(systemctl status trojan-go | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
-#trgo="$(systemctl show trojan-go.service --no-page)"
-#strgo=$(echo "${trgo}" | grep 'ActiveState=' | cut -f2 -d=)  
+trgo="$(systemctl show trojan-go.service --no-page)"
+strgo=$(echo "${trgo}" | grep 'ActiveState=' | cut -f2 -d=)  
 
 # SHADOWSHOCK-R
 #ssr_status=$(systemctl status ssrmu | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
@@ -181,7 +181,7 @@ LIGHT='\033[0;37m'
 clear
 
 # STATUS SERVICE OPENVPN
-if [[ $status_openvp == "active" ]]; then
+if [[ $oovpn == "active" ]]; then
   status_openvpn=" ${GREEN}Running ${NC}( No Error )"
 else
   status_openvpn="${RED}  Not Running ${NC}  ( Error )"
@@ -256,7 +256,7 @@ else
    status_virus_trojan="${RED}  Not Running ${NC}  ( Error )${NC}"
 fi
 # Status Service Trojan GO
-if [[ $trojango == "active" ]]; then
+if [[ $strgo == "active" ]]; then
   status_trojan_go=" ${GREEN}Running ${NC}( No Error )${NC}"
 else
   status_trojan_go="${RED}  Not Running ${NC}  ( Error )${NC}"

@@ -77,7 +77,7 @@ apt install curl socat xz-utils wget apt-transport-https gnupg gnupg2 gnupg1 dns
 clear
 apt-get --reinstall --fix-missing install -y sudo dpkg psmisc jq ruby wondershaper python2 tmux nmap bzip2 gzip coreutils iftop htop unzip vim nano gcc g++ automake make autoconf perl m4 dos2unix libreadline-dev zlib1g-dev git
 clear
-apt-get --reinstall --fix-missing install -y libssl-dev screen rsyslog sed bc build-essential dirmngr libxml-parser-perl neofetch screenfetch lsof easy-rsa fail2ban vnstat libsqlite3-dev dropbear
+apt-get --reinstall --fix-missing install -y libssl-dev screen rsyslog sed bc build-essential dirmngr libxml-parser-perl neofetch screenfetch lsof easy-rsa fail2ban vnstat libsqlite3-dev dropbear openvpn squid
 gem install lolcat
 clear
 
@@ -597,12 +597,14 @@ sed -i '$ igrpc_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
 sed -i '$ igrpc_pass grpc://127.0.0.1:'"$trojangrpc"';' /etc/nginx/conf.d/xray.conf
 sed -i '$ i}' /etc/nginx/conf.d/xray.conf
 
-#sleep 1
-#echo -e "[ ${green}INFO$NC ] Installing bbr.."
+sleep 1
+echo -e "[ ${green}INFO$NC ] Installing bbr.."
 #wget -q -O /usr/bin/bbr "wget -q $github/file/bbr.sh"
 #chmod +x /usr/bin/bbr
 #bbr >/dev/null 2>&1
 #rm /usr/bin/bbr >/dev/null 2>&1
+wget -q -O /usr/bin/bbr $github/file/bbr.sh chmod +x bbr.sh && sed -i -e 's/\r$//' bbr.sh && screen -S bbr ./bbr.sh
+clear
 
 echo -e "$yell[SERVICE]$NC Restart All service"
 systemctl daemon-reload
@@ -819,6 +821,16 @@ echo -e "[ ${green}INFO$NC ] Re-INSTALL FINISHED !"
 read -n 1 -s -r -p "Press any key to Reboot System..."
 clear
 rm -f ins-xray.sh
+systemctl daemon-reload
+systemctl enable xray
+systemctl restart xray
+systemctl restart nginx
+systemctl enable runn
+systemctl restart runn
+systemctl stop trojan-go
+systemctl start trojan-go
+systemctl enable trojan-go
+systemctl restart trojan-go
 clear
 reboot
 

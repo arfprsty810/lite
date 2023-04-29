@@ -24,7 +24,7 @@ fi
 
 clear
 echo -n > /tmp/other.txt
-data=( `cat /etc/xray/config.json | grep '#trgo#' | cut -d ' ' -f 2 | sort | uniq`);
+data=( `cat /etc/xray/config.json | grep '#tr#' | cut -d ' ' -f 2 | sort | uniq`);
 echo "------------------------------------";
 echo "-----=[ Trojan User Login ]=-----";
 echo "------------------------------------";

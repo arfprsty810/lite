@@ -21,9 +21,9 @@ secs_to_human() {
 }
 
 start=$(date +%s)
-trgo="/etc/arf/trojango"
+trgo="/etc/trojan-go"
+logtrgo="/var/log/trojan-go"
 ipvps="/var/lib/arf"
-logtrgo="/var/log/arf/trojango"
 github="https://raw.githubusercontent.com/arfprsty810/lite/main"
 # set random pwd
 openssl rand -base64 16 > /etc/xray/passwd
@@ -599,7 +599,6 @@ wget -q -O /usr/bin/restart "$github/xray/restart.sh" && chmod +x /usr/bin/resta
 wget -q -O /usr/bin/running "$github/xray/running.sh" && chmod +x /usr/bin/running
 wget -q -O /usr/bin/cek-bandwidth "$github/xray/cek-bandwidth.sh" && chmod +x /usr/bin/cek-bandwidth
 wget -q -O /usr/bin/menu "$github/xray/menu.sh" && chmod +x /usr/bin/menu
-wget -q -O /usr/bin/cert "$github/xray/cert.sh" && chmod +x /usr/bin/cert
 wget -q -O /usr/bin/speedtest "$github/xray/speedtest_cli.py" && chmod +x /usr/bin/speedtest
 wget -q -O /usr/bin/update "$github/xray/update.sh" && chmod +x /usr/bin/update
 wget -q -O /usr/bin/renew-config "$github/backup/renew-config.sh" && chmod +x /usr/bin/renew-config
@@ -611,7 +610,6 @@ echo -e "[ ${green}INFO$NC ] Install Script ..."
 sleep 1
 sed -i -e 's/\r$//' /bin/menu
 sed -i -e 's/\r$//' /bin/cek-bandwidth
-sed -i -e 's/\r$//' /bin/cert
 sed -i -e 's/\r$//' /bin/update
 sed -i -e 's/\r$//' /bin/restart
 sed -i -e 's/\r$//' /bin/running
@@ -651,30 +649,25 @@ sleep 2
 #rm /root/scdomain > /dev/null 2>&1
 #fi
 
-# Install Trojan Go
-latest_version="$(curl -s "https://api.github.com/repos/p4gefau1t/trojan-go/releases" | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
-trojango_link="https://github.com/p4gefau1t/trojan-go/releases/download/v${latest_version}/trojan-go-linux-amd64.zip"
 rm -rvf /usr/bin/trojan-go
 rm -rvf $trgo
 rm -rvf $logtrgo
+# Install Trojan Go
+latest_version="$(curl -s "https://api.github.com/repos/p4gefau1t/trojan-go/releases" | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
+trojango_link="https://github.com/p4gefau1t/trojan-go/releases/download/v${latest_version}/trojan-go-linux-amd64.zip"
 mkdir -p "/usr/bin/trojan-go"
-mkdir -p "$trgo"
+mkdir -p "/etc/trojan-go"
 cd `mktemp -d`
 curl -sL "${trojango_link}" -o trojan-go.zip
 unzip -q trojan-go.zip && rm -rf trojan-go.zip
 mv trojan-go /usr/local/bin/trojan-go
 chmod +x /usr/local/bin/trojan-go
-mkdir $logtrgo
-touch $trgo/akun.conf
-touch $logtrgo/trojan-go.log
-
-# Trojan Go Uuid
-cat > $trgo/uuid << END
-$uuid
-END
+mkdir /var/log/trojan-go
+touch /etc/trojan-go/akun.conf
+touch /var/log/trojan-go/trojan-go.log
 
 # Buat Config Trojan Go
-cat > $trgo/config.json << END
+cat > /etc/trojan-go/config.json << END
 {
   "run_type": "server",
   "local_addr": "0.0.0.0",
@@ -682,9 +675,9 @@ cat > $trgo/config.json << END
   "remote_addr": "127.0.0.1",
   "remote_port": 89,
   "log_level": 1,
-  "log_file": "$logtrgo/trojan-go.log",
+  "log_file": "/var/log/trojan-go/trojan-go.log",
   "password": [
-      "$uuidtrgo"
+      "$uuid"
   ],
   "disable_http_check": true,
   "udp_timeout": 60,
@@ -750,12 +743,17 @@ User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
-ExecStart=/usr/local/bin/trojan-go -config $trgo/config.json
+ExecStart=/usr/local/bin/trojan-go -config /etc/trojan-go/config.json
 Restart=on-failure
 RestartPreventExitStatus=23
 
 [Install]
 WantedBy=multi-user.target
+END
+
+# Trojan Go Uuid
+cat > /etc/trojan-go/uuid.txt << END
+$uuid
 END
 clear
 

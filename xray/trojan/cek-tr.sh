@@ -52,11 +52,6 @@ echo > /dev/null
 else
 jum2=$(cat /tmp/ipxray.txt | nl)
 lastlogin=$(cat /var/log/xray/access.log | grep -w "$akun" | tail -n 500 | cut -d " " -f 2 | tail -1)
-echo " Trojan-Ws & Trojan GRPC :
-echo -e "user :${GREEN} ${akun} ${NC}
-${RED}Online Jam ${NC}: ${lastlogin} wib";
-echo -e "$jum2";
-echo "-------------------------------"
 fi
 rm -rf /tmp/ipxray.txt
 done
@@ -88,6 +83,10 @@ echo > /dev/null
 else
 jumtrgo2=$(cat /tmp/iptrojango.txt | nl)
 lastlogintrgo=$(cat $logtrgo/access.log | grep -w "$akun" | tail -n 500 | cut -d " " -f 2 | tail -1)
+echo " Trojan-Ws & Trojan GRPC :
+echo -e "user :${GREEN} ${akun} ${NC}
+${RED}Online Jam ${NC}: ${lastlogin} wib";
+echo -e "$jum2";
 echo "------------------------------------";
 echo " Trojan-Go :
 echo -e "user :${GREEN} ${akun} ${NC}

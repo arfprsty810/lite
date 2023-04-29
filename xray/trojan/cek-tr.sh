@@ -10,17 +10,17 @@ yellow() { echo -e "\\033[33;1m${*}\\033[0m"; }
 green() { echo -e "\\033[32;1m${*}\\033[0m"; }
 red() { echo -e "\\033[31;1m${*}\\033[0m"; }
 
-trgo="/etc/arf/trojango"
-ipvps="/var/lib/arf"
-logtrgo="/var/log/arf/trojango"
-
 clear
+trgo="/etc/trojan-go"
+logtrgo="/var/log/trojan-go"
+ipvps="/var/lib/arf"
 source $ipvps/ipvps.conf
 if [[ "$IP" = "" ]]; then
 domain=$(cat /etc/xray/domain)
 else
 domain=$IP
 fi
+clear 
 
 clear
 echo -n > /tmp/other.txt

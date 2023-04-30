@@ -19,15 +19,14 @@ if [[ "$IP" = "" ]]; then
 domain=$(cat /etc/xray/domain)
 else
 domain=$IP
-fi
-clear 
+fi 
 
 clear
-echo -n > /tmp/other.txt
-data=( `cat /etc/xray/config.json | grep '#tr#' | cut -d ' ' -f 2 | sort | uniq`);
 echo "-----------------------------------------";
 echo "-----=[ Trojan-WS & Trojan-GRPC User Login ]=-----";
 echo "-----------------------------------------";
+echo -n > /tmp/other.txt
+data=( `cat /etc/xray/config.json | grep '#tr#' | cut -d ' ' -f 2 | sort | uniq`);
 for akun in "${data[@]}"
 do
 if [[ -z "$akun" ]]; then
@@ -58,25 +57,25 @@ echo -e "$jum2";
 echo ""
 #echo "-------------------------------"
 fi
-rm -rf /tmp/iptrojan.txt
 done
+rm -rf /tmp/iptrojan.txt
 rm -rf /tmp/other.txt
 
-echo -n > /tmp/other.txt
-data=( `cat /etc/trojan-go/akun.conf | grep '#trgo#' | cut -d ' ' -f 2 | sort | uniq`);
 echo "------------------------------------";
 echo "-----=[ Trojan-Go User Login ]=-----";
 echo "------------------------------------";
+echo -n > /tmp/other.txt
+data=( `cat $trgo/akun.conf | grep '^#trgo#' | cut -d ' ' -f 2`);
 for akun in "${data[@]}"
 do
 if [[ -z "$akun" ]]; then
 akun="tidakada"
 fi
 echo -n > /tmp/iptrojango.txt
-data2=( `cat /var/log/trojan-go/trojan-go.log | tail -n 500 | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | sort | uniq`);
+data2=( `netstat -anp | grep ESTABLISHED | grep tcp6 | grep trojan-go | awk '{print $5}' | cut -d: -f1 | sort | uniq`);
 for ip in "${data2[@]}"
 do
-jum=$(cat /var/log/trojan-go/trojan-go.log | grep -w "$akun" | tail -n 500 | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | grep -w "$ip" | sort | uniq)
+jum=$(cat $logtrgo/trojan-go.log | grep -w $akun | awk '{print $3}' | cut -d: -f1 | grep -w $ip | sort | uniq)
 if [[ "$jum" = "$ip" ]]; then
 echo "$jum" >> /tmp/iptrojango.txt
 else
@@ -86,18 +85,21 @@ jum2=$(cat /tmp/iptrojango.txt)
 sed -i "/$jum2/d" /tmp/other.txt > /dev/null 2>&1
 done
 jum=$(cat /tmp/iptrojango.txt)
+oth=$(cat /tmp/other.txt | sort | uniq | nl)
+lastlogin=$(cat $logtrgo/access.log | grep -w "$akun" | tail -n 500 | cut -d " " -f 2 | tail -1)
 if [[ -z "$jum" ]]; then
 echo > /dev/null
-else
+#else
 jum2=$(cat /tmp/iptrojango.txt | nl)
-lastlogin=$(cat /var/log/trojan-go/trojan-go.log | grep -w "$akun" | tail -n 500 | cut -d " " -f 2 | tail -1)
-echo -e "user :${GREEN} ${akun} ${NC}
-${RED}Online Jam ${NC}: ${lastlogin} wib";
-echo -e "$jum2";
-echo "-------------------------------"
+echo "user : $akun";
+echo "Login dengan IP:"
+echo "$oth $lastlogin";
+#echo "$jum2";
+echo "------------------------------------";
 fi
-rm -rf /tmp/iptrojango.txt
 done
+
+rm -rf /tmp/iptrojango.txt
 rm -rf /tmp/other.txt
 
 echo ""

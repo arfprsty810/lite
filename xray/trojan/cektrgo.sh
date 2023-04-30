@@ -49,25 +49,19 @@ jum2=$(cat /tmp/iptrojango.txt)
 sed -i "/$jum2/d" /tmp/other.txt > /dev/null 2>&1
 done
 jum=$(cat /tmp/iptrojango.txt)
+oth=$(cat /tmp/other.txt | sort | uniq | nl)
+lastlogin=$(cat $logtrgo/access.log | grep -w "$akun" | tail -n 500 | cut -d " " -f 2 | tail -1)
 if [[ -z "$jum" ]]; then
 echo > /dev/null
-else
-#jum2=$(cat /tmp/iptrojango.txt | nl)
-#echo "user : $akun";
-#echo "$jum2";
-#echo "------------------------------------";
-fi
-#rm -rf /tmp/iptrojango.txt
-done
+#else
 jum2=$(cat /tmp/iptrojango.txt | nl)
 echo "user : $akun";
-echo "$jum2";
+echo "Login dengan IP:"
+echo "$oth $lastlogin";
+#echo "$jum2";
 echo "------------------------------------";
-oth=$(cat /tmp/other.txt | sort | uniq | nl)
-echo "other";
-echo "$oth";
-echo "------------------------------------";
+fi
+done
 
 rm -rf /tmp/iptrojango.txt
 rm -rf /tmp/other.txt
-

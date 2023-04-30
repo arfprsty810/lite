@@ -50,7 +50,7 @@ sed -i "/$jum2/d" /tmp/other.txt > /dev/null 2>&1
 done
 jum=$(cat /tmp/iptrojango.txt)
 oth=$(cat /tmp/other.txt | sort | uniq | nl)
-lastlogin=$(cat $logtrgo/access.log | grep -w "$akun" | tail -n 500 | cut -d " " -f 2 | tail -1)
+lastlogin=$(cat $logtrgo/trojan-go.log | grep -w "$akun" | tail -n 500 | cut -d " " -f 2 | tail -1)
 if [[ -z "$jum" ]]; then
 echo > /dev/null
 #else

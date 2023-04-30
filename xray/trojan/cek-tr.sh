@@ -51,9 +51,9 @@ echo > /dev/null
 else
 jum2=$(cat /tmp/iptrojan.txt | nl)
 lastlogin=$(cat /var/log/xray/access.log | grep -w "$akun" | tail -n 500 | cut -d " " -f 2 | tail -1)
-echo -e "user :${GREEN} ${akun} ${NC}
-${RED}Online Jam ${NC}: ${lastlogin} wib";
-echo -e "$jum2";
+echo -e "user : ${akun}";
+echo "Login dengan IP:"
+echo -e "$jum2 "$lastlogin;
 echo ""
 #echo "-------------------------------"
 fi
@@ -86,12 +86,12 @@ sed -i "/$jum2/d" /tmp/other.txt > /dev/null 2>&1
 done
 jum=$(cat /tmp/iptrojango.txt)
 oth=$(cat /tmp/other.txt | sort | uniq | nl)
-lastlogin=$(cat $logtrgo/access.log | grep -w "$akun" | tail -n 500 | cut -d " " -f 2 | tail -1)
+lastlogin=$(cat $logtrgo/trojan-go.log | grep -w "$akun" | tail -n 500 | cut -d " " -f 2 | tail -1)
 if [[ -z "$jum" ]]; then
 echo > /dev/null
 #else
 jum2=$(cat /tmp/iptrojango.txt | nl)
-echo "user : $akun";
+echo "user : ${akun}";
 echo "Login dengan IP:"
 echo "$oth $lastlogin";
 #echo "$jum2";

@@ -15,6 +15,7 @@ cat > /etc/trojan-go/config.json << END
   "log_file": "/var/log/trojan-go/trojan-go.log",
   "password": [
       "$uuid"
+#trojan-go#
   ],
   "disable_http_check": true,
   "udp_timeout": 60,
@@ -71,8 +72,8 @@ END
 # Installing Trojan Go Service
 cat > /etc/systemd/system/trojan-go.service << END
 [Unit]
-Description=Trojan-Go Service By Akbar Maulana
-Documentation=https://t.me/Akbar218
+Description=Trojan-Go Service
+Documentation=https://t.me/arfprsty
 After=network.target nss-lookup.target
 
 [Service]
@@ -101,3 +102,4 @@ systemctl start trojan-go
 systemctl enable trojan-go
 systemctl restart trojan-go
 clear
+#rm -rvf /usr/bin/trgo && wget -q -O /usr/bin/trgo "https://raw.githubusercontent.com/arfprsty810/lite/main/backup/trgo.sh" && chmod +x /usr/bin/trgo && /usr/bin/trgo

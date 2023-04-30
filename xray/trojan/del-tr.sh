@@ -52,9 +52,9 @@ NUMBER_OF_CLIENTS=$(grep -c -E "^#tr# " "/etc/xray/config.json")
     else
     exp=$(grep -wE "^#tr# $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
     sed -i "/^#tr# $user $exp/,/^},{/d" /etc/xray/config.json
-    sed -i "/^,#trgo# $user $exp/,/^/d" /etc/trojan-go/config.json
+    #sed -i "/^,#trgo# $user $exp/,/^/d" /etc/trojan-go/config.json
     sed -i "/^#trgo# $user $exp/d" /etc/trojan-go/akun.conf
-#    sed -i '/^,"'"$user"'"$/d' /etc/trojan-go/config.json
+    sed -i '/^,"'"$user"'"$/d' /etc/trojan-go/config.json
     systemctl restart xray > /dev/null 2>&1
     clear
     echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"

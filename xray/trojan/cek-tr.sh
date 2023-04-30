@@ -53,9 +53,8 @@ jum2=$(cat /tmp/iptrojan.txt | nl)
 lastlogin=$(cat /var/log/xray/access.log | grep -w "$akun" | tail -n 500 | cut -d " " -f 2 | tail -1)
 echo -e "user : ${akun}";
 echo "Login dengan IP:"
-echo -e "$jum2 | "$lastlogin;
+echo -e "$jum2 | $lastlogin";
 echo ""
-#echo "-------------------------------"
 fi
 done
 rm -rf /tmp/iptrojan.txt
@@ -93,8 +92,7 @@ echo > /dev/null
 jum2=$(cat /tmp/iptrojango.txt | nl)
 echo "user : ${akun}";
 echo "Login dengan IP:"
-#echo "$oth";
-echo "$jum2";
+echo "$oth | $lastlogin";
 echo "------------------------------------";
 fi
 done

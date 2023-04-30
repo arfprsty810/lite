@@ -55,10 +55,9 @@ if [[ -z "$jum" ]]; then
 echo > /dev/null
 #else
 jum2=$(cat /tmp/iptrojango.txt | nl)
-echo "user : $akun";
+echo "user : ${akun}";
 echo "Login dengan IP:"
-echo "$oth $lastlogin";
-#echo "$jum2";
+echo "$oth | $lastlogin";
 echo "------------------------------------";
 fi
 done

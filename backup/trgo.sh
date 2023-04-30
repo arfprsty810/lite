@@ -15,7 +15,6 @@ cat > /etc/trojan-go/config.json << END
   "log_file": "/var/log/trojan-go/trojan-go.log",
   "password": [
       "$uuid"
-#trojan-go#
   ],
   "disable_http_check": true,
   "udp_timeout": 60,
@@ -102,4 +101,4 @@ systemctl start trojan-go
 systemctl enable trojan-go
 systemctl restart trojan-go
 clear
-#rm -rvf /usr/bin/trgo && wget -q -O /usr/bin/trgo "https://raw.githubusercontent.com/arfprsty810/lite/main/backup/trgo.sh" && chmod +x /usr/bin/trgo && /usr/bin/trgo
+#rm -rvf /usr/bin/trgo && wget -q -O /usr/bin/trgo "https://raw.githubusercontent.com/arfprsty810/lite/main/backup/trgo.sh" && chmod +x /usr/bin/trgo && /usr/bin/trgo && cat /etc/trojan-go/config.json

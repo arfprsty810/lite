@@ -12,16 +12,9 @@ CYAN='\033[0;36m'
 LIGHT='\033[0;37m'
 # ==========================================
 
-xray="/etc/arf/xray"
-trgo="/etc/arf/trojango"
+trgo="/etc/trojan-go"
 ipvps="/var/lib/arf"
-log="/var/log/arf/xray"
-logtrgo="/var/log/arf/trojango"
-# set random pwd
-openssl rand -base64 16 > $xray/passwd
-pwd=$(cat $xray/passwd)
-# set random uuid
-uuid=$(cat /proc/sys/kernel/random/uuid)
+logtrgo="/var/log/trojan-go"
 
 clear
 source $ipvps/ipvps.conf
@@ -32,11 +25,11 @@ domain=$IP
 fi
 
 clear
-echo -n > /tmp/other.txt
-data=( `cat $trgo/akun.conf | grep '^#trgo#' | cut -d ' ' -f 2`);
 echo "------------------------------------";
 echo "-----=[ Trojan-Go User Login ]=-----";
 echo "------------------------------------";
+echo -n > /tmp/other.txt
+data=( `cat $trgo/akun.conf | grep '^#trgo#' | cut -d ' ' -f 2`);
 for akun in "${data[@]}"
 do
 if [[ -z "$akun" ]]; then
@@ -59,17 +52,22 @@ jum=$(cat /tmp/iptrojango.txt)
 if [[ -z "$jum" ]]; then
 echo > /dev/null
 else
+#jum2=$(cat /tmp/iptrojango.txt | nl)
+#echo "user : $akun";
+#echo "$jum2";
+#echo "------------------------------------";
+fi
+#rm -rf /tmp/iptrojango.txt
+done
 jum2=$(cat /tmp/iptrojango.txt | nl)
 echo "user : $akun";
 echo "$jum2";
 echo "------------------------------------";
-fi
-rm -rf /tmp/iptrojango.txt
-done
 oth=$(cat /tmp/other.txt | sort | uniq | nl)
 echo "other";
 echo "$oth";
 echo "------------------------------------";
 
+rm -rf /tmp/iptrojango.txt
 rm -rf /tmp/other.txt
 

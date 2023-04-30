@@ -78,14 +78,15 @@ clear
 # trojan
 AKUN_TROJAN_1="trojan_arf"
 UID_TROJAN_1="8394ff55-d075-4d1d-a65a-c82f16dc62d1"
-UID_TROJAN_GO=$(cat /etc/trojan-go/uuid.txt)
+UID_TROJAN_GO=$(cat /etc/trojan-go/uuid)
 EXP_TROJAN_1="2030-01-01"
 sed -i '/#trojanws$/a\#tr# '"$AKUN_TROJAN_1 $EXP_TROJAN_1"'\
 },{"password": "'""$UID_TROJAN_1""'","email": "'""$AKUN_TROJAN_1""'"' /etc/xray/config.json
 sed -i '/#trojangrpc$/a\#tr# '"$AKUN_TROJAN_1 $EXP_TROJAN_1"'\
 },{"password": "'""$UID_TROJAN_1""'","email": "'""$AKUN_TROJAN_1""'"' /etc/xray/config.json
-sed -i '/"'""$UID_TROJAN_GO""'"$/a\,#trgo# '"$AKUN_TROJAN_1 $EXP_TROJAN_1"'\
-"'""$UID_TROJAN_1""'"' /etc/trojan-go/config.json
+#sed -i '/"'""$UID_TROJAN_GO""'"$/a\,#trgo# '"$AKUN_TROJAN_1 $EXP_TROJAN_1"'\
+#"'""$UID_TROJAN_1""'"' /etc/trojan-go/config.json
+sed -i '/"'""$UID_TROJAN_GO""'"$/a\,"'""$AKUN_TROJAN_1""'"' /etc/trojan-go/config.json
 echo -e "#trgo# $AKUN_TROJAN_1 $EXP_TROJAN_1" >> /etc/trojan-go/akun.conf
 clear
 

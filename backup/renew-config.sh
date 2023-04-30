@@ -752,7 +752,7 @@ WantedBy=multi-user.target
 END
 
 # Trojan Go Uuid
-cat > /etc/trojan-go/uuid.txt << END
+cat > /etc/trojan-go/uuid << END
 $uuid
 END
 clear

@@ -1,7 +1,7 @@
 #!/bin/bash
 systemctl stop trojan-go
 domain=$(cat /etc/xray/domain)
-uuid=$(cat /etc/trojan-go/uuid.txt)
+uuid=$(cat /etc/trojan-go/uuid)
 clear
 sleep 1
 cat > /etc/trojan-go/config.json << END

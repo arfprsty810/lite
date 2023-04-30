@@ -83,7 +83,7 @@ sed -i '/#trojanws$/a\#tr# '"$AKUN_TROJAN_1 $EXP_TROJAN_1"'\
 },{"password": "'""$UID_TROJAN_1""'","email": "'""$AKUN_TROJAN_1""'"' /etc/xray/config.json
 sed -i '/#trojangrpc$/a\#tr# '"$AKUN_TROJAN_1 $EXP_TROJAN_1"'\
 },{"password": "'""$UID_TROJAN_1""'","email": "'""$AKUN_TROJAN_1""'"' /etc/xray/config.json
-sed -i '/#trojan-go#$/a\,#trgo# '"$AKUN_TROJAN_1 $EXP_TROJAN_1"'\
+sed -i '/"'""$uuid""'"$/a\,#trgo# '"$AKUN_TROJAN_1 $EXP_TROJAN_1"'\
 "'""$UID_TROJAN_1""'"' /etc/trojan-go/config.json
 echo -e "#trgo# $AKUN_TROJAN_1 $EXP_TROJAN_1" >> /etc/trojan-go/akun.conf
 clear

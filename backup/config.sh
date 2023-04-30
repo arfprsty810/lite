@@ -9,6 +9,7 @@ cat > /etc/trojan-go/config.json << END
   "log_file": "/var/log/trojan-go/trojan-go.log",
   "password": [
       "7123d67e-1b6b-4383-b8e1-e46e137768bd"
+#trojan-go#
   ],
   "disable_http_check": true,
   "udp_timeout": 60,

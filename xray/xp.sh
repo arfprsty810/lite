@@ -16,7 +16,7 @@ data=( `cat /etc/xray/config.json | grep '^#vm#' | cut -d ' ' -f 2 | sort | uniq
 now=`date +"%Y-%m-%d"`
 for user in "${data[@]}"
 do
-exp=$(grep -w "^### $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+exp=$(grep -w "^#vm# $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
 d1=$(date -d "$exp" +%s)
 d2=$(date -d "$now" +%s)
 exp2=$(( (d1 - d2) / 86400 ))
@@ -32,7 +32,7 @@ data=( `cat /etc/xray/config.json | grep '^#vl#' | cut -d ' ' -f 2 | sort | uniq
 now=`date +"%Y-%m-%d"`
 for user in "${data[@]}"
 do
-exp=$(grep -w "^#& $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+exp=$(grep -w "^#vl# $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
 d1=$(date -d "$exp" +%s)
 d2=$(date -d "$now" +%s)
 exp2=$(( (d1 - d2) / 86400 ))
@@ -47,7 +47,7 @@ data=( `cat /etc/xray/config.json | grep '^#tr#' | cut -d ' ' -f 2 | sort | uniq
 now=`date +"%Y-%m-%d"`
 for user in "${data[@]}"
 do
-exp=$(grep -w "^#! $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+exp=$(grep -w "^#tr# $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
 d1=$(date -d "$exp" +%s)
 d2=$(date -d "$now" +%s)
 exp2=$(( (d1 - d2) / 86400 ))
@@ -57,3 +57,20 @@ sed -i "/^#tr# $user $exp/,/^},{/d" /etc/xray/config.json
 fi
 done
 systemctl restart xray
+
+data=( `cat /etc/trojan-go/akun.conf | grep '^#trgo#' | cut -d ' ' -f 2`);
+now=`date +"%Y-%m-%d"`
+for user in "${data[@]}"
+do
+exp=$(grep -w "^#trgo# $user" "/etc/trojan-go/akun.conf" | cut -d ' ' -f 3)
+d1=$(date -d "$exp" +%s)
+d2=$(date -d "$now" +%s)
+exp2=$(( (d1 - d2) / 86400 ))
+if [[ "$exp2" -le "0" ]]; then
+sed -i "/^#trgo# $user $exp/d" /etc/trojan-go/akun.conf
+sed -i "/^,#trgo# $user $exp/,/^/d" /etc/trojan-go/config.json
+sed -i "/^#trgo# $user $exp/d" /etc/trojan-go/akun.conf
+sed -i "/^,#trgo# $user $exp/,/^/d" /etc/trojan-go/config.json
+fi
+done
+systemctl restart trojan-go

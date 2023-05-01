@@ -11,7 +11,7 @@ green() { echo -e "\\033[32;1m${*}\\033[0m"; }
 red() { echo -e "\\033[31;1m${*}\\033[0m"; }
 
 clear
-echo -e "[ ${green}INFO$NC ] Restar All Service ..."
+echo -e "[ ${green}INFO$NC ] Restart All Service ..."
 sleep 1
 clear
 systemctl daemon-reload

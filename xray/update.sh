@@ -17,7 +17,7 @@ ipvps="/var/lib/arf"
 github="https://raw.githubusercontent.com/arfprsty810/lite/main"
 
 clear
-echo -e "[ ${green}INFO$NC ] Remove old file"
+echo -e "[ ${green}INFO$NC ] Remove old file ..."
 sleep 1
 
 #vmess

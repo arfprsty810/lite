@@ -147,6 +147,19 @@ running
 
 9)
 clear
+echo -e "================================================="
+echo -e "#     Premium Auto Script By Akbar Maulana      #"
+echo -e "================================================="
+echo -e "# For Debian 10 64 bit                          #"
+echo -e "# For Ubuntu 18.04 & Ubuntu 20.04 64 bit        #"
+echo -e "# For VPS with KVM and VMWare virtualization    #"
+echo -e "# Build Up By @arf.prsty                        #"
+echo -e "================================================="
+echo -e "# Thanks To                                     #"
+echo -e "================================================="
+echo -e "# Allah SWT                                     #"
+echo -e "# My Family                                     #"
+echo -e "================================================="
 cat /root/log-install.txt
 echo ""
 read -n 1 -s -r -p "Press any key to back on menu"

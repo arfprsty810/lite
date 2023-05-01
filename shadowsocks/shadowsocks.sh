@@ -122,4 +122,4 @@ chmod +x delss
 chmod +x cekss
 chmod +x renewss
 cd
-rm -f /root/sodosok.sh
+rm -f /root/shadowsocks.sh

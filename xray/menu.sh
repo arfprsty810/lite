@@ -141,7 +141,6 @@ cek-bandwidth
 ;;
 
 8)
-sed -i -e 's/\r$//' /bin/running
 clear
 running
 ;;

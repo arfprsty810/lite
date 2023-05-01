@@ -17,17 +17,19 @@ chmod +x /usr/bin/cekuser
 sed -i -e 's/\r$//' /bin/cekuser
 clear
 
-echo -n > /tmp/other.txt
-data=( `cat /etc/xray/config.json | grep '###' | cut -d ' ' -f 2 | sort | uniq`);
 echo "------------------------------------";
 echo "-----=[ XRAY User Login ]=-----";
 echo "------------------------------------";
 echo "";
 echo "Sedang Mengirim Info Online ke Telegram ...";
-sleep 2
-echo "";
+echo ""
 echo "Please wait ...";
+echo "";
+echo "-------------------------------";
 sleep 2
+
+echo -n > /tmp/other.txt
+data=( `cat /etc/xray/config.json | grep '#vm#' | cut -d ' ' -f 2 | sort | uniq`);
 for akun in "${data[@]}"
 do
 if [[ -z "$akun" ]]; then
@@ -46,17 +48,84 @@ fi
 jum2=$(cat /tmp/ipxray.txt)
 sed -i "/$jum2/d" /tmp/other.txt > /dev/null 2>&1
 done
+
+data=( `cat /etc/xray/config.json | grep '#vl#' | cut -d ' ' -f 2 | sort | uniq`);
+for akun in "${data[@]}"
+do
+if [[ -z "$akun" ]]; then
+akun="tidakada"
+fi
+echo -n > /tmp/ipxray.txt
+data2=( `cat /var/log/xray/access.log | tail -n 500 | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | sort | uniq`);
+for ip in "${data2[@]}"
+do
+jum=$(cat /var/log/xray/access.log | grep -w "$akun" | tail -n 500 | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | grep -w "$ip" | sort | uniq)
+if [[ "$jum" = "$ip" ]]; then
+echo "$jum" >> /tmp/ipxray.txt
+else
+echo "$ip" >> /tmp/other.txt
+fi
+jum2=$(cat /tmp/ipxray.txt)
+sed -i "/$jum2/d" /tmp/other.txt > /dev/null 2>&1
+done
+
+data=( `cat /etc/xray/config.json | grep '#tr#' | cut -d ' ' -f 2 | sort | uniq`);
+for akun in "${data[@]}"
+do
+if [[ -z "$akun" ]]; then
+akun="tidakada"
+fi
+echo -n > /tmp/ipxray.txt
+data2=( `cat /var/log/xray/access.log | tail -n 500 | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | sort | uniq`);
+for ip in "${data2[@]}"
+do
+jum=$(cat /var/log/xray/access.log | grep -w "$akun" | tail -n 500 | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | grep -w "$ip" | sort | uniq)
+if [[ "$jum" = "$ip" ]]; then
+echo "$jum" >> /tmp/ipxray.txt
+else
+echo "$ip" >> /tmp/other.txt
+fi
+jum2=$(cat /tmp/ipxray.txt)
+sed -i "/$jum2/d" /tmp/other.txt > /dev/null 2>&1
+done
+
+data=( `cat /etc/trojan-go/akun.conf | grep '#trgo#' | cut -d ' ' -f 2 | sort | uniq`);
+for akun in "${data[@]}"
+do
+if [[ -z "$akun" ]]; then
+akun="tidakada"
+fi
+echo -n > /tmp/ipxray.txt
+data2=( `cat /var/log/trojan-go/trojan-go.log | tail -n 500 | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | sort | uniq`);
+for ip in "${data2[@]}"
+do
+jum=$(cat /var/log/trojan-go/trojan-go.log | grep -w "$akun" | tail -n 500 | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | grep -w "$ip" | sort | uniq)
+if [[ "$jum" = "$ip" ]]; then
+echo "$jum" >> /tmp/ipxray.txt
+else
+echo "$ip" >> /tmp/other.txt
+fi
+jum2=$(cat /tmp/ipxray.txt)
+sed -i "/$jum2/d" /tmp/other.txt > /dev/null 2>&1
+done
+
 jum=$(cat /tmp/ipxray.txt)
 if [[ -z "$jum" ]]; then
 echo > /dev/null
 else
 jum2=$(cat /tmp/ipxray.txt | nl)
 lastlogin=$(cat /var/log/xray/access.log | grep -w "$akun" | tail -n 500 | cut -d " " -f 2 | tail -1)
+lastlogin2=$(cat /var/log/trojan-go/trojan-go.log | grep -w "$akun" | tail -n 500 | cut -d " " -f 2 | tail -1)
+
 #echo -e "user :${GREEN} ${akun} ${NC}
 #${RED}Online Jam ${NC}: ${lastlogin} wib";
 #echo -e "$jum2";
-echo ""
-echo "-------------------------------";
+#echo ""
+#echo "-------------------------------";
+#fi
+#done
+#rm -rf /tmp/other.txt
+#rm -rf /tmp/ipxray.txt
 
 #curl "https://api.telegram.org/bot6233747947:AAFDo-lXjoiw5BN1ysK-K5g8v-RjFktO99A/getUpdates"
 
@@ -67,13 +136,14 @@ token=6233747947:AAFDo-lXjoiw5BN1ysK-K5g8v-RjFktO99A
 chatid=1761935484
 
 curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" -d chat_id="$chatid" -d text="${lastlogin} WIB   |  • Info Online User-XRAY-${akun} $jum2" > /dev/null 2>&1
-
 clear
 fi
-rm -rf /tmp/ipxray.txt
+done
+done
+done
 done
 rm -rf /tmp/other.txt
-
+rm -rf /tmp/ipxray.txt
 
 echo "------------------------------------";
 echo "-----=[ XRAY User Login ]=-----";
@@ -85,4 +155,5 @@ echo "-------------------------------";
 sleep 1
 echo "";
 read -n 1 -s -r -p "Press any key to Exit"
-exit 1
+exit
+clear

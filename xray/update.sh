@@ -148,9 +148,9 @@ sed -i -e 's/\r$//' /bin/renew-tr
 
 clear
 sleep 1
-echo -e "[ ${green}INFO$NC ] Update successfully!"
+echo -e "[ ${green}INFO$NC ] Update Successfully!"
 clear
-echo -e "[ ${green}ok${NC} ] Enable & restart xray "
+echo -e "[ ${green}ok${NC} ] Enable & Restart All Service "
 sleep 2
 systemctl daemon-reload
 systemctl enable xray
@@ -162,6 +162,20 @@ systemctl stop trojan-go
 systemctl start trojan-go
 systemctl enable trojan-go
 systemctl restart trojan-go
+#systemctl restart ws-dropbear.service >/dev/null 2>&1
+#systemctl restart ws-stunnel.service >/dev/null 2>&1
+systemctl restart xray.service >/dev/null 2>&1
+/etc/init.d/ssh restart
+/etc/init.d/dropbear restart
+#/etc/init.d/stunnel5 restart
+/etc/init.d/fail2ban restart
+/etc/init.d/cron restart
+/etc/init.d/nginx restart
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 1000
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 1000
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300 --max-clients 1000
+systemctl restart rc-local.service
+clear
 sleep 1
 cat> /root/.profile << END
 # ~/.profile: executed by Bourne-compatible login shells.

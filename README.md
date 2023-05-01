@@ -4,12 +4,16 @@ Ini merupakan sebuah script yang memudahkan para Pengguna VPN untuk install pack
 Selain itu Script yang sangat ringan Dan Fast Respon
 
 ### Service & Port:
-  Service Port
- - XRAY  Vmess TLS + gRPC  : 443
- - XRAY  Vless TLS + gRPC  : 443
- - Trojan WS + gRPC        : 443
+Service Port :
+ - XRAY  Vmess TLS         : 443
+ - XRAY  Vmess gRPC        : 443
  - XRAY  Vmess None TLS    : 80
+ - XRAY  Vless TLS         : 443
+ - XRAY  Vless gRPC        : 443
  - XRAY  Vless None TLS    : 80
+ - Trojan WS               : 443
+ - Trojan gRPC             : 443
+ - Trojan GO               : 2087
  - Nginx                   : 81
 
 ### Other Services:
@@ -32,12 +36,12 @@ Speedtest CLI
 ## Installation
 
 ```
-sysctl -w net.ipv6.conf.all.disable_ipv6=1 && sysctl -w net.ipv6.conf.default.disable_ipv6=1 && rm -rf setup.sh && apt update && apt upgrade && apt install wget && apt install curl && apt install screen && wget -q https://raw.githubusercontent.com/arfprsty810/lite/main/xray/menu.sh && chmod +x setup.sh && ./setup.sh
+rm -rvf setup.sh && apt update && apt upgrade && wget -q https://raw.githubusercontent.com/arfprsty810/lite/main/xray/menu.sh && chmod +x setup.sh && ./setup.sh
 ```
 **Link Copy script:**
 
 BBR Booster untuk Trojan, V2Ray dan XRay
 ```
-wget https://raw.githubusercontent.com/arfprsty810/lite/main/file/bbr.sh chmod +x bbr.sh && sed -i -e 's/\r$//' bbr.sh && screen -S bbr ./bbr.sh
+wget -q -O /usr/bin/bbr https://raw.githubusercontent.com/arfprsty810/lite/main/bbr/bbr.sh chmod +x /usr/bin/bbr && sed -i -e 's/\r$//' /usr/bin/bbr && screen -S bbr /bin/bbr
 ```
 ## NOT FOR SALE !

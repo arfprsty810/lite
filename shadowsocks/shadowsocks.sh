@@ -13,20 +13,9 @@ CYAN='\033[0;36m'
 LIGHT='\033[0;37m'
 # ==========================================
 
-ipvps="/var/lib/arf"
 github="raw.githubusercontent.com/arfprsty810/lite/main/shadowsocks"
 OS=$ID
 ver=$VERSION_ID
-# set random pwd
-openssl rand -base64 16 > /etc/xray/passwd
-pwd=$(cat /etc/xray/passwd)
-source /etc/os-release
-source $ipvps/ipvps.conf
-if [[ "$IP" = "" ]]; then
-domain=$(cat /etc/xray/domain)
-else
-domain=$IP
-fi
 clear
 
 #Install_Packages

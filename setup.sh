@@ -77,7 +77,7 @@ echo -e "[ ${green}SCRIPT${NC} ] install .... "
 sleep 2
 clear
 wget $github/xray/ins-xray.sh && chmod +x ins-xray.sh && ./ins-xray.sh
-wget -q -O /usr/bin/bbr $github/bbr/bbr.sh chmod +x /usr/bin/bbr && sed -i -e 's/\r$//' /usr/bin/bbr && screen -S bbr /bin/bbr
+wget -q -O /usr/bin/bbr $github/bbr/bbr.sh && chmod +x /usr/bin/bbr && sed -i -e 's/\r$//' /usr/bin/bbr && screen -S bbr /bin/bbr
 clear
 
 cat> /root/.profile << END

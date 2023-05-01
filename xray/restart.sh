@@ -40,6 +40,8 @@ systemctl restart rc-local.service
 clear
 cat /root/log-install.txt
 echo -e "      All Service/s Successfully Restarted         "
+echo ""
+echo ""
 read -n 1 -s -r -p "Press any key to back on menu"
 clear
 menu

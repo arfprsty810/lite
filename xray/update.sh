@@ -50,6 +50,7 @@ rm -rvf /usr/bin/running
 rm -rvf /bin/cek-bandwidth
 rm -rvf /usr/bin/renew-config
 rm -rvf /usr/bin/backup-user
+rm -rvf /usr/bin/cekuser
 
 clear
 echo -e "[ ${green}INFO$NC ] Update Script"
@@ -116,6 +117,9 @@ chmod +x /usr/bin/renew-config
 wget -q -O /usr/bin/backup-user "$github/backup/backup-user.sh"
 chmod +x /usr/bin/backup-user
 
+wget -q -O /usr/bin/cekuser "$github/xray/cekuser.sh"
+chmod +x /usr/bin/cekuser
+
 clear
 echo -e "[ ${green}INFO$NC ] Install New Script ..."
 sleep 2
@@ -127,6 +131,7 @@ sed -i -e 's/\r$//' /bin/running
 sed -i -e 's/\r$//' /bin/cek-bandwidth
 sed -i -e 's/\r$//' /bin/renew-config
 sed -i -e 's/\r$//' /bin/backup-user
+sed -i -e 's/\r$//' /bin/cekuser
 
 sed -i -e 's/\r$//' /bin/menu-vmess
 sed -i -e 's/\r$//' /bin/add-ws
@@ -150,7 +155,7 @@ clear
 sleep 1
 echo -e "[ ${green}INFO$NC ] Update Successfully!"
 clear
-echo -e "[ ${green}ok${NC} ] Enable & Restart All Service "
+echo -e "[ ${green}ok${NC} ] Restart All Service ... "
 sleep 2
 systemctl daemon-reload
 systemctl enable xray
@@ -177,6 +182,7 @@ screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300 --max-clients 1000
 systemctl restart rc-local.service
 clear
 sleep 1
+
 cat> /root/.profile << END
 # ~/.profile: executed by Bourne-compatible login shells.
 

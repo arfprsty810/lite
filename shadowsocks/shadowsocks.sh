@@ -13,22 +13,15 @@ CYAN='\033[0;36m'
 LIGHT='\033[0;37m'
 # ==========================================
 
-github="raw.githubusercontent.com/arfprsty810/lite/main/shadowsocks"
+github="https://raw.githubusercontent.com/arfprsty810/lite/main/shadowsocks"
+source /etc/os-release
 OS=$ID
 ver=$VERSION_ID
 clear
 
 #Install_Packages
-echo "#############################################"
-echo "Install Paket..."
 apt-get install --no-install-recommends build-essential autoconf libtool libssl-dev libpcre3-dev libev-dev asciidoc xmlto automake -y
-echo "Install Paket Selesai."
-echo "#############################################"
 
-
-#Install_Shadowsocks_libev
-echo "#############################################"
-echo "Install Shadowsocks-libev..."
 apt-get install software-properties-common -y
 if [[ $OS == 'ubuntu' ]]; then
 apt install shadowsocks-libev -y
@@ -46,12 +39,7 @@ apt -t buster-backports install shadowsocks-libev -y
 apt -t buster-backports install simple-obfs -y
 fi
 fi
-echo "Install Shadowsocks-libev Selesai."
-echo "#############################################"
 
-#Server konfigurasi
-echo "#############################################"
-echo "Konfigurasi Server."
 cat > /etc/shadowsocks-libev/config.json <<END
 {   
     "server":"0.0.0.0",
@@ -64,18 +52,10 @@ cat > /etc/shadowsocks-libev/config.json <<END
     "mode":"tcp_and_udp",
 }
 END
-echo "#############################################"
 
-#mulai ~shadowsocks-libev~ server
-echo "#############################################"
-echo "mulai ss server"
 systemctl enable shadowsocks-libev.service
 systemctl start shadowsocks-libev.service
-echo "#############################################"
 
-#buat client config
-echo "#############################################"
-echo "buat config obfs"
 cat > /etc/shadowsocks-libev.json <<END
 {
     "server":"127.0.0.1",
@@ -91,24 +71,23 @@ cat > /etc/shadowsocks-libev.json <<END
 }
 END
 chmod +x /etc/shadowsocks-libev.json
-echo "#############################################"
 
 echo -e "">>"/etc/shadowsocks-libev/akun.conf"
 
-echo "#############################################"
-echo "Menambahkan Perintah Shadowsocks-libev"
 iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2443:3543 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2443:3543 -j ACCEPT
 iptables-save > /etc/iptables.up.rules
 ip6tables-save > /etc/ip6tables.up.rules
 cd /usr/bin
-wget -O addss "https://${github}/addss.sh"
-wget -O delss "https://${github}/delss.sh"
-wget -O cekss "https://${github}/cekss.sh"
-wget -O renewss "https://${github}/renewss.sh"
+wget -O addss "${github}/addss.sh"
+wget -O delss "${github}/delss.sh"
+wget -O cekss "${github}/cekss.sh"
+wget -O renewss "${github}/renewss.sh"
+wget -O menu-ss "${github}/renewss.sh"
 chmod +x addss
 chmod +x delss
 chmod +x cekss
 chmod +x renewss
+chmod +x menu-ss
 cd
 rm -f /root/shadowsocks.sh

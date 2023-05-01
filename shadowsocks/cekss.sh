@@ -53,3 +53,6 @@ echo "----------------------------------"
 fi
 x=$(( "$x" + 1 ))
 done
+read -n 1 -s -r -p "Press any key to back on menu"
+
+menu

@@ -105,3 +105,6 @@ echo -e "Link TLS    : $linkss1"
 echo -e "========================="
 echo -e "Link No TLS : $linkss2"
 echo -e "========================="
+read -n 1 -s -r -p "Press any key to back on menu"
+
+menu

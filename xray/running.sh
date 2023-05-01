@@ -325,7 +325,7 @@ echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━�
 echo -e "  ❇️ \e[32;1m Sever Uptime\e[0m     : $( uptime -p  | cut -d " " -f 2-10000 ) "
 echo -e "  ❇️ \e[32;1m Current Time\e[0m     : $( date -d "0 days" +"%d-%m-%Y | %X" ) "
 echo -e "  ❇️ \e[32;1m Operating System\e[0m : $( cat /etc/os-release | grep -w PRETTY_NAME | sed 's/PRETTY_NAME//g' | sed 's/=//g' | sed 's/"//g' ) ( $( uname -m) ) "
-echo -e "  ❇️ \e[32;1m Processor\e[0m          : $tipeprosesor"
+echo -e "  ❇️ \e[32;1m Processor\e[0m         : $tipeprosesor"
 echo -e "  ❇️ \e[32;1m Current Isp Name\e[0m : $ISP "
 echo -e "  ❇️ \e[32;1m Server IP\e[0m        : $IP "
 echo -e "  ❇️ \e[32;1m Current Domain\e[0m   : $DOMAIN "

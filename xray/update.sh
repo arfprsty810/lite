@@ -150,11 +150,12 @@ sed -i -e 's/\r$//' /bin/add-tr
 sed -i -e 's/\r$//' /bin/cek-tr
 sed -i -e 's/\r$//' /bin/del-tr
 sed -i -e 's/\r$//' /bin/renew-tr
-
 clear
+
 sleep 1
 echo -e "[ ${green}INFO$NC ] Update Successfully!"
 clear
+
 systemctl daemon-reload
 systemctl enable xray
 systemctl restart xray
@@ -178,11 +179,11 @@ screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 1000
 screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 1000
 screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300 --max-clients 1000
 systemctl restart rc-local.service
-echo -e "[ ${green}ok${NC} ] Restart All Service ... "
-sleep 2
-clear
 sleep 1
+echo -e "[ ${green}ok${NC} ] Restart All Service ... "
+clear
 
+sleep 1
 cat> /root/.profile << END
 # ~/.profile: executed by Bourne-compatible login shells.
 

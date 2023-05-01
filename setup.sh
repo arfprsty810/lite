@@ -15,6 +15,7 @@ red() { echo -e "\\033[31;1m${*}\\033[0m"; }
 cd /root
 
 ipvps="/var/lib/arf"
+github="https://raw.githubusercontent.com/arfprsty810/lite/main"
 mkdir -p /etc/xray
 mkdir -p $ipvps >/dev/null 2>&1
 echo "IP=" >> $ipvps/ipvps.conf
@@ -28,21 +29,6 @@ start=$(date +%s)
 ln -fs /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
 sysctl -w net.ipv6.conf.all.disable_ipv6=1 >/dev/null 2>&1
 sysctl -w net.ipv6.conf.default.disable_ipv6=1 >/dev/null 2>&1
-
-coreselect=''
-cat> /root/.profile << END
-# ~/.profile: executed by Bourne-compatible login shells.
-
-if [ "$BASH" ]; then
-  if [ -f ~/.bashrc ]; then
-    . ~/.bashrc
-  fi
-fi
-
-mesg n || true
-clear
-END
-chmod 644 /root/.profile
 
 if [ -f "/etc/xray/domain" ]; then
 clear
@@ -90,9 +76,10 @@ echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━�
 echo -e "[ ${green}SCRIPT${NC} ] install .... "
 sleep 2
 clear
-wget https://raw.githubusercontent.com/arfprsty810/lite/main/xray/ins-xray.sh && chmod +x ins-xray.sh && ./ins-xray.sh
-wget https://raw.githubusercontent.com/arfprsty810/lite/main/file/bbr.sh chmod +x bbr.sh && sed -i -e 's/\r$//' bbr.sh && screen -S bbr ./bbr.sh
+wget $github/xray/ins-xray.sh && chmod +x ins-xray.sh && ./ins-xray.sh
+wget -q -O /usr/bin/bbr $github/bbr/bbr.sh chmod +x /usr/bin/bbr && sed -i -e 's/\r$//' /usr/bin/bbr && screen -S bbr /bin/bbr
 clear
+
 cat> /root/.profile << END
 # ~/.profile: executed by Bourne-compatible login shells.
 
@@ -108,35 +95,37 @@ menu
 END
 chmod 644 /root/.profile
 
-curl -sS ifconfig.me > /etc/myipvps
-
 clear
-echo ""
-echo ""
-echo ""
-echo ""
-echo ""
-echo "=====================-[ SCRIPT INFO ]-===================="
-echo ""
-echo "----------------------------------------------------------"
-echo ""
+echo "" | tee -a log-install.txt
+echo "" | tee -a log-install.txt
+echo "" | tee -a log-install.txt
+echo "" | tee -a log-install.txt
+echo "" | tee -a log-install.txt
+echo "=====================-[ SCRIPT INFO ]-====================" | tee -a log-install.txt
+echo "" | tee -a log-install.txt
+echo "----------------------------------------------------------" | tee -a log-install.txt
+echo "" | tee -a log-install.txt
 echo "   >>> Service & Port"  | tee -a log-install.txt
-echo "   - Trojan WS + gRPC        : 443" | tee -a log-install.txt
-echo "   - XRAY  Vmess TLS + gRPC  : 443" | tee -a log-install.txt
-echo "   - XRAY  Vless TLS + gRPC  : 443" | tee -a log-install.txt
+echo "   - XRAY  Vmess TLS         : 443" | tee -a log-install.txt
+echo "   - XRAY  Vmess gRPC        : 443" | tee -a log-install.txt
 echo "   - XRAY  Vmess None TLS    : 80" | tee -a log-install.txt
+echo "   - XRAY  Vless TLS         : 443" | tee -a log-install.txt
+echo "   - XRAY  Vless gRPC        : 443" | tee -a log-install.txt
 echo "   - XRAY  Vless None TLS    : 80" | tee -a log-install.txt
+echo "   - Trojan WS               : 443" | tee -a log-install.txt
+echo "   - Trojan gRPC             : 443" | tee -a log-install.txt
+echo "   - Trojan GO               : 2087" | tee -a log-install.txt
 echo "   - Nginx                   : 81" | tee -a log-install.txt
-echo ""
-echo "------------------------------------------------------------"
-echo ""
-echo "=========-[ Script Created By @arf.prsty_ ]-=========="
-echo -e ""
-echo ""
+echo "" | tee -a log-install.txt
+echo "------------------------------------------------------------" | tee -a log-install.txt
+echo "" | tee -a log-install.txt
+echo "=========-[ Script Created By @arf.prsty_ ]-==========" | tee -a log-install.txt
+echo -e "" | tee -a log-install.txt
+echo "" | tee -a log-install.txt
 echo "" | tee -a log-install.txt
 rm /root/setup.sh >/dev/null 2>&1
 secs_to_human "$(($(date +%s) - ${start}))" | tee -a log-install.txt
-echo -e ""
+echo -e "" | tee -a log-install.txt
 
 echo -ne "[ ${yell}WARNING${NC} ] Reboot ur VPS ? (y/n)? "
 read answer

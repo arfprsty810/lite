@@ -46,6 +46,6 @@ rm -rvf setup.sh && apt update && apt upgrade && wget -q https://raw.githubuserc
 
 BBR Booster untuk Trojan, V2Ray dan XRay
 ```
-wget -q -O /usr/bin/bbr https://raw.githubusercontent.com/arfprsty810/lite/main/bbr/bbr.sh chmod +x /usr/bin/bbr && sed -i -e 's/\r$//' /usr/bin/bbr && screen -S bbr /bin/bbr
+wget -q -O /usr/bin/bbr https://raw.githubusercontent.com/arfprsty810/lite/main/bbr/bbr.sh && chmod +x /usr/bin/bbr && sed -i -e 's/\r$//' /usr/bin/bbr && screen -S bbr /bin/bbr
 ```
 ## NOT FOR SALE !

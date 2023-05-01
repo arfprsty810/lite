@@ -117,7 +117,7 @@ menu-trojan
 
 4)
 clear
-menu-ssws
+menu-ss
 ;;
 
 5)

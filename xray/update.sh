@@ -155,8 +155,6 @@ clear
 sleep 1
 echo -e "[ ${green}INFO$NC ] Update Successfully!"
 clear
-echo -e "[ ${green}ok${NC} ] Restart All Service ... "
-sleep 2
 systemctl daemon-reload
 systemctl enable xray
 systemctl restart xray
@@ -180,6 +178,8 @@ screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 1000
 screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 1000
 screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300 --max-clients 1000
 systemctl restart rc-local.service
+echo -e "[ ${green}ok${NC} ] Restart All Service ... "
+sleep 2
 clear
 sleep 1
 

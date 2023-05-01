@@ -53,7 +53,7 @@ rm -rvf /usr/bin/backup-user
 rm -rvf /usr/bin/cekuser
 
 clear
-echo -e "[ ${green}INFO$NC ] Update Script"
+echo -e "[ ${green}INFO$NC ] Update New Script ..."
 sleep 1
 
 #vmess

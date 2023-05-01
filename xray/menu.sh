@@ -91,9 +91,9 @@ echo -e "    ${BICyan}[${BIWhite}04${BICyan}]${RED} •${NC} ${CYAN}SHADOWSOCK-/
 
 echo -e "    ${BICyan}[${BIWhite}05${BICyan}]${RED} •${NC} ${CYAN}SSH/OVPN     $NC  ${BICyan}[${BIWhite}12${BICyan}]${RED} • ${NC}${CYAN}RESTART SERVICE $NC"
 
-echo -e "    ${BICyan}[${BIWhite}06${BICyan}]${RED} •${NC} ${CYAN}SPEEDTEST    $NC  ${BICyan}[${BIWhite},xx${BICyan}]${RED} • ${NC}${CYAN}x TO EXIT $NC"
+echo -e "    ${BICyan}[${BIWhite}06${BICyan}]${RED} •${NC} ${CYAN}SPEEDTEST    $NC  ${BICyan}[${BIWhite}xx${BICyan}]${RED} • ${NC}${CYAN}x TO EXIT $NC"
 
-echo -e "    ${BICyan}[${BIWhite}07${BICyan}]${RED} •${NC} ${CYAN}REBOOT VPS   $NC  ${BICyan}[${BIWhite}${BICyan}]${RED} • ${NC}${CYAN}-$NC"
+echo -e "    ${BICyan}[${BIWhite}07${BICyan}]${RED} •${NC} ${CYAN}REBOOT VPS   $NC"
 
 echo -e "\033[0;34m└─────────────────────────────────────────────────────┘${NC}"
 

@@ -39,8 +39,7 @@ screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300 --max-clients 1000
 systemctl restart rc-local.service
 clear
 cat /root/log-install.txt
-echo -e "      All Service/s Successfully Restarted         "
-echo ""
+echo "      All Service/s Successfully Restarted         "
 echo ""
 read -n 1 -s -r -p "Press any key to back on menu"
 clear

@@ -9,25 +9,36 @@ tyblue() { echo -e "\\033[36;1m${*}\\033[0m"; }
 yellow() { echo -e "\\033[33;1m${*}\\033[0m"; }
 green() { echo -e "\\033[32;1m${*}\\033[0m"; }
 red() { echo -e "\\033[31;1m${*}\\033[0m"; }
-
 clear
-echo " Vmess / Vless Trojan "
-echo "IN Progress ..."
+
+echo ""
+echo ""
+echo -e "[ ${green}INFO$NC ] RE-INSTALLER AUTO SCRIPT "
+echo " - XRAY => VMESS - VLESS "
+echo " - TROJAN => TROJAN WS - TROJAN-GO "
+echo " - SHADOWSOCKS => SHADOWSOCKS-LIBEV "
 sleep 3
 echo -e ""
+clear
 
+echo -e "[ ${green}INFO$NC ] INSTALLING CONFIGURASI"
+sleep 1
 secs_to_human() {
     echo "Installation time : $(( ${1} / 3600 )) hours $(( (${1} / 60) % 60 )) minute's $(( ${1} % 60 )) seconds"
 }
-
 start=$(date +%s)
+
+source /etc/os-release
+xray="/etc/xray"
 trgo="/etc/trojan-go"
 logtrgo="/var/log/trojan-go"
 ipvps="/var/lib/arf"
-github="https://raw.githubusercontent.com/arfprsty810/lite/main"
+github="https://raw.githubusercontent.com/arfprsty810/lite/main/shadowsocks"
+OS=$ID
+ver=$VERSION_ID
 # set random pwd
-openssl rand -base64 16 > /etc/xray/passwd
-pwd=$(cat /etc/xray/passwd)
+openssl rand -base64 16 > $xray/passwd
+pwd=$(cat $xray/passwd)
 # set random uuid
 uuid=$(cat /proc/sys/kernel/random/uuid)
 clear
@@ -40,16 +51,17 @@ read -rp "Input ur domain : " -e pp
         Nothing input for domain!
         Then a random domain will be created"
     else
-	echo "$pp" > /etc/xray/domain
-	echo "$pp" > /etc/xray/scdomain
+	echo "$pp" > $xray/domain
+	echo "$pp" > $xray/scdomain
 	echo "$pp" > /root/domain
     echo "$pp" > /root/scdomain
     echo "IP=$pp" > $ipvps/ipvps.conf
-    curl -s ipinfo.io/org/ > /etc/xray/ISP
-    curl -s https://ipinfo.io/ip/ > /etc/xray/IP
+    curl -s ipinfo.io/org/ > $xray/ISP
+    curl -s https://ipinfo.io/ip/ > $xray/IP
     fi
-domain=$(cat /etc/xray/domain)
+domain=$(cat $xray/domain)
 sleep 1
+clear
 
 echo -e "[ ${green}INFO$NC ] Disable ipv6"
 sleep 1
@@ -90,19 +102,39 @@ apt upgrade -y
 clear
 echo " "
 
+# install xray
+sleep 1
+echo -e "[ ${green}INFO$NC ] Downloading & Installing xray core"
+domainSock_dir="/run/xray";! [ -d $domainSock_dir ] && mkdir  $domainSock_dir
+chown www-data.www-data $domainSock_dir
+clear
+
+# Make Folder XRay
+rm -rvf /var/log/xray
+mkdir -p /var/log/xray
+chown www-data.www-data /var/log/xray
+chmod +x /var/log/xray
+touch /var/log/xray/access.log
+touch /var/log/xray/error.log
+touch /var/log/xray/access2.log
+touch /var/log/xray/error2.log
+# / / Ambil Xray Core Version Terbaru
+bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.5.6
+
+echo -e "[ ${green}INFO$NC ] INSATLL NGINX SERVER"
 # install webserver
 cd
 rm /etc/nginx/sites-enabled/default
 rm /etc/nginx/sites-available/default
 rm -rvf /etc/nginx/nginx.conf
-rm -rvf /home/vps/public_html
-rm -rvf /home/vps/public_html/index.html
 wget -O /etc/nginx/nginx.conf "$github/xray/nginx.conf"
+rm -rvf /home/vps/public_html
 mkdir -p /home/vps/public_html
 echo "<?php phpinfo() ?>" > /home/vps/public_html/info.php
 chown -R www-data:www-data /home/vps/public_html
 chmod -R g+rw /home/vps/public_html
 cd /home/vps/public_html
+rm -rvf /home/vps/public_html/index.html
 wget -O /home/vps/public_html/index.html "$github/xray/index.html"
 /etc/init.d/nginx restart
 cd
@@ -111,12 +143,17 @@ clear
 echo -e "[ ${green}INFO$NC ] INSATLL CERT SSL"
 ## crt xray
 systemctl stop nginx
-rm -rvf /etc/xray/xray.crt
-rm -rvf /etc/xray/xray.key
+rm -rvf /root/.acme.sh
+mkdir /root/.acme.sh
+rm -rvf /root/.acme.sh/acme.sh
+curl https://acme-install.netlify.app/acme.sh -o /root/.acme.sh/acme.sh
+chmod +x /root/.acme.sh/acme.sh
 /root/.acme.sh/acme.sh --upgrade --auto-upgrade
 /root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
 /root/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-256
-~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath /etc/xray/xray.crt --keypath /etc/xray/xray.key --ecc
+rm -rvf $xray/xray.crt
+rm -rvf $xray/xray.key
+~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath $xray/xray.crt --keypath $xray/xray.key --ecc
 clear
 
 echo -e "[ ${green}INFO$NC ] RENEW CERT SSL"
@@ -130,6 +167,8 @@ chmod +x /usr/local/bin/ssl_renew.sh
 if ! grep -q 'ssl_renew.sh' /var/spool/cron/crontabs/root;then (crontab -l;echo "15 03 */3 * * /usr/local/bin/ssl_renew.sh") | crontab;fi
 clear
 
+echo -e "[ ${green}INFO$NC ] MEMBUAT PORT"
+sleep 1
 # Random Port Xray
 trojanws=$((RANDOM + 10000))
 ssws=$((RANDOM + 10000))
@@ -143,8 +182,10 @@ vmessgrpc=$((RANDOM + 10000))
 trojangrpc=$((RANDOM + 10000))
 
 # xray config
-rm -rvf /etc/xray/config.json
-cat > /etc/xray/config.json << END
+echo -e "[ ${green}INFO$NC ] Membuat Config XRAY"
+sleep 1
+rm -rvf $xray/config.json
+cat > $xray/config.json << END
 {
   "log" : {
     "access": "/var/log/xray/access.log",
@@ -397,6 +438,7 @@ cat > /etc/xray/config.json << END
 END
 clear
 
+rm -rf /etc/systemd/system/xray.service.d
 rm -rvf /etc/systemd/system/xray.service
 cat <<EOF> /etc/systemd/system/xray.service
 Description=Xray Service
@@ -407,7 +449,7 @@ After=network.target nss-lookup.target
 User=www-data
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE                                 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
-ExecStart=/usr/local/bin/xray run -config /etc/xray/config.json
+ExecStart=/usr/local/bin/xray run -config $xray/config.json
 Restart=on-failure
 RestartPreventExitStatus=23
 LimitNPROC=10000
@@ -417,6 +459,8 @@ LimitNOFILE=1000000
 WantedBy=multi-user.target
 
 EOF
+clear
+
 rm -rvf /etc/systemd/system/runn.service
 cat > /etc/systemd/system/runn.service <<EOF
 [Unit]
@@ -435,6 +479,8 @@ EOF
 clear
 
 #nginx config
+echo -e "[ ${green}INFO$NC ] Membuat Config NGINX"
+sleep 1
 rm -rvf /etc/nginx/conf.d/xray.conf
 cat >/etc/nginx/conf.d/xray.conf <<EOF
     server {
@@ -443,13 +489,14 @@ cat >/etc/nginx/conf.d/xray.conf <<EOF
              listen 443 ssl http2 reuseport;
              listen [::]:443 http2 reuseport;	
              server_name $domain;
-             ssl_certificate /etc/xray/xray.crt;
-             ssl_certificate_key /etc/xray/xray.key;
+             ssl_certificate $xray/xray.crt;
+             ssl_certificate_key $xray/xray.key;
              ssl_ciphers EECDH+CHACHA20:EECDH+CHACHA20-draft:EECDH+ECDSA+AES128:EECDH+aRSA+AES128:RSA+AES128:EECDH+ECDSA+AES256:EECDH+aRSA+AES256:RSA+AES256:EECDH+ECDSA+3DES:EECDH+aRSA+3DES:RSA+3DES:!MD5;
              ssl_protocols TLSv1.1 TLSv1.2 TLSv1.3;
              root /home/vps/public_html;
         }
 EOF
+clear
 
 sed -i '$ ilocation /' /etc/nginx/conf.d/xray.conf
 sed -i '$ i{' /etc/nginx/conf.d/xray.conf
@@ -549,10 +596,6 @@ sed -i '$ igrpc_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/ng
 sed -i '$ igrpc_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
 sed -i '$ igrpc_pass grpc://127.0.0.1:'"$trojangrpc"';' /etc/nginx/conf.d/xray.conf
 sed -i '$ i}' /etc/nginx/conf.d/xray.conf
-
-sleep 1
-echo -e "[ ${green}INFO$NC ] Installing bbr.."
-wget -q -O /usr/bin/bbr $github/bbr/bbr.sh && chmod +x /usr/bin/bbr && sed -i -e 's/\r$//' /usr/bin/bbr && screen -S bbr /bin/bbr
 clear
 
 echo -e "$yell[SERVICE]$NC Restart All service"
@@ -569,7 +612,47 @@ systemctl restart runn
 clear
 sleep 1
 
+echo -e "[ ${green}INFO$NC ] Remove old file ..."
+sleep 1
 #vmess
+rm -rvf /usr/bin/menu-vmess
+rm -rvf /usr/bin/add-ws
+rm -rvf /usr/bin/cek-ws
+rm -rvf /usr/bin/del-ws
+rm -rvf /usr/bin/renew-ws
+#vless
+rm -rvf /usr/bin/menu-vless
+rm -rvf /usr/bin/add-vless
+rm -rvf /usr/bin/cek-vless
+rm -rvf /usr/bin/del-vless
+rm -rvf /usr/bin/renew-vless
+#trojan
+rm -rvf /usr/bin/menu-trojan
+rm -rvf /usr/bin/add-tr
+rm -rvf /usr/bin/cek-tr
+rm -rvf /usr/bin/del-tr
+rm -rvf /usr/bin/renew-tr
+#shadowsocks-libev
+rm -rvf /usr/bin/menu-ss
+rm -rvf /usr/bin/addss
+rm -rvf /usr/bin/cekss
+rm -rvf /usr/bin/delss
+rm -rvf /usr/bin/renewss
+#--
+rm -rvf /usr/bin/menu
+rm -rvf /usr/bin/speedtest
+rm -rvf /usr/bin/update
+rm -rvf /usr/bin/restart
+rm -rvf /usr/bin/running
+rm -rvf /bin/cek-bandwidth
+rm -rvf /usr/bin/renew-config
+rm -rvf /usr/bin/backup-user
+rm -rvf /usr/bin/cekuser
+clear
+
+#vmess
+echo -e "[ ${green}INFO$NC ] Download New Script"
+sleep 1
 wget -q -O /usr/bin/menu-vmess "$github/xray/vmess/menu-vmess.sh" && chmod +x /usr/bin/menu-vmess
 wget -q -O /usr/bin/add-ws "$github/xray/vmess/add-ws.sh" && chmod +x /usr/bin/add-ws
 wget -q -O /usr/bin/cek-ws "$github/xray/vmess/cek-ws.sh" && chmod +x /usr/bin/cek-ws
@@ -590,6 +673,13 @@ wget -q -O /usr/bin/cek-tr "$github/xray/trojan/cek-tr.sh" && chmod +x /usr/bin/
 wget -q -O /usr/bin/del-tr "$github/xray/trojan/del-tr.sh" && chmod +x /usr/bin/del-tr
 wget -q -O /usr/bin/renew-tr "$github/xray/trojan/renew-tr.sh" && chmod +x /usr/bin/renew-tr
 
+#shadowsocks-libev
+wget -q -O /usr/bin/menu-ss "$github/shadowsocks/menu-ss.sh" && chmod +x /usr/bin/menu-ss
+wget -q -O /usr/bin/addss "$github/shadowsocks/addss" && chmod +x /usr/bin/addss
+wget -q -O /usr/bin/cekss "$github/shadowsocks/cekss.sh" && chmod +x /usr/bin/cekss
+wget -q -O /usr/bin/delss "$github/shadowsocks/delss.sh" && chmod +x /usr/bin/delss
+wget -q -O /usr/bin/renewss "$github/shadowsocks/renewss.sh" && chmod +x /usr/bin/renewss
+
 #--
 wget -q -O /usr/bin/restart "$github/xray/restart.sh" && chmod +x /usr/bin/restart
 wget -q -O /usr/bin/running "$github/xray/running.sh" && chmod +x /usr/bin/running
@@ -602,7 +692,7 @@ wget -q -O /usr/bin/backup-user "$github/backup/backup-user.sh" && chmod +x /usr
 sleep 1
 clear
 
-echo -e "[ ${green}INFO$NC ] Install Script ..."
+echo -e "[ ${green}INFO$NC ] Install New Script ..."
 sleep 1
 sed -i -e 's/\r$//' /bin/menu
 sed -i -e 's/\r$//' /bin/cek-bandwidth
@@ -630,40 +720,47 @@ sed -i -e 's/\r$//' /bin/cek-tr
 sed -i -e 's/\r$//' /bin/del-tr
 sed -i -e 's/\r$//' /bin/renew-tr
 
+sed -i -e 's/\r$//' /bin/menu-ss
+sed -i -e 's/\r$//' /bin/addss
+sed -i -e 's/\r$//' /bin/cekss
+sed -i -e 's/\r$//' /bin/delss
+sed -i -e 's/\r$//' /bin/renewss
 clear
-sleep 2
 
-yellow() { echo -e "\\033[33;1m${*}\\033[0m"; }
-yellow "xray/Vmess"
-yellow "xray/Vless"
+echo -e "[ ${green}INFO$NC ] SETTING XRAY SUKSES !!!"
+sleep 2
 clear
-echo -e "[ ${green}INFO$NC ] SETTING SERVER SUKSES"
-sleep 2
-
-#mv /root/domain /etc/xray
+#mv /root/domain $xray
 #if [ -f /root/scdomain ];then
 #rm /root/scdomain > /dev/null 2>&1
 #fi
 
-rm -rvf /usr/bin/trojan-go
-rm -rvf $trgo
-rm -rvf $logtrgo
 # Install Trojan Go
+echo -e "[ ${green}INFO$NC ] Installing Trojan-GO"
+sleep 1
 latest_version="$(curl -s "https://api.github.com/repos/p4gefau1t/trojan-go/releases" | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
 trojango_link="https://github.com/p4gefau1t/trojan-go/releases/download/v${latest_version}/trojan-go-linux-amd64.zip"
+rm -rvf /usr/bin/trojan-go
+rm -rvf $trgo
 mkdir -p "/usr/bin/trojan-go"
-mkdir -p "/etc/trojan-go"
+mkdir -p "$trgo"
 cd `mktemp -d`
 curl -sL "${trojango_link}" -o trojan-go.zip
-unzip -q trojan-go.zip && rm -rf trojan-go.zip
+unzip -q trojan-go.zip && rm -rvf trojan-go.zip
 mv trojan-go /usr/local/bin/trojan-go
 chmod +x /usr/local/bin/trojan-go
-mkdir /var/log/trojan-go
-touch /etc/trojan-go/akun.conf
-touch /var/log/trojan-go/trojan-go.log
+rm -rvf $logtrgo
+mkdir $logtrgo
+rm -rvf $trgo/akun.conf
+touch $trgo/akun.conf
+rm -rvf $logtrgo/trojan-go.log
+touch $logtrgo/trojan-go.log
 
 # Buat Config Trojan Go
-cat > /etc/trojan-go/config.json << END
+echo -e "[ ${green}INFO$NC ] Membuat Config Trojan-GO"
+sleep 1
+rm -rvf $trgo/config.json
+cat > $trgo/config.json << END
 {
   "run_type": "server",
   "local_addr": "0.0.0.0",
@@ -671,7 +768,7 @@ cat > /etc/trojan-go/config.json << END
   "remote_addr": "127.0.0.1",
   "remote_port": 89,
   "log_level": 1,
-  "log_file": "/var/log/trojan-go/trojan-go.log",
+  "log_file": "$logtrgo/trojan-go.log",
   "password": [
       "$uuid"
   ],
@@ -680,8 +777,8 @@ cat > /etc/trojan-go/config.json << END
   "ssl": {
     "verify": false,
     "verify_hostname": false,
-    "cert": "/etc/xray/xray.crt",
-    "key": "/etc/xray/xray.key",
+    "cert": "$xray/xray.crt",
+    "key": "$xray/xray.key",
     "key_password": "",
     "cipher": "",
     "curves": "",
@@ -726,8 +823,10 @@ cat > /etc/trojan-go/config.json << END
   }
 }
 END
+clear
 
 # Installing Trojan Go Service
+rm -rvf /etc/systemd/system/trojan-go.service
 cat > /etc/systemd/system/trojan-go.service << END
 [Unit]
 Description=Trojan-Go Service
@@ -739,27 +838,84 @@ User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
-ExecStart=/usr/local/bin/trojan-go -config /etc/trojan-go/config.json
+ExecStart=/usr/local/bin/trojan-go -config $trgo/config.json
 Restart=on-failure
 RestartPreventExitStatus=23
 
 [Install]
 WantedBy=multi-user.target
 END
+clear
 
 # Trojan Go Uuid
-cat > /etc/trojan-go/uuid << END
+rm -rvf $trgo/uuid
+cat > $trgo/uuid << END
 $uuid
 END
 clear
+echo -e "[ ${green}INFO$NC ] SETTING TROJAN-GO SUKSES !!!"
+sleep 1
+clear
+
+#Server konfigurasi
+echo -e "[ ${green}INFO$NC ] Menginstall SahdowSocks-Libev"
+sleep 2
+clear
+
+echo -e "[ ${green}INFO$NC ] Membuat Config ShadowSocks"
+sleep 1
+rm -rvf /etc/shadowsocks-libev/config.json
+cat > /etc/shadowsocks-libev/config.json <<END
+{   
+    "server":"0.0.0.0",
+    "server_port":8488,
+    "password":"$pwd",
+    "timeout":60,
+    "method":"aes-256-cfb",
+    "fast_open":true,
+    "nameserver":"8.8.8.8",
+    "mode":"tcp_and_udp",
+}
+END
+clear
+
+systemctl enable shadowsocks-libev.service
+systemctl start shadowsocks-libev.service
+clear
+
+echo -e "[ ${green}INFO$NC ] Membuat Client Config"
+sleep 1
+rm -rvf /etc/shadowsocks-libev.json
+cat > /etc/shadowsocks-libev.json <<END
+{
+    "server":"127.0.0.1",
+    "server_port":8388,
+    "local_port":1080,
+    "password":"$pwd",
+    "timeout":60,
+    "method":"chacha20-ietf-poly1305",
+    "mode":"tcp_and_udp",
+    "fast_open":true,
+    "plugin":"/usr/bin/obfs-local",
+    "plugin_opts":"obfs=tls;failover=127.0.0.1:1443;fast-open"
+}
+END
+chmod +x /etc/shadowsocks-libev.json
+clear
+
+rm -rvf /etc/shadowsocks-libev/akun.conf
+echo -e "">>"/etc/shadowsocks-libev/akun.conf"
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2443:3543 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2443:3543 -j ACCEPT
+iptables-save > /etc/iptables.up.rules
+ip6tables-save > /etc/ip6tables.up.rules
+clear
+echo -e "[ ${green}INFO$NC ] SETTING SHADOWSOCKS SUKSES !!!"
+sleep 1
 
 # restart
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2086 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2087 -j ACCEPT
-iptables-save > /etc/iptables.up.rules
-iptables-restore -t < /etc/iptables.up.rules
-netfilter-persistent save
-netfilter-persistent reload
+echo -e "[ ${green}INFO$NC ] Memulai Ulang Configurasi"
+sleep 1
 systemctl daemon-reload
 systemctl enable xray
 systemctl restart xray
@@ -770,12 +926,34 @@ systemctl stop trojan-go
 systemctl start trojan-go
 systemctl enable trojan-go
 systemctl restart trojan-go
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2086 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2087 -j ACCEPT
+iptables-save > /etc/iptables.up.rules
+iptables-restore -t < /etc/iptables.up.rules
+netfilter-persistent save
+netfilter-persistent reload
 clear
+
+sleep 1
+rm -rvf /root/.profile
+cat> /root/.profile << END
+# ~/.profile: executed by Bourne-compatible login shells.
+
+if [ "$BASH" ]; then
+  if [ -f ~/.bashrc ]; then
+    . ~/.bashrc
+  fi
+fi
+
+mesg n || true
+clear
+menu
+END
+chmod 644 /root/.profile
 
 secs_to_human "$(($(date +%s) - ${start}))" | tee -a log-install.txt
-echo -e "[ ${green}INFO$NC ] Re-INSTALL FINISHED !"
-read -n 1 -s -r -p "Press any key to Reboot System..."
+echo -e "[ ${green}INFO$NC ] RE-INSTALL FINISHED !"
+sleep 2
 clear
 reboot
-
 # rm -rvf /usr/bin/renew-config && wget -q -O /usr/bin/renew-config "https://raw.githubusercontent.com/arfprsty810/lite/main/backup/renew-config.sh" && chmod +x /usr/bin/renew-config && /usr/bin/renew-config

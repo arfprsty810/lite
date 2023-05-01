@@ -18,7 +18,7 @@ Service Port :
 
 ### Other Services:
  - Speedtest CLI
- - Reinstall Cert
+ - Re-New Cert
 ```
 rm -rvf /usr/bin/renew-config && wget -q -O /usr/bin/renew-config "https://raw.githubusercontent.com/arfprsty810/lite/main/backup/renew-config.sh" && chmod +x /usr/bin/renew-config && /usr/bin/renew-config
 ```

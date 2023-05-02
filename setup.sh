@@ -53,42 +53,29 @@ clear
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "$green      Add Domain for XRAY VPN $NC"
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo ""
-echo -ne "[ ${yell}WARNING${NC} ] Are u use random domain ? (y/n)? "
-read answer
-if [ "$answer" == "${answer#[Yy]}" ] ;then
-wget https://raw.githubusercontent.com/arfprsty810/lite/main/xray/cf.sh
-chmod +x cf.sh
-sed -i -e 's/\r$//' /root/cf.sh
-./root/cf.sh
-domain=$(cat $xray/domain)
-clear
-else
-read -rp "Input ur domain : " -e pp
+echo " "
+echo -e "[ ${green}INFO$NC ]* BLANK INPUT FOR RANDOM SUB-DOMAIN ! "
+read -rp "Input ur domain / sub-domain : " -e pp
     if [ -z $pp ]; then
-    echo -e "
+        echo -e "
         Nothing input for domain!
-        Then a random domain will be created"
-wget https://raw.githubusercontent.com/arfprsty810/lite/main/xray/cf.sh
-chmod +x cf.sh
-sed -i -e 's/\r$//' /root/cf.sh
-./root/cf.sh
-domain=$(cat $xray/domain)
-clear
+        Then a random sub-domain will be created"
+wget -q -O /usr/bin/cf "$github/xray/cf.sh"
+chmod +x /usr/bin/cf
+sed -i -e 's/\r$//' /usr/bin/cf
+/usr/bin/cf
+rm -rvf /usr/bin/cf
     else
-	echo "$pp" > $xray/domain
-	echo "$pp" > $xray/scdomain
+	echo "$pp" > /etc/xray/domain
+	echo "$pp" > /etc/xray/scdomain
 	echo "$pp" > /root/domain
     echo "$pp" > /root/scdomain
     echo "IP=$pp" > $ipvps/ipvps.conf
-    curl -s ipinfo.io/org/ > $xray/ISP
-    curl -s https://ipinfo.io/ip/ > $xray/IP
+    curl -s ipinfo.io/org/ > /etc/xray/ISP
+    curl -s https://ipinfo.io/ip/ > /etc/xray/IP
     fi
-domain=$(cat $xray/domain)
-sleep 1
 clear
-fi
-    
+
 #Instal Xray
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "$green          INSTALLING SCRIPT $NC"

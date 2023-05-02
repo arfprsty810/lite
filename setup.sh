@@ -53,7 +53,6 @@ clear
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "$green      Add Domain for XRAY VPN $NC"
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-date
 echo ""
 echo -ne "[ ${yell}WARNING${NC} ] Are u use random domain ? (y/n)? "
 read answer
@@ -67,7 +66,9 @@ clear
 else
 read -rp "Input ur domain : " -e pp
     if [ -z $pp ]; then
-        echo -e "
+    echo -e "
+        Nothing input for domain!
+        Then a random domain will be created"
 wget https://raw.githubusercontent.com/arfprsty810/lite/main/xray/cf.sh
 chmod +x cf.sh
 sed -i -e 's/\r$//' /root/cf.sh
@@ -87,7 +88,7 @@ domain=$(cat $xray/domain)
 sleep 1
 clear
 fi
-
+    
 #Instal Xray
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "$green          INSTALLING SCRIPT $NC"

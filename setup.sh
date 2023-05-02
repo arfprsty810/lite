@@ -45,13 +45,13 @@ fi
 fi
 echo ""
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "$green             AUTOSCRIPT VPS XRAY v.1.0                          $NC"
-echo -e "$green             MULTI PORT XRAY 443 + 80                       $NC"
+echo -e "$green                 AUTOSCRIPT VPS XRAY v.1.0 $NC"
+echo -e "$green               MULTI PORT XRAY 443 + 80 & RANDOM $NC"
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 sleep 3
 clear
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "$green        Add Domain for XRAY VPN              $NC"
+echo -e "$green      Add Domain for XRAY VPN $NC"
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo " "
 read -rp "Input ur domain : " -e pp
@@ -71,7 +71,7 @@ read -rp "Input ur domain : " -e pp
     
 #Instal Xray
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "$green          Install XRAY              $NC"
+echo -e "$green          INSTALLING SCRIPT $NC"
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "[ ${green}SCRIPT${NC} ] install .... "
 sleep 2
@@ -95,15 +95,25 @@ menu
 END
 chmod 644 /root/.profile
 
-clear
+rm -rvf log-install.txt
+echo ""
+echo -e "===================================================" | tee -a log-install.txt
+echo -e "#        Premium Auto Script By ™D-JumPer™        #" | tee -a log-install.txt
+echo -e "==================================================="
+echo -e "# For Debian 10 64bit                             #" | tee -a log-install.txt
+echo -e "# For Ubuntu 18.04 - Ubuntu Lastest Version 64bit #" | tee -a log-install.txt
+echo -e "# For VPS with KVM and VMWare virtualization      #" | tee -a log-install.txt
+echo -e "# Build Up By @arf.prsty                          #" | tee -a log-install.txt
+echo -e "===================================================" | tee -a log-install.txt
+echo -e "# Thanks To                                     #" | tee -a log-install.txt
+echo -e "===================================================" | tee -a log-install.txt
+echo -e "# Allah SWT                                     #" | tee -a log-install.txt
+echo -e "# My Family                                     #" | tee -a log-install.txt
+echo -e "===================================================" | tee -a log-install.txt
 echo "" | tee -a log-install.txt
+echo "======================-[ SCRIPT INFO ]-=====================" | tee -a log-install.txt
 echo "" | tee -a log-install.txt
-echo "" | tee -a log-install.txt
-echo "" | tee -a log-install.txt
-echo "" | tee -a log-install.txt
-echo "=====================-[ SCRIPT INFO ]-====================" | tee -a log-install.txt
-echo "" | tee -a log-install.txt
-echo "----------------------------------------------------------" | tee -a log-install.txt
+echo "------------------------------------------------------------" | tee -a log-install.txt
 echo "" | tee -a log-install.txt
 echo "   >>> Service & Port"  | tee -a log-install.txt
 echo "   - XRAY  Vmess TLS         : 443" | tee -a log-install.txt
@@ -120,12 +130,11 @@ echo "" | tee -a log-install.txt
 echo "------------------------------------------------------------" | tee -a log-install.txt
 echo "" | tee -a log-install.txt
 echo "=========-[ Script Created By @arf.prsty_ ]-==========" | tee -a log-install.txt
-echo -e "" | tee -a log-install.txt
-echo "" | tee -a log-install.txt
 echo "" | tee -a log-install.txt
 rm /root/setup.sh >/dev/null 2>&1
 secs_to_human "$(($(date +%s) - ${start}))" | tee -a log-install.txt
 echo -e "" | tee -a log-install.txt
+clear
 
 echo -ne "[ ${yell}WARNING${NC} ] Reboot ur VPS ? (y/n)? "
 read answer

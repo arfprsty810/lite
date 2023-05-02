@@ -87,13 +87,15 @@ clear
 clear
 
 # SHADOWSHOCK
-#ss_tls=$(echo "${status_ss_tls}" | grep 'ActiveState=' | cut -f2 -d=)
-#ss_http=$(echo "${status_ss_http}" | grep 'ActiveState=' | cut -f2 -d=)
-#status_ss_http="$(systemctl show shadowsocks-libev-server@http.service --no-page)"
+ss_status=$(systemctl status shadowsocks-libev.service | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+ss_info="$(systemctl show shadowsocks-libev.service --no-page)"
+ss_obfs=$(echo "${ss_info}" | grep 'ActiveState=' | cut -f2 -d=)  
 #status_ss_tls="$(systemctl show shadowsocks-libev-server@tls.service --no-page)"
+#ss_tls=$(echo "${status_ss_tls}" | grep 'ActiveState=' | cut -f2 -d=)
+#status_ss_http="$(systemctl show shadowsocks-libev-server@http.service --no-page)"
+#ss_http=$(echo "${status_ss_http}" | grep 'ActiveState=' | cut -f2 -d=)
 #sst_status=$(systemctl status shadowsocks-libev-server@tls | grep Active | awk '{print $0}' | cut -d "(" -f2 | cut -d ")" -f1) 
 #sssohtt=$(systemctl status shadowsocks-libev-server@*-http | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
-#status="$(systemctl show shadowsocks-libev.service --no-page)"
 #ssh_status=$(systemctl status shadowsocks-libev-server@http | grep Active | awk '{print $0}' | cut -d "(" -f2 | cut -d ")" -f1) 
 clear
 
@@ -148,6 +150,70 @@ clear
 #osslh=$(systemctl status sslh | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
 clear
 
+# STATUS SERVICE VMESS TLS 
+if [[ $tls_v2ray_status == "running" ]]; then 
+   status_tls_v2ray=" ${GREEN}Running${NC} ( No Error )"
+else
+   status_tls_v2ray="${RED}  Not Running${NC}   ( Error )"
+fi
+clear
+
+# STATUS SERVICE VMESS NON TLS V2RAY
+if [[ $nontls_v2ray_status == "running" ]]; then 
+   status_nontls_v2ray=" ${GREEN}Running ${NC}( No Error )${NC}"
+else
+   status_nontls_v2ray="${RED}  Not Running ${NC}  ( Error )${NC}"
+fi
+clear
+
+# STATUS SERVICE VLESS HTTPS
+if [[ $vless_tls_v2ray_status == "running" ]]; then
+  status_tls_vless=" ${GREEN}Running${NC} ( No Error )"
+else
+  status_tls_vless="${RED}  Not Running ${NC}  ( Error )${NC}"
+fi
+clear
+
+# STATUS SERVICE VLESS HTTP
+if [[ $vless_nontls_v2ray_status == "running" ]]; then
+  status_nontls_vless=" ${GREEN}Running${NC} ( No Error )"
+else
+  status_nontls_vless="${RED}  Not Running ${NC}  ( Error )${NC}"
+fi
+clear
+
+# STATUS SERVICE TROJAN
+if [[ $trojan_server == "running" ]]; then 
+   status_virus_trojan=" ${GREEN}Running ${NC}( No Error )${NC}"
+else
+   status_virus_trojan="${RED}  Not Running ${NC}  ( Error )${NC}"
+fi
+clear
+
+# STATUS SERVICE TROJAN GO
+if [[ $strgo == "active" ]]; then
+  status_trojan_go=" ${GREEN}Running ${NC}( No Error )${NC}"
+else
+  status_trojan_go="${RED}  Not Running ${NC}  ( Error )${NC}"
+fi
+clear
+
+# STATUS SERVICE TROJAN GFW
+if [[ $trojangfw_server == "running" ]]; then 
+   status_virus_trojangfw=" ${GREEN}Running ${NC}( No Error )${NC}"
+else
+   status_virus_trojangfw="${RED}  Not Running ${NC}  ( Error )${NC}"
+fi
+clear
+
+# STATUS SERVICE SHADOWSOCKS OBFS
+if [[ $ss_obfs == "active" ]]; then
+  status_ss_obfs=" ${GREEN}Running ${NC}( No Error )${NC}"
+else
+  status_ss_obfs="${RED}  Not Running ${NC}  ( Error )${NC}"
+fi
+clear
+
 # STATUS SERVICE OPENVPN
 if [[ $oovpn == "active" ]]; then
   status_openvpn=" ${GREEN}Running ${NC}( No Error )"
@@ -193,62 +259,6 @@ if [[ $fail2ban_service == "running" ]]; then
    status_fail2ban=" ${GREEN}Running ${NC}( No Error )"
 else
    status_fail2ban="${RED}  Not Running ${NC}  ( Error )"
-fi
-clear
-
-# STATUS SERVICE  TLS 
-if [[ $tls_v2ray_status == "running" ]]; then 
-   status_tls_v2ray=" ${GREEN}Running${NC} ( No Error )"
-else
-   status_tls_v2ray="${RED}  Not Running${NC}   ( Error )"
-fi
-clear
-
-# STATUS SERVICE NON TLS V2RAY
-if [[ $nontls_v2ray_status == "running" ]]; then 
-   status_nontls_v2ray=" ${GREEN}Running ${NC}( No Error )${NC}"
-else
-   status_nontls_v2ray="${RED}  Not Running ${NC}  ( Error )${NC}"
-fi
-clear
-
-# STATUS SERVICE VLESS HTTPS
-if [[ $vless_tls_v2ray_status == "running" ]]; then
-  status_tls_vless=" ${GREEN}Running${NC} ( No Error )"
-else
-  status_tls_vless="${RED}  Not Running ${NC}  ( Error )${NC}"
-fi
-clear
-
-# STATUS SERVICE VLESS HTTP
-if [[ $vless_nontls_v2ray_status == "running" ]]; then
-  status_nontls_vless=" ${GREEN}Running${NC} ( No Error )"
-else
-  status_nontls_vless="${RED}  Not Running ${NC}  ( Error )${NC}"
-fi
-clear
-
-# STATUS SERVICE TROJAN
-if [[ $trojan_server == "running" ]]; then 
-   status_virus_trojan=" ${GREEN}Running ${NC}( No Error )${NC}"
-else
-   status_virus_trojan="${RED}  Not Running ${NC}  ( Error )${NC}"
-fi
-clear
-
-# Status Service Trojan GO
-if [[ $strgo == "active" ]]; then
-  status_trojan_go=" ${GREEN}Running ${NC}( No Error )${NC}"
-else
-  status_trojan_go="${RED}  Not Running ${NC}  ( Error )${NC}"
-fi
-clear
-
-# STATUS SERVICE TROJAN GFW
-if [[ $trojangfw_server == "running" ]]; then 
-   status_virus_trojangfw=" ${GREEN}Running ${NC}( No Error )${NC}"
-else
-   status_virus_trojangfw="${RED}  Not Running ${NC}  ( Error )${NC}"
 fi
 clear
 
@@ -334,23 +344,24 @@ echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━�
 echo -e "\E[39;1;92m             ⇱ Service Information ⇲             \E[0m"
 echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
 echo -e "❇️ SSH / TUN               :$status_ssh"
-echo -e "❇️ OpenVPN                 :$status_openvpn"
+echo -e "❇️ OPENVPN                 :$status_openvpn"
 #echo -e "❇️ Dropbear                :$status_beruangjatuh"
 #echo -e "❇️ Stunnel5                :$status_stunnel"
 #echo -e "❇️ Squid                   :$status_squid"
 #echo -e "❇️ Fail2Ban                :$status_fail2ban"
 #echo -e "❇️ Crons                   :$status_cron"
 #echo -e "❇️ Vnstat                  :$status_vnstat"
-echo -e "❇️ XRAYS Vmess TLS         :$status_tls_v2ray"
-echo -e "❇️ XRAYS Vmess None TLS    :$status_nontls_v2ray"
-echo -e "❇️ XRAYS Vmess gRPC        :$status_tls_v2ray"
-echo -e "❇️ XRAYS Vless TLS         :$status_tls_vless"
-echo -e "❇️ XRAYS Vless None TLS    :$status_nontls_vless"
-echo -e "❇️ XRAYS Vless gRPC        :$status_tls_vless"
-echo -e "❇️ XRAYS Trojan            :$status_virus_trojan"
-echo -e "❇️ XRAYS Trojan gRPC       :$status_virus_trojan"
-echo -e "❇️ Trojan GO               :$status_trojan_go"
+echo -e "❇️ XRAYS VMESS TLS         :$status_tls_v2ray"
+echo -e "❇️ XRAYS VMESS NONE TLS    :$status_nontls_v2ray"
+echo -e "❇️ XRAYS VMESS GRPC        :$status_tls_v2ray"
+echo -e "❇️ XRAYS VLESS TLS         :$status_tls_vless"
+echo -e "❇️ XRAYS VLESS NONE TLS    :$status_nontls_vless"
+echo -e "❇️ XRAYS VLESS GRPC        :$status_tls_vless"
+echo -e "❇️ XRAYS TROJAN            :$status_virus_trojan"
+echo -e "❇️ XRAYS TROJAN GRPC       :$status_virus_trojan"
+echo -e "❇️ TROJAN GO               :$status_trojan_go"
 #echo -e "❇️ Trojan GFW              :$status_virus_trojangfw"
+echo -e "❇️ SHADOWSOCKS OBFS        :$status_ss_obfs"
 #echo -e "❇️ Websocket TLS           :$swstls"
 #echo -e "❇️ Websocket None TLS      :$swstls"
 echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"

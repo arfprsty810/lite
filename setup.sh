@@ -94,8 +94,8 @@ clear
 menu
 END
 chmod 644 /root/.profile
+clear
 
-rm -rvf log-install.txt
 echo ""
 echo -e "===================================================" | tee -a log-install.txt
 echo -e "#        Premium Auto Script By ™D-JumPer™        #" | tee -a log-install.txt
@@ -134,7 +134,6 @@ echo "" | tee -a log-install.txt
 rm /root/setup.sh >/dev/null 2>&1
 secs_to_human "$(($(date +%s) - ${start}))" | tee -a log-install.txt
 echo -e "" | tee -a log-install.txt
-clear
 
 echo -ne "[ ${yell}WARNING${NC} ] Reboot ur VPS ? (y/n)? "
 read answer

@@ -22,7 +22,7 @@ NUMBER_OF_CLIENTS=$(grep -c -E "^#ss# " "/etc/shadowsocks-libev/akun.conf")
 		echo ""
 		echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
         echo ""
-        read -n 1 -s -r -p "Press any key to back on menu"
+        sleep 2
         menu-ss
 	fi
 
@@ -37,7 +37,6 @@ NUMBER_OF_CLIENTS=$(grep -c -E "^#ss# " "/etc/shadowsocks-libev/akun.conf")
     echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 	read -rp "Input Username : " user
     if [ -z $user ]; then
-    exit
     menu-ss
     else
     read -p "Expired (days): " masaaktif

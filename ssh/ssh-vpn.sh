@@ -51,12 +51,12 @@ export WARNING="${RED}\e[5m"
 export UNDERLINE="\e[4m"
 
 # // Exporting URL Host
-export Server_URL="raw.githubusercontent.com/wunuit/test/main"
-export Server1_URL="raw.githubusercontent.com/wunuit/limit/main"
+export Server_URL="raw.githubusercontent.com/arfprsty810/lite/main"
+export Server1_URL="raw.githubusercontent.com/arfprsty810/lite/main"
 export Server_Port="443"
 export Server_IP="underfined"
 export Script_Mode="Stable"
-export Auther=".geovpn"
+export Auther=".arfvpn"
 
 # // Root Checking
 if [ "${EUID}" -ne 0 ]; then
@@ -81,13 +81,13 @@ ver=$VERSION_ID
 country=ID
 state=Indonesia
 locality=Indonesia
-organization=geovpn
-organizationalunit=geovpn
-commonname=geovpn
-email=admin@geostore.net
+organization=arfvpn
+organizationalunit=arfvpn
+commonname=arfvpn
+email=arfprsty@my.id
 
 # simple password minimal
-wget -q -O /etc/pam.d/common-password "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/password"
+wget -q -O /etc/pam.d/common-password "https://$Server_URL/ssh/password"
 chmod +x /etc/pam.d/common-password
 
 # go to root
@@ -125,7 +125,7 @@ cd
 clear 
 
 # Getting websocket ssl stunnel
-wget -q -O /usr/local/bin/ws-stunnel "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ws-stunnel"
+wget -q -O /usr/local/bin/ws-stunnel "https://$Server_URL/ssh/ws-stunnel"
 chmod +x /usr/local/bin/ws-stunnel
 
 # Installing Service Ovpn Websocket
@@ -231,7 +231,7 @@ fi
 cd
 echo -e "[ ${GREEN}INFO$NC ] Installing badvpn for game support..."
 #wget -q -O /usr/bin/badvpn-udpgw "https://raw.githubusercontent.com/wunuit/0/main/badvpn-udpgw64"
-wget -q -O /usr/bin/badvpn-udpgw "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/newudpgw"
+wget -q -O /usr/bin/badvpn-udpgw "https://$Server_URL/ssh/newudpgw"
 chmod +x /usr/bin/badvpn-udpgw  >/dev/null 2>&1
 sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 500' /etc/rc.local >/dev/null 2>&1
 sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 500' /etc/rc.local >/dev/null 2>&1
@@ -275,7 +275,7 @@ fi
 
 # Install Stunnel5
 cd /root/
-wget -q "https://raw.githubusercontent.com/arfprsty810/lite/main/stunnel/stunnel5.zip"
+wget -q "https://$Server_URL/stunnel/stunnel5.zip"
 unzip stunnel5.zip
 cd /root/stunnel
 chmod +x configure
@@ -344,7 +344,7 @@ END
 
 # Service Stunnel5 /etc/init.d/stunnel5
 rm -fr /etc/init.d/stunnel5
-wget -q -O /etc/init.d/stunnel5 "https://raw.githubusercontent.com/arfprsty810/lite/main/stunnel/stunnel5.init"
+wget -q -O /etc/init.d/stunnel5 "https://$Server_URL/stunnel/stunnel5.init"
 
 # Ubah Izin Akses
 #chmod 600 /etc/stunnel5/stunnel5.pem
@@ -465,7 +465,7 @@ rm -fr /etc/issue.net
 rm -fr /etc/issue.net.save
 sleep 1
 echo -e "[ ${GREEN}INFO$NC ] Settings banner"
-wget -q -O /etc/issue.net "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/issue.net"
+wget -q -O /etc/issue.net "https://$Server_URL/ssh/issue.net"
 chmod +x /etc/issue.net
 echo "Banner /etc/issue.net" >> /etc/ssh/sshd_config
 sed -i 's@DROPBEAR_BANNER=""@DROPBEAR_BANNER="/etc/issue.net"@g' /etc/default/dropbear

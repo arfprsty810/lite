@@ -185,14 +185,14 @@ systemctl restart xray
 systemctl restart nginx
 systemctl enable runn
 systemctl restart runn
-systemctl enable shadowsocks-libev-server@$akun-tls.service
-systemctl start shadowsocks-libev-server@$akun-tls.service
-systemctl enable shadowsocks-libev-server@$akun-http.service
-systemctl start shadowsocks-libev-server@$akun-http.service
 systemctl stop trojan-go
 systemctl start trojan-go
 systemctl enable trojan-go
 systemctl restart trojan-go
+systemctl enable shadowsocks-libev-server@$akun-tls.service
+systemctl start shadowsocks-libev-server@$akun-tls.service
+systemctl enable shadowsocks-libev-server@$akun-http.service
+systemctl start shadowsocks-libev-server@$akun-http.service
 #systemctl restart ws-dropbear.service >/dev/null 2>&1
 #systemctl restart ws-stunnel.service >/dev/null 2>&1
 systemctl restart xray.service >/dev/null 2>&1

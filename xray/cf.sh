@@ -20,6 +20,8 @@ SUB_DOMAIN=${sub}.d-jumper.me
 CF_ID=arief.prsty@gmail.com
 CF_KEY=3a3ac5ccc9e764de9129fbbb177c161b9dfbd
 set -euo pipefail
+mkdir /etc/xray/IP
+curl -s https://ipinfo.io/ip/ > /etc/xray/IP
 IP=$(cat /etc/xray/IP);
 echo "Updating DNS for ${SUB_DOMAIN}..."
 ZONE=$(curl -sLX GET "https://api.cloudflare.com/client/v4/zones?name=${DOMAIN}&status=active" \

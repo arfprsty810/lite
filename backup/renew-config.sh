@@ -45,11 +45,21 @@ clear
 
 date
 echo ""
+echo -ne "[ ${yell}WARNING${NC} ] Are u use random domain ? (y/n)? "
+read answer
+if [ "$answer" == "${answer#[Yy]}" ] ;then
+/usr/bin/cf
+domain=$(cat $xray/domain)
+clear
+else
 read -rp "Input ur domain : " -e pp
     if [ -z $pp ]; then
-        echo -e "
+    echo -e "
         Nothing input for domain!
         Then a random domain will be created"
+        /usr/bin/cf
+        domain=$(cat $xray/domain)
+        clear
     else
 	echo "$pp" > $xray/domain
 	echo "$pp" > $xray/scdomain
@@ -62,6 +72,7 @@ read -rp "Input ur domain : " -e pp
 domain=$(cat $xray/domain)
 sleep 1
 clear
+fi
 
 echo -e "[ ${green}INFO$NC ] DISABLE IPV6"
 sleep 1
@@ -641,6 +652,8 @@ rm -rvf /usr/bin/cekss
 rm -rvf /usr/bin/delss
 rm -rvf /usr/bin/renewss
 #--
+rm -rvf /usr/bin/cf
+rm -rvf /usr/bin/xp
 rm -rvf /usr/bin/menu
 rm -rvf /usr/bin/speedtest
 rm -rvf /usr/bin/update
@@ -683,6 +696,7 @@ wget -q -O /usr/bin/delss "$github/shadowsocks/delss.sh" && chmod +x /usr/bin/de
 wget -q -O /usr/bin/renewss "$github/shadowsocks/renewss.sh" && chmod +x /usr/bin/renewss
 
 #--
+wget -q -O /usr/bin/cf "$github/xray/cf.sh" && chmod +x /usr/bin/cf
 wget -q -O /usr/bin/xp "$github/xray/xp.sh" && chmod +x /usr/bin/xp
 wget -q -O /usr/bin/restart "$github/xray/restart.sh" && chmod +x /usr/bin/restart
 wget -q -O /usr/bin/running "$github/xray/running.sh" && chmod +x /usr/bin/running
@@ -704,7 +718,8 @@ sed -i -e 's/\r$//' /bin/restart
 sed -i -e 's/\r$//' /bin/running
 sed -i -e 's/\r$//' /bin/renew-config
 sed -i -e 's/\r$//' /bin/backup-user
-sed -i -e 's/\r$//' /bin/sh
+sed -i -e 's/\r$//' /bin/cf
+sed -i -e 's/\r$//' /bin/xp
 
 sed -i -e 's/\r$//' /bin/menu-vmess
 sed -i -e 's/\r$//' /bin/add-ws

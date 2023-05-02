@@ -186,6 +186,48 @@ sed -i -e 's/\r$//' /bin/delss
 sed -i -e 's/\r$//' /bin/renewss
 clear
 
+
+wget -q -O /usr/bin/autodel "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/autodel.sh"
+chmod +x /usr/bin/autodel
+sed -i -e 's/\r$//' /bin/autodel
+
+wget -q -O /usr/bin/autokill "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/autokill.sh"
+chmod +x /usr/bin/autokill
+sed -i -e 's/\r$//' /bin/autokill
+
+wget -q -O /usr/bin/cek "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/cek.sh"
+chmod +x /usr/bin/cek
+sed -i -e 's/\r$//' /bin/cek
+
+wget -q -O /usr/bin/ceklim "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ceklim.sh"
+chmod +x /usr/bin/ceklim
+sed -i -e 's/\r$//' /bin/ceklim
+
+wget -q -O /usr/bin/del "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/del.sh"
+chmod +x /usr/bin/del
+sed -i -e 's/\r$//' /bin/del
+
+wget -q -O /usr/bin/member "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/member.sh"
+chmod +x /usr/bin/member
+sed -i -e 's/\r$//' /bin/member
+
+wget -q -O /usr/bin/menu-ssh "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/menu-ssh.sh"
+chmod +x /usr/bin/menu-ssh
+sed -i -e 's/\r$//' /bin/menu-ssh
+
+wget -q -O /usr/bin/renew "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/renew.sh"
+chmod +x /usr/bin/renew
+sed -i -e 's/\r$//' /bin/renew
+
+wget -q -O /usr/bin/tendang "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/tendang.sh"
+chmod +x /usr/bin/tendang
+sed -i -e 's/\r$//' /bin/tendang
+
+wget -q -O /usr/bin/usernew "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/usernew.sh"
+chmod +x /usr/bin/usernew
+sed -i -e 's/\r$//' /bin/usernew
+
+
 echo -e "[ ${green}INFO$NC ] Update Successfully!"
 sleep 3
 clear

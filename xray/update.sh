@@ -15,17 +15,17 @@ trgo="/etc/trojan-go"
 logtrgo="/var/log/trojan-go"
 ipvps="/var/lib/arf"
 github="https://raw.githubusercontent.com/arfprsty810/lite/main"
-
 clear
+
 echo -e "[ ${green}INFO$NC ] Remove old file ..."
 sleep 1
-
 #vmess
 rm -rvf /usr/bin/menu-vmess
 rm -rvf /usr/bin/add-ws
 rm -rvf /usr/bin/cek-ws
 rm -rvf /usr/bin/del-ws
 rm -rvf /usr/bin/renew-ws
+clear
 
 #vless
 rm -rvf /usr/bin/menu-vless
@@ -33,6 +33,7 @@ rm -rvf /usr/bin/add-vless
 rm -rvf /usr/bin/cek-vless
 rm -rvf /usr/bin/del-vless
 rm -rvf /usr/bin/renew-vless
+clear
 
 #trojan
 rm -rvf /usr/bin/menu-trojan
@@ -40,6 +41,7 @@ rm -rvf /usr/bin/add-tr
 rm -rvf /usr/bin/cek-tr
 rm -rvf /usr/bin/del-tr
 rm -rvf /usr/bin/renew-tr
+clear
 
 #shadowsocks-libev
 rm -rvf /usr/bin/menu-ss
@@ -47,6 +49,7 @@ rm -rvf /usr/bin/addss
 rm -rvf /usr/bin/cekss
 rm -rvf /usr/bin/delss
 rm -rvf /usr/bin/renewss
+clear
 
 #--
 rm -rvf /usr/bin/menu
@@ -59,11 +62,10 @@ rm -rvf /usr/bin/renew-config
 rm -rvf /usr/bin/backup-user
 rm -rvf /usr/bin/cekuser
 rm -rvf /usr/bin/xp
-
 clear
+
 echo -e "[ ${green}INFO$NC ] Update New Script ..."
 sleep 1
-
 #vmess
 wget -q -O /usr/bin/menu-vmess "$github/xray/vmess/menu-vmess.sh"
 chmod +x /usr/bin/menu-vmess
@@ -75,6 +77,7 @@ wget -q -O /usr/bin/del-ws "$github/xray/vmess/del-ws.sh"
 chmod +x /usr/bin/del-ws
 wget -q -O /usr/bin/renew-ws "$github/xray/vmess/renew-ws.sh"
 chmod +x /usr/bin/renew-ws
+clear
 
 #vless
 wget -q -O /usr/bin/menu-vless "$github/xray/vless/menu-vless.sh"
@@ -87,6 +90,7 @@ wget -q -O /usr/bin/del-vless "$github/xray/vless/del-vless.sh"
 chmod +x /usr/bin/del-vless
 wget -q -O /usr/bin/renew-vless "$github/xray/vless/renew-vless.sh"
 chmod +x /usr/bin/renew-vless
+clear
 
 #trojan
 wget -q -O /usr/bin/menu-trojan "$github/xray/trojan/menu-trojan.sh"
@@ -99,6 +103,7 @@ wget -q -O /usr/bin/del-tr "$github/xray/trojan/del-tr.sh"
 chmod +x /usr/bin/del-tr
 wget -q -O /usr/bin/renew-tr "$github/xray/trojan/renew-tr.sh"
 chmod +x /usr/bin/renew-tr
+clear
 
 #shadowsocks-libev
 wget -q -O /usr/bin/menu-ss "$github/shadowsocks/menu-ss.sh"  
@@ -111,42 +116,33 @@ wget -q -O /usr/bin/delss "$github/shadowsocks/delss.sh"
 chmod +x /usr/bin/delss
 wget -q -O /usr/bin/renewss "$github/shadowsocks/renewss.sh"
 chmod +x /usr/bin/renewss
+clear
 
 #--
 wget -q -O /usr/bin/xp "$github/xray/xp.sh"
 chmod +x /usr/bin/xp
-
 wget -q -O /usr/bin/restart "$github/xray/restart.sh"
 chmod +x /usr/bin/restart
-
 wget -q -O /usr/bin/running "$github/xray/running.sh"
 chmod +x /usr/bin/running
-
 wget -q -O /usr/bin/cek-bandwidth "$github/xray/cek-bandwidth.sh"
 chmod +x /usr/bin/cek-bandwidth
-
 wget -q -O /usr/bin/menu "$github/xray/menu.sh"
 chmod +x /usr/bin/menu
-
 wget -q -O /usr/bin/speedtest "$github/xray/speedtest_cli.py"
 chmod +x /usr/bin/speedtest
-
 wget -q -O /usr/bin/update "$github/xray/update.sh"
 chmod +x /usr/bin/update
-
 wget -q -O /usr/bin/renew-config "$github/backup/renew-config.sh"
 chmod +x /usr/bin/renew-config
-
 wget -q -O /usr/bin/backup-user "$github/backup/backup-user.sh"
 chmod +x /usr/bin/backup-user
-
 wget -q -O /usr/bin/cekuser "$github/xray/cekuser.sh"
 chmod +x /usr/bin/cekuser
-
 clear
+
 echo -e "[ ${green}INFO$NC ] Install New Script ..."
 sleep 2
-
 sed -i -e 's/\r$//' /bin/xp
 sed -i -e 's/\r$//' /bin/menu
 sed -i -e 's/\r$//' /bin/update
@@ -156,24 +152,28 @@ sed -i -e 's/\r$//' /bin/cek-bandwidth
 sed -i -e 's/\r$//' /bin/renew-config
 sed -i -e 's/\r$//' /bin/backup-user
 sed -i -e 's/\r$//' /bin/cekuser
+clear
 
 sed -i -e 's/\r$//' /bin/menu-vmess
 sed -i -e 's/\r$//' /bin/add-ws
 sed -i -e 's/\r$//' /bin/cek-ws
 sed -i -e 's/\r$//' /bin/del-vmess
 sed -i -e 's/\r$//' /bin/renew-ws
+clear
 
 sed -i -e 's/\r$//' /bin/menu-vless
 sed -i -e 's/\r$//' /bin/add-vless
 sed -i -e 's/\r$//' /bin/cek-vless
 sed -i -e 's/\r$//' /bin/del-vless
 sed -i -e 's/\r$//' /bin/renew-ws
+clear
 
 sed -i -e 's/\r$//' /bin/menu-trojan
 sed -i -e 's/\r$//' /bin/add-tr
 sed -i -e 's/\r$//' /bin/cek-tr
 sed -i -e 's/\r$//' /bin/del-tr
 sed -i -e 's/\r$//' /bin/renew-tr
+clear
 
 sed -i -e 's/\r$//' /bin/menu-ss
 sed -i -e 's/\r$//' /bin/addss
@@ -182,10 +182,17 @@ sed -i -e 's/\r$//' /bin/delss
 sed -i -e 's/\r$//' /bin/renewss
 clear
 
-sleep 1
 echo -e "[ ${green}INFO$NC ] Update Successfully!"
+sleep 3
 clear
 
+echo -e "[ ${green}INFO$NC ] CHECK EXPIRED USER ..."
+sleep 2
+/usr/bin/xp
+clear
+
+echo -e "[ ${green}ok${NC} ] Restart All Service ... "
+sleep 1
 systemctl daemon-reload
 systemctl enable xray
 systemctl restart xray
@@ -209,8 +216,6 @@ screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 1000
 screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 1000
 screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300 --max-clients 1000
 systemctl restart rc-local.service
-sleep 1
-echo -e "[ ${green}ok${NC} ] Restart All Service ... "
 clear
 
 sleep 1
@@ -228,6 +233,6 @@ clear
 menu
 END
 chmod 644 /root/.profile
-
 clear
+
 menu

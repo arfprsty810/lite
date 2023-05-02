@@ -22,7 +22,7 @@ NUMBER_OF_CLIENTS=$(grep -c -E "^#vm# " "/etc/xray/config.json")
 		echo ""
 		echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
         echo ""
-        read -n 1 -s -r -p "Press any key to back on menu"
+        sleep 2
         menu-ws
 	fi
 
@@ -37,7 +37,6 @@ NUMBER_OF_CLIENTS=$(grep -c -E "^#vm# " "/etc/xray/config.json")
     echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 	read -rp "Input Username : " user
     if [ -z $user ]; then
-    exit
     menu-ws
     else
     read -p "Expired (days): " masaaktif

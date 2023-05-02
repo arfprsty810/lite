@@ -45,21 +45,13 @@ clear
 
 date
 echo ""
-echo -ne "[ ${yell}WARNING${NC} ] Are u use random domain ? (y/n)? "
-read answer
-if [ "$answer" == "${answer#[Yy]}" ] ;then
-/usr/bin/cf
-domain=$(cat $xray/domain)
-clear
-else
-read -rp "Input ur domain : " -e pp
+echo -e "[ ${green}INFO$NC ]* BLANK INPUT FOR RANDOM SUB-DOMAIN ! "
+read -rp "Input ur domain / sub-domain : " -e pp
     if [ -z $pp ]; then
-    echo -e "
+        echo -e "
         Nothing input for domain!
-        Then a random domain will be created"
+        Then a random sub-domain will be created"
         /usr/bin/cf
-        domain=$(cat $xray/domain)
-        clear
     else
 	echo "$pp" > $xray/domain
 	echo "$pp" > $xray/scdomain
@@ -72,7 +64,6 @@ read -rp "Input ur domain : " -e pp
 domain=$(cat $xray/domain)
 sleep 1
 clear
-fi
 
 echo -e "[ ${green}INFO$NC ] DISABLE IPV6"
 sleep 1

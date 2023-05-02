@@ -38,8 +38,8 @@ clear
 			echo "A client with the specified name was already created, please choose another name."
 			echo ""
 			echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-			read -n 1 -s -r -p "Press any key to back on menu"
-menu
+sleep 2
+add-ws
 		fi
 	done
 
@@ -176,6 +176,7 @@ vmesslink7="vmess://$(echo $ami | base64 -w 0)"
 systemctl restart xray > /dev/null 2>&1
 service cron restart > /dev/null 2>&1
 clear
+
 echo -e "----------------------------------" | tee -a /etc/log-create-user.log
 echo -e "\\E[0;41;36m        Xray/Vmess Account        \E[0m" | tee -a /etc/log-create-user.log
 echo -e "----------------------------------" | tee -a /etc/log-create-user.log

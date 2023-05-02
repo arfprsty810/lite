@@ -33,7 +33,7 @@ NUMBER_OF_CLIENTS=$(grep -c -E "^#tr# " "/etc/xray/config.json")
 		echo ""
 		echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 sleep 2
-menu-tr
+menu-trojan
 	fi
 
 	clear
@@ -48,7 +48,7 @@ menu-tr
     echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 	read -rp "Input Username : " user
     if [ -z $user ]; then
-    menu-tr
+    menu-trojan
     else
     exp=$(grep -wE "^#tr# $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
     sed -i "/^#tr# $user $exp/,/^},{/d" /etc/xray/config.json

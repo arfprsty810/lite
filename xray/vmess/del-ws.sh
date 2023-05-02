@@ -21,7 +21,7 @@ NUMBER_OF_CLIENTS=$(grep -c -E "^#vm# " "/etc/xray/config.json")
 		echo ""
 		echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 sleep 2
-menu-ws
+menu-vmess
 	fi
 
 	clear
@@ -36,7 +36,7 @@ menu-ws
     echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 	read -rp "Input Username : " user
     if [ -z $user ]; then
-    menu-ws
+    menu-vmess
     else
     exp=$(grep -wE "^#vm# $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
     sed -i "/^#vm# $user $exp/,/^},{/d" /etc/xray/config.json

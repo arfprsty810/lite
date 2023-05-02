@@ -683,6 +683,7 @@ wget -q -O /usr/bin/delss "$github/shadowsocks/delss.sh" && chmod +x /usr/bin/de
 wget -q -O /usr/bin/renewss "$github/shadowsocks/renewss.sh" && chmod +x /usr/bin/renewss
 
 #--
+wget -q -O /usr/bin/xp "$github/xray/xp.sh" && chmod +x /usr/bin/xp
 wget -q -O /usr/bin/restart "$github/xray/restart.sh" && chmod +x /usr/bin/restart
 wget -q -O /usr/bin/running "$github/xray/running.sh" && chmod +x /usr/bin/running
 wget -q -O /usr/bin/cek-bandwidth "$github/xray/cek-bandwidth.sh" && chmod +x /usr/bin/cek-bandwidth
@@ -703,6 +704,7 @@ sed -i -e 's/\r$//' /bin/restart
 sed -i -e 's/\r$//' /bin/running
 sed -i -e 's/\r$//' /bin/renew-config
 sed -i -e 's/\r$//' /bin/backup-user
+sed -i -e 's/\r$//' /bin/sh
 
 sed -i -e 's/\r$//' /bin/menu-vmess
 sed -i -e 's/\r$//' /bin/add-ws

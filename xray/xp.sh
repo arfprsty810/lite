@@ -88,30 +88,3 @@ rm -f "/etc/shadowsocks-libev/$user-http.json"
 fi
 done
 clear
-
-#----- Restart Service
-service cron restart
-systemctl daemon-reload
-systemctl enable xray
-systemctl restart xray
-systemctl restart nginx
-systemctl enable runn
-systemctl restart runn
-systemctl stop trojan-go
-systemctl start trojan-go
-systemctl enable trojan-go
-systemctl restart trojan-go
-#systemctl restart ws-dropbear.service >/dev/null 2>&1
-#systemctl restart ws-stunnel.service >/dev/null 2>&1
-systemctl restart xray.service >/dev/null 2>&1
-/etc/init.d/ssh restart
-/etc/init.d/dropbear restart
-#/etc/init.d/stunnel5 restart
-/etc/init.d/fail2ban restart
-/etc/init.d/cron restart
-/etc/init.d/nginx restart
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 1000
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 1000
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300 --max-clients 1000
-systemctl restart rc-local.service
-clear

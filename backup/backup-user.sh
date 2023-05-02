@@ -134,7 +134,7 @@ METHOD="aes-256-cfb"
 AKUN_SS_1="ss_arf"
 PASSWORD_SS_1="ss_arf"
 EXP_SS_1="2030-01-01"
-cat > /etc/shadowsocks-libev/$akun-tls.json<<END
+cat > /etc/shadowsocks-libev/$AKUN_SS_1-tls.json<<END
 {   
     "server":"0.0.0.0",
     "server_port":$tls,
@@ -149,7 +149,7 @@ cat > /etc/shadowsocks-libev/$akun-tls.json<<END
     "plugin_opts":"obfs=tls"
 }
 END
-cat > /etc/shadowsocks-libev/$akun-http.json <<-END
+cat > /etc/shadowsocks-libev/$AKUN_SS_1-http.json <<-END
 {
     "server":"0.0.0.0",
     "server_port":$http,
@@ -164,8 +164,8 @@ cat > /etc/shadowsocks-libev/$akun-http.json <<-END
     "plugin_opts":"obfs=http"
 }
 END
-chmod +x /etc/shadowsocks-libev/$akun-tls.json
-chmod +x /etc/shadowsocks-libev/$akun-http.json
+chmod +x /etc/shadowsocks-libev/$AKUN_SS_1-tls.json
+chmod +x /etc/shadowsocks-libev/$AKUN_SS_1-http.json
 echo -e "#ss# $PASSWORD_SS_1 $EXP_SS_1
 port_tls $tls
 port_http $http">>"/etc/shadowsocks-libev/akun.conf"

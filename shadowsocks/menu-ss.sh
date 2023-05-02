@@ -34,12 +34,12 @@ export NC='\033[0m'
 
 clear
 echo -e "${BICyan} ┌─────────────────────────────────────────────────────┐${NC}"
-echo -e "       ${BIWhite}${UWhite}Shadowsocks ${NC}"
+echo -e "       ${BIWhite}${UWhite}Shadowsocks OBFS${NC}"
 echo -e ""
 echo -e "     ${BICyan}[${BIWhite}1${BICyan}] Add Account Shadowsocks      "
 echo -e "     ${BICyan}[${BIWhite}2${BICyan}] Delete Account Shadowsocks      "
 echo -e "     ${BICyan}[${BIWhite}3${BICyan}] Renew Account Shadowsocks      "
-echo -e "     ${BICyan}[${BIWhite}4${BICyan}] Cek User XRAY     "
+echo -e "     ${BICyan}[${BIWhite}4${BICyan}] Cek User Shadowsocks     "
 echo -e "     ${BICyan}[${BIWhite}0${BICyan}] Back to Menu"
 echo -e " ${BICyan}└─────────────────────────────────────────────────────┘${NC}"
 echo ""

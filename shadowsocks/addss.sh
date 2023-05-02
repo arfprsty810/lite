@@ -27,18 +27,26 @@ http=3443
 else
 http="$((lastport2+1))"
 fi
+method="aes-256-cfb"
+clear
 
-echo ""
-echo "Masukkan Password"
-
+echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "\\E[0;41;36m    Add Shadowsocks OBFS Account    \E[0m"
+echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 		read -rp "Password : " -e user
 		CLIENT_EXISTS=$(grep -w $user /etc/shadowsocks-libev/akun.conf | wc -l)
-
 		if [[ ${CLIENT_EXISTS} == '1' ]]; then
-			echo ""
-			echo -e "Username ${RED}${user}${NC} Already On VPS Please Choose Another"
-			exit 1
+clear
+echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "\\E[0;41;36m    Add Shadowsocks OBFS Account    \E[0m"
+echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo ""
+echo "A client with the specified name was already created, please choose another name."
+echo ""
+echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+sleep 2
+addss
 		fi
 	done
 read -p "Expired (Days) : " masaaktif
@@ -50,7 +58,7 @@ cat > /etc/shadowsocks-libev/$user-tls.json<<END
     "server_port":$tls,
     "password":"$user",
     "timeout":60,
-    "method":"aes-256-cfb",
+    "method":"$method",
     "fast_open":true,
     "no_delay":true,
     "nameserver":"8.8.8.8",
@@ -65,7 +73,7 @@ cat > /etc/shadowsocks-libev/$user-http.json <<-END
     "server_port":$http,
     "password":"$user",
     "timeout":60,
-    "method":"aes-256-cfb",
+    "method":"$method",
     "fast_open":true,
     "no_delay":true,
     "nameserver":"8.8.8.8",
@@ -81,8 +89,8 @@ systemctl enable shadowsocks-libev-server@$user-tls.service
 systemctl start shadowsocks-libev-server@$user-tls.service
 systemctl enable shadowsocks-libev-server@$user-http.service
 systemctl start shadowsocks-libev-server@$user-http.service
-tmp1=$(echo -n "aes-256-cfb:${user}@${IP}:$tls" | base64 -w0)
-tmp2=$(echo -n "aes-256-cfb:${user}@${IP}:$http" | base64 -w0)
+tmp1=$(echo -n "${method}:${user}@${IP}:$tls" | base64 -w0)
+tmp2=$(echo -n "${method}:${user}@${IP}:$http" | base64 -w0)
 linkss1="ss://${tmp1}?plugin=obfs-local;obfs=tls;obfs-host=bing.com"
 linkss2="ss://${tmp2}?plugin=obfs-local;obfs=http;obfs-host=bing.com"
 echo -e "#ss# $user $exp
@@ -90,21 +98,24 @@ port_tls $tls
 port_http $http">>"/etc/shadowsocks-libev/akun.conf"
 service cron restart
 clear
-echo -e ""
-echo -e "======-SHADOWSOCKS-======"
-echo -e "IP/Host     : $IP"
-echo -e "Domain      : $DOMAIN"
-echo -e "Port TLS    : $tls"
-echo -e "Port No TLS : $http"
-echo -e "Password    : $user"
-echo -e "Method      : aes-256-cfb"
-echo -e "Created     : $hariini"
-echo -e "Expired     : $exp"
-echo -e "========================="
-echo -e "Link TLS    : $linkss1"
-echo -e "========================="
-echo -e "Link No TLS : $linkss2"
-echo -e "========================="
+
+echo -e "----------------------------------" | tee -a /etc/log-create-user.log
+echo -e "\\E[0;41;36m        Shadowsocks Account        \E[0m" | tee -a /etc/log-create-user.log
+echo -e "----------------------------------" | tee -a /etc/log-create-user.log
+echo -e "Remarks   : $user" | tee -a /etc/log-create-user.log
+echo -e "IP/Host   : $IP" | tee -a /etc/log-create-user.log
+echo -e "Domain    : $DOMAIN" | tee -a /etc/log-create-user.log
+echo -e "Port TLS  : $tls" | tee -a /etc/log-create-user.log
+echo -e "Port NTLS : $http" | tee -a /etc/log-create-user.log
+echo -e "Method   : $method" | tee -a /etc/log-create-user.log
+echo -e "----------------------------------" | tee -a /etc/log-create-user.log
+echo -e "Link TLS : $linkss1" | tee -a /etc/log-create-user.log
+echo -e "----------------------------------" | tee -a /etc/log-create-user.log
+echo -e "Link none TLS : $linkss2" | tee -a /etc/log-create-user.log
+echo -e "----------------------------------" | tee -a /etc/log-create-user.log
+echo -e "Expired On : $exp" | tee -a /etc/log-create-user.log
+echo -e "----------------------------------" | tee -a /etc/log-create-user.log
+echo "" | tee -a /etc/log-create-user.log
 read -n 1 -s -r -p "Press any key to back on menu"
 
 menu

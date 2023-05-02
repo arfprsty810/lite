@@ -677,7 +677,7 @@ wget -q -O /usr/bin/renew-tr "$github/xray/trojan/renew-tr.sh" && chmod +x /usr/
 
 #shadowsocks-libev
 wget -q -O /usr/bin/menu-ss "$github/shadowsocks/menu-ss.sh" && chmod +x /usr/bin/menu-ss
-wget -q -O /usr/bin/addss "$github/shadowsocks/addss" && chmod +x /usr/bin/addss
+wget -q -O /usr/bin/addss "$github/shadowsocks/addss.sh" && chmod +x /usr/bin/addss
 wget -q -O /usr/bin/cekss "$github/shadowsocks/cekss.sh" && chmod +x /usr/bin/cekss
 wget -q -O /usr/bin/delss "$github/shadowsocks/delss.sh" && chmod +x /usr/bin/delss
 wget -q -O /usr/bin/renewss "$github/shadowsocks/renewss.sh" && chmod +x /usr/bin/renewss

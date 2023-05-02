@@ -14,6 +14,7 @@ clear
 echo -e "[ ${green}INFO$NC ] Restart All Service ..."
 sleep 1
 clear
+service cron restart
 systemctl daemon-reload
 systemctl enable xray
 systemctl restart xray

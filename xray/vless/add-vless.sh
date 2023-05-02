@@ -38,8 +38,8 @@ clear
 			echo "A client with the specified name was already created, please choose another name."
 			echo ""
 			echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-			read -n 1 -s -r -p "Press any key to back on menu"
-menu
+sleep 2
+add-vless
 		fi
 	done
 

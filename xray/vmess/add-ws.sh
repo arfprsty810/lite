@@ -39,7 +39,7 @@ clear
 			echo ""
 			echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 sleep 2
-add-vmess
+add-ws
 		fi
 	done
 

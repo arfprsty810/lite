@@ -21,7 +21,7 @@ sleep 3
 echo -e ""
 clear
 
-echo -e "[ ${green}INFO$NC ] INSTALLING CONFIGURASI"
+echo -e "[ ${green}INFO$NC ] RE-INSTALLING KONFIGURASI"
 sleep 1
 secs_to_human() {
     echo "Installation time : $(( ${1} / 3600 )) hours $(( (${1} / 60) % 60 )) minute's $(( ${1} % 60 )) seconds"
@@ -63,7 +63,7 @@ domain=$(cat $xray/domain)
 sleep 1
 clear
 
-echo -e "[ ${green}INFO$NC ] Disable ipv6"
+echo -e "[ ${green}INFO$NC ] DISABLE IPV6"
 sleep 1
 echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6 >/dev/null 2>&1
 sed -i '$ i\echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6' /etc/rc.local >/dev/null 2>&1
@@ -71,45 +71,46 @@ apt update -y
 apt upgrade -y
 apt dist-upgrade -y
 clear
-echo -e "[ ${green}INFO${NC} ] Checking... "
+echo -e "[ ${green}INFO${NC} ] CHECKING... "
 sleep 1
 clear
-echo -e "[ ${green}INFO$NC ] Setting ntpdate"
+echo -e "[ ${green}INFO$NC ] SETTING NTPDATE"
 ntpdate -u pool.ntp.org
 ntpdate pool.ntp.org 
 timedatectl set-ntp true
 timedatectl set-timezone Asia/Jakarta
 sleep 1
 clear
-echo -e "[ ${green}INFO$NC ] Enable chronyd"
+echo -e "[ ${green}INFO$NC ] ENABLE CHRONYD"
 systemctl enable chronyd
 systemctl restart chronyd
 sleep 1
 clear
-echo -e "[ ${green}INFO$NC ] Enable chrony"
+echo -e "[ ${green}INFO$NC ] ENABLE CHRONY"
 systemctl enable chrony
 systemctl restart chrony
 clear
 sleep 1
 clear
-echo -e "[ ${green}INFO$NC ] Setting chrony tracking"
+echo -e "[ ${green}INFO$NC ] SETTING CHRONY TRACKING"
 chronyc sourcestats -v
 chronyc tracking -v
 clear
-echo -e "[ ${green}INFO$NC ] Setting service"
+echo -e "[ ${green}INFO$NC ] SETTING SERVICE"
 apt update -y
 apt upgrade -y
 clear
 echo " "
 
 # install xray
+echo -e "[ ${green}INFO$NC ] RE-INSTALLING XRAY VMESS - VLESS"
 sleep 1
-echo -e "[ ${green}INFO$NC ] Downloading & Installing xray core"
 domainSock_dir="/run/xray";! [ -d $domainSock_dir ] && mkdir  $domainSock_dir
 chown www-data.www-data $domainSock_dir
 clear
 
 # Make Folder XRay
+echo -e "[ ${green}INFO$NC ] MEMBUAT ULANG FOLDER XRAY"
 rm -rvf /var/log/xray
 mkdir -p /var/log/xray
 chown www-data.www-data /var/log/xray
@@ -120,8 +121,9 @@ touch /var/log/xray/access2.log
 touch /var/log/xray/error2.log
 # / / Ambil Xray Core Version Terbaru
 bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.5.6
+clear
 
-echo -e "[ ${green}INFO$NC ] INSATLL NGINX SERVER"
+echo -e "[ ${green}INFO$NC ] MENGINSTALL ULANG NGINX SERVER"
 # install webserver
 cd
 rm /etc/nginx/sites-enabled/default
@@ -140,7 +142,7 @@ wget -O /home/vps/public_html/index.html "$github/xray/index.html"
 cd
 clear
 
-echo -e "[ ${green}INFO$NC ] INSATLL CERT SSL"
+echo -e "[ ${green}INFO$NC ] MENGINSTALL ULANG CERT SSL"
 ## crt xray
 systemctl stop nginx
 rm -rvf /root/.acme.sh
@@ -156,7 +158,7 @@ rm -rvf $xray/xray.key
 ~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath $xray/xray.crt --keypath $xray/xray.key --ecc
 clear
 
-echo -e "[ ${green}INFO$NC ] RENEW CERT SSL"
+echo -e "[ ${green}INFO$NC ] MEMBUAT ULANG CERT SSL"
 # nginx renew ssl
 echo -n '#!/bin/bash
 /etc/init.d/nginx stop
@@ -167,7 +169,7 @@ chmod +x /usr/local/bin/ssl_renew.sh
 if ! grep -q 'ssl_renew.sh' /var/spool/cron/crontabs/root;then (crontab -l;echo "15 03 */3 * * /usr/local/bin/ssl_renew.sh") | crontab;fi
 clear
 
-echo -e "[ ${green}INFO$NC ] MEMBUAT PORT"
+echo -e "[ ${green}INFO$NC ] MEMBUAT ULANG PORT"
 sleep 1
 # Random Port Xray
 trojanws=$((RANDOM + 10000))
@@ -182,7 +184,7 @@ vmessgrpc=$((RANDOM + 10000))
 trojangrpc=$((RANDOM + 10000))
 
 # xray config
-echo -e "[ ${green}INFO$NC ] Membuat Config XRAY"
+echo -e "[ ${green}INFO$NC ] MEMBUAT ULANG CONFIG XRAY"
 sleep 1
 rm -rvf $xray/config.json
 cat > $xray/config.json << END
@@ -479,7 +481,7 @@ EOF
 clear
 
 #nginx config
-echo -e "[ ${green}INFO$NC ] Membuat Config NGINX"
+echo -e "[ ${green}INFO$NC ] MEMBUAT ULANG CONFIG NGINX"
 sleep 1
 rm -rvf /etc/nginx/conf.d/xray.conf
 cat >/etc/nginx/conf.d/xray.conf <<EOF
@@ -598,12 +600,12 @@ sed -i '$ igrpc_pass grpc://127.0.0.1:'"$trojangrpc"';' /etc/nginx/conf.d/xray.c
 sed -i '$ i}' /etc/nginx/conf.d/xray.conf
 clear
 
-echo -e "$yell[SERVICE]$NC Restart All service"
+echo -e "$yell[SERVICE]$NC RESTART ALL SERVICE"
 systemctl daemon-reload
 sleep 1
 clear
 
-echo -e "[ ${green}ok${NC} ] Enable & restart xray "
+echo -e "[ ${green}ok${NC} ] ENABLE & RESTART XRAY "
 systemctl enable xray
 systemctl restart xray
 systemctl restart nginx
@@ -612,7 +614,7 @@ systemctl restart runn
 clear
 sleep 1
 
-echo -e "[ ${green}INFO$NC ] Remove old file ..."
+echo -e "[ ${green}INFO$NC ] REMOVE OLD FILE ..."
 sleep 1
 #vmess
 rm -rvf /usr/bin/menu-vmess
@@ -651,7 +653,7 @@ rm -rvf /usr/bin/cekuser
 clear
 
 #vmess
-echo -e "[ ${green}INFO$NC ] Download New Script"
+echo -e "[ ${green}INFO$NC ] DOWNLOAD NEW SCRIPT"
 sleep 1
 wget -q -O /usr/bin/menu-vmess "$github/xray/vmess/menu-vmess.sh" && chmod +x /usr/bin/menu-vmess
 wget -q -O /usr/bin/add-ws "$github/xray/vmess/add-ws.sh" && chmod +x /usr/bin/add-ws
@@ -692,7 +694,7 @@ wget -q -O /usr/bin/backup-user "$github/backup/backup-user.sh" && chmod +x /usr
 sleep 1
 clear
 
-echo -e "[ ${green}INFO$NC ] Install New Script ..."
+echo -e "[ ${green}INFO$NC ] INSTALL NEW SCRIPT ..."
 sleep 1
 sed -i -e 's/\r$//' /bin/menu
 sed -i -e 's/\r$//' /bin/cek-bandwidth
@@ -727,7 +729,7 @@ sed -i -e 's/\r$//' /bin/delss
 sed -i -e 's/\r$//' /bin/renewss
 clear
 
-echo -e "[ ${green}INFO$NC ] SETTING XRAY SUKSES !!!"
+echo -e "[ ${green}INFO$NC ] SETTING XRAY VMESS - VLESS SUKSES !!!"
 sleep 2
 clear
 #mv /root/domain $xray
@@ -736,7 +738,7 @@ clear
 #fi
 
 # Install Trojan Go
-echo -e "[ ${green}INFO$NC ] Installing Trojan-GO"
+echo -e "[ ${green}INFO$NC ] RE-INSTALLING TROJAN-GO"
 sleep 1
 latest_version="$(curl -s "https://api.github.com/repos/p4gefau1t/trojan-go/releases" | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
 trojango_link="https://github.com/p4gefau1t/trojan-go/releases/download/v${latest_version}/trojan-go-linux-amd64.zip"
@@ -757,7 +759,7 @@ rm -rvf $logtrgo/trojan-go.log
 touch $logtrgo/trojan-go.log
 
 # Buat Config Trojan Go
-echo -e "[ ${green}INFO$NC ] Membuat Config Trojan-GO"
+echo -e "[ ${green}INFO$NC ] MEMBUAT ULANG CONFIG TROJAN-GO"
 sleep 1
 rm -rvf $trgo/config.json
 cat > $trgo/config.json << END
@@ -825,7 +827,7 @@ cat > $trgo/config.json << END
 END
 clear
 
-# Installing Trojan Go Service
+# RE-INSTALLING Trojan Go Service
 rm -rvf /etc/systemd/system/trojan-go.service
 cat > /etc/systemd/system/trojan-go.service << END
 [Unit]
@@ -858,11 +860,11 @@ sleep 1
 clear
 
 #Server konfigurasi
-echo -e "[ ${green}INFO$NC ] Menginstall SahdowSocks-Libev"
+echo -e "[ ${green}INFO$NC ] MENGINSTALL ULANG SAHDOWSOCKS-LIBEV"
 sleep 2
 clear
 
-echo -e "[ ${green}INFO$NC ] Membuat Config ShadowSocks"
+echo -e "[ ${green}INFO$NC ] MEMBUAT ULANG CONFIG SHADOWSOCKS"
 sleep 1
 rm -rvf /etc/shadowsocks-libev/config.json
 cat > /etc/shadowsocks-libev/config.json <<END
@@ -883,7 +885,7 @@ systemctl enable shadowsocks-libev.service
 systemctl start shadowsocks-libev.service
 clear
 
-echo -e "[ ${green}INFO$NC ] Membuat Client Config"
+echo -e "[ ${green}INFO$NC ] MEMBUAT ULANG CLIENT CONFIG"
 sleep 1
 rm -rvf /etc/shadowsocks-libev.json
 cat > /etc/shadowsocks-libev.json <<END
@@ -914,7 +916,7 @@ echo -e "[ ${green}INFO$NC ] SETTING SHADOWSOCKS SUKSES !!!"
 sleep 1
 
 # restart
-echo -e "[ ${green}INFO$NC ] Memulai Ulang Configurasi"
+echo -e "[ ${green}INFO$NC ] MEMULAI ULANG KONFIGURASI"
 sleep 1
 systemctl daemon-reload
 systemctl enable xray

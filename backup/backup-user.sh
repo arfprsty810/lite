@@ -51,7 +51,7 @@ done
 clear
 
 datass=( `cat /etc/shadowsocks-libev/akun.conf | grep '#ss#' | cut -d ' ' -f 2 | sort | uniq`);
-for akun in "${datatr[@]}"
+for akun in "${datass[@]}"
 do
 if [[ -z "$akun" ]]; then
 akun="tidakada"

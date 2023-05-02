@@ -84,15 +84,20 @@ cat > /etc/shadowsocks-libev/$user-http.json <<-END
 END
 chmod +x /etc/shadowsocks-libev/$user-tls.json
 chmod +x /etc/shadowsocks-libev/$user-http.json
+clear
 
 systemctl enable shadowsocks-libev-server@$user-tls.service
 systemctl start shadowsocks-libev-server@$user-tls.service
 systemctl enable shadowsocks-libev-server@$user-http.service
 systemctl start shadowsocks-libev-server@$user-http.service
+clear
+
 tmp1=$(echo -n "${method}:${user}@${IP}:$tls" | base64 -w0)
 tmp2=$(echo -n "${method}:${user}@${IP}:$http" | base64 -w0)
 linkss1="ss://${tmp1}?plugin=obfs-local;obfs=tls;obfs-host=bing.com"
 linkss2="ss://${tmp2}?plugin=obfs-local;obfs=http;obfs-host=bing.com"
+clear
+
 echo -e "#ss# $user $exp
 port_tls $tls
 port_http $http">>"/etc/shadowsocks-libev/akun.conf"
@@ -107,7 +112,7 @@ echo -e "IP/Host   : $IP" | tee -a /etc/log-create-user.log
 echo -e "Domain    : $DOMAIN" | tee -a /etc/log-create-user.log
 echo -e "Port TLS  : $tls" | tee -a /etc/log-create-user.log
 echo -e "Port NTLS : $http" | tee -a /etc/log-create-user.log
-echo -e "Method   : $method" | tee -a /etc/log-create-user.log
+echo -e "Method    : $method" | tee -a /etc/log-create-user.log
 echo -e "----------------------------------" | tee -a /etc/log-create-user.log
 echo -e "Link TLS : $linkss1" | tee -a /etc/log-create-user.log
 echo -e "----------------------------------" | tee -a /etc/log-create-user.log

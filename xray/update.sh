@@ -102,7 +102,7 @@ chmod +x /usr/bin/renew-tr
 #shadowsocks-libev
 wget -q -O /usr/bin/menu-ss "$github/shadowsocks/menu-ss.sh"  
 chmod +x /usr/bin/menu-ss
-wget -q -O /usr/bin/addss "$github/shadowsocks/addss"
+wget -q -O /usr/bin/addss "$github/shadowsocks/addss.sh"
 chmod +x /usr/bin/addss
 wget -q -O /usr/bin/cekss "$github/shadowsocks/cekss.sh"
 chmod +x /usr/bin/cekss

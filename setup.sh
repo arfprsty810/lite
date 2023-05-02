@@ -64,7 +64,6 @@ wget -q -O /usr/bin/cf "$github/xray/cf.sh"
 chmod +x /usr/bin/cf
 sed -i -e 's/\r$//' /usr/bin/cf
 /usr/bin/cf
-rm -rvf /usr/bin/cf
     else
 	echo "$pp" > /etc/xray/domain
 	echo "$pp" > /etc/xray/scdomain

@@ -41,6 +41,13 @@ rm -rvf /usr/bin/cek-tr
 rm -rvf /usr/bin/del-tr
 rm -rvf /usr/bin/renew-tr
 
+#shadowsocks-libev
+rm -rvf /usr/bin/menu-ss
+rm -rvf /usr/bin/addss
+rm -rvf /usr/bin/cekss
+rm -rvf /usr/bin/delss
+rm -rvf /usr/bin/renewss
+
 #--
 rm -rvf /usr/bin/menu
 rm -rvf /usr/bin/speedtest
@@ -91,6 +98,13 @@ wget -q -O /usr/bin/del-tr "$github/xray/trojan/del-tr.sh"
 chmod +x /usr/bin/del-tr
 wget -q -O /usr/bin/renew-tr "$github/xray/trojan/renew-tr.sh"
 chmod +x /usr/bin/renew-tr
+
+#shadowsocks-libev
+wget -q -O /usr/bin/menu-ss "$github/shadowsocks/menu-ss.sh" && chmod +x /usr/bin/menu-ss
+wget -q -O /usr/bin/addss "$github/shadowsocks/addss" && chmod +x /usr/bin/addss
+wget -q -O /usr/bin/cekss "$github/shadowsocks/cekss.sh" && chmod +x /usr/bin/cekss
+wget -q -O /usr/bin/delss "$github/shadowsocks/delss.sh" && chmod +x /usr/bin/delss
+wget -q -O /usr/bin/renewss "$github/shadowsocks/renewss.sh" && chmod +x /usr/bin/renewss
 
 #--
 wget -q -O /usr/bin/restart "$github/xray/restart.sh"
@@ -150,6 +164,12 @@ sed -i -e 's/\r$//' /bin/add-tr
 sed -i -e 's/\r$//' /bin/cek-tr
 sed -i -e 's/\r$//' /bin/del-tr
 sed -i -e 's/\r$//' /bin/renew-tr
+
+sed -i -e 's/\r$//' /bin/menu-ss
+sed -i -e 's/\r$//' /bin/addss
+sed -i -e 's/\r$//' /bin/cekss
+sed -i -e 's/\r$//' /bin/delss
+sed -i -e 's/\r$//' /bin/renewss
 clear
 
 sleep 1

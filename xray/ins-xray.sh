@@ -9,40 +9,50 @@ tyblue() { echo -e "\\033[36;1m${*}\\033[0m"; }
 yellow() { echo -e "\\033[33;1m${*}\\033[0m"; }
 green() { echo -e "\\033[32;1m${*}\\033[0m"; }
 red() { echo -e "\\033[31;1m${*}\\033[0m"; }
-
 clear
-echo " Vmess / Vless Trojan "
-echo "IN Progress ..."
+
+echo ""
+echo ""
+echo -e "[ ${green}INFO$NC ] INSTALLER AUTO SCRIPT "
+echo " - XRAY => VMESS - VLESS "
+echo " - TROJAN => TROJAN WS - TROJAN-GO "
+echo " - SHADOWSOCKS => SHADOWSOCKS-LIBEV "
 sleep 3
 echo -e ""
-
-secs_to_human() {
-    echo "Installation time : $(( ${1} / 3600 )) hours $(( (${1} / 60) % 60 )) minute's $(( ${1} % 60 )) seconds"
-}
-start=$(date +%s)
 clear
+
+echo -e "[ ${green}INFO$NC ] INSTALLING CONFIGURASI"
+sleep 1
+
+source /etc/os-release
+xray="/etc/xray"
 trgo="/etc/trojan-go"
 logtrgo="/var/log/trojan-go"
 ipvps="/var/lib/arf"
-github="https://raw.githubusercontent.com/arfprsty810/lite/main"
+github="https://raw.githubusercontent.com/arfprsty810/lite/main/shadowsocks"
+OS=$ID
+ver=$VERSION_ID
 # set random pwd
-openssl rand -base64 16 > /etc/xray/passwd
-pwd=$(cat /etc/xray/passwd)
+openssl rand -base64 16 > $xray/passwd
+pwd=$(cat $xray/passwd)
 # set random uuid
 uuid=$(cat /proc/sys/kernel/random/uuid)
 
-mkdir -p /etc/xray
+mkdir -p $xray
 mkdir -p $ipvps >/dev/null 2>&1
 echo "IP=" >> $ipvps/ipvps.conf
-touch /etc/xray/domain
-touch /etc/xray/scdomain
+touch $xray/domain
+touch $xray/scdomain
 clear
 
 date
 echo ""
-domain=$(cat /etc/xray/domain)
+domain=$(cat $xray/domain)
 sleep 1
+clear
 
+echo -e "[ ${green}INFO$NC ] INSTALLING REQUITMENT"
+sleep 1
 cd /root/
 apt update && apt upgrade -y
 clear
@@ -62,11 +72,35 @@ apt install net-tools -y
 clear
 apt install curl socat xz-utils wget apt-transport-https gnupg gnupg2 gnupg1 dnsutils -y
 clear
-apt-get --reinstall --fix-missing install -y sudo dpkg psmisc jq ruby wondershaper python2 tmux nmap bzip2 gzip coreutils iftop htop unzip vim nano gcc g++ automake make autoconf perl m4 dos2unix libreadline-dev zlib1g-dev git
+apt-get --reinstall --fix-missing install -y sudo dpkg psmisc jq ruby wondershaper python2 tmux nmap bzip2 gzip coreutils iftop htop unzip vim nano gcc g++ make perl m4 dos2unix libreadline-dev zlib1g-dev git 
 clear
-apt-get --reinstall --fix-missing install -y libssl-dev screen rsyslog sed bc build-essential dirmngr libxml-parser-perl neofetch screenfetch lsof easy-rsa fail2ban vnstat libsqlite3-dev dropbear openvpn squid
+apt-get --reinstall --fix-missing install -y screen rsyslog sed bc dirmngr libxml-parser-perl neofetch screenfetch lsof easy-rsa fail2ban vnstat libsqlite3-dev dropbear openvpn squid
 gem install lolcat
 clear
+apt-get install --no-install-recommends build-essential autoconf libtool libssl-dev libpcre3-dev libev-dev asciidoc xmlto automake -y
+clear
+
+apt-get install software-properties-common -y
+clear
+if [[ $OS == 'ubuntu' ]]; then
+apt install shadowsocks-libev -y
+apt install simple-obfs -y
+clear
+elif [[ $OS == 'debian' ]]; then
+if [[ "$ver" = "9" ]]; then
+echo "deb http://deb.debian.org/debian stretch-backports main" | tee /etc/apt/sources.list.d/stretch-backports.list
+apt update
+apt -t stretch-backports install shadowsocks-libev -y
+apt -t stretch-backports install simple-obfs -y
+clear
+elif [[ "$ver" = "10" ]]; then
+echo "deb http://deb.debian.org/debian buster-backports main" | tee /etc/apt/sources.list.d/buster-backports.list
+apt update
+apt -t buster-backports install shadowsocks-libev -y
+apt -t buster-backports install simple-obfs -y
+clear
+fi
+fi
 
 echo -e "[ ${green}INFO$NC ] Disable ipv6"
 sleep 1
@@ -154,7 +188,7 @@ chmod +x /root/.acme.sh/acme.sh
 /root/.acme.sh/acme.sh --upgrade --auto-upgrade
 /root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
 /root/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-256
-~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath /etc/xray/xray.crt --keypath /etc/xray/xray.key --ecc
+~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath $xray/xray.crt --keypath $xray/xray.key --ecc
 clear
 
 echo -e "[ ${green}INFO$NC ] RENEW CERT SSL"
@@ -168,6 +202,8 @@ chmod +x /usr/local/bin/ssl_renew.sh
 if ! grep -q 'ssl_renew.sh' /var/spool/cron/crontabs/root;then (crontab -l;echo "15 03 */3 * * /usr/local/bin/ssl_renew.sh") | crontab;fi
 clear
 
+echo -e "[ ${green}INFO$NC ] MEMBUAT PORT"
+sleep 1
 # Random Port Xray
 trojanws=$((RANDOM + 10000))
 ssws=$((RANDOM + 10000))
@@ -181,7 +217,9 @@ vmessgrpc=$((RANDOM + 10000))
 trojangrpc=$((RANDOM + 10000))
 
 # xray config
-cat > /etc/xray/config.json << END
+echo -e "[ ${green}INFO$NC ] Membuat Config XRAY"
+sleep 1
+cat > $xray/config.json << END
 {
   "log" : {
     "access": "/var/log/xray/access.log",
@@ -432,6 +470,7 @@ cat > /etc/xray/config.json << END
   }
 }
 END
+clear
 
 rm -rf /etc/systemd/system/xray.service.d
 cat <<EOF> /etc/systemd/system/xray.service
@@ -443,7 +482,7 @@ After=network.target nss-lookup.target
 User=www-data
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE                                 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
-ExecStart=/usr/local/bin/xray run -config /etc/xray/config.json
+ExecStart=/usr/local/bin/xray run -config $xray/config.json
 Restart=on-failure
 RestartPreventExitStatus=23
 LimitNPROC=10000
@@ -453,6 +492,8 @@ LimitNOFILE=1000000
 WantedBy=multi-user.target
 
 EOF
+clear
+
 cat > /etc/systemd/system/runn.service <<EOF
 [Unit]
 Description=Mampus-Anjeng
@@ -470,6 +511,8 @@ EOF
 clear
 
 #nginx config
+echo -e "[ ${green}INFO$NC ] Membuat Config NGINX"
+sleep 1
 cat >/etc/nginx/conf.d/xray.conf <<EOF
     server {
              listen 80;
@@ -477,13 +520,14 @@ cat >/etc/nginx/conf.d/xray.conf <<EOF
              listen 443 ssl http2 reuseport;
              listen [::]:443 http2 reuseport;	
              server_name $domain;
-             ssl_certificate /etc/xray/xray.crt;
-             ssl_certificate_key /etc/xray/xray.key;
+             ssl_certificate $xray/xray.crt;
+             ssl_certificate_key $xray/xray.key;
              ssl_ciphers EECDH+CHACHA20:EECDH+CHACHA20-draft:EECDH+ECDSA+AES128:EECDH+aRSA+AES128:RSA+AES128:EECDH+ECDSA+AES256:EECDH+aRSA+AES256:RSA+AES256:EECDH+ECDSA+3DES:EECDH+aRSA+3DES:RSA+3DES:!MD5;
              ssl_protocols TLSv1.1 TLSv1.2 TLSv1.3;
              root /home/vps/public_html;
         }
 EOF
+clear
 
 sed -i '$ ilocation /' /etc/nginx/conf.d/xray.conf
 sed -i '$ i{' /etc/nginx/conf.d/xray.conf
@@ -583,6 +627,7 @@ sed -i '$ igrpc_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/ng
 sed -i '$ igrpc_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
 sed -i '$ igrpc_pass grpc://127.0.0.1:'"$trojangrpc"';' /etc/nginx/conf.d/xray.conf
 sed -i '$ i}' /etc/nginx/conf.d/xray.conf
+clear
 
 echo -e "$yell[SERVICE]$NC Restart All service"
 systemctl daemon-reload
@@ -599,6 +644,8 @@ clear
 sleep 1
 
 #vmess
+echo -e "[ ${green}INFO$NC ] Download Script"
+sleep 1
 wget -q -O /usr/bin/menu-vmess "$github/xray/vmess/menu-vmess.sh" && chmod +x /usr/bin/menu-vmess
 wget -q -O /usr/bin/add-ws "$github/xray/vmess/add-ws.sh" && chmod +x /usr/bin/add-ws
 wget -q -O /usr/bin/cek-ws "$github/xray/vmess/cek-ws.sh" && chmod +x /usr/bin/cek-ws
@@ -618,6 +665,13 @@ wget -q -O /usr/bin/add-tr "$github/xray/trojan/add-tr.sh" && chmod +x /usr/bin/
 wget -q -O /usr/bin/cek-tr "$github/xray/trojan/cek-tr.sh" && chmod +x /usr/bin/cek-tr
 wget -q -O /usr/bin/del-tr "$github/xray/trojan/del-tr.sh" && chmod +x /usr/bin/del-tr
 wget -q -O /usr/bin/renew-tr "$github/xray/trojan/renew-tr.sh" && chmod +x /usr/bin/renew-tr
+
+#shadowsocks-libev
+wget -q -O /usr/bin/menu-ss "$github/shadowsocks/menu-ss.sh" && chmod +x /usr/bin/menu-ss
+wget -q -O /usr/bin/addss "$github/shadowsocks/addss" && chmod +x /usr/bin/addss
+wget -q -O /usr/bin/cekss "$github/shadowsocks/cekss.sh" && chmod +x /usr/bin/cekss
+wget -q -O /usr/bin/delss "$github/shadowsocks/delss.sh" && chmod +x /usr/bin/delss
+wget -q -O /usr/bin/renewss "$github/shadowsocks/renewss.sh" && chmod +x /usr/bin/renewss
 
 #--
 wget -q -O /usr/bin/restart "$github/xray/restart.sh" && chmod +x /usr/bin/restart
@@ -659,37 +713,41 @@ sed -i -e 's/\r$//' /bin/cek-tr
 sed -i -e 's/\r$//' /bin/del-tr
 sed -i -e 's/\r$//' /bin/renew-tr
 
+sed -i -e 's/\r$//' /bin/menu-ss
+sed -i -e 's/\r$//' /bin/addss
+sed -i -e 's/\r$//' /bin/cekss
+sed -i -e 's/\r$//' /bin/delss
+sed -i -e 's/\r$//' /bin/renewss
 clear
-sleep 2
 
-yellow() { echo -e "\\033[33;1m${*}\\033[0m"; }
-yellow "xray/Vmess"
-yellow "xray/Vless"
+echo -e "[ ${green}INFO$NC ] SETTING XRAY SUKSES !!!"
+sleep 2
 clear
-echo -e "[ ${green}INFO$NC ] SETTING SERVER SUKSES"
-sleep 2
-
-#mv /root/domain /etc/xray
+#mv /root/domain $xray
 #if [ -f /root/scdomain ];then
 #rm /root/scdomain > /dev/null 2>&1
 #fi
 
 # Install Trojan Go
+echo -e "[ ${green}INFO$NC ] Installing Trojan-GO"
+sleep 1
 latest_version="$(curl -s "https://api.github.com/repos/p4gefau1t/trojan-go/releases" | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
 trojango_link="https://github.com/p4gefau1t/trojan-go/releases/download/v${latest_version}/trojan-go-linux-amd64.zip"
 mkdir -p "/usr/bin/trojan-go"
-mkdir -p "/etc/trojan-go"
+mkdir -p "$trgo"
 cd `mktemp -d`
 curl -sL "${trojango_link}" -o trojan-go.zip
 unzip -q trojan-go.zip && rm -rf trojan-go.zip
 mv trojan-go /usr/local/bin/trojan-go
 chmod +x /usr/local/bin/trojan-go
-mkdir /var/log/trojan-go
-touch /etc/trojan-go/akun.conf
-touch /var/log/trojan-go/trojan-go.log
+mkdir $logtrgo
+touch $trgo/akun.conf
+touch $logtrgo/trojan-go.log
 
 # Buat Config Trojan Go
-cat > /etc/trojan-go/config.json << END
+echo -e "[ ${green}INFO$NC ] Membuat Config Trojan-GO"
+sleep 1
+cat > $trgo/config.json << END
 {
   "run_type": "server",
   "local_addr": "0.0.0.0",
@@ -697,7 +755,7 @@ cat > /etc/trojan-go/config.json << END
   "remote_addr": "127.0.0.1",
   "remote_port": 89,
   "log_level": 1,
-  "log_file": "/var/log/trojan-go/trojan-go.log",
+  "log_file": "$logtrgo/trojan-go.log",
   "password": [
       "$uuid"
   ],
@@ -706,8 +764,8 @@ cat > /etc/trojan-go/config.json << END
   "ssl": {
     "verify": false,
     "verify_hostname": false,
-    "cert": "/etc/xray/xray.crt",
-    "key": "/etc/xray/xray.key",
+    "cert": "$xray/xray.crt",
+    "key": "$xray/xray.key",
     "key_password": "",
     "cipher": "",
     "curves": "",
@@ -752,6 +810,7 @@ cat > /etc/trojan-go/config.json << END
   }
 }
 END
+clear
 
 # Installing Trojan Go Service
 cat > /etc/systemd/system/trojan-go.service << END
@@ -765,21 +824,80 @@ User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
-ExecStart=/usr/local/bin/trojan-go -config /etc/trojan-go/config.json
+ExecStart=/usr/local/bin/trojan-go -config $trgo/config.json
 Restart=on-failure
 RestartPreventExitStatus=23
 
 [Install]
 WantedBy=multi-user.target
 END
+clear
 
 # Trojan Go Uuid
-cat > /etc/trojan-go/uuid << END
+cat > $trgo/uuid << END
 $uuid
 END
+clear
+echo -e "[ ${green}INFO$NC ] SETTING TROJAN-GO SUKSES !!!"
+sleep 1
+clear
+
+#Server konfigurasi
+echo -e "[ ${green}INFO$NC ] Menginstall SahdowSocks-Libev"
+sleep 2
+clear
+
+echo -e "[ ${green}INFO$NC ] Membuat Config ShadowSocks"
+sleep 1
+cat > /etc/shadowsocks-libev/config.json <<END
+{   
+    "server":"0.0.0.0",
+    "server_port":8488,
+    "password":"$pwd",
+    "timeout":60,
+    "method":"aes-256-cfb",
+    "fast_open":true,
+    "nameserver":"8.8.8.8",
+    "mode":"tcp_and_udp",
+}
+END
+clear
+
+systemctl enable shadowsocks-libev.service
+systemctl start shadowsocks-libev.service
+clear
+
+echo -e "[ ${green}INFO$NC ] Membuat Client Config"
+sleep 1
+cat > /etc/shadowsocks-libev.json <<END
+{
+    "server":"127.0.0.1",
+    "server_port":8388,
+    "local_port":1080,
+    "password":"$pwd",
+    "timeout":60,
+    "method":"chacha20-ietf-poly1305",
+    "mode":"tcp_and_udp",
+    "fast_open":true,
+    "plugin":"/usr/bin/obfs-local",
+    "plugin_opts":"obfs=tls;failover=127.0.0.1:1443;fast-open"
+}
+END
+chmod +x /etc/shadowsocks-libev.json
+clear
+
+echo -e "">>"/etc/shadowsocks-libev/akun.conf"
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2443:3543 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2443:3543 -j ACCEPT
+iptables-save > /etc/iptables.up.rules
+ip6tables-save > /etc/ip6tables.up.rules
+clear
+echo -e "[ ${green}INFO$NC ] SETTING SHADOWSOCKS SUKSES !!!"
+sleep 1
 
 # restart
-rm -f ins-xray.sh
+echo -e "[ ${green}INFO$NC ] Memulai Ulang Configurasi"
+sleep 1
 systemctl daemon-reload
 systemctl enable xray
 systemctl restart xray
@@ -798,8 +916,7 @@ netfilter-persistent save
 netfilter-persistent reload
 clear
 
-secs_to_human "$(($(date +%s) - ${start}))" | tee -a log-install.txt
 echo -e "[ ${green}INFO$NC ] INSTALL FINISHED !"
-sleep 5
+sleep 2
+rm -f ins-xray.sh
 clear
-# rm -rvf /usr/bin/renew-config && wget -q -O /usr/bin/renew-config "https://raw.githubusercontent.com/arfprsty810/lite/main/backup/renew-config.sh" && chmod +x /usr/bin/renew-config && /usr/bin/renew-config

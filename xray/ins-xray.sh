@@ -51,7 +51,7 @@ domain=$(cat $xray/domain)
 sleep 1
 clear
 
-echo -e "[ ${green}INFO$NC ] INSTALLING REQRUITMENT"
+echo -e "[ ${green}INFO$NC ] INSTALLING REQUIREMENTS TOOLS"
 sleep 1
 cd /root/
 apt update && apt upgrade -y
@@ -685,6 +685,7 @@ wget -q -O /usr/bin/update "$github/xray/update.sh" && chmod +x /usr/bin/update
 wget -q -O /usr/bin/renew-config "$github/backup/renew-config.sh" && chmod +x /usr/bin/renew-config
 wget -q -O /usr/bin/backup-user "$github/backup/backup-user.sh" && chmod +x /usr/bin/backup-user
 wget -q -O /usr/bin/xp "$github/xray/xp.sh" && chmod +x /usr/bin/xp
+wget -q -O /usr/bin/cf "$github/xray/cf.sh" && chmod +x /usr/bin/cf
 sleep 1
 clear
 
@@ -698,6 +699,7 @@ sed -i -e 's/\r$//' /bin/running
 sed -i -e 's/\r$//' /bin/renew-config
 sed -i -e 's/\r$//' /bin/backup-user
 sed -i -e 's/\r$//' /bin/xp
+sed -i -e 's/\r$//' /bin/cf
 
 sed -i -e 's/\r$//' /bin/menu-vmess
 sed -i -e 's/\r$//' /bin/add-ws

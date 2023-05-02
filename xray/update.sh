@@ -62,6 +62,7 @@ rm -rvf /usr/bin/renew-config
 rm -rvf /usr/bin/backup-user
 rm -rvf /usr/bin/cekuser
 rm -rvf /usr/bin/xp
+rm -rvf /usr/bin/cf
 clear
 
 echo -e "[ ${green}INFO$NC ] Update New Script ..."
@@ -119,6 +120,8 @@ chmod +x /usr/bin/renewss
 clear
 
 #--
+wget -q -O /usr/bin/cf "$github/xray/cf.sh"
+chmod +x /usr/bin/cf
 wget -q -O /usr/bin/xp "$github/xray/xp.sh"
 chmod +x /usr/bin/xp
 wget -q -O /usr/bin/restart "$github/xray/restart.sh"
@@ -143,6 +146,7 @@ clear
 
 echo -e "[ ${green}INFO$NC ] Install New Script ..."
 sleep 2
+sed -i -e 's/\r$//' /bin/cf
 sed -i -e 's/\r$//' /bin/xp
 sed -i -e 's/\r$//' /bin/menu
 sed -i -e 's/\r$//' /bin/update

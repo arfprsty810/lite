@@ -93,6 +93,12 @@ chmod +x /etc/pam.d/common-password
 # go to root
 cd
 
+# Getting file ssh
+wget -q -O /usr/local/bin/usernew "https://$Server_URL/ssh/usernew.sh"
+chmod +x /usr/local/bin/usernew
+wget -q -O /usr/local/bin/tendang "https://$Server_URL/ssh/tendang.sh"
+chmod +x /usr/local/bin/tendang
+
 # Getting websocket dropbear
 #wget -q -O /usr/local/bin/ws-dropbear "https://raw.githubusercontent.com/wunuit/0/main/ws-dropbear"
 #chmod +x /usr/local/bin/ws-dropbear

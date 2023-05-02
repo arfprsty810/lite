@@ -58,6 +58,7 @@ rm -rvf /bin/cek-bandwidth
 rm -rvf /usr/bin/renew-config
 rm -rvf /usr/bin/backup-user
 rm -rvf /usr/bin/cekuser
+rm -rvf /usr/bin/xp
 
 clear
 echo -e "[ ${green}INFO$NC ] Update New Script ..."
@@ -112,6 +113,9 @@ wget -q -O /usr/bin/renewss "$github/shadowsocks/renewss.sh"
 chmod +x /usr/bin/renewss
 
 #--
+wget -q -O /usr/bin/xp "$github/xray/xp.sh"
+chmod +x /usr/bin/xp
+
 wget -q -O /usr/bin/restart "$github/xray/restart.sh"
 chmod +x /usr/bin/restart
 
@@ -143,6 +147,7 @@ clear
 echo -e "[ ${green}INFO$NC ] Install New Script ..."
 sleep 2
 
+sed -i -e 's/\r$//' /bin/xp
 sed -i -e 's/\r$//' /bin/menu
 sed -i -e 's/\r$//' /bin/update
 sed -i -e 's/\r$//' /bin/restart

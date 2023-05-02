@@ -57,8 +57,13 @@ if [[ $nginx == "running" ]]; then
 else
  status_nginx="${RED}FAILED${NC}"
 fi
-
 clear
+
+echo -e "[ ${green}INFO$NC ] CHECK EXPIRED USER ..."
+sleep 2
+/usr/bin/xp
+clear
+
 echo -e "\033[0;34m┌─────────────────────────────────────────────────────┐${NC}"
 echo -e "                     ⇱ \e[32;1mInformasi VPS\e[0m ⇲ "
 echo -e "\033[0;34m└─────────────────────────────────────────────────────┘${NC}"

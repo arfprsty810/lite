@@ -962,47 +962,7 @@ END
 chmod 644 /root/.profile
 clear
 
-rm -rvf log-install.txt
-echo ""
-echo -e "===================================================" | tee -a log-install.txt
-echo -e "#        Premium Auto Script By ™D-JumPer™        #" | tee -a log-install.txt
-echo -e "==================================================="
-echo -e "# For Debian 10 64bit                             #" | tee -a log-install.txt
-echo -e "# For Ubuntu 18.04 - Ubuntu Lastest Version 64bit #" | tee -a log-install.txt
-echo -e "# For VPS with KVM and VMWare virtualization      #" | tee -a log-install.txt
-echo -e "# Build Up By @arf.prsty                          #" | tee -a log-install.txt
-echo -e "===================================================" | tee -a log-install.txt
-echo -e "# Thanks To                                     #" | tee -a log-install.txt
-echo -e "===================================================" | tee -a log-install.txt
-echo -e "# Allah SWT                                     #" | tee -a log-install.txt
-echo -e "# My Family                                     #" | tee -a log-install.txt
-echo -e "===================================================" | tee -a log-install.txt
-echo "" | tee -a log-install.txt
-echo "======================-[ SCRIPT INFO ]-=====================" | tee -a log-install.txt
-echo "" | tee -a log-install.txt
-echo "------------------------------------------------------------" | tee -a log-install.txt
-echo "" | tee -a log-install.txt
-echo "   >>> Service & Port"  | tee -a log-install.txt
-echo "   - XRAY  Vmess TLS         : 443" | tee -a log-install.txt
-echo "   - XRAY  Vmess gRPC        : 443" | tee -a log-install.txt
-echo "   - XRAY  Vmess None TLS    : 80" | tee -a log-install.txt
-echo "   - XRAY  Vless TLS         : 443" | tee -a log-install.txt
-echo "   - XRAY  Vless gRPC        : 443" | tee -a log-install.txt
-echo "   - XRAY  Vless None TLS    : 80" | tee -a log-install.txt
-echo "   - Trojan WS               : 443" | tee -a log-install.txt
-echo "   - Trojan gRPC             : 443" | tee -a log-install.txt
-echo "   - Trojan GO               : 2087" | tee -a log-install.txt
-echo "   - Shadowsocks TLS         : 2443 - 3442 (Show Result)" | tee -a log-install.txt
-echo "   - Shadowsocks None TLS    : 3443 - 4442 (Show Result)" | tee -a log-install.txt
-echo "   - Nginx                   : 81" | tee -a log-install.txt
-echo "" | tee -a log-install.txt
-echo "------------------------------------------------------------" | tee -a log-install.txt
-echo "" | tee -a log-install.txt
-echo "=========-[ Script Created By @arf.prsty_ ]-==========" | tee -a log-install.txt
-echo "" | tee -a log-install.txt
-rm /root/setup.sh >/dev/null 2>&1
-secs_to_human "$(($(date +%s) - ${start}))" | tee -a log-install.txt
-echo -e "" | tee -a log-install.txt
+secs_to_human "$(($(date +%s) - ${start}))"
 
 echo -e "[ ${green}INFO$NC ] RE-INSTALL FINISHED !"
 sleep 2

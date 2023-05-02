@@ -37,7 +37,6 @@ NUMBER_OF_CLIENTS=$(grep -c -E "^#vl# " "/etc/xray/config.json")
     echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 	read -rp "Input Username : " user
     if [ -z $user ]; then
-    exit
     menu-vless
     else
     read -p "Expired (days): " masaaktif

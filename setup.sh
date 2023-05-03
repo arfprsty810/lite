@@ -77,20 +77,15 @@ rm -fr /usr/local/bin/stunnel5
 rm -fr /etc/nginx
 rm -fr /var/lib/arf
 rm -fr /usr/bin/xray
-rm -fr /etc/xray
-rm -fr /usr/local/etc/xray
+rm -fr $xray
+rm -fr /usr/local/xray
 rm -fr /var/log/xray
-rm -fr /etc/trojan-go
-rm -fr /usr/bin/trojan-go
-rm -fr /usr/local/bin/trojan-go
-rm -fr /var/log/trojan-go
-rm -fr /etc/shadowsocks-libev
-rm -fr /etc/shadowsocks-libev.*
 clear
-
+apt install jq curl -y
 secs_to_human() {
     echo "Installation time : $(( ${1} / 3600 )) hours $(( (${1} / 60) % 60 )) minute's $(( ${1} % 60 )) seconds"
 }
+clear
 
 #ln -fs /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
 #sysctl -w net.ipv6.conf.all.disable_ipv6=1 >/dev/null 2>&1
@@ -306,26 +301,26 @@ WantedBy=multi-user.target
 END
 
 # nano /etc/rc.local
-#cat > /etc/rc.local <<-END
+cat > /etc/rc.local <<-END
 #!/bin/sh -e
 # rc.local
 # By default this script does nothing.
-#exit 0
-#END
+exit 0
+END
 
 # Ubah izin akses
-#chmod +x /etc/rc.local
-#echo -e " "
+chmod +x /etc/rc.local
+echo -e " "
 date
 echo ""
 # enable rc local
-#sleep 1
+sleep 1
 echo -e "[ ${GREEN}INFO${NC} ] Checking... "
 sleep 2
 sleep 1
-#echo -e "[ ${GREEN}INFO$NC ] Enable system rc local"
-#systemctl enable rc-local >/dev/null 2>&1
-#systemctl start rc-local.service >/dev/null 2>&1
+echo -e "[ ${GREEN}INFO$NC ] Enable system rc local"
+systemctl enable rc-local >/dev/null 2>&1
+systemctl start rc-local.service >/dev/null 2>&1
 
 # disable ipv6
 #sleep 1
@@ -334,9 +329,9 @@ sleep 1
 #sed -i '$ i\echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6' /etc/rc.local >/dev/null 2>&1
 
 # set time GMT +7
-#sleep 1
-#echo -e "[ ${GREEN}INFO$NC ] Set zona local time to Asia/Jakarta GMT+7"
-#ln -fs /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
+sleep 1
+echo -e "[ ${GREEN}INFO$NC ] Set zona local time to Asia/Jakarta GMT+7"
+ln -fs /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
 
 # set locale
 sed -i 's/AcceptEnv/#AcceptEnv/g' /etc/ssh/sshd_config
@@ -366,13 +361,19 @@ cd
 echo -e "[ ${GREEN}INFO$NC ] Installing badvpn for game support..."
 #wget -q -O /usr/bin/badvpn-udpgw "$github/ssh/badvpn-udpgw64"
 wget -q -O /usr/bin/badvpn-udpgw "$github/ssh/newudpgw"
-chmod +x /usr/bin/badvpn-udpgw  >/dev/null 2>&1
-sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 500' /etc/rc.local >/dev/null 2>&1
-sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 500' /etc/rc.local >/dev/null 2>&1
-sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300 --max-clients 500' /etc/rc.local >/dev/null 2>&1
-systemctl daemon-reload >/dev/null 2>&1
-systemctl start rc-local.service >/dev/null 2>&1
-systemctl restart rc-local.service >/dev/null 2>&1
+chmod +x /usr/bin/badvpn-udpgw
+sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 500' /etc/rc.local
+sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 500' /etc/rc.local
+sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300 --max-clients 500' /etc/rc.local
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 500
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 500
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300 --max-clients 500
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7400 --max-clients 500
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7500 --max-clients 500
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7600 --max-clients 500
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7700 --max-clients 500
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7800 --max-clients 500
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7900 --max-clients 500
 
 # /etc/ssh/sshd_config
 sed -i 's/Port 22/Port 22/g' /etc/ssh/sshd_config
@@ -405,55 +406,6 @@ apt -y install squid3
 wget -O /etc/squid/squid.conf "$github/ssh/squid3.conf"
 sed -i $IP /etc/squid/squid.conf
 
-# Install SSLH
-apt -y install sslh
-rm -f /etc/default/sslh
-
-# Settings SSLH
-cat > /etc/default/sslh <<-END
-# Default options for sslh initscript
-# sourced by /etc/init.d/sslh
-
-# Disabled by default, to force yourself
-# to read the configuration:
-# - /usr/share/doc/sslh/README.Debian (quick start)
-# - /usr/share/doc/sslh/README, at "Configuration" section
-# - sslh(8) via "man sslh" for more configuration details.
-# Once configuration ready, you *must* set RUN to yes here
-# and try to start sslh (standalone mode only)
-
-RUN=yes
-
-# binary to use: forked (sslh) or single-thread (sslh-select) version
-# systemd users: don't forget to modify /lib/systemd/system/sslh.service
-DAEMON=/usr/sbin/sslh
-
-DAEMON_OPTS="--user sslh --listen 0.0.0.0:443 --ssl 127.0.0.1:777 --ssh 127.0.0.1:109 --openvpn 127.0.0.1:1194 --http 127.0.0.1:8880 --pidfile /var/run/sslh/sslh.pid -n"
-
-END
-
-# Restart Service SSLH
-service sslh restart
-systemctl restart sslh
-/etc/init.d/sslh restart
-/etc/init.d/sslh status
-/etc/init.d/sslh restart
-
-# setting vnstat
-/etc/init.d/vnstat restart
-wget https://humdi.net/vnstat/vnstat-2.6.tar.gz
-tar zxvf vnstat-2.6.tar.gz
-cd vnstat-2.6
-./configure --prefix=/usr --sysconfdir=/etc && make && make install
-cd
-vnstat -u -i $NET
-sed -i 's/Interface "'""eth0""'"/Interface "'""$NET""'"/g' /etc/vnstat.conf
-chown vnstat:vnstat /var/lib/vnstat -R
-systemctl enable vnstat
-/etc/init.d/vnstat restart
-rm -f /root/vnstat-2.6.tar.gz
-rm -rf /root/vnstat-2.6
-
 # Install Stunnel5
 #wget -q -O /usr/bin/ssh_ssl "$github/stunnel5/ssh_ssl.sh"
 #chmod +x /usr/bin/ssh_ssl
@@ -476,8 +428,11 @@ mkdir -p /etc/stunnel5
 chmod 644 /etc/stunnel5
 
 # Download Config Stunnel5
+#cat $xray/xray.crt $xray/xray.key >> /etc/stunnel5/stunnel5.pem
 cat > /etc/stunnel5/stunnel5.conf <<-END
-cert = /etc/stunnel5/stunnel5.pem
+#cert = /etc/stunnel5/stunnel5.pem
+cert = $xray/xray.crt
+key = $xray/xray.key
 client = no
 socket = a:SO_REUSEADDR=1
 socket = l:TCP_NODELAY=1
@@ -496,20 +451,6 @@ accept = 442
 connect = 127.0.0.1:1194
 
 END
-
-# make a certificate
-#openssl genrsa -out key.pem 2048  >/dev/null 2>&1
-#openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
-#-subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"  >/dev/null 2>&1
-cd $xray
-cat xray.key xray.crt >> /etc/stunnel/stunnel.pem
-cd /root/
-# konfigurasi stunnel
-#echo "ENABLED=1" >> /etc/default/stunnel4
-#sed -i 's/ENABLED=0/ENABLED=1/g' /etc/default/stunnel4
-#systemctl daemon-reload >/dev/null 2>&1
-#/etc/init.d/stunnel4 start >/dev/null 2>&1
-#/etc/init.d/stunnel4 restart >/dev/null 2>&1
 
 # Service Stunnel5 systemctl restart stunnel5
 rm -fr /etc/systemd/system/stunnel5.service
@@ -530,10 +471,8 @@ END
 
 # Service Stunnel5 /etc/init.d/stunnel5
 rm -fr /etc/init.d/stunnel5
-wget -q -O /etc/init.d/stunnel5 "$github/stunnel5/stunnel5.init"
-
-# Ubah Izin Akses
-chmod 600 /etc/stunnel5/stunnel5.pem
+wget -q -O /etc/init.d/stunnel5 "https://raw.githubusercontent.com/arfprsty810/lite/main/stunnel5/stunnel5.init"
+#chmod 600 /etc/stunnel5/stunnel5.pem
 chmod +x /etc/init.d/stunnel5
 cp -r /usr/local/bin/stunnel /usr/local/bin/stunnel5
 #mv /usr/local/bin/stunnel /usr/local/bin/stunnel5
@@ -645,6 +584,29 @@ echo -e "[ ${GREEN}ok${NC} ] Restarting squid "
 screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 500 >/dev/null 2>&1
 screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 500 >/dev/null 2>&1
 screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300 --max-clients 500 >/dev/null 2>&1
+
+chown -R www-data:www-data /home/vps/public_html
+/etc/init.d/nginx restart
+/etc/init.d/openvpn restart
+/etc/init.d/cron restart
+/etc/init.d/ssh restart
+/etc/init.d/dropbear restart
+/etc/init.d/fail2ban restart
+/etc/init.d/sslh restart
+/etc/init.d/stunnel5 restart
+/etc/init.d/vnstat restart
+/etc/init.d/fail2ban restart
+/etc/init.d/squid restart
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 500
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 500
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300 --max-clients 500
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7400 --max-clients 500
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7500 --max-clients 500
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7600 --max-clients 500
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7700 --max-clients 500
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7800 --max-clients 500
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7900 --max-clients 500
+
 history -c
 echo "unset HISTFILE" >> /etc/profile
 

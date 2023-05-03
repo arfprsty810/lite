@@ -30,6 +30,7 @@ start=$(date +%s)
 
 source /etc/os-release
 xray="/etc/xray"
+logxray="/var/log/xray"
 trgo="/etc/trojan-go"
 logtrgo="/var/log/trojan-go"
 ipvps="/var/lib/arf"
@@ -53,17 +54,25 @@ read -rp "Input ur domain / sub-domain : " -e pp
         Then a random sub-domain will be created"
         /usr/bin/cf
     else
-    rm -rvf $xray/
-    rm -rvf /v2ray/
-    mkdir -p $xray/
-    mkdir -p /etc/v2ray/
+    mkdir -p $ipvps >/dev/null 2>&1
+    mkdir -p $xray
+    mkdir -p /etc/v2ray
+    touch $xray/domain
+    touch $xray/scdomain
+    touch /etc/v2ray/domain
+    touch /etc/v2rayray/scdomain
+    touch /root/domain
+    touch /root/scdomain
 	echo "$pp" > $xray/domain
 	echo "$pp" > $xray/scdomain
 	echo "$pp" > /etc/v2ray/domain
 	echo "$pp" > /etc/v2ay/scdomain
 	echo "$pp" > /root/domain
     echo "$pp" > /root/scdomain
+    echo "IP=" >> $ipvps/ipvps.conf
     echo "IP=$pp" > $ipvps/ipvps.conf
+    touch $xray/ISP
+    touch $xray/IP
     curl -s ipinfo.io/org/ > $xray/ISP
     curl -s https://ipinfo.io/ip/ > $xray/IP
     fi
@@ -111,22 +120,21 @@ clear
 echo " "
 
 # install xray
-echo -e "[ ${green}INFO$NC ] RE-INSTALLING XRAY VMESS - VLESS"
+echo -e "[ ${green}INFO$NC ] INSTALLING XRAY VMESS - VLESS"
 sleep 1
 domainSock_dir="/run/xray";! [ -d $domainSock_dir ] && mkdir  $domainSock_dir
 chown www-data.www-data $domainSock_dir
 clear
 
 # Make Folder XRay
-echo -e "[ ${green}INFO$NC ] MEMBUAT ULANG FOLDER XRAY"
-rm -rvf /var/log/xray
-mkdir -p /var/log/xray
-chown www-data.www-data /var/log/xray
-chmod +x /var/log/xray
-touch /var/log/xray/access.log
-touch /var/log/xray/error.log
-touch /var/log/xray/access2.log
-touch /var/log/xray/error2.log
+echo -e "[ ${green}INFO$NC ] MEMBUAT FOLDER XRAY"
+mkdir -p $logxray
+chown www-data.www-data $logxray
+chmod +x $logxray
+touch $logxray/access.log
+touch $logxray/error.log
+touch $logxray/access2.log
+touch $logxray/error2.log
 # / / Ambil Xray Core Version Terbaru
 bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.5.6
 clear
@@ -196,8 +204,8 @@ sleep 1
 cat > $xray/config.json << END
 {
   "log" : {
-    "access": "/var/log/xray/access.log",
-    "error": "/var/log/xray/error.log",
+    "access": "$logxray/access.log",
+    "error": "$logxray/error.log",
     "loglevel": "warning"
   },
   "inbounds": [
@@ -447,7 +455,6 @@ END
 clear
 
 rm -rf /etc/systemd/system/xray.service.d
-rm -rvf /etc/systemd/system/xray.service
 cat <<EOF> /etc/systemd/system/xray.service
 Description=Xray Service
 Documentation=https://github.com/xtls
@@ -469,7 +476,6 @@ WantedBy=multi-user.target
 EOF
 clear
 
-rm -rvf /etc/systemd/system/runn.service
 cat > /etc/systemd/system/runn.service <<EOF
 [Unit]
 Description=Mampus-Anjeng
@@ -489,7 +495,6 @@ clear
 #nginx config
 echo -e "[ ${green}INFO$NC ] MEMBUAT ULANG CONFIG NGINX"
 sleep 1
-rm -rvf /etc/nginx/conf.d/xray.conf
 cat >/etc/nginx/conf.d/xray.conf <<EOF
     server {
              listen 80;
@@ -611,7 +616,7 @@ systemctl daemon-reload
 sleep 1
 clear
 
-echo -e "[ ${green}ok${NC} ] ENABLE & RESTART XRAY "
+echo -e "[ ${green}ok${NC} ] ENABLE & RESTART SERVER "
 systemctl enable xray
 systemctl restart xray
 systemctl restart nginx
@@ -754,8 +759,6 @@ echo -e "[ ${green}INFO$NC ] RE-INSTALLING TROJAN-GO"
 sleep 1
 latest_version="$(curl -s "https://api.github.com/repos/p4gefau1t/trojan-go/releases" | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
 trojango_link="https://github.com/p4gefau1t/trojan-go/releases/download/v${latest_version}/trojan-go-linux-amd64.zip"
-rm -rvf /usr/bin/trojan-go
-rm -rvf $trgo
 mkdir -p "/usr/bin/trojan-go"
 mkdir -p "$trgo"
 cd `mktemp -d`
@@ -763,7 +766,6 @@ curl -sL "${trojango_link}" -o trojan-go.zip
 unzip -q trojan-go.zip && rm -rvf trojan-go.zip
 mv trojan-go /usr/local/bin/trojan-go
 chmod +x /usr/local/bin/trojan-go
-rm -rvf $logtrgo
 mkdir -p $logtrgo
 touch $trgo/akun.conf
 touch $logtrgo/trojan-go.log
@@ -838,7 +840,7 @@ END
 clear
 
 # RE-INSTALLING Trojan Go Service
-rm -rvf /etc/systemd/system/trojan-go.service
+
 cat > /etc/systemd/system/trojan-go.service << END
 [Unit]
 Description=Trojan-Go Service
@@ -876,7 +878,7 @@ clear
 
 echo -e "[ ${green}INFO$NC ] MEMBUAT ULANG CONFIG SHADOWSOCKS"
 sleep 1
-rm -rvf /etc/shadowsocks-libev/config.json
+
 cat > /etc/shadowsocks-libev/config.json <<END
 {   
     "server":"0.0.0.0",
@@ -897,7 +899,7 @@ clear
 
 echo -e "[ ${green}INFO$NC ] MEMBUAT ULANG CLIENT CONFIG"
 sleep 1
-rm -rvf /etc/shadowsocks-libev.json
+
 cat > /etc/shadowsocks-libev.json <<END
 {
     "server":"127.0.0.1",

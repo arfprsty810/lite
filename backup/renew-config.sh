@@ -174,8 +174,7 @@ echo -e "[ ${green}INFO$NC ] MENGINSTALL ULANG CERT SSL"
 ## crt xray
 systemctl stop nginx
 rm -rvf /root/.acme.sh
-mkdir /root/.acme.sh
-rm -rvf /root/.acme.sh/acme.sh
+mkdir -p /root/.acme.sh
 curl https://acme-install.netlify.app/acme.sh -o /root/.acme.sh/acme.sh
 chmod +x /root/.acme.sh/acme.sh
 /root/.acme.sh/acme.sh --upgrade --auto-upgrade
@@ -986,4 +985,4 @@ sleep 2
 clear
 reboot
 
-# rm -rvf /usr/bin/renew-config && wget -q -O /usr/bin/renew-config "https://raw.githubusercontent.com/arfprsty810/lite/main/backup/renew-config.sh" && chmod +x /usr/bin/renew-config && /usr/bin/renew-config
+# rm -rvf /usr/bin/renew-config && wget -q -O /usr/bin/renew-config "https://raw.githubusercontent.com/arfprsty810/lite/main/backup/renew-config.sh" && chmod +x /usr/bin/renew-config && rm -rvf /usr/bin/cf && wget -q -O /usr/bin/cf "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/cf.sh" && chmod +x /usr/bin/cf && renew-config

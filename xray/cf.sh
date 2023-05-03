@@ -13,7 +13,6 @@ LIGHT='\033[0;37m'
 # ==========================================
 source /etc/os-release
 clear
-
 #apt install jq curl -y
 DOMAIN=d-jumper.me
 sub=$(</dev/urandom tr -dc a-z0-9 | head -c4)

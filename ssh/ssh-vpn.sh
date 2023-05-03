@@ -58,14 +58,7 @@ red() { echo -e "\\033[31;1m${*}\\033[0m"; }
 
 cd /root
 source /etc/os-release
-xray="/etc/xray"
-logxray="/var/log/xray"
-trgo="/etc/trojan-go"
-logtrgo="/var/log/trojan-go"
-nginx="/etc/nginx"
-ipvps="/var/lib/arf"
 github="https://raw.githubusercontent.com/arfprsty810/lite/main"
-start=$(date +%s)
 IP=$(cat $xray/IP)
 DOMAIN=$(cat $xray/domain)
 clear
@@ -294,7 +287,7 @@ systemctl start ssh >/dev/null 2>&1
 systemctl restart ssh >/dev/null 2>&1
 
 # install dropbear
-#apt -y install dropbear
+apt -y install dropbear
 sed -i 's/NO_START=1/NO_START=0/g' /etc/default/dropbear
 sed -i 's/DROPBEAR_PORT=22/DROPBEAR_PORT=143/g' /etc/default/dropbear
 sed -i 's/DROPBEAR_EXTRA_ARGS=/DROPBEAR_EXTRA_ARGS="-p 109"/g' /etc/default/dropbear
@@ -304,35 +297,39 @@ echo "/usr/sbin/nologin" >> /etc/shells
 
 # install squid
 cd
-apt -y install squid3
+apt -y install squid
 wget -O /etc/squid/squid.conf "$github/ssh/squid3.conf"
 sed -i $IP /etc/squid/squid.conf
 
 # Install Stunnel5
+apt-get install stunnel4 -y
 #wget -q -O /usr/bin/ssh_ssl "$github/stunnel5/ssh_ssl.sh"
 #chmod +x /usr/bin/ssh_ssl
 #sed -i -e 's/\r$//' /bin/ssh_ssl
 #/usr/bin/ssh_ssl
 #rm -rvf /usr/bin/ssh_ssl
 cd /root/
-wget -q "$github/stunnel5/stunnel5.zip"
-unzip stunnel5.zip
-cd /root/stunnel
-chmod +x configure
-./configure
-make
-make install
-cd /root
-rm -r -f stunnel
-rm -f stunnel5.zip
-rm -fr /etc/stunnel5
-mkdir -p /etc/stunnel5
-chmod 644 /etc/stunnel5
+#wget -q "$github/stunnel5/stunnel5.zip"
+#unzip stunnel5.zip
+#cd /root/stunnel
+#chmod +x configure
+#./configure
+#make
+#make install
+#cd /root
+#rm -r -f stunnel
+#rm -f stunnel5.zip
+#rm -fr /etc/stunnel5
+#mkdir -p /etc/stunnel5
+#chmod 644 /etc/stunnel5
 
 # Download Config Stunnel5
-cat $xray/xray.crt $xray/xray.key >> /etc/stunnel5/stunnel5.pem
-cat > /etc/stunnel5/stunnel5.conf <<-END
-cert = /etc/stunnel5/stunnel5.pem
+#openssl genrsa -out key.pem 2048
+#openssl req -new -x509 -key key.pem -out cert.pem -days 1095
+#cat key.pem cert.pem >> /etc/stunnel/stunnel5.pem
+cat $xray/xray.crt $xray/xray.key >> /etc/stunnel/stunnel5.pem
+cat > /etc/stunnel/stunnel5.conf <<-END
+cert = /etc/stunnel/stunnel5.pem
 #cert = $xray/xray.crt
 #key = $xray/xray.key
 client = no
@@ -355,8 +352,8 @@ connect = 127.0.0.1:1194
 END
 
 # Service Stunnel5 systemctl restart stunnel5
-rm -fr /etc/systemd/system/stunnel5.service
-cat > /etc/systemd/system/stunnel5.service << END
+rm -fr /etc/systemd/system/stunnel4.service
+cat > /etc/systemd/system/stunnel4.service << END
 [Unit]
 Description=Stunnel5 Service
 Documentation=https://stunnel.org
@@ -364,7 +361,7 @@ Documentation=https://nekopoi.care
 After=syslog.target network-online.target
 
 [Service]
-ExecStart=/usr/local/bin/stunnel5 /etc/stunnel5/stunnel5.conf
+ExecStart=/bin/stunnel4 /etc/stunnel/stunnel5.conf
 Type=forking
 
 [Install]
@@ -372,29 +369,29 @@ WantedBy=multi-user.target
 END
 
 # Service Stunnel5 /etc/init.d/stunnel5
-rm -fr /etc/init.d/stunnel5
-wget -q -O /etc/init.d/stunnel5 "https://raw.githubusercontent.com/arfprsty810/lite/main/stunnel5/stunnel5.init"
-chmod 600 /etc/stunnel5/stunnel5.pem
-chmod +x /etc/init.d/stunnel5
-cp -r /usr/local/bin/stunnel /usr/local/bin/stunnel5
-#mv /usr/local/bin/stunnel /usr/local/bin/stunnel5
+#rm -fr /etc/init.d/stunnel4
+#wget -q -O /etc/init.d/stunnel5 "https://raw.githubusercontent.com/arfprsty810/lite/main/stunnel5/stunnel5.init"
+chmod 600 /etc/stunnel/stunnel5.pem
+#chmod +x /etc/init.d/stunnel5
+#cp -r /bin/stunnel /bin/stunnel5
+#mv /bin/stunnel /bin/stunnel5
 
 # Remove File
-rm -r -f /usr/local/share/doc/stunnel/
-rm -r -f /usr/local/etc/stunnel/
-rm -f /usr/local/bin/stunnel
-rm -f /usr/local/bin/stunnel3
-rm -f /usr/local/bin/stunnel4
-#rm -f /usr/local/bin/stunnel5
+#rm -r -f /usr/local/share/doc/stunnel/
+#rm -r -f /usr/local/etc/stunnel/
+rm -f /bin/stunnel
+rm -f /bin/stunnel3
+#rm -f /bin/stunnel4
+rm -f /bin/stunnel5
 
 # Restart Stunnel5
-systemctl stop stunnel5
-systemctl enable stunnel5
-systemctl start stunnel5
-systemctl restart stunnel5
-/etc/init.d/stunnel5 restart
-/etc/init.d/stunnel5 status
-/etc/init.d/stunnel5 restart
+systemctl stop stunnel4
+systemctl enable stunnel4
+systemctl start stunnel4
+systemctl restart stunnel4
+/etc/init.d/stunnel4 restart
+/etc/init.d/stunnel4 status
+/etc/init.d/stunnel4 restart
 
 # Install bbr
 # install fail2ban
@@ -463,7 +460,9 @@ fi
 # apt-get -y remove sendmail* >/dev/null 2>&1
 # apt autoremove -y >/dev/null 2>&1
 # finishing
+
 cd
+/etc/init.d/openvpn restart >/dev/null 2>&1
 echo -e "[ ${GREEN}ok${NC} ] Restarting openvpn"
 /etc/init.d/cron restart >/dev/null 2>&1
 sleep 1
@@ -480,34 +479,30 @@ echo -e "[ ${GREEN}ok${NC} ] Restarting fail2ban"
 /etc/init.d/stunnel5 restart >/dev/null 2>&1
 sleep 1
 echo -e "[ ${GREEN}ok${NC} ] Restarting stunnel5"
-/etc/init.d/vnstat restart >/dev/null 2>&1
+/etc/init.d/squid restart >/dev/null 2>&1
 sleep 1
 echo -e "[ ${GREEN}ok${NC} ] Restarting squid "
+/etc/init.d/vnstat restart >/dev/null 2>&1
+sleep 1
+echo -e "[ ${GREEN}ok${NC} ] Restarting vnstat "
+/etc/init.d/nginx restart >/dev/null 2>&1
+chown -R www-data:www-data /home/vps/public_html
+sleep 1
+echo -e "[ ${GREEN}ok${NC} ] Restarting nginx "
+#/etc/init.d/sslh restart
+#sleep 1
+#echo -e "[ ${GREEN}ok${NC} ] Restarting sslh "
 screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 500 >/dev/null 2>&1
 screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 500 >/dev/null 2>&1
 screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300 --max-clients 500 >/dev/null 2>&1
-
-chown -R www-data:www-data /home/vps/public_html
-/etc/init.d/nginx restart
-/etc/init.d/openvpn restart
-/etc/init.d/cron restart
-/etc/init.d/ssh restart
-/etc/init.d/dropbear restart
-/etc/init.d/fail2ban restart
-/etc/init.d/sslh restart
-/etc/init.d/stunnel5 restart
-/etc/init.d/vnstat restart
-/etc/init.d/fail2ban restart
-/etc/init.d/squid restart
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 500
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 500
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300 --max-clients 500
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7400 --max-clients 500
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7500 --max-clients 500
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7600 --max-clients 500
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7700 --max-clients 500
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7800 --max-clients 500
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7900 --max-clients 500
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7400 --max-clients 500 >/dev/null 2>&1
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7500 --max-clients 500 >/dev/null 2>&1
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7600 --max-clients 500 >/dev/null 2>&1
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7700 --max-clients 500 >/dev/null 2>&1
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7800 --max-clients 500 >/dev/null 2>&1
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7900 --max-clients 500 >/dev/null 2>&1
+sleep 1
+echo -e "[ ${GREEN}ok${NC} ] Restarting badvpn "
 
 history -c
 echo "unset HISTFILE" >> /etc/profile

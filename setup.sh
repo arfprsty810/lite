@@ -17,10 +17,15 @@ cd /root
 ipvps="/var/lib/arf"
 github="https://raw.githubusercontent.com/arfprsty810/lite/main"
 mkdir -p /etc/xray
+mkdir -p /etc/v2ray
 mkdir -p $ipvps >/dev/null 2>&1
 echo "IP=" >> $ipvps/ipvps.conf
 touch /etc/xray/domain
 touch /etc/xray/scdomain
+touch /etc/v2ray/domain
+touch /etc/v2rayray/scdomain
+touch /root/domain
+touch /root/scdomain
 
 secs_to_human() {
     echo "Installation time : $(( ${1} / 3600 )) hours $(( (${1} / 60) % 60 )) minute's $(( ${1} % 60 )) seconds"
@@ -67,6 +72,8 @@ sed -i -e 's/\r$//' /usr/bin/cf
     else
 	echo "$pp" > /etc/xray/domain
 	echo "$pp" > /etc/xray/scdomain
+	echo "$pp" > /etc/v2ray/domain
+	echo "$pp" > /etc/v2ay/scdomain
 	echo "$pp" > /root/domain
     echo "$pp" > /root/scdomain
     echo "IP=$pp" > $ipvps/ipvps.conf

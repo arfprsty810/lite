@@ -51,15 +51,9 @@ rm -fr /usr/local/bin/stunnel5
 rm -fr /etc/nginx
 rm -fr /var/lib/arf
 rm -fr /usr/bin/xray
-rm -fr /etc/xray
-rm -fr /usr/local/etc/xray
+rm -fr $xray
+rm -fr /usr/local/xray
 rm -fr /var/log/xray
-rm -fr /etc/trojan-go
-rm -fr /usr/bin/trojan-go
-rm -fr /usr/local/bin/trojan-go
-rm -fr /var/log/trojan-go
-rm -fr /etc/shadowsocks-libev
-rm -fr /etc/shadowsocks-libev.*
 clear
 
 date

@@ -22,10 +22,13 @@ CF_KEY=3a3ac5ccc9e764de9129fbbb177c161b9dfbd
 set -euo pipefail
 
 xray="/etc/xray"
+nginx="/etc/nginx"
 ipvps="/var/lib/arf"
 mkdir -p $xray
 mkdir -p /etc/v2ray
-mkdir -p /etc/nginx
+mkdir -p $nginx
+mkdir -p $ipvps >/dev/null 2>&1
+echo "IP=" >> $ipvps/ipvps.conf
 touch $xray/ISP
 touch $xray/IP
 curl -s ipinfo.io/org/ > $xray/ISP
@@ -88,8 +91,6 @@ clear
 echo "Your Sub-Domain : $SUB_DOMAIN"
 sleep 5
 
-mkdir -p $ipvps >/dev/null 2>&1
-echo "IP=" >> $ipvps/ipvps.conf
 touch $xray/domain
 touch $xray/scdomain
 touch /etc/v2ray/domain

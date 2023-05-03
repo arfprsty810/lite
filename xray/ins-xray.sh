@@ -26,8 +26,11 @@ sleep 1
 
 source /etc/os-release
 xray="/etc/xray"
+logxray="/var/log/xray"
 trgo="/etc/trojan-go"
 logtrgo="/var/log/trojan-go"
+nginx="/etc/nginx"
+ipvps="/var/lib/arf"
 github="https://raw.githubusercontent.com/arfprsty810/lite/main"
 OS=$ID
 ver=$VERSION_ID
@@ -77,6 +80,7 @@ apt install zip -y
 clear
 apt install net-tools -y
 clear
+
 apt install curl socat xz-utils wget apt-transport-https gnupg gnupg2 gnupg1 dnsutils -y
 clear
 apt-get --reinstall --fix-missing install -y sudo dpkg psmisc jq ruby wondershaper python2 tmux nmap bzip2 gzip coreutils iftop htop unzip vim nano gcc g++ make perl m4 dos2unix libreadline-dev zlib1g-dev git 
@@ -160,13 +164,13 @@ clear
 
 # Make Folder XRay
 echo -e "[ ${green}INFO$NC ] MEMBUAT FOLDER XRAY"
-mkdir -p /var/log/xray
-chown www-data.www-data /var/log/xray
-chmod +x /var/log/xray
-touch /var/log/xray/access.log
-touch /var/log/xray/error.log
-touch /var/log/xray/access2.log
-touch /var/log/xray/error2.log
+mkdir -p $logxray
+chown www-data.www-data $logxray
+chmod +x $logxray
+touch $logxray/access.log
+touch $logxray/error.log
+touch $logxray/access2.log
+touch $logxray/error2.log
 # / / Ambil Xray Core Version Terbaru
 bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.5.6
 clear
@@ -175,9 +179,9 @@ echo -e "[ ${green}INFO$NC ] INSTALLING NGINX SERVER"
 # install webserver
 cd
 apt -y install nginx
-rm /etc/nginx/sites-enabled/default
-rm /etc/nginx/sites-available/default
-wget -O /etc/nginx/nginx.conf "$github/xray/nginx.conf"
+rm $nginx/sites-enabled/default
+rm $nginx/sites-available/default
+wget -O $nginx/nginx.conf "$github/xray/nginx.conf"
 mkdir -p /home/vps/public_html
 echo "<?php phpinfo() ?>" > /home/vps/public_html/info.php
 chown -R www-data:www-data /home/vps/public_html
@@ -231,8 +235,8 @@ sleep 1
 cat > $xray/config.json << END
 {
   "log" : {
-    "access": "/var/log/xray/access.log",
-    "error": "/var/log/xray/error.log",
+    "access": "$logxray/access.log",
+    "error": "$logxray/error.log",
     "loglevel": "warning"
   },
   "inbounds": [
@@ -522,7 +526,7 @@ clear
 #nginx config
 echo -e "[ ${green}INFO$NC ] MEMBUAT CONFIG NGINX"
 sleep 1
-cat >/etc/nginx/conf.d/xray.conf <<EOF
+cat >$nginx/conf.d/xray.conf <<EOF
     server {
              listen 80;
              listen [::]:80;
@@ -538,104 +542,104 @@ cat >/etc/nginx/conf.d/xray.conf <<EOF
 EOF
 clear
 
-sed -i '$ ilocation /' /etc/nginx/conf.d/xray.conf
-sed -i '$ i{' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_pass http://127.0.0.1:700'';' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_http_version 1.1;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
-sed -i '$ i}' /etc/nginx/conf.d/xray.conf
+sed -i '$ ilocation /' $nginx/conf.d/xray.conf
+sed -i '$ i{' $nginx/conf.d/xray.conf
+sed -i '$ iproxy_redirect off;' $nginx/conf.d/xray.conf
+sed -i '$ iproxy_pass http://127.0.0.1:700'';' $nginx/conf.d/xray.conf
+sed -i '$ iproxy_http_version 1.1;' $nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' $nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' $nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' $nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header Connection "upgrade";' $nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header Host \$http_host;' $nginx/conf.d/xray.conf
+sed -i '$ i}' $nginx/conf.d/xray.conf
 
-sed -i '$ ilocation = /vless' /etc/nginx/conf.d/xray.conf
-sed -i '$ i{' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_pass http://127.0.0.1:'"$vless"';' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_http_version 1.1;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
-sed -i '$ i}' /etc/nginx/conf.d/xray.conf
+sed -i '$ ilocation = /vless' $nginx/conf.d/xray.conf
+sed -i '$ i{' $nginx/conf.d/xray.conf
+sed -i '$ iproxy_redirect off;' $nginx/conf.d/xray.conf
+sed -i '$ iproxy_pass http://127.0.0.1:'"$vless"';' $nginx/conf.d/xray.conf
+sed -i '$ iproxy_http_version 1.1;' $nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' $nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' $nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' $nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header Connection "upgrade";' $nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header Host \$http_host;' $nginx/conf.d/xray.conf
+sed -i '$ i}' $nginx/conf.d/xray.conf
 
-sed -i '$ ilocation = /vmess' /etc/nginx/conf.d/xray.conf
-sed -i '$ i{' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_pass http://127.0.0.1:'"$vmess"';' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_http_version 1.1;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
-sed -i '$ i}' /etc/nginx/conf.d/xray.conf
+sed -i '$ ilocation = /vmess' $nginx/conf.d/xray.conf
+sed -i '$ i{' $nginx/conf.d/xray.conf
+sed -i '$ iproxy_redirect off;' $nginx/conf.d/xray.conf
+sed -i '$ iproxy_pass http://127.0.0.1:'"$vmess"';' $nginx/conf.d/xray.conf
+sed -i '$ iproxy_http_version 1.1;' $nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' $nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' $nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' $nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header Connection "upgrade";' $nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header Host \$http_host;' $nginx/conf.d/xray.conf
+sed -i '$ i}' $nginx/conf.d/xray.conf
 
-sed -i '$ ilocation = /worryfree' /etc/nginx/conf.d/xray.conf
-sed -i '$ i{' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_pass http://127.0.0.1:'"$worryfree"';' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_http_version 1.1;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
-sed -i '$ i}' /etc/nginx/conf.d/xray.conf
+sed -i '$ ilocation = /worryfree' $nginx/conf.d/xray.conf
+sed -i '$ i{' $nginx/conf.d/xray.conf
+sed -i '$ iproxy_redirect off;' $nginx/conf.d/xray.conf
+sed -i '$ iproxy_pass http://127.0.0.1:'"$worryfree"';' $nginx/conf.d/xray.conf
+sed -i '$ iproxy_http_version 1.1;' $nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' $nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' $nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' $nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header Connection "upgrade";' $nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header Host \$http_host;' $nginx/conf.d/xray.conf
+sed -i '$ i}' $nginx/conf.d/xray.conf
 
-sed -i '$ ilocation = /kuota-habis' /etc/nginx/conf.d/xray.conf
-sed -i '$ i{' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_pass http://127.0.0.1:'"$kuotahabis"';' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_http_version 1.1;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
-sed -i '$ i}' /etc/nginx/conf.d/xray.conf
+sed -i '$ ilocation = /kuota-habis' $nginx/conf.d/xray.conf
+sed -i '$ i{' $nginx/conf.d/xray.conf
+sed -i '$ iproxy_redirect off;' $nginx/conf.d/xray.conf
+sed -i '$ iproxy_pass http://127.0.0.1:'"$kuotahabis"';' $nginx/conf.d/xray.conf
+sed -i '$ iproxy_http_version 1.1;' $nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' $nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' $nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' $nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header Connection "upgrade";' $nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header Host \$http_host;' $nginx/conf.d/xray.conf
+sed -i '$ i}' $nginx/conf.d/xray.conf
 
-sed -i '$ ilocation = /trojan-ws' /etc/nginx/conf.d/xray.conf
-sed -i '$ i{' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_pass http://127.0.0.1:'"$trojanws"';' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_http_version 1.1;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
-sed -i '$ i}' /etc/nginx/conf.d/xray.conf
+sed -i '$ ilocation = /trojan-ws' $nginx/conf.d/xray.conf
+sed -i '$ i{' $nginx/conf.d/xray.conf
+sed -i '$ iproxy_redirect off;' $nginx/conf.d/xray.conf
+sed -i '$ iproxy_pass http://127.0.0.1:'"$trojanws"';' $nginx/conf.d/xray.conf
+sed -i '$ iproxy_http_version 1.1;' $nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' $nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' $nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' $nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header Connection "upgrade";' $nginx/conf.d/xray.conf
+sed -i '$ iproxy_set_header Host \$http_host;' $nginx/conf.d/xray.conf
+sed -i '$ i}' $nginx/conf.d/xray.conf
 
-sed -i '$ ilocation ^~ /vless-grpc' /etc/nginx/conf.d/xray.conf
-sed -i '$ i{' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
-sed -i '$ igrpc_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
-sed -i '$ igrpc_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
-sed -i '$ igrpc_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
-sed -i '$ igrpc_pass grpc://127.0.0.1:'"$vlessgrpc"';' /etc/nginx/conf.d/xray.conf
-sed -i '$ i}' /etc/nginx/conf.d/xray.conf
+sed -i '$ ilocation ^~ /vless-grpc' $nginx/conf.d/xray.conf
+sed -i '$ i{' $nginx/conf.d/xray.conf
+sed -i '$ iproxy_redirect off;' $nginx/conf.d/xray.conf
+sed -i '$ igrpc_set_header X-Real-IP \$remote_addr;' $nginx/conf.d/xray.conf
+sed -i '$ igrpc_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' $nginx/conf.d/xray.conf
+sed -i '$ igrpc_set_header Host \$http_host;' $nginx/conf.d/xray.conf
+sed -i '$ igrpc_pass grpc://127.0.0.1:'"$vlessgrpc"';' $nginx/conf.d/xray.conf
+sed -i '$ i}' $nginx/conf.d/xray.conf
 
-sed -i '$ ilocation ^~ /vmess-grpc' /etc/nginx/conf.d/xray.conf
-sed -i '$ i{' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
-sed -i '$ igrpc_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
-sed -i '$ igrpc_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
-sed -i '$ igrpc_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
-sed -i '$ igrpc_pass grpc://127.0.0.1:'"$vmessgrpc"';' /etc/nginx/conf.d/xray.conf
-sed -i '$ i}' /etc/nginx/conf.d/xray.conf
+sed -i '$ ilocation ^~ /vmess-grpc' $nginx/conf.d/xray.conf
+sed -i '$ i{' $nginx/conf.d/xray.conf
+sed -i '$ iproxy_redirect off;' $nginx/conf.d/xray.conf
+sed -i '$ igrpc_set_header X-Real-IP \$remote_addr;' $nginx/conf.d/xray.conf
+sed -i '$ igrpc_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' $nginx/conf.d/xray.conf
+sed -i '$ igrpc_set_header Host \$http_host;' $nginx/conf.d/xray.conf
+sed -i '$ igrpc_pass grpc://127.0.0.1:'"$vmessgrpc"';' $nginx/conf.d/xray.conf
+sed -i '$ i}' $nginx/conf.d/xray.conf
 
-sed -i '$ ilocation ^~ /trojan-grpc' /etc/nginx/conf.d/xray.conf
-sed -i '$ i{' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
-sed -i '$ igrpc_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
-sed -i '$ igrpc_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
-sed -i '$ igrpc_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
-sed -i '$ igrpc_pass grpc://127.0.0.1:'"$trojangrpc"';' /etc/nginx/conf.d/xray.conf
-sed -i '$ i}' /etc/nginx/conf.d/xray.conf
+sed -i '$ ilocation ^~ /trojan-grpc' $nginx/conf.d/xray.conf
+sed -i '$ i{' $nginx/conf.d/xray.conf
+sed -i '$ iproxy_redirect off;' $nginx/conf.d/xray.conf
+sed -i '$ igrpc_set_header X-Real-IP \$remote_addr;' $nginx/conf.d/xray.conf
+sed -i '$ igrpc_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' $nginx/conf.d/xray.conf
+sed -i '$ igrpc_set_header Host \$http_host;' $nginx/conf.d/xray.conf
+sed -i '$ igrpc_pass grpc://127.0.0.1:'"$trojangrpc"';' $nginx/conf.d/xray.conf
+sed -i '$ i}' $nginx/conf.d/xray.conf
 clear
 
 echo -e "$yell[SERVICE]$NC RESTART ALL SERVICE"
@@ -747,14 +751,13 @@ sleep 1
 latest_version="$(curl -s "https://api.github.com/repos/p4gefau1t/trojan-go/releases" | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
 trojango_link="https://github.com/p4gefau1t/trojan-go/releases/download/v${latest_version}/trojan-go-linux-amd64.zip"
 mkdir -p "/usr/bin/trojan-go"
-mkdir -p "/usr/local/bin/trojan-go"
 mkdir -p "$trgo"
 cd `mktemp -d`
 curl -sL "${trojango_link}" -o trojan-go.zip
 unzip -q trojan-go.zip && rm -rf trojan-go.zip
 mv trojan-go /usr/local/bin/trojan-go
 chmod +x /usr/local/bin/trojan-go
-mkdir -p $logtrgo
+mkdir $logtrgo/
 touch $trgo/akun.conf
 touch $logtrgo/trojan-go.log
 clear

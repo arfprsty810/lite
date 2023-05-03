@@ -20,13 +20,17 @@ SUB_DOMAIN=${sub}.d-jumper.me
 CF_ID=arief.prsty@gmail.com
 CF_KEY=3a3ac5ccc9e764de9129fbbb177c161b9dfbd
 set -euo pipefail
-rm -rvf /etc/xray/
-rm -rvf /v2ray/
-mkdir -p /etc/xray/
-mkdir -p /etc/v2ray/
-curl -s ipinfo.io/org/ > /etc/xray/ISP
-curl -s https://ipinfo.io/ip/ > /etc/xray/IP
-IP=$(cat /etc/xray/IP);
+xray="/etc/xray"
+ipvps="/var/lib/arf"
+mkdir -p $ipvps >/dev/null 2>&1
+echo "IP=" >> $ipvps/ipvps.conf
+mkdir -p $xray
+mkdir -p /etc/v2ray
+touch $xray/ISP
+touch $xray/IP
+curl -s ipinfo.io/org/ > $xray/ISP
+curl -s https://ipinfo.io/ip/ > $xray/IP
+IP=$(cat $xray/IP);
 echo "Updating DNS for ${SUB_DOMAIN}..."
 ZONE=$(curl -sLX GET "https://api.cloudflare.com/client/v4/zones?name=${DOMAIN}&status=active" \
      -H "X-Auth-Email: ${CF_ID}" \
@@ -82,20 +86,15 @@ RESULT=$(curl -sLX PUT "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_r
 clear
 echo "Your Sub-Domain : $SUB_DOMAIN"
 sleep 5
-echo $SUB_DOMAIN > /etc/xray/domain
 
-ipvps="/var/lib/arf"
-rm -rvf $ipvps
-mkdir -p $ipvps >/dev/null 2>&1
-echo "IP=" >> $ipvps/ipvps.conf
-touch /etc/xray/domain
-touch /etc/xray/scdomain
+touch $xray/domain
+touch $xray/scdomain
 touch /etc/v2ray/domain
-touch /etc/v2rayray/scdomain
+touch /etc/v2ray/scdomain
 touch /root/domain
 touch /root/scdomain
-echo "$SUB_DOMAIN" > /etc/xray/domain
-echo "$SUB_DOMAIN" > /etc/xray/scdomain
+echo "$SUB_DOMAIN" > $xray/domain
+echo "$SUB_DOMAIN" > $xray/scdomain
 echo "$SUB_DOMAIN" > /etc/v2ray/domain
 echo "$SUB_DOMAIN" > /etc/v2ray/scdomain
 echo "$SUB_DOMAIN" > /root/domain

@@ -1,7 +1,50 @@
 #!/bin/bash
 #########################
+BIBlack='\033[1;90m'      # Black
+BIRed='\033[1;91m'        # Red
+BIGREEN='\033[1;92m'      # GREEN
+BIYellow='\033[1;93m'     # Yellow
+BIBlue='\033[1;94m'       # Blue
+BIPurple='\033[1;95m'     # Purple
+BICyan='\033[1;96m'       # Cyan
+BIWhite='\033[1;97m'      # White
+UWhite='\033[4;37m'       # White
+On_IPurple='\033[0;105m'  #
+On_IRed='\033[0;101m'
+IBlack='\033[0;90m'       # Black
+IRed='\033[0;91m'         # Red
+IGREEN='\033[0;92m'       # GREEN
+IYellow='\033[0;93m'      # Yellow
+IBlue='\033[0;94m'        # Blue
+IPurple='\033[0;95m'      # Purple
+ICyan='\033[0;96m'        # Cyan
+IWhite='\033[0;97m'       # White
+NC='\e[0m'
 
+# // Export Color & Information
+export RED='\033[0;31m'
+export GREEN='\033[0;32m'
+export YELLOW='\033[0;33m'
+export BLUE='\033[0;34m'
+export PURPLE='\033[0;35m'
+export CYAN='\033[0;36m'
+export LIGHT='\033[0;37m'
+export NC='\033[0m'
+
+# // Export Banner Status Information
+export EROR="[${RED} EROR ${NC}]"
+export INFO="[${YELLOW} INFO ${NC}]"
+export OKEY="[${GREEN} OKEY ${NC}]"
+export PENDING="[${YELLOW} PENDING ${NC}]"
+export SEND="[${YELLOW} SEND ${NC}]"
+export RECEIVE="[${YELLOW} RECEIVE ${NC}]"
+
+# // Export Align
+export BOLD="\e[1m"
+export WARNING="${RED}\e[5m"
+export UNDERLINE="\e[4m"
 clear
+
 red='\e[1;31m'
 green='\e[0;32m'
 yell='\e[1;33m'
@@ -14,18 +57,44 @@ green() { echo -e "\\033[32;1m${*}\\033[0m"; }
 red() { echo -e "\\033[31;1m${*}\\033[0m"; }
 
 cd /root
+source /etc/os-release
 xray="/etc/xray"
 ipvps="/var/lib/arf"
 github="https://raw.githubusercontent.com/arfprsty810/lite/main"
 start=$(date +%s)
+clear
+
+# // Root Checking
+if [ "${EUID}" -ne 0 ]; then
+		echo -e "${EROR} Please Run This Script As Root User !"
+		exit 1
+fi
+
+# // Remove File & Directory
+rm -fr /usr/local/bin/xray
+rm -fr /usr/local/bin/stunnel
+rm -fr /usr/local/bin/stunnel5
+rm -fr /etc/nginx
+rm -fr /var/lib/arf
+rm -fr /usr/bin/xray
+rm -fr /etc/xray
+rm -fr /usr/local/etc/xray
+rm -fr /var/log/xray
+rm -fr /etc/trojan-go
+rm -fr /usr/bin/trojan-go
+rm -fr /usr/local/bin/trojan-go
+rm -fr /var/log/trojan-go
+rm -fr /etc/shadowsocks-libev
+rm -fr /etc/shadowsocks-libev.*
+clear
 
 secs_to_human() {
     echo "Installation time : $(( ${1} / 3600 )) hours $(( (${1} / 60) % 60 )) minute's $(( ${1} % 60 )) seconds"
 }
 
-ln -fs /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
-sysctl -w net.ipv6.conf.all.disable_ipv6=1 >/dev/null 2>&1
-sysctl -w net.ipv6.conf.default.disable_ipv6=1 >/dev/null 2>&1
+#ln -fs /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
+#sysctl -w net.ipv6.conf.all.disable_ipv6=1 >/dev/null 2>&1
+#sysctl -w net.ipv6.conf.default.disable_ipv6=1 >/dev/null 2>&1
 
 echo ""
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
@@ -53,6 +122,7 @@ read -rp "Input ur domain / sub-domain : " -e pp
     mkdir -p $ipvps >/dev/null 2>&1
     mkdir -p $xray
     mkdir -p /etc/v2ray
+    mkdir -p /etc/nginx
     touch $xray/domain
     touch $xray/scdomain
     touch /etc/v2ray/domain
@@ -101,78 +171,6 @@ END
 chmod 644 /root/.profile
 clear
 
-clear
-BIBlack='\033[1;90m'      # Black
-BIRed='\033[1;91m'        # Red
-BIGREEN='\033[1;92m'      # GREEN
-BIYellow='\033[1;93m'     # Yellow
-BIBlue='\033[1;94m'       # Blue
-BIPurple='\033[1;95m'     # Purple
-BICyan='\033[1;96m'       # Cyan
-BIWhite='\033[1;97m'      # White
-UWhite='\033[4;37m'       # White
-On_IPurple='\033[0;105m'  #
-On_IRed='\033[0;101m'
-IBlack='\033[0;90m'       # Black
-IRed='\033[0;91m'         # Red
-IGREEN='\033[0;92m'       # GREEN
-IYellow='\033[0;93m'      # Yellow
-IBlue='\033[0;94m'        # Blue
-IPurple='\033[0;95m'      # Purple
-ICyan='\033[0;96m'        # Cyan
-IWhite='\033[0;97m'       # White
-NC='\e[0m'
-
-# // Export Color & Information
-export RED='\033[0;31m'
-export GREEN='\033[0;32m'
-export YELLOW='\033[0;33m'
-export BLUE='\033[0;34m'
-export PURPLE='\033[0;35m'
-export CYAN='\033[0;36m'
-export LIGHT='\033[0;37m'
-export NC='\033[0m'
-
-# // Export Banner Status Information
-export EROR="[${RED} EROR ${NC}]"
-export INFO="[${YELLOW} INFO ${NC}]"
-export OKEY="[${GREEN} OKEY ${NC}]"
-export PENDING="[${YELLOW} PENDING ${NC}]"
-export SEND="[${YELLOW} SEND ${NC}]"
-export RECEIVE="[${YELLOW} RECEIVE ${NC}]"
-
-# // Export Align
-export BOLD="\e[1m"
-export WARNING="${RED}\e[5m"
-export UNDERLINE="\e[4m"
-
-# // Exporting URL Host
-export Server_URL="raw.githubusercontent.com/arfprsty810/lite/main"
-export Server1_URL="raw.githubusercontent.com/arfprsty810/lite/main"
-export Server_Port="443"
-export Server_IP="underfined"
-export Script_Mode="Stable"
-export Auther=".arfvpn"
-
-# // Root Checking
-if [ "${EUID}" -ne 0 ]; then
-		echo -e "${EROR} Please Run This Script As Root User !"
-		exit 1
-fi
-
-# // Exporting IP Address
-IP=$(cat $xray/IP);
-
-# // Exporting Network Interface
-export NETWORK_IFACE="$(ip route show to default | awk '{print $5}')"
-
-export DEBIAN_FRONTEND=noninteractive
-MYIP=$(curl -sS ifconfig.me);
-MYIP2="s/xxxxxxxxx/$MYIP/g";
-NET=$(ip -o $ANU -4 route show to default | awk '{print $5}');
-source /etc/os-release
-ver=$VERSION_ID
-
 #detail nama perusahaan
 country=ID
 state=Indonesia
@@ -180,52 +178,52 @@ locality=Indonesia
 organization=arfvpn
 organizationalunit=arfvpn
 commonname=arfvpn
-email=admin@geostore.net
-
-# simple password minimal
-wget -q -O /etc/pam.d/common-password "https://${Server_URL}/ssh/password"
-chmod +x /etc/pam.d/common-password
+email=arfprsty@my.id
+clear
 
 # go to root
 cd
+# simple password minimal
+wget -q -O /etc/pam.d/common-password "$github/ssh/password"
+chmod +x /etc/pam.d/common-password
 
-wget -q -O /usr/bin/autodel "https://${Server_URL}/ssh/autodel.sh"
+wget -q -O /usr/bin/autodel "$github/ssh/autodel.sh"
 chmod +x /usr/bin/autodel
 sed -i -e 's/\r$//' /bin/autodel
 
-wget -q -O /usr/bin/autokill "https://${Server_URL}/ssh/autokill.sh"
+wget -q -O /usr/bin/autokill "$github/ssh/autokill.sh"
 chmod +x /usr/bin/autokill
 sed -i -e 's/\r$//' /bin/autokill
 
-wget -q -O /usr/bin/cek "https://${Server_URL}/ssh/cek.sh"
+wget -q -O /usr/bin/cek "$github/ssh/cek.sh"
 chmod +x /usr/bin/cek
 sed -i -e 's/\r$//' /bin/cek
 
-wget -q -O /usr/bin/ceklim "https://${Server_URL}/ssh/ceklim.sh"
+wget -q -O /usr/bin/ceklim "$github/ssh/ceklim.sh"
 chmod +x /usr/bin/ceklim
 sed -i -e 's/\r$//' /bin/ceklim
 
-wget -q -O /usr/bin/del "https://${Server_URL}/ssh/del.sh"
+wget -q -O /usr/bin/del "$github/ssh/del.sh"
 chmod +x /usr/bin/del
 sed -i -e 's/\r$//' /bin/del
 
-wget -q -O /usr/bin/member "https://${Server_URL}/ssh/member.sh"
+wget -q -O /usr/bin/member "$github/ssh/member.sh"
 chmod +x /usr/bin/member
 sed -i -e 's/\r$//' /bin/member
 
-wget -q -O /usr/bin/menu-ssh "https://${Server_URL}/ssh/menu-ssh.sh"
+wget -q -O /usr/bin/menu-ssh "$github/ssh/menu-ssh.sh"
 chmod +x /usr/bin/menu-ssh
 sed -i -e 's/\r$//' /bin/menu-ssh
 
-wget -q -O /usr/bin/renew "https://${Server_URL}/ssh/renew.sh"
+wget -q -O /usr/bin/renew "$github/ssh/renew.sh"
 chmod +x /usr/bin/renew
 sed -i -e 's/\r$//' /bin/renew
 
-wget -q -O /usr/bin/tendang "https://${Server_URL}/ssh/tendang.sh"
+wget -q -O /usr/bin/tendang "$github/ssh/tendang.sh"
 chmod +x /usr/bin/tendang
 sed -i -e 's/\r$//' /bin/tendang
 
-wget -q -O /usr/bin/usernew "https://${Server_URL}/ssh/usernew.sh"
+wget -q -O /usr/bin/usernew "$github/ssh/usernew.sh"
 chmod +x /usr/bin/usernew
 sed -i -e 's/\r$//' /bin/usernew
 
@@ -257,18 +255,18 @@ sed -i -e 's/\r$//' /bin/usernew
 #systemctl enable ws-dropbear >/dev/null 2>&1
 #systemctl start ws-dropbear >/dev/null 2>&1
 #systemctl restart ws-dropbear >/dev/null 2>&1
-
 clear 
 
 # Getting websocket ssl stunnel
-wget -q -O /usr/local/bin/ws-stunnel "https://${Server_URL}/ssh/ws-stunnel"
+wget -q -O /usr/local/bin/ws-stunnel "$github/ssh/ws-stunnel"
 chmod +x /usr/local/bin/ws-stunnel
+clear
 
 # Installing Service Ovpn Websocket
 cat > /etc/systemd/system/ws-stunnel.service << END
 [Unit]
 Description=Ovpn Websocket 
-Documentation=https://xnxx.com
+Documentation=https://github.com
 After=network.target nss-lookup.target
 
 [Service]
@@ -288,7 +286,6 @@ systemctl daemon-reload >/dev/null 2>&1
 systemctl enable ws-stunnel >/dev/null 2>&1
 systemctl start ws-stunnel >/dev/null 2>&1
 systemctl restart ws-stunnel >/dev/null 2>&1
-
 clear
 
 cat > /etc/systemd/system/rc-local.service <<-END
@@ -307,38 +304,37 @@ WantedBy=multi-user.target
 END
 
 # nano /etc/rc.local
-cat > /etc/rc.local <<-END
+#cat > /etc/rc.local <<-END
 #!/bin/sh -e
 # rc.local
 # By default this script does nothing.
-exit 0
-END
+#exit 0
+#END
 
 # Ubah izin akses
-chmod +x /etc/rc.local
-echo -e "
-"
+#chmod +x /etc/rc.local
+#echo -e " "
 date
 echo ""
 # enable rc local
-sleep 1
+#sleep 1
 echo -e "[ ${GREEN}INFO${NC} ] Checking... "
 sleep 2
 sleep 1
-echo -e "[ ${GREEN}INFO$NC ] Enable system rc local"
-systemctl enable rc-local >/dev/null 2>&1
-systemctl start rc-local.service >/dev/null 2>&1
+#echo -e "[ ${GREEN}INFO$NC ] Enable system rc local"
+#systemctl enable rc-local >/dev/null 2>&1
+#systemctl start rc-local.service >/dev/null 2>&1
 
 # disable ipv6
-sleep 1
-echo -e "[ ${GREEN}INFO$NC ] Disable ipv6"
-echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6 >/dev/null 2>&1
-sed -i '$ i\echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6' /etc/rc.local >/dev/null 2>&1
+#sleep 1
+#echo -e "[ ${GREEN}INFO$NC ] Disable ipv6"
+#echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6 >/dev/null 2>&1
+#sed -i '$ i\echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6' /etc/rc.local >/dev/null 2>&1
 
 # set time GMT +7
-sleep 1
-echo -e "[ ${GREEN}INFO$NC ] Set zona local time to Asia/Jakarta GMT+7"
-ln -fs /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
+#sleep 1
+#echo -e "[ ${GREEN}INFO$NC ] Set zona local time to Asia/Jakarta GMT+7"
+#ln -fs /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
 
 # set locale
 sed -i 's/AcceptEnv/#AcceptEnv/g' /etc/ssh/sshd_config
@@ -367,7 +363,7 @@ fi
 cd
 echo -e "[ ${GREEN}INFO$NC ] Installing badvpn for game support..."
 #wget -q -O /usr/bin/badvpn-udpgw "https://raw.githubusercontent.com/wunuit/0/main/badvpn-udpgw64"
-wget -q -O /usr/bin/badvpn-udpgw "https://${Server_URL}/ssh/newudpgw"
+wget -q -O /usr/bin/badvpn-udpgw "$github/ssh/newudpgw"
 chmod +x /usr/bin/badvpn-udpgw  >/dev/null 2>&1
 sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 500' /etc/rc.local >/dev/null 2>&1
 sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 500' /etc/rc.local >/dev/null 2>&1
@@ -410,8 +406,13 @@ echo "/usr/sbin/nologin" >> /etc/shells
 fi
 
 # Install Stunnel5
+#wget -q -O /usr/bin/ssh_ssl "$github/stunnel5/ssh_ssl.sh"
+#chmod +x /usr/bin/ssh_ssl
+#sed -i -e 's/\r$//' /bin/ssh_ssl
+#/usr/bin/ssh_ssl
+#rm -rvf /usr/bin/ssh_ssl
 cd /root/
-wget -q "https://${Server_URL}/stunnel5/stunnel5.zip"
+wget -q "$github/stunnel5/stunnel5.zip"
 unzip stunnel5.zip
 cd /root/stunnel
 chmod +x configure
@@ -449,10 +450,12 @@ connect = 127.0.0.1:1194
 END
 
 # make a certificate
-#openssl genrsa -out key.pem 2048  >/dev/null 2>&1
-#openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
-#-subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"  >/dev/null 2>&1
-#cat key.pem cert.pem >> /etc/stunnel/stunnel.pem
+cd /root/
+openssl genrsa -out key.pem 2048  >/dev/null 2>&1
+openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
+-subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"  >/dev/null 2>&1
+
+cat key.pem cert.pem >> /etc/stunnel/stunnel.pem
 
 # konfigurasi stunnel
 #echo "ENABLED=1" >> /etc/default/stunnel4
@@ -480,10 +483,10 @@ END
 
 # Service Stunnel5 /etc/init.d/stunnel5
 rm -fr /etc/init.d/stunnel5
-wget -q -O /etc/init.d/stunnel5 "https://${Server_URL}/stunnel5/stunnel5.init"
+wget -q -O /etc/init.d/stunnel5 "$github/stunnel5/stunnel5.init"
 
 # Ubah Izin Akses
-#chmod 600 /etc/stunnel5/stunnel5.pem
+chmod 600 /etc/stunnel5/stunnel5.pem
 chmod +x /etc/init.d/stunnel5
 cp -r /usr/local/bin/stunnel /usr/local/bin/stunnel5
 #mv /usr/local/bin/stunnel /usr/local/bin/stunnel5
@@ -503,77 +506,8 @@ systemctl start stunnel5 >/dev/null 2>&1
 systemctl restart stunnel5 >/dev/null 2>&1
 
 # Install bbr
-sleep 1
-echo -e "[ ${GREEN}INFO$NC ] Install bbr"
-#Optimasi Speed Mod By Akhir Zaman
-Add_To_New_Line(){
-	if [ "$(tail -n1 $1 | wc -l)" == "0"  ];then
-		echo "" >> "$1"
-	fi
-	echo "$2" >> "$1"
-}
-
-Check_And_Add_Line(){
-	if [ -z "$(cat "$1" | grep "$2")" ];then
-		Add_To_New_Line "$1" "$2"
-	fi
-}
-
-Install_BBR(){
-echo "#############################################"
-echo "Install TCP_BBR..."
-if [ -n "$(lsmod | grep bbr)" ];then
-echo "TCP_BBR sudah diinstall."
-echo "#############################################"
-return 1
-fi
-echo "Mulai menginstall TCP_BBR..."
-modprobe tcp_bbr
-Add_To_New_Line "/etc/modules-load.d/modules.conf" "tcp_bbr"
-Add_To_New_Line "/etc/sysctl.conf" "net.core.default_qdisc = fq"
-Add_To_New_Line "/etc/sysctl.conf" "net.ipv4.tcp_congestion_control = bbr"
-sysctl -p
-if [ -n "$(sysctl net.ipv4.tcp_available_congestion_control | grep bbr)" ] && [ -n "$(sysctl net.ipv4.tcp_congestion_control | grep bbr)" ] && [ -n "$(lsmod | grep "tcp_bbr")" ];then
-	echo "TCP_BBR Install Success."
-else
-	echo "Gagal menginstall TCP_BBR."
-fi
-echo "#############################################"
-}
-
-Optimize_Parameters(){
-echo "#############################################"
-echo "Optimasi Parameters..."
-Check_And_Add_Line "/etc/security/limits.conf" "* soft nofile 51200"
-Check_And_Add_Line "/etc/security/limits.conf" "* hard nofile 51200"
-Check_And_Add_Line "/etc/security/limits.conf" "root soft nofile 51200"
-Check_And_Add_Line "/etc/security/limits.conf" "root hard nofile 51200"
-Check_And_Add_Line "/etc/sysctl.conf" "fs.file-max = 51200"
-Check_And_Add_Line "/etc/sysctl.conf" "net.core.rmem_max = 67108864"
-Check_And_Add_Line "/etc/sysctl.conf" "net.core.wmem_max = 67108864"
-Check_And_Add_Line "/etc/sysctl.conf" "net.core.netdev_max_backlog = 250000"
-Check_And_Add_Line "/etc/sysctl.conf" "net.core.somaxconn = 4096"
-Check_And_Add_Line "/etc/sysctl.conf" "net.ipv4.tcp_syncookies = 1"
-Check_And_Add_Line "/etc/sysctl.conf" "net.ipv4.tcp_tw_reuse = 1"
-Check_And_Add_Line "/etc/sysctl.conf" "net.ipv4.tcp_fin_timeout = 30"
-Check_And_Add_Line "/etc/sysctl.conf" "net.ipv4.tcp_keepalive_time = 1200"
-Check_And_Add_Line "/etc/sysctl.conf" "net.ipv4.ip_local_port_range = 10000 65000"
-Check_And_Add_Line "/etc/sysctl.conf" "net.ipv4.tcp_max_syn_backlog = 8192"
-Check_And_Add_Line "/etc/sysctl.conf" "net.ipv4.tcp_max_tw_buckets = 5000"
-Check_And_Add_Line "/etc/sysctl.conf" "net.ipv4.tcp_fastopen = 3"
-Check_And_Add_Line "/etc/sysctl.conf" "net.ipv4.tcp_mem = 25600 51200 102400"
-Check_And_Add_Line "/etc/sysctl.conf" "net.ipv4.tcp_rmem = 4096 87380 67108864"
-Check_And_Add_Line "/etc/sysctl.conf" "net.ipv4.tcp_wmem = 4096 65536 67108864"
-Check_And_Add_Line "/etc/sysctl.conf" "net.ipv4.tcp_mtu_probing = 1"
-echo "Optimasi Parameters Selesai."
-echo "#############################################"
-}
-Install_BBR
-Optimize_Parameters
-sleep 1
-echo -e "[ ${GREEN}INFO$NC ] Install successfully..."
-
 # install fail2ban
+
 # Instal DDOS Flate
 rm -fr /usr/local/ddos
 mkdir -p /usr/local/ddos >/dev/null 2>&1
@@ -601,29 +535,29 @@ rm -fr /etc/issue.net
 rm -fr /etc/issue.net.save
 sleep 1
 echo -e "[ ${GREEN}INFO$NC ] Settings banner"
-wget -q -O /etc/issue.net "https://${Server_URL}/ssh/issue.net"
+wget -q -O /etc/issue.net "$github/ssh/issue.net"
 chmod +x /etc/issue.net
 echo "Banner /etc/issue.net" >> /etc/ssh/sshd_config
 sed -i 's@DROPBEAR_BANNER=""@DROPBEAR_BANNER="/etc/issue.net"@g' /etc/default/dropbear
 
 # Blokir Torrent
-echo -e "[ ${GREEN}INFO$NC ] Set iptables"
-sleep 1
-sudo iptables -A FORWARD -m string --string "get_peers" --algo bm -j DROP
-sudo iptables -A FORWARD -m string --string "announce_peer" --algo bm -j DROP
-sudo iptables -A FORWARD -m string --string "find_node" --algo bm -j DROP
-sudo iptables -A FORWARD -m string --algo bm --string "BitTorrent" -j DROP
-sudo iptables -A FORWARD -m string --algo bm --string "BitTorrent protocol" -j DROP
-sudo iptables -A FORWARD -m string --algo bm --string "peer_id=" -j DROP
-sudo iptables -A FORWARD -m string --algo bm --string ".torrent" -j DROP
-sudo iptables -A FORWARD -m string --algo bm --string "announce.php?passkey=" -j DROP
-sudo iptables -A FORWARD -m string --algo bm --string "torrent" -j DROP
-sudo iptables -A FORWARD -m string --algo bm --string "announce" -j DROP
-sudo iptables -A FORWARD -m string --algo bm --string "info_hash" -j DROP
-sudo iptables-save > /etc/iptables.up.rules
-sudo iptables-restore -t < /etc/iptables.up.rules
-sudo netfilter-persistent save >/dev/null 2>&1
-sudo netfilter-persistent reload >/dev/null 2>&1
+#echo -e "[ ${GREEN}INFO$NC ] Set iptables"
+#sleep 1
+#sudo iptables -A FORWARD -m string --string "get_peers" --algo bm -j DROP
+#sudo iptables -A FORWARD -m string --string "announce_peer" --algo bm -j DROP
+#sudo iptables -A FORWARD -m string --string "find_node" --algo bm -j DROP
+#sudo iptables -A FORWARD -m string --algo bm --string "BitTorrent" -j DROP
+#sudo iptables -A FORWARD -m string --algo bm --string "BitTorrent protocol" -j DROP
+#sudo iptables -A FORWARD -m string --algo bm --string "peer_id=" -j DROP
+#sudo iptables -A FORWARD -m string --algo bm --string ".torrent" -j DROP
+#sudo iptables -A FORWARD -m string --algo bm --string "announce.php?passkey=" -j DROP
+#sudo iptables -A FORWARD -m string --algo bm --string "torrent" -j DROP
+#sudo iptables -A FORWARD -m string --algo bm --string "announce" -j DROP
+#sudo iptables -A FORWARD -m string --algo bm --string "info_hash" -j DROP
+#sudo iptables-save > /etc/iptables.up.rules
+#sudo iptables-restore -t < /etc/iptables.up.rules
+#sudo netfilter-persistent save >/dev/null 2>&1
+#sudo netfilter-persistent reload >/dev/null 2>&1
 
 # remove unnecessary files
 sleep 1
@@ -672,10 +606,10 @@ sleep 1
 yellow "SSH & OVPN install successfully"
 sleep 5
 clear
-rm -fr /root/key.pem >/dev/null 2>&1
-rm -fr /root/cert.pem >/dev/null 2>&1
-rm -fr /root/ssh-vpn.sh >/dev/null 2>&1
-rm -fr /root/rampak.sh >/dev/null 2>&1
+
+rm -rvf /root/*.sh
+rm -rvf /root/*.sh.*
+clear
 
 echo "" | tee -a log-install.txt
 echo "======================-[ SCRIPT INFO ]-=====================" | tee -a log-install.txt
@@ -712,7 +646,6 @@ echo "------------------------------------------------------------" | tee -a log
 echo "" | tee -a log-install.txt
 echo "=========-[ Script Created By @arf.prsty_ ]-==========" | tee -a log-install.txt
 echo "" | tee -a log-install.txt
-rm /root/setup.sh >/dev/null 2>&1
 secs_to_human "$(($(date +%s) - ${start}))" | tee -a log-install.txt
 echo -e "" | tee -a log-install.txt
 

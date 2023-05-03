@@ -142,6 +142,8 @@ read -rp "Input ur domain / sub-domain : " -e pp
     curl -s ipinfo.io/org/ > $xray/ISP
     curl -s https://ipinfo.io/ip/ > $xray/IP
     fi
+IP=$(cat $xray/IP)
+DOMAIN=$(cat $xray/domain)
 clear
 
 #Instal Xray
@@ -362,7 +364,7 @@ echo -ne
 fi
 cd
 echo -e "[ ${GREEN}INFO$NC ] Installing badvpn for game support..."
-#wget -q -O /usr/bin/badvpn-udpgw "https://raw.githubusercontent.com/wunuit/0/main/badvpn-udpgw64"
+#wget -q -O /usr/bin/badvpn-udpgw "$github/ssh/badvpn-udpgw64"
 wget -q -O /usr/bin/badvpn-udpgw "$github/ssh/newudpgw"
 chmod +x /usr/bin/badvpn-udpgw  >/dev/null 2>&1
 sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 500' /etc/rc.local >/dev/null 2>&1
@@ -389,21 +391,68 @@ systemctl start ssh >/dev/null 2>&1
 systemctl restart ssh >/dev/null 2>&1
 
 # install dropbear
-sleep 1
-echo -e "[ ${GREEN}INFO$NC ] Settings Dropbear"
+#apt -y install dropbear
 sed -i 's/NO_START=1/NO_START=0/g' /etc/default/dropbear
 sed -i 's/DROPBEAR_PORT=22/DROPBEAR_PORT=143/g' /etc/default/dropbear
 sed -i 's/DROPBEAR_EXTRA_ARGS=/DROPBEAR_EXTRA_ARGS="-p 109"/g' /etc/default/dropbear
-systemctl daemon-reload >/dev/null 2>&1
-systemctl start dropbear >/dev/null 2>&1
-systemctl restart dropbear >/dev/null 2>&1
-cekker=$(cat /etc/shells | grep -w "/bin/false")
-if [[ "$cekker" = "/bin/false" ]];then
-echo -ne
-else
 echo "/bin/false" >> /etc/shells
 echo "/usr/sbin/nologin" >> /etc/shells
-fi
+/etc/init.d/dropbear restart
+
+# install squid
+cd
+apt -y install squid3
+wget -O /etc/squid/squid.conf "$github/ssh/squid3.conf"
+sed -i $IP /etc/squid/squid.conf
+
+# Install SSLH
+apt -y install sslh
+rm -f /etc/default/sslh
+
+# Settings SSLH
+cat > /etc/default/sslh <<-END
+# Default options for sslh initscript
+# sourced by /etc/init.d/sslh
+
+# Disabled by default, to force yourself
+# to read the configuration:
+# - /usr/share/doc/sslh/README.Debian (quick start)
+# - /usr/share/doc/sslh/README, at "Configuration" section
+# - sslh(8) via "man sslh" for more configuration details.
+# Once configuration ready, you *must* set RUN to yes here
+# and try to start sslh (standalone mode only)
+
+RUN=yes
+
+# binary to use: forked (sslh) or single-thread (sslh-select) version
+# systemd users: don't forget to modify /lib/systemd/system/sslh.service
+DAEMON=/usr/sbin/sslh
+
+DAEMON_OPTS="--user sslh --listen 0.0.0.0:443 --ssl 127.0.0.1:777 --ssh 127.0.0.1:109 --openvpn 127.0.0.1:1194 --http 127.0.0.1:8880 --pidfile /var/run/sslh/sslh.pid -n"
+
+END
+
+# Restart Service SSLH
+service sslh restart
+systemctl restart sslh
+/etc/init.d/sslh restart
+/etc/init.d/sslh status
+/etc/init.d/sslh restart
+
+# setting vnstat
+/etc/init.d/vnstat restart
+wget https://humdi.net/vnstat/vnstat-2.6.tar.gz
+tar zxvf vnstat-2.6.tar.gz
+cd vnstat-2.6
+./configure --prefix=/usr --sysconfdir=/etc && make && make install
+cd
+vnstat -u -i $NET
+sed -i 's/Interface "'""eth0""'"/Interface "'""$NET""'"/g' /etc/vnstat.conf
+chown vnstat:vnstat /var/lib/vnstat -R
+systemctl enable vnstat
+/etc/init.d/vnstat restart
+rm -f /root/vnstat-2.6.tar.gz
+rm -rf /root/vnstat-2.6
 
 # Install Stunnel5
 #wget -q -O /usr/bin/ssh_ssl "$github/stunnel5/ssh_ssl.sh"
@@ -428,8 +477,7 @@ chmod 644 /etc/stunnel5
 
 # Download Config Stunnel5
 cat > /etc/stunnel5/stunnel5.conf <<-END
-cert = $xray/xray.crt
-key = $xray/xray.key
+cert = /etc/stunnel5/stunnel5.pem
 client = no
 socket = a:SO_REUSEADDR=1
 socket = l:TCP_NODELAY=1
@@ -450,13 +498,12 @@ connect = 127.0.0.1:1194
 END
 
 # make a certificate
+#openssl genrsa -out key.pem 2048  >/dev/null 2>&1
+#openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
+#-subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"  >/dev/null 2>&1
+cd $xray
+cat xray.key xray.crt >> /etc/stunnel/stunnel.pem
 cd /root/
-openssl genrsa -out key.pem 2048  >/dev/null 2>&1
-openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
--subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"  >/dev/null 2>&1
-
-cat key.pem cert.pem >> /etc/stunnel/stunnel.pem
-
 # konfigurasi stunnel
 #echo "ENABLED=1" >> /etc/default/stunnel4
 #sed -i 's/ENABLED=0/ENABLED=1/g' /etc/default/stunnel4
@@ -500,10 +547,13 @@ rm -f /usr/local/bin/stunnel4
 #rm -f /usr/local/bin/stunnel5
 
 # Restart Stunnel5
-systemctl daemon-reload >/dev/null 2>&1
-systemctl enable stunnel5 >/dev/null 2>&1
-systemctl start stunnel5 >/dev/null 2>&1
-systemctl restart stunnel5 >/dev/null 2>&1
+systemctl stop stunnel5
+systemctl enable stunnel5
+systemctl start stunnel5
+systemctl restart stunnel5
+/etc/init.d/stunnel5 restart
+/etc/init.d/stunnel5 status
+/etc/init.d/stunnel5 restart
 
 # Install bbr
 # install fail2ban
@@ -540,24 +590,22 @@ chmod +x /etc/issue.net
 echo "Banner /etc/issue.net" >> /etc/ssh/sshd_config
 sed -i 's@DROPBEAR_BANNER=""@DROPBEAR_BANNER="/etc/issue.net"@g' /etc/default/dropbear
 
-# Blokir Torrent
-#echo -e "[ ${GREEN}INFO$NC ] Set iptables"
-#sleep 1
-#sudo iptables -A FORWARD -m string --string "get_peers" --algo bm -j DROP
-#sudo iptables -A FORWARD -m string --string "announce_peer" --algo bm -j DROP
-#sudo iptables -A FORWARD -m string --string "find_node" --algo bm -j DROP
-#sudo iptables -A FORWARD -m string --algo bm --string "BitTorrent" -j DROP
-#sudo iptables -A FORWARD -m string --algo bm --string "BitTorrent protocol" -j DROP
-#sudo iptables -A FORWARD -m string --algo bm --string "peer_id=" -j DROP
-#sudo iptables -A FORWARD -m string --algo bm --string ".torrent" -j DROP
-#sudo iptables -A FORWARD -m string --algo bm --string "announce.php?passkey=" -j DROP
-#sudo iptables -A FORWARD -m string --algo bm --string "torrent" -j DROP
-#sudo iptables -A FORWARD -m string --algo bm --string "announce" -j DROP
-#sudo iptables -A FORWARD -m string --algo bm --string "info_hash" -j DROP
-#sudo iptables-save > /etc/iptables.up.rules
-#sudo iptables-restore -t < /etc/iptables.up.rules
-#sudo netfilter-persistent save >/dev/null 2>&1
-#sudo netfilter-persistent reload >/dev/null 2>&1
+# blockir torrent
+iptables -A FORWARD -m string --string "get_peers" --algo bm -j DROP
+iptables -A FORWARD -m string --string "announce_peer" --algo bm -j DROP
+iptables -A FORWARD -m string --string "find_node" --algo bm -j DROP
+iptables -A FORWARD -m string --algo bm --string "BitTorrent" -j DROP
+iptables -A FORWARD -m string --algo bm --string "BitTorrent protocol" -j DROP
+iptables -A FORWARD -m string --algo bm --string "peer_id=" -j DROP
+iptables -A FORWARD -m string --algo bm --string ".torrent" -j DROP
+iptables -A FORWARD -m string --algo bm --string "announce.php?passkey=" -j DROP
+iptables -A FORWARD -m string --algo bm --string "torrent" -j DROP
+iptables -A FORWARD -m string --algo bm --string "announce" -j DROP
+iptables -A FORWARD -m string --algo bm --string "info_hash" -j DROP
+iptables-save > /etc/iptables.up.rules
+iptables-restore -t < /etc/iptables.up.rules
+netfilter-persistent save
+netfilter-persistent reload
 
 # remove unnecessary files
 sleep 1

@@ -80,12 +80,13 @@ apt install zip -y
 clear
 apt install net-tools -y
 clear
-
+apt install -y openvpn #dropbear squid3
+clear
 apt install curl socat xz-utils wget apt-transport-https gnupg gnupg2 gnupg1 dnsutils -y
 clear
 apt-get --reinstall --fix-missing install -y sudo dpkg psmisc jq ruby wondershaper python2 tmux nmap bzip2 gzip coreutils iftop htop unzip vim nano gcc g++ make perl m4 dos2unix libreadline-dev zlib1g-dev git 
 clear
-apt-get --reinstall --fix-missing install -y screen rsyslog sed bc dirmngr libxml-parser-perl neofetch screenfetch lsof easy-rsa fail2ban vnstat libsqlite3-dev dropbear openvpn squid
+apt-get --reinstall --fix-missing install -y screen rsyslog sed bc dirmngr libxml-parser-perl neofetch screenfetch lsof easy-rsa fail2ban vnstat libsqlite3-dev
 gem install lolcat
 clear
 apt-get install --no-install-recommends build-essential autoconf libtool libssl-dev libpcre3-dev libev-dev asciidoc xmlto automake -y

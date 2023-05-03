@@ -44,6 +44,24 @@ pwd=$(cat $xray/passwd)
 uuid=$(cat /proc/sys/kernel/random/uuid)
 clear
 
+# // Remove File & Directory
+rm -fr /usr/local/bin/xray
+rm -fr /usr/local/bin/stunnel
+rm -fr /usr/local/bin/stunnel5
+rm -fr /etc/nginx
+rm -fr /var/lib/arf
+rm -fr /usr/bin/xray
+rm -fr /etc/xray
+rm -fr /usr/local/etc/xray
+rm -fr /var/log/xray
+rm -fr /etc/trojan-go
+rm -fr /usr/bin/trojan-go
+rm -fr /usr/local/bin/trojan-go
+rm -fr /var/log/trojan-go
+rm -fr /etc/shadowsocks-libev
+rm -fr /etc/shadowsocks-libev.*
+clear
+
 date
 echo ""
 echo -e "[ ${green}INFO$NC ]* BLANK INPUT FOR RANDOM SUB-DOMAIN ! "
@@ -57,6 +75,7 @@ read -rp "Input ur domain / sub-domain : " -e pp
     mkdir -p $ipvps >/dev/null 2>&1
     mkdir -p $xray
     mkdir -p /etc/v2ray
+    mkdir -p /etc/nginx
     touch $xray/domain
     touch $xray/scdomain
     touch /etc/v2ray/domain
@@ -755,20 +774,22 @@ clear
 #fi
 
 # Install Trojan Go
-echo -e "[ ${green}INFO$NC ] RE-INSTALLING TROJAN-GO"
+echo -e "[ ${green}INFO$NC ] INSTALLING TROJAN-GO"
 sleep 1
 latest_version="$(curl -s "https://api.github.com/repos/p4gefau1t/trojan-go/releases" | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
 trojango_link="https://github.com/p4gefau1t/trojan-go/releases/download/v${latest_version}/trojan-go-linux-amd64.zip"
 mkdir -p "/usr/bin/trojan-go"
+mkdir -p "/usr/local/bin/trojan-go"
 mkdir -p "$trgo"
 cd `mktemp -d`
 curl -sL "${trojango_link}" -o trojan-go.zip
-unzip -q trojan-go.zip && rm -rvf trojan-go.zip
+unzip -q trojan-go.zip && rm -rf trojan-go.zip
 mv trojan-go /usr/local/bin/trojan-go
 chmod +x /usr/local/bin/trojan-go
 mkdir -p $logtrgo
 touch $trgo/akun.conf
 touch $logtrgo/trojan-go.log
+clear
 
 # Buat Config Trojan Go
 echo -e "[ ${green}INFO$NC ] MEMBUAT ULANG CONFIG TROJAN-GO"
@@ -878,7 +899,6 @@ clear
 
 echo -e "[ ${green}INFO$NC ] MEMBUAT ULANG CONFIG SHADOWSOCKS"
 sleep 1
-
 cat > /etc/shadowsocks-libev/config.json <<END
 {   
     "server":"0.0.0.0",
@@ -891,8 +911,6 @@ cat > /etc/shadowsocks-libev/config.json <<END
     "mode":"tcp_and_udp",
 }
 END
-clear
-
 systemctl enable shadowsocks-libev.service
 systemctl start shadowsocks-libev.service
 clear
@@ -924,8 +942,10 @@ iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2443:3543 -j ACCEPT
 iptables-save > /etc/iptables.up.rules
 ip6tables-save > /etc/ip6tables.up.rules
 clear
+
 echo -e "[ ${green}INFO$NC ] SETTING SHADOWSOCKS SUKSES !!!"
 sleep 1
+clear
 
 # restart
 echo -e "[ ${green}INFO$NC ] MEMULAI ULANG KONFIGURASI"

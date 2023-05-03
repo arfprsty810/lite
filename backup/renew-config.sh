@@ -53,8 +53,14 @@ read -rp "Input ur domain / sub-domain : " -e pp
         Then a random sub-domain will be created"
         /usr/bin/cf
     else
+    rm -rvf $xray/
+    rm -rvf /v2ray/
+    mkdir -p $xray/
+    mkdir -p /etc/v2ray/
 	echo "$pp" > $xray/domain
 	echo "$pp" > $xray/scdomain
+	echo "$pp" > /etc/v2ray/domain
+	echo "$pp" > /etc/v2ay/scdomain
 	echo "$pp" > /root/domain
     echo "$pp" > /root/scdomain
     echo "IP=$pp" > $ipvps/ipvps.conf
@@ -155,8 +161,6 @@ chmod +x /root/.acme.sh/acme.sh
 /root/.acme.sh/acme.sh --upgrade --auto-upgrade
 /root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
 /root/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-256
-rm -rvf $xray/xray.crt
-rm -rvf $xray/xray.key
 ~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath $xray/xray.crt --keypath $xray/xray.key --ecc
 clear
 
@@ -188,7 +192,7 @@ trojangrpc=$((RANDOM + 10000))
 # xray config
 echo -e "[ ${green}INFO$NC ] MEMBUAT ULANG CONFIG XRAY"
 sleep 1
-rm -rvf $xray/config.json
+
 cat > $xray/config.json << END
 {
   "log" : {
@@ -760,16 +764,14 @@ unzip -q trojan-go.zip && rm -rvf trojan-go.zip
 mv trojan-go /usr/local/bin/trojan-go
 chmod +x /usr/local/bin/trojan-go
 rm -rvf $logtrgo
-mkdir $logtrgo
-rm -rvf $trgo/akun.conf
+mkdir -p $logtrgo
 touch $trgo/akun.conf
-rm -rvf $logtrgo/trojan-go.log
 touch $logtrgo/trojan-go.log
 
 # Buat Config Trojan Go
 echo -e "[ ${green}INFO$NC ] MEMBUAT ULANG CONFIG TROJAN-GO"
 sleep 1
-rm -rvf $trgo/config.json
+
 cat > $trgo/config.json << END
 {
   "run_type": "server",
@@ -858,7 +860,7 @@ END
 clear
 
 # Trojan Go Uuid
-rm -rvf $trgo/uuid
+
 cat > $trgo/uuid << END
 $uuid
 END

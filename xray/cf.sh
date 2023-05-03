@@ -11,9 +11,10 @@ PURPLE='\033[0;35m'
 CYAN='\033[0;36m'
 LIGHT='\033[0;37m'
 # ==========================================
-
+source /etc/os-release
 clear
-apt install jq curl -y
+
+#apt install jq curl -y
 DOMAIN=d-jumper.me
 sub=$(</dev/urandom tr -dc a-z0-9 | head -c4)
 SUB_DOMAIN=${sub}.d-jumper.me
@@ -25,6 +26,7 @@ xray="/etc/xray"
 ipvps="/var/lib/arf"
 mkdir -p $xray
 mkdir -p /etc/v2ray
+mkdir -p /etc/nginx
 touch $xray/ISP
 touch $xray/IP
 curl -s ipinfo.io/org/ > $xray/ISP

@@ -28,7 +28,6 @@ source /etc/os-release
 xray="/etc/xray"
 trgo="/etc/trojan-go"
 logtrgo="/var/log/trojan-go"
-ipvps="/var/lib/arf"
 github="https://raw.githubusercontent.com/arfprsty810/lite/main"
 OS=$ID
 ver=$VERSION_ID
@@ -38,21 +37,29 @@ pwd=$(cat $xray/passwd)
 # set random uuid
 uuid=$(cat /proc/sys/kernel/random/uuid)
 
-mkdir -p $xray
-mkdir -p $ipvps >/dev/null 2>&1
-echo "IP=" >> $ipvps/ipvps.conf
-touch $xray/domain
-touch $xray/scdomain
-clear
-
-date
-echo ""
 domain=$(cat $xray/domain)
 sleep 1
 clear
 
+echo ""
+date
+echo ""
 echo -e "[ ${green}INFO$NC ] INSTALLING REQUIREMENTS TOOLS"
 sleep 1
+cd /root/
+# // Remove
+apt-get remove --purge nginx* -y
+apt-get remove --purge nginx-common* -y
+apt-get remove --purge nginx-full* -y
+apt-get remove --purge dropbear* -y
+apt-get remove --purge stunnel4* -y
+apt-get remove --purge apache2* -y
+apt-get remove --purge ufw* -y
+apt-get remove --purge firewalld* -y
+apt-get remove --purge exim4* -y
+apt autoremove -y
+clear
+
 cd /root/
 apt update && apt upgrade -y
 clear
@@ -740,15 +747,17 @@ sleep 1
 latest_version="$(curl -s "https://api.github.com/repos/p4gefau1t/trojan-go/releases" | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
 trojango_link="https://github.com/p4gefau1t/trojan-go/releases/download/v${latest_version}/trojan-go-linux-amd64.zip"
 mkdir -p "/usr/bin/trojan-go"
+mkdir -p "/usr/local/bin/trojan-go"
 mkdir -p "$trgo"
 cd `mktemp -d`
 curl -sL "${trojango_link}" -o trojan-go.zip
 unzip -q trojan-go.zip && rm -rf trojan-go.zip
 mv trojan-go /usr/local/bin/trojan-go
 chmod +x /usr/local/bin/trojan-go
-mkdir $logtrgo
+mkdir -p $logtrgo
 touch $trgo/akun.conf
 touch $logtrgo/trojan-go.log
+clear
 
 # Buat Config Trojan Go
 echo -e "[ ${green}INFO$NC ] MEMBUAT CONFIG TROJAN-GO"
@@ -867,8 +876,6 @@ cat > /etc/shadowsocks-libev/config.json <<END
     "mode":"tcp_and_udp",
 }
 END
-clear
-
 systemctl enable shadowsocks-libev.service
 systemctl start shadowsocks-libev.service
 clear
@@ -898,8 +905,10 @@ iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2443:3543 -j ACCEPT
 iptables-save > /etc/iptables.up.rules
 ip6tables-save > /etc/ip6tables.up.rules
 clear
+
 echo -e "[ ${green}INFO$NC ] SETTING SHADOWSOCKS SUKSES !!!"
 sleep 1
+clear
 
 # restart
 echo -e "[ ${green}INFO$NC ] MEMULAI ULANG KONFIGURASI"
@@ -924,5 +933,5 @@ clear
 
 echo -e "[ ${green}INFO$NC ] INSTALL FINISHED !"
 sleep 2
-rm -f ins-xray.sh
+rm -rvf /root/ins-xray.sh
 clear

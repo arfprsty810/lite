@@ -12,42 +12,21 @@ tyblue() { echo -e "\\033[36;1m${*}\\033[0m"; }
 yellow() { echo -e "\\033[33;1m${*}\\033[0m"; }
 green() { echo -e "\\033[32;1m${*}\\033[0m"; }
 red() { echo -e "\\033[31;1m${*}\\033[0m"; }
-cd /root
 
+cd /root
+xray="/etc/xray"
 ipvps="/var/lib/arf"
 github="https://raw.githubusercontent.com/arfprsty810/lite/main"
-mkdir -p /etc/xray
-mkdir -p /etc/v2ray
-mkdir -p $ipvps >/dev/null 2>&1
-echo "IP=" >> $ipvps/ipvps.conf
-touch /etc/xray/domain
-touch /etc/xray/scdomain
-touch /etc/v2ray/domain
-touch /etc/v2rayray/scdomain
-touch /root/domain
-touch /root/scdomain
+start=$(date +%s)
 
 secs_to_human() {
     echo "Installation time : $(( ${1} / 3600 )) hours $(( (${1} / 60) % 60 )) minute's $(( ${1} % 60 )) seconds"
 }
-start=$(date +%s)
+
 ln -fs /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
 sysctl -w net.ipv6.conf.all.disable_ipv6=1 >/dev/null 2>&1
 sysctl -w net.ipv6.conf.default.disable_ipv6=1 >/dev/null 2>&1
 
-if [ -f "/etc/xray/domain" ]; then
-clear
-echo ""
-echo -ne "[ ${yell}INFO${NC} ] INSTALL AUTOSCRIPT VPS XRAY v.1.0   ?  (y/n)? "
-read answer
-if [ "$answer" == "${answer#[Yy]}" ] ;then
-rm setup.sh
-sleep 5
-exit 0
-else
-clear
-fi
-fi
 echo ""
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "$green                 AUTOSCRIPT VPS XRAY v.1.0 $NC"
@@ -62,23 +41,36 @@ echo " "
 echo -e "[ ${green}INFO$NC ]* BLANK INPUT FOR RANDOM SUB-DOMAIN ! "
 read -rp "Input ur domain / sub-domain : " -e pp
     if [ -z $pp ]; then
-        echo -e "
-        Nothing input for domain!
-        Then a random sub-domain will be created"
-wget -q -O /usr/bin/cf "$github/xray/cf.sh"
-chmod +x /usr/bin/cf
-sed -i -e 's/\r$//' /usr/bin/cf
-/usr/bin/cf
+    echo -e "
+    Nothing input for domain!
+    Then a random sub-domain will be created"
+    sleep 2
+    wget -q -O /usr/bin/cf "$github/xray/cf.sh"
+    chmod +x /usr/bin/cf
+    sed -i -e 's/\r$//' /usr/bin/cf
+    /usr/bin/cf
     else
-	echo "$pp" > /etc/xray/domain
-	echo "$pp" > /etc/xray/scdomain
+    mkdir -p $ipvps >/dev/null 2>&1
+    mkdir -p $xray
+    mkdir -p /etc/v2ray
+    touch $xray/domain
+    touch $xray/scdomain
+    touch /etc/v2ray/domain
+    touch /etc/v2rayray/scdomain
+    touch /root/domain
+    touch /root/scdomain
+	echo "$pp" > $xray/domain
+	echo "$pp" > $xray/scdomain
 	echo "$pp" > /etc/v2ray/domain
 	echo "$pp" > /etc/v2ay/scdomain
 	echo "$pp" > /root/domain
     echo "$pp" > /root/scdomain
+    echo "IP=" >> $ipvps/ipvps.conf
     echo "IP=$pp" > $ipvps/ipvps.conf
-    curl -s ipinfo.io/org/ > /etc/xray/ISP
-    curl -s https://ipinfo.io/ip/ > /etc/xray/IP
+    touch $xray/ISP
+    touch $xray/IP
+    curl -s ipinfo.io/org/ > $xray/ISP
+    curl -s https://ipinfo.io/ip/ > $xray/IP
     fi
 clear
 
@@ -435,8 +427,8 @@ chmod 644 /etc/stunnel5
 
 # Download Config Stunnel5
 cat > /etc/stunnel5/stunnel5.conf <<-END
-cert = /etc/xray/xray.crt
-key = /etc/xray/xray.key
+cert = $xray/xray.crt
+key = $xray/xray.key
 client = no
 socket = a:SO_REUSEADDR=1
 socket = l:TCP_NODELAY=1

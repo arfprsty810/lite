@@ -59,6 +59,10 @@ red() { echo -e "\\033[31;1m${*}\\033[0m"; }
 cd /root
 source /etc/os-release
 xray="/etc/xray"
+logxray="/var/log/xray"
+trgo="/etc/trojan-go"
+logtrgo="/var/log/trojan-go"
+nginx="/etc/nginx"
 ipvps="/var/lib/arf"
 github="https://raw.githubusercontent.com/arfprsty810/lite/main"
 start=$(date +%s)
@@ -71,15 +75,16 @@ if [ "${EUID}" -ne 0 ]; then
 fi
 
 # // Remove File & Directory
-rm -fr /usr/local/bin/xray
 rm -fr /usr/local/bin/stunnel
 rm -fr /usr/local/bin/stunnel5
-rm -fr /etc/nginx
-rm -fr /var/lib/arf
-rm -fr /usr/bin/xray
+rm -fr $nginx
+rm -fr $ipvps
 rm -fr $xray
-rm -fr /usr/local/xray
-rm -fr /var/log/xray
+rm -fr $logxray
+rm -fr /usr/local/bin/xray
+rm -fr $trgo
+rm -fr $logtrgo
+rm -fr /usr/bin/trojan-go
 clear
 apt install jq curl -y
 secs_to_human() {
@@ -117,11 +122,11 @@ read -rp "Input ur domain / sub-domain : " -e pp
     mkdir -p $ipvps >/dev/null 2>&1
     mkdir -p $xray
     mkdir -p /etc/v2ray
-    mkdir -p /etc/nginx
+    mkdir -p $nginx
     touch $xray/domain
     touch $xray/scdomain
     touch /etc/v2ray/domain
-    touch /etc/v2rayray/scdomain
+    touch /etc/v2ray/scdomain
     touch /root/domain
     touch /root/scdomain
 	echo "$pp" > $xray/domain
@@ -130,7 +135,6 @@ read -rp "Input ur domain / sub-domain : " -e pp
 	echo "$pp" > /etc/v2ay/scdomain
 	echo "$pp" > /root/domain
     echo "$pp" > /root/scdomain
-    echo "IP=" >> $ipvps/ipvps.conf
     echo "IP=$pp" > $ipvps/ipvps.conf
     touch $xray/ISP
     touch $xray/IP
@@ -428,11 +432,11 @@ mkdir -p /etc/stunnel5
 chmod 644 /etc/stunnel5
 
 # Download Config Stunnel5
-#cat $xray/xray.crt $xray/xray.key >> /etc/stunnel5/stunnel5.pem
+cat $xray/xray.crt $xray/xray.key >> /etc/stunnel5/stunnel5.pem
 cat > /etc/stunnel5/stunnel5.conf <<-END
-#cert = /etc/stunnel5/stunnel5.pem
-cert = $xray/xray.crt
-key = $xray/xray.key
+cert = /etc/stunnel5/stunnel5.pem
+#cert = $xray/xray.crt
+#key = $xray/xray.key
 client = no
 socket = a:SO_REUSEADDR=1
 socket = l:TCP_NODELAY=1
@@ -472,7 +476,7 @@ END
 # Service Stunnel5 /etc/init.d/stunnel5
 rm -fr /etc/init.d/stunnel5
 wget -q -O /etc/init.d/stunnel5 "https://raw.githubusercontent.com/arfprsty810/lite/main/stunnel5/stunnel5.init"
-#chmod 600 /etc/stunnel5/stunnel5.pem
+chmod 600 /etc/stunnel5/stunnel5.pem
 chmod +x /etc/init.d/stunnel5
 cp -r /usr/local/bin/stunnel /usr/local/bin/stunnel5
 #mv /usr/local/bin/stunnel /usr/local/bin/stunnel5

@@ -271,27 +271,42 @@ sleep 2
 cd
 
 #Instal Xray
-wget $github/xray/ins-xray.sh && chmod +x ins-xray.sh && sed -i -e 's/\r$//' ins-xray.sh && ./ins-xray.sh
+wget $github/xray/ins-xray.sh
+chmod +x ins-xray.sh
+sed -i -e 's/\r$//' /root/ins-xray.sh
+/root/ins-xray.sh
 clear
 sleep 2
 
 #Instal Trojan-GO
-wget $github/xray/trojan/trojan-go.sh && chmod +x trojan-go.sh && sed -i -e 's/\r$//' trojan-go.sh && ./trojan-go.sh
+wget $github/xray/trojan/trojan-go.sh
+chmod +x /root/trojan-go.sh
+sed -i -e 's/\r$//' /root/trojan-go.sh
+/root/trojan-go.sh
 clear
 sleep 2
 
 #Instal Shadowsocks
-wget $github/shadowsocks/shadowsocks.sh && chmod +x shadowsocks.sh sed -i -e 's/\r$//' shadowsocks.sh && ./shadowsocks.sh
+wget $github/shadowsocks/shadowsocks.sh
+chmod +x /root/shadowsocks.sh 
+sed -i -e 's/\r$//' /root/shadowsocks.sh
+/root/shadowsocks.sh
 clear
 sleep 2
 
 #Instal SSH-vpn
-wget $github/ssh/ssh-vpn.sh && chmod +x ssh-vpn.sh && sed -i -e 's/\r$//' ssh-vpn.sh && ./ssh-vpn.sh
+wget $github/ssh/ssh-vpn.sh
+chmod +x /root/ssh-vpn.sh
+sed -i -e 's/\r$//' /root/ssh-vpn.sh
+/root/ssh-vpn.sh
 clear
 sleep 2
 
 #Instal Bbr
-wget $github/bbr/bbr.sh && chmod +x bbr.sh && sed -i -e 's/\r$//' bbr.sh && screen -S bbr ./bbr
+wget $github/bbr/bbr.sh
+chmod +x /root/bbr.sh
+sed -i -e 's/\r$//' /root/bbr.sh
+screen -S bbr /root/bbr
 clear
 sleep 2
 

@@ -286,12 +286,12 @@ clear
 sleep 2
 
 #Instal Shadowsocks
-wget https://raw.githubusercontent.com/arfprsty810/lite/main/shadowsocks/shadowsocks.sh
-chmod +x shadowsocks.sh 
-sed -i -e 's/\r$//' shadowsocks.sh
-./shadowsocks.sh
-clear
-sleep 2
+#wget https://raw.githubusercontent.com/arfprsty810/lite/main/shadowsocks/shadowsocks.sh
+#chmod +x shadowsocks.sh 
+#sed -i -e 's/\r$//' shadowsocks.sh
+#./shadowsocks.sh
+#clear
+#sleep 2
 
 #Instal SSH-vpn
 wget https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ssh-vpn.sh

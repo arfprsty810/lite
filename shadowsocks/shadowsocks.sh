@@ -15,6 +15,7 @@ clear
 #openssl rand -base64 16 > $xray/passwd
 </dev/urandom tr -dc a-z0-9 | head -c16 > $xray/passwd
 pwd=$(cat $xray/passwd)
+github="https://raw.githubusercontent.com/arfprsty810/lite/main"
 
 #Server konfigurasi
 echo -e "[ ${green}INFO$NC ] MENGINSTALL SAHDOWSOCKS-LIBEV"

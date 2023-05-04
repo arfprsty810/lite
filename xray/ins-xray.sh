@@ -9,20 +9,6 @@ tyblue() { echo -e "\\033[36;1m${*}\\033[0m"; }
 yellow() { echo -e "\\033[33;1m${*}\\033[0m"; }
 green() { echo -e "\\033[32;1m${*}\\033[0m"; }
 red() { echo -e "\\033[31;1m${*}\\033[0m"; }
-clear
-
-echo ""
-echo ""
-echo -e "[ ${green}INFO$NC ] INSTALLER AUTO SCRIPT "
-echo " - XRAY => VMESS - VLESS "
-echo " - TROJAN => TROJAN WS - TROJAN-GO "
-echo " - SHADOWSOCKS => SHADOWSOCKS-LIBEV "
-sleep 3
-echo -e ""
-clear
-
-echo -e "[ ${green}INFO$NC ] INSTALLING KONFIGURASI"
-sleep 1
 
 source /etc/os-release
 xray="/etc/xray"
@@ -34,53 +20,9 @@ OS=$ID
 ver=$VERSION_ID
 # set random uuid
 uuid=$(cat /proc/sys/kernel/random/uuid)
-
 domain=$(cat $xray/domain)
 sleep 1
 clear
-
-echo -e "[ ${green}INFO$NC ] DISABLE IPV6"
-sleep 1
-echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6 >/dev/null 2>&1
-sed -i '$ i\echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6' /etc/rc.local >/dev/null 2>&1
-apt update -y
-apt upgrade -y
-apt dist-upgrade -y
-clear
-echo -e "[ ${green}INFO${NC} ] CHECKING... "
-apt install iptables iptables-persistent -y
-sleep 1
-clear
-echo -e "[ ${green}INFO$NC ] SETTING NTPDATE"
-apt install ntpdate -y
-ntpdate -u pool.ntp.org
-ntpdate pool.ntp.org 
-timedatectl set-ntp true
-timedatectl set-timezone Asia/Jakarta
-ln -fs /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
-sleep 1
-clear
-echo -e "[ ${green}INFO$NC ] ENABLE CHRONYD"
-apt -y install chrony
-systemctl enable chronyd
-systemctl restart chronyd
-sleep 1
-clear
-echo -e "[ ${green}INFO$NC ] ENABLE CHRONY"
-systemctl enable chrony
-systemctl restart chrony
-clear
-sleep 1
-clear
-echo -e "[ ${green}INFO$NC ] SETTING CHRONY TRACKING"
-chronyc sourcestats -v
-chronyc tracking -v
-clear
-echo -e "[ ${green}INFO$NC ] SETTING SERVICE"
-apt update -y
-apt upgrade -y
-clear
-echo " "
 
 # install xray
 echo -e "[ ${green}INFO$NC ] INSTALLING XRAY VMESS - VLESS"

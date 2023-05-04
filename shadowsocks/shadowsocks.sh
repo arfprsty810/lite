@@ -11,6 +11,7 @@ green() { echo -e "\\033[32;1m${*}\\033[0m"; }
 red() { echo -e "\\033[31;1m${*}\\033[0m"; }
 clear
 
+xray="/etc/xray"
 # set random pwd
 #openssl rand -base64 16 > $xray/passwd
 </dev/urandom tr -dc a-z0-9 | head -c16 > $xray/passwd
@@ -36,6 +37,8 @@ cat > /etc/shadowsocks-libev/config.json <<END
     "mode":"tcp_and_udp",
 }
 END
+clear
+
 systemctl enable shadowsocks-libev.service
 systemctl start shadowsocks-libev.service
 clear
@@ -64,6 +67,25 @@ iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2443:3543 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2443:3543 -j ACCEPT
 iptables-save > /etc/iptables.up.rules
 ip6tables-save > /etc/ip6tables.up.rules
+clear
+echo -e "[ ${green}INFO$NC ] SETTING SHADOWSOCKS SUKSES !!!"
+sleep 1
+
+# restart
+echo -e "[ ${green}INFO$NC ] MEMULAI ULANG KONFIGURASI"
+sleep 1
+systemctl daemon-reload
+systemctl enable xray
+systemctl restart xray
+systemctl restart nginx
+systemctl enable runn
+systemctl restart runn
+systemctl stop trojan-go
+systemctl start trojan-go
+systemctl enable trojan-go
+systemctl restart trojan-go
+systemctl enable shadowsocks-libev.service
+systemctl start shadowsocks-libev.service
 clear
 
 #shadowsocks-libev

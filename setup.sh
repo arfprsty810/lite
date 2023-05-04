@@ -113,7 +113,7 @@ cd
 # // Remove
 apt-get remove --purge nginx* -y
 apt-get remove --purge apache2* -y
-apt autoremove -y
+#apt autoremove -y
 clear
 
 cd /root/
@@ -147,7 +147,7 @@ clear
 apt-get install --no-install-recommends build-essential autoconf libtool libssl-dev libpcre3-dev libev-dev asciidoc xmlto -y
 clear
 
-apt -y install php php-fpm php-cli php-mysql libxml-parser-perl
+#apt -y install php php-fpm php-cli php-mysql libxml-parser-perl
 
 apt install make cmake automake -y
 apt install libz-dev -y

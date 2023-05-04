@@ -130,6 +130,7 @@ echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━�
 echo -e "[ ${green}SCRIPT${NC} ] install .... "
 sleep 2
 cd
+
 #Instal Xray
 wget https://raw.githubusercontent.com/arfprsty810/lite/main/xray/ins-xray.sh
 chmod +x ins-xray.sh
@@ -138,7 +139,7 @@ sed -i -e 's/\r$//' ins-xray.sh
 clear
 sleep 2
 
-Instal Trojan-GO
+#Instal Trojan-GO
 wget https://raw.githubusercontent.com/arfprsty810/lite/main/xray/trojan/trojan-go.sh
 chmod +x trojan-go.sh
 sed -i -e 's/\r$//' trojan-go.sh
@@ -155,12 +156,12 @@ clear
 sleep 2
 
 #Instal SSH-vpn
-wget https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ssh-vpn.sh
-chmod +x ssh-vpn.sh
-sed -i -e 's/\r$//' ssh-vpn.sh
-./ssh-vpn.sh
-clear
-sleep 2
+#wget https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ssh-vpn.sh
+#chmod +x ssh-vpn.sh
+#sed -i -e 's/\r$//' ssh-vpn.sh
+#./ssh-vpn.sh
+#clear
+#sleep 2
 
 #Instal Bbr
 wget https://raw.githubusercontent.com/arfprsty810/lite/main/bbr/bbr.sh

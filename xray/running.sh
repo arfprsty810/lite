@@ -69,7 +69,7 @@ xray_status=$(systemctl status xray | grep Active | awk '{print $3}' | cut -d "(
 clear
 
 # TROJAN-GO
-trojango=$(systemctl status trojan-go | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+trojango=$(systemctl status trojan-go.service | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
 clear
 
 # TROJAN-GFW
@@ -81,7 +81,7 @@ clear
 #clear
 
 # SHADOWSHOCK
-ss_status=$(/etc/init.d/shadowsocks-libev status | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+ss_status=$(systemctl status shadowsocks-libev.service | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
 #ss_info="$(systemctl show shadowsocks-libev.service --no-page)"
 #ss_obfs=$(echo "${ss_info}" | grep 'ActiveState=' | cut -f2 -d=)  
 #status_ss_tls="$(systemctl show shadowsocks-libev-server@tls.service --no-page)"
@@ -324,8 +324,8 @@ echo -e "❇️ TROJAN GRPC             :$status_xray"
 echo -e "❇️ TROJAN GO               :$status_trojan_go"
 #echo -e "❇️ Trojan GFW              :$status_virus_trojangfw"
 echo -e "❇️ SHADOWSOCKS OBFS        :$status_ss_obfs"
-echo -e "❇️ Websocket TLS           :$swstls"
-echo -e "❇️ Websocket None TLS      :$swstls"
+echo -e "❇️ WS-Stunnel TLS          :$swstls"
+echo -e "❇️ WS-Stunnel None TLS     :$swstls"
 echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
 echo ""
 read -n 1 -s -r -p "Press any key to back on menu"

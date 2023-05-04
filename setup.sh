@@ -278,12 +278,12 @@ clear
 sleep 2
 
 #Instal Trojan-GO
-wget https://raw.githubusercontent.com/arfprsty810/lite/main/xray/trojan/trojan-go.sh
-chmod +x trojan-go.sh
-sed -i -e 's/\r$//' trojan-go.sh
-./trojan-go.sh
-clear
-sleep 2
+#wget https://raw.githubusercontent.com/arfprsty810/lite/main/xray/trojan/trojan-go.sh
+#chmod +x trojan-go.sh
+#sed -i -e 's/\r$//' trojan-go.sh
+#./trojan-go.sh
+#clear
+#sleep 2
 
 #Instal Shadowsocks
 #wget https://raw.githubusercontent.com/arfprsty810/lite/main/shadowsocks/shadowsocks.sh

@@ -27,95 +27,17 @@ sleep 1
 source /etc/os-release
 xray="/etc/xray"
 logxray="/var/log/xray"
-trgo="/etc/trojan-go"
-logtrgo="/var/log/trojan-go"
 nginx="/etc/nginx"
 ipvps="/var/lib/arf"
 github="https://raw.githubusercontent.com/arfprsty810/lite/main"
 OS=$ID
 ver=$VERSION_ID
-# set random pwd
-#openssl rand -base64 16 > $xray/passwd
-</dev/urandom tr -dc a-z0-9 | head -c16 > $xray/passwd
-pwd=$(cat $xray/passwd)
 # set random uuid
 uuid=$(cat /proc/sys/kernel/random/uuid)
 
 domain=$(cat $xray/domain)
 sleep 1
 clear
-
-echo ""
-date
-echo ""
-echo -e "[ ${green}INFO$NC ] INSTALLING REQUIREMENTS TOOLS"
-sleep 1
-
-cd /root/
-# // Remove
-apt-get remove --purge nginx* -y
-apt-get remove --purge apache2* -y
-apt autoremove -y
-clear
-
-cd /root/
-apt update && apt upgrade -y
-clear
-apt clean all && apt update
-clear
-apt install iptables iptables-persistent -y
-clear
-apt install cron bash-completion -y
-clear
-apt install pwgen openssl netcat -y
-clear
-apt install lsb-release -y 
-clear
-apt install zip -y
-clear
-apt install net-tools -y
-clear
-apt install -y openvpn
-clear
-apt install socat xz-utils wget apt-transport-https gnupg gnupg2 gnupg1 dnsutils -y
-clear
-apt-get --reinstall --fix-missing install -y sudo dpkg psmisc ruby wondershaper python2 tmux nmap bzip2 gzip coreutils iftop htop unzip vim nano gcc g++ perl m4 dos2unix libreadline-dev zlib1g-dev git 
-clear
-apt-get --reinstall --fix-missing install -y screen rsyslog sed bc dirmngr neofetch screenfetch lsof easy-rsa libsqlite3-dev
-gem install lolcat
-clear
-apt-get install --no-install-recommends build-essential autoconf libtool libssl-dev libpcre3-dev libev-dev asciidoc xmlto -y
-clear
-
-apt -y install php php-fpm php-cli php-mysql libxml-parser-perl
-
-apt install make cmake automake -y
-apt install libz-dev -y
-apt install libssl1.0-dev -y
-apt install dos2unix -y
-clear
-
-apt-get install software-properties-common -y
-clear
-if [[ $OS == 'ubuntu' ]]; then
-apt install shadowsocks-libev -y
-apt install simple-obfs -y
-clear
-elif [[ $OS == 'debian' ]]; then
-if [[ "$ver" = "9" ]]; then
-echo "deb http://deb.debian.org/debian stretch-backports main" | tee /etc/apt/sources.list.d/stretch-backports.list
-apt update
-apt -t stretch-backports install shadowsocks-libev -y
-apt -t stretch-backports install simple-obfs -y
-clear
-elif [[ "$ver" = "10" ]]; then
-echo "deb http://deb.debian.org/debian buster-backports main" | tee /etc/apt/sources.list.d/buster-backports.list
-apt update
-apt -t buster-backports install shadowsocks-libev -y
-apt -t buster-backports install simple-obfs -y
-clear
-fi
-fi
 
 echo -e "[ ${green}INFO$NC ] DISABLE IPV6"
 sleep 1
@@ -685,38 +607,14 @@ wget -q -O /usr/bin/cek-tr "$github/xray/trojan/cek-tr.sh" && chmod +x /usr/bin/
 wget -q -O /usr/bin/del-tr "$github/xray/trojan/del-tr.sh" && chmod +x /usr/bin/del-tr
 wget -q -O /usr/bin/renew-tr "$github/xray/trojan/renew-tr.sh" && chmod +x /usr/bin/renew-tr
 
-#shadowsocks-libev
-wget -q -O /usr/bin/menu-ss "$github/shadowsocks/menu-ss.sh" && chmod +x /usr/bin/menu-ss
-wget -q -O /usr/bin/addss "$github/shadowsocks/addss.sh" && chmod +x /usr/bin/addss
-wget -q -O /usr/bin/cekss "$github/shadowsocks/cekss.sh" && chmod +x /usr/bin/cekss
-wget -q -O /usr/bin/delss "$github/shadowsocks/delss.sh" && chmod +x /usr/bin/delss
-wget -q -O /usr/bin/renewss "$github/shadowsocks/renewss.sh" && chmod +x /usr/bin/renewss
-
 #--
-wget -q -O /usr/bin/restart "$github/xray/restart.sh" && chmod +x /usr/bin/restart
-wget -q -O /usr/bin/running "$github/xray/running.sh" && chmod +x /usr/bin/running
-wget -q -O /usr/bin/cek-bandwidth "$github/xray/cek-bandwidth.sh" && chmod +x /usr/bin/cek-bandwidth
-wget -q -O /usr/bin/menu "$github/xray/menu.sh" && chmod +x /usr/bin/menu
-wget -q -O /usr/bin/speedtest "$github/xray/speedtest_cli.py" && chmod +x /usr/bin/speedtest
-wget -q -O /usr/bin/update "$github/xray/update.sh" && chmod +x /usr/bin/update
-wget -q -O /usr/bin/renew-config "$github/backup/renew-config.sh" && chmod +x /usr/bin/renew-config
-wget -q -O /usr/bin/backup-user "$github/backup/backup-user.sh" && chmod +x /usr/bin/backup-user
 wget -q -O /usr/bin/xp "$github/xray/xp.sh" && chmod +x /usr/bin/xp
-wget -q -O /usr/bin/cf "$github/xray/cf.sh" && chmod +x /usr/bin/cf
 sleep 1
 clear
 
 echo -e "[ ${green}INFO$NC ] INSTALL SCRIPT ..."
 sleep 1
-sed -i -e 's/\r$//' /bin/menu
-sed -i -e 's/\r$//' /bin/cek-bandwidth
-sed -i -e 's/\r$//' /bin/update
-sed -i -e 's/\r$//' /bin/restart
-sed -i -e 's/\r$//' /bin/running
-sed -i -e 's/\r$//' /bin/renew-config
-sed -i -e 's/\r$//' /bin/backup-user
 sed -i -e 's/\r$//' /bin/xp
-sed -i -e 's/\r$//' /bin/cf
 
 sed -i -e 's/\r$//' /bin/menu-vmess
 sed -i -e 's/\r$//' /bin/add-ws
@@ -735,212 +633,13 @@ sed -i -e 's/\r$//' /bin/add-tr
 sed -i -e 's/\r$//' /bin/cek-tr
 sed -i -e 's/\r$//' /bin/del-tr
 sed -i -e 's/\r$//' /bin/renew-tr
-
-sed -i -e 's/\r$//' /bin/menu-ss
-sed -i -e 's/\r$//' /bin/addss
-sed -i -e 's/\r$//' /bin/cekss
-sed -i -e 's/\r$//' /bin/delss
-sed -i -e 's/\r$//' /bin/renewss
 clear
 
 echo -e "[ ${green}INFO$NC ] SETTING XRAY VMESS & VLESS  SUKSES !!!"
 sleep 2
 clear
-#mv /root/domain $xray
-#if [ -f /root/scdomain ];then
-#rm /root/scdomain > /dev/null 2>&1
-#fi
 
-# Install Trojan Go
-echo -e "[ ${green}INFO$NC ] INSTALLING TROJAN-GO"
-sleep 1
-latest_version="$(curl -s "https://api.github.com/repos/p4gefau1t/trojan-go/releases" | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
-trojango_link="https://github.com/p4gefau1t/trojan-go/releases/download/v${latest_version}/trojan-go-linux-amd64.zip"
-mkdir -p "/usr/bin/trojan-go"
-mkdir -p "$trgo"
-cd `mktemp -d`
-curl -sL "${trojango_link}" -o trojan-go.zip
-unzip -q trojan-go.zip && rm -rf trojan-go.zip
-mv trojan-go /usr/local/bin/trojan-go
-chmod +x /usr/local/bin/trojan-go
-mkdir $logtrgo/
-touch $trgo/akun.conf
-touch $logtrgo/trojan-go.log
-clear
-
-# Buat Config Trojan Go
-echo -e "[ ${green}INFO$NC ] MEMBUAT CONFIG TROJAN-GO"
-sleep 1
-cat > $trgo/config.json << END
-{
-  "run_type": "server",
-  "local_addr": "0.0.0.0",
-  "local_port": 2087,
-  "remote_addr": "127.0.0.1",
-  "remote_port": 89,
-  "log_level": 1,
-  "log_file": "$logtrgo/trojan-go.log",
-  "password": [
-      "$uuid"
-  ],
-  "disable_http_check": true,
-  "udp_timeout": 60,
-  "ssl": {
-    "verify": false,
-    "verify_hostname": false,
-    "cert": "$xray/xray.crt",
-    "key": "$xray/xray.key",
-    "key_password": "",
-    "cipher": "",
-    "curves": "",
-    "prefer_server_cipher": false,
-    "sni": "$domain",
-    "alpn": [
-      "http/1.1"
-    ],
-    "session_ticket": true,
-    "reuse_session": true,
-    "plain_http_response": "",
-    "fallback_addr": "127.0.0.1",
-    "fallback_port": 0,
-    "fingerprint": "firefox"
-  },
-  "tcp": {
-    "no_delay": true,
-    "keep_alive": true,
-    "prefer_ipv4": true
-  },
-  "mux": {
-    "enabled": false,
-    "concurrency": 8,
-    "idle_timeout": 60
-  },
-  "websocket": {
-    "enabled": true,
-    "path": "/trojango",
-    "host": "$domain"
-  },
-    "api": {
-    "enabled": false,
-    "api_addr": "",
-    "api_port": 0,
-    "ssl": {
-      "enabled": false,
-      "key": "",
-      "cert": "",
-      "verify_client": false,
-      "client_cert": []
-    }
-  }
-}
-END
-clear
-
-# Installing Trojan Go Service
-cat > /etc/systemd/system/trojan-go.service << END
-[Unit]
-Description=Trojan-Go Service
-Documentation=https://t.me/arfprsty
-After=network.target nss-lookup.target
-
-[Service]
-User=root
-CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-NoNewPrivileges=true
-ExecStart=/usr/local/bin/trojan-go -config $trgo/config.json
-Restart=on-failure
-RestartPreventExitStatus=23
-
-[Install]
-WantedBy=multi-user.target
-END
-clear
-
-# Trojan Go Uuid
-cat > $trgo/uuid << END
-$uuid
-END
-clear
-echo -e "[ ${green}INFO$NC ] SETTING TROJAN-GO SUKSES !!!"
-sleep 1
-clear
-
-#Server konfigurasi
-echo -e "[ ${green}INFO$NC ] MENGINSTALL SAHDOWSOCKS-LIBEV"
-sleep 2
-clear
-
-echo -e "[ ${green}INFO$NC ] MEMBUAT CONFIG SHADOWSOCKS"
-sleep 1
-cat > /etc/shadowsocks-libev/config.json <<END
-{   
-    "server":"0.0.0.0",
-    "server_port":8488,
-    "password":"$pwd",
-    "timeout":60,
-    "method":"aes-256-cfb",
-    "fast_open":true,
-    "nameserver":"8.8.8.8",
-    "mode":"tcp_and_udp",
-}
-END
-systemctl enable shadowsocks-libev.service
-systemctl start shadowsocks-libev.service
-clear
-
-echo -e "[ ${green}INFO$NC ] MEMBUAT CLIENT CONFIG"
-sleep 1
-cat > /etc/shadowsocks-libev.json <<END
-{
-    "server":"127.0.0.1",
-    "server_port":8388,
-    "local_port":1080,
-    "password":"$pwd",
-    "timeout":60,
-    "method":"chacha20-ietf-poly1305",
-    "mode":"tcp_and_udp",
-    "fast_open":true,
-    "plugin":"/usr/bin/obfs-local",
-    "plugin_opts":"obfs=tls;failover=127.0.0.1:1443;fast-open"
-}
-END
-chmod +x /etc/shadowsocks-libev.json
-clear
-
-echo -e "">>"/etc/shadowsocks-libev/akun.conf"
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2443:3543 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2443:3543 -j ACCEPT
-iptables-save > /etc/iptables.up.rules
-ip6tables-save > /etc/ip6tables.up.rules
-clear
-
-echo -e "[ ${green}INFO$NC ] SETTING SHADOWSOCKS SUKSES !!!"
-sleep 1
-clear
-
-# restart
-echo -e "[ ${green}INFO$NC ] MEMULAI ULANG KONFIGURASI"
-sleep 1
-systemctl daemon-reload
-systemctl enable xray
-systemctl restart xray
-systemctl restart nginx
-systemctl enable runn
-systemctl restart runn
-systemctl stop trojan-go
-systemctl start trojan-go
-systemctl enable trojan-go
-systemctl restart trojan-go
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2086 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2087 -j ACCEPT
-iptables-save > /etc/iptables.up.rules
-iptables-restore -t < /etc/iptables.up.rules
-netfilter-persistent save
-netfilter-persistent reload
-clear
-
-echo -e "[ ${green}INFO$NC ] INSTALL FINISHED !"
+echo -e "[ ${green}INFO$NC ] INSTALL XRAY FINISHED !"
 sleep 2
 rm -rvf /root/ins-xray.sh
 clear

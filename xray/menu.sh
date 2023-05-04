@@ -60,7 +60,7 @@ fi
 clear
 
 echo -e "\033[0;34m┌─────────────────────────────────────────────────────┐${NC}"
-echo -e "                    ⇱ \e[32;1mInformasi VPS\e[0m ⇲ "
+echo -e "                   ⇱ \e[32;1mInformasi VPS\e[0m ⇲ "
 echo -e "\033[0;34m└─────────────────────────────────────────────────────┘${NC}"
 echo -e "  ❇️ \e[32;1m Sever Uptime\e[0m     : $( uptime -p  | cut -d " " -f 2-10000 ) "
 echo -e "  ❇️ \e[32;1m Current Time\e[0m     : $( date -d "0 days" +"%d-%m-%Y | %X" ) "
@@ -72,9 +72,9 @@ echo -e "  ❇️ \e[32;1m Time Reboot VPS\e[0m  : 00:00 ( Jam 12 Malam ) "
 echo -e "\033[0;34m└─────────────────────────────────────────────────────┘${NC}"
 echo -e ""
 echo -e "\033[0;34m┌─────────────────────────────────────────────────────┐${NC}"
-echo -e "                    ⇱ \e[32;1mStatus Layanan\e[0m ⇲ "
+echo -e "                  ⇱ \e[32;1mStatus Layanan\e[0m ⇲ "
 echo -e "\033[0;34m└─────────────────────────────────────────────────────┘${NC}"
-echo -e "       🟢🟡🔴  SERVER STATUS     :    ${status_nginx}  🔴🟡🟢"
+echo -e "      🟢🟡🔴  SERVER STATUS     :    ${status_nginx}  🔴🟡🟢"
 echo -e "\033[0;34m└─────────────────────────────────────────────────────┘${NC}"
 echo -e ""
 echo -e "\033[0;34m┌─────────────────────────────────────────────────────┐${NC}"
@@ -90,7 +90,7 @@ echo -e "\033[0;34m└───────────────────�
 echo""
 
 echo -e "\033[0;34m┌─────────────────────────────────────────────────────┐${NC}"
-echo -e "                   ⇱ \e[32;1mMenu Service/s\e[0m ⇲ "
+echo -e "                  ⇱ \e[32;1mMenu Service/s\e[0m ⇲ "
 echo -e "\033[0;34m└─────────────────────────────────────────────────────┘${NC}"
 
 echo -e "    ${BICyan}[${BIWhite}06${BICyan}]${RED} •${NC} ${CYAN}SPEEDTEST    $NC  ${BICyan}[${BIWhite}10${BICyan}]${RED} • ${NC}${CYAN}CEK BANDWIDTH $NC"

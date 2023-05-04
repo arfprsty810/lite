@@ -12,6 +12,13 @@ CYAN='\033[0;36m'
 LIGHT='\033[0;37m'
 # ==========================================
 source /etc/os-release
+xray="/etc/xray"
+nginx="/etc/nginx"
+ipvps="/var/lib/arf"
+rm -fr $nginx
+rm -fr $ipvps
+rm -fr $xray
+rm -fr /usr/local/bin/xray
 clear
 #apt install jq curl -y
 DOMAIN=d-jumper.me
@@ -21,11 +28,7 @@ CF_ID=arief.prsty@gmail.com
 CF_KEY=3a3ac5ccc9e764de9129fbbb177c161b9dfbd
 set -euo pipefail
 
-xray="/etc/xray"
-nginx="/etc/nginx"
-ipvps="/var/lib/arf"
 mkdir -p $xray
-mkdir -p /etc/v2ray
 mkdir -p $nginx
 mkdir -p $ipvps >/dev/null 2>&1
 echo "IP=" >> $ipvps/ipvps.conf
@@ -93,14 +96,10 @@ sleep 5
 
 touch $xray/domain
 touch $xray/scdomain
-touch /etc/v2ray/domain
-touch /etc/v2ray/scdomain
 touch /root/domain
 touch /root/scdomain
 echo "$SUB_DOMAIN" > $xray/domain
 echo "$SUB_DOMAIN" > $xray/scdomain
-echo "$SUB_DOMAIN" > /etc/v2ray/domain
-echo "$SUB_DOMAIN" > /etc/v2ray/scdomain
 echo "$SUB_DOMAIN" > /root/domain
 echo "$SUB_DOMAIN" > /root/scdomain
 echo "IP=$SUB_DOMAIN" > $ipvps/ipvps.conf

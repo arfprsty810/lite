@@ -65,31 +65,25 @@ clear
 
 # CHECK STATUS 
 # XRAY VMESS - VLESS - TROJAN
-tls_v2ray_status=$(systemctl status xray | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
-nontls_v2ray_status=$(systemctl status xray | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
-vless_tls_v2ray_status=$(systemctl status xray | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
-vless_nontls_v2ray_status=$(systemctl status xray | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
-trojan_server=$(systemctl status xray | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
-clear
-
-# TROJAN-GFW
-#trojangfw_server=$(systemctl status trojan | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+xray_status=$(systemctl status xray | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
 clear
 
 # TROJAN-GO
 trojango=$(systemctl status trojan-go | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
-trgo="$(systemctl show trojan-go.service --no-page)"
-strgo=$(echo "${trgo}" | grep 'ActiveState=' | cut -f2 -d=)  
 clear
+
+# TROJAN-GFW
+#trojangfw_server=$(systemctl status trojan | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+#clear
 
 # SHADOWSHOCK-R
 #ssr_status=$(systemctl status ssrmu | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
-clear
+#clear
 
 # SHADOWSHOCK
-ss_status=$(systemctl status shadowsocks-libev.service | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
-ss_info="$(systemctl show shadowsocks-libev.service --no-page)"
-ss_obfs=$(echo "${ss_info}" | grep 'ActiveState=' | cut -f2 -d=)  
+ss_status=$(/etc/init.d/shadowsocks-libev status | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+#ss_info="$(systemctl show shadowsocks-libev.service --no-page)"
+#ss_obfs=$(echo "${ss_info}" | grep 'ActiveState=' | cut -f2 -d=)  
 #status_ss_tls="$(systemctl show shadowsocks-libev-server@tls.service --no-page)"
 #ss_tls=$(echo "${status_ss_tls}" | grep 'ActiveState=' | cut -f2 -d=)
 #status_ss_http="$(systemctl show shadowsocks-libev-server@http.service --no-page)"
@@ -106,8 +100,6 @@ ssh_service=$(/etc/init.d/ssh status | grep Active | awk '{print $3}' | cut -d "
 clear
 
 # OPENVPN
-openvpn_service="$(systemctl show openvpn.service --no-page)"
-oovpn=$(echo "${openvpn_service}" | grep 'ActiveState=' | cut -f2 -d=)
 status_openvp=$(/etc/init.d/openvpn status | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
 #wsovpn=$(systemctl status ws-ovpn | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
 #ohq=$(systemctl status openvpn-ohp | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
@@ -145,7 +137,6 @@ clear
 vnstat_service=$(/etc/init.d/vnstat status | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
 clear
 
-#status_text=$(echo "${status}" | grep 'ActiveState=' | cut -f2 -d=)
 #sstp_service=$(systemctl status accel-ppp | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
 #wg="$(systemctl show wg-quick@wg0.service --no-page)"
 #swg=$(echo "${wg}" | grep 'ActiveState=' | cut -f2 -d=)
@@ -154,47 +145,15 @@ clear
 clear
 
 # STATUS SERVICE VMESS TLS 
-if [[ $tls_v2ray_status == "running" ]]; then 
-   status_tls_v2ray=" ${GREEN}Running${NC} ( No Error )"
+if [[ $xray_status == "running" ]]; then 
+   status_xray=" ${GREEN}Running${NC} ( No Error )"
 else
-   status_tls_v2ray="${RED}  Not Running${NC}   ( Error )"
-fi
-clear
-
-# STATUS SERVICE VMESS NON TLS V2RAY
-if [[ $nontls_v2ray_status == "running" ]]; then 
-   status_nontls_v2ray=" ${GREEN}Running ${NC}( No Error )${NC}"
-else
-   status_nontls_v2ray="${RED}  Not Running ${NC}  ( Error )${NC}"
-fi
-clear
-
-# STATUS SERVICE VLESS HTTPS
-if [[ $vless_tls_v2ray_status == "running" ]]; then
-  status_tls_vless=" ${GREEN}Running${NC} ( No Error )"
-else
-  status_tls_vless="${RED}  Not Running ${NC}  ( Error )${NC}"
-fi
-clear
-
-# STATUS SERVICE VLESS HTTP
-if [[ $vless_nontls_v2ray_status == "running" ]]; then
-  status_nontls_vless=" ${GREEN}Running${NC} ( No Error )"
-else
-  status_nontls_vless="${RED}  Not Running ${NC}  ( Error )${NC}"
-fi
-clear
-
-# STATUS SERVICE TROJAN
-if [[ $trojan_server == "running" ]]; then 
-   status_virus_trojan=" ${GREEN}Running ${NC}( No Error )${NC}"
-else
-   status_virus_trojan="${RED}  Not Running ${NC}  ( Error )${NC}"
+   status_xray="${RED}  Not Running${NC}   ( Error )"
 fi
 clear
 
 # STATUS SERVICE TROJAN GO
-if [[ $strgo == "active" ]]; then
+if [[ $trojango == "active" ]]; then
   status_trojan_go=" ${GREEN}Running ${NC}( No Error )${NC}"
 else
   status_trojan_go="${RED}  Not Running ${NC}  ( Error )${NC}"
@@ -218,7 +177,7 @@ fi
 clear
 
 # STATUS SERVICE OPENVPN
-if [[ $oovpn == "active" ]]; then
+if [[ $status_openvp == "active" ]]; then
   status_openvpn=" ${GREEN}Running ${NC}( No Error )"
 else
   status_openvpn="${RED}  Not Running ${NC}  ( Error )"
@@ -354,14 +313,14 @@ echo -e "❇️ Squid                   :$status_squid"
 echo -e "❇️ Fail2Ban                :$status_fail2ban"
 echo -e "❇️ Crons                   :$status_cron"
 echo -e "❇️ Vnstat                  :$status_vnstat"
-echo -e "❇️ XRAYS VMESS TLS         :$status_tls_v2ray"
-echo -e "❇️ XRAYS VMESS NONE TLS    :$status_nontls_v2ray"
-echo -e "❇️ XRAYS VMESS GRPC        :$status_tls_v2ray"
-echo -e "❇️ XRAYS VLESS TLS         :$status_tls_vless"
-echo -e "❇️ XRAYS VLESS NONE TLS    :$status_nontls_vless"
-echo -e "❇️ XRAYS VLESS GRPC        :$status_tls_vless"
-echo -e "❇️ TROJAN WS               :$status_virus_trojan"
-echo -e "❇️ TROJAN GRPC             :$status_virus_trojan"
+echo -e "❇️ XRAYS VMESS TLS         :$status_xray"
+echo -e "❇️ XRAYS VMESS NONE TLS    :$status_xray"
+echo -e "❇️ XRAYS VMESS GRPC        :$status_xray"
+echo -e "❇️ XRAYS VLESS TLS         :$status_xray"
+echo -e "❇️ XRAYS VLESS NONE TLS    :$status_xray"
+echo -e "❇️ XRAYS VLESS GRPC        :$status_xray"
+echo -e "❇️ TROJAN WS               :$status_xray"
+echo -e "❇️ TROJAN GRPC             :$status_xray"
 echo -e "❇️ TROJAN GO               :$status_trojan_go"
 #echo -e "❇️ Trojan GFW              :$status_virus_trojangfw"
 echo -e "❇️ SHADOWSOCKS OBFS        :$status_ss_obfs"

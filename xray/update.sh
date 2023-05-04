@@ -186,47 +186,56 @@ sed -i -e 's/\r$//' /bin/delss
 sed -i -e 's/\r$//' /bin/renewss
 clear
 
-
+rm -rvf /bin/autodel
 wget -q -O /usr/bin/autodel "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/autodel.sh"
 chmod +x /usr/bin/autodel
 sed -i -e 's/\r$//' /bin/autodel
 
+rm -rvf /bin/autokill
 wget -q -O /usr/bin/autokill "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/autokill.sh"
 chmod +x /usr/bin/autokill
 sed -i -e 's/\r$//' /bin/autokill
 
+rm -rvf /bin/cek
 wget -q -O /usr/bin/cek "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/cek.sh"
 chmod +x /usr/bin/cek
 sed -i -e 's/\r$//' /bin/cek
 
+rm -rvf /bin/ceklim
 wget -q -O /usr/bin/ceklim "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ceklim.sh"
 chmod +x /usr/bin/ceklim
 sed -i -e 's/\r$//' /bin/ceklim
 
+rm -rvf /bin/del
 wget -q -O /usr/bin/del "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/del.sh"
 chmod +x /usr/bin/del
 sed -i -e 's/\r$//' /bin/del
 
+rm -rvf /bin/member
 wget -q -O /usr/bin/member "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/member.sh"
 chmod +x /usr/bin/member
 sed -i -e 's/\r$//' /bin/member
 
+rm -rvf /bin/menu-ssh
 wget -q -O /usr/bin/menu-ssh "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/menu-ssh.sh"
 chmod +x /usr/bin/menu-ssh
 sed -i -e 's/\r$//' /bin/menu-ssh
 
+rm -rvf /bin/renew
 wget -q -O /usr/bin/renew "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/renew.sh"
 chmod +x /usr/bin/renew
 sed -i -e 's/\r$//' /bin/renew
 
+rm -rvf /bin/tendang
 wget -q -O /usr/bin/tendang "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/tendang.sh"
 chmod +x /usr/bin/tendang
 sed -i -e 's/\r$//' /bin/tendang
 
+rm -rvf /bin/usernew
 wget -q -O /usr/bin/usernew "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/usernew.sh"
 chmod +x /usr/bin/usernew
 sed -i -e 's/\r$//' /bin/usernew
-
+clear
 
 echo -e "[ ${green}INFO$NC ] Update Successfully!"
 sleep 3
@@ -235,33 +244,6 @@ clear
 echo -e "[ ${green}INFO$NC ] CHECK EXPIRED USER ..."
 sleep 2
 /usr/bin/xp
-clear
-
-echo -e "[ ${green}ok${NC} ] Restart All Service ... "
-sleep 1
-systemctl daemon-reload
-systemctl enable xray
-systemctl restart xray
-systemctl restart nginx
-systemctl enable runn
-systemctl restart runn
-systemctl stop trojan-go
-systemctl start trojan-go
-systemctl enable trojan-go
-systemctl restart trojan-go
-#systemctl restart ws-dropbear.service >/dev/null 2>&1
-#systemctl restart ws-stunnel.service >/dev/null 2>&1
-systemctl restart xray.service >/dev/null 2>&1
-/etc/init.d/ssh restart
-/etc/init.d/dropbear restart
-#/etc/init.d/stunnel5 restart
-/etc/init.d/fail2ban restart
-/etc/init.d/cron restart
-/etc/init.d/nginx restart
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 1000
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 1000
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300 --max-clients 1000
-systemctl restart rc-local.service
 clear
 
 sleep 1
@@ -280,5 +262,116 @@ menu
 END
 chmod 644 /root/.profile
 clear
+
+sleep 1
+echo -e "[ ${green}INFO$NC ] Restart All Service ..."
+systemctl daemon-reload >/dev/null 2>&1
+sleep 1
+echo -e "[ ${GREEN}ok${NC} ] Daemon-Reload"
+systemctl stop xray >/dev/null 2>&1
+systemctl restart xray >/dev/null 2>&1
+systemctl enable xray >/dev/null 2>&1
+systemctl start xray >/dev/null 2>&1
+sleep 1
+echo -e "[ ${GREEN}ok${NC} ] Restarting Xray"
+systemctl stop runn >/dev/null 2>&1
+systemctl restart runn >/dev/null 2>&1
+systemctl enable runn >/dev/null 2>&1
+systemctl start runn >/dev/null 2>&1
+sleep 1
+echo -e "[ ${GREEN}ok${NC} ] Restarting Run"
+systemctl stop trojan-go >/dev/null 2>&1
+systemctl restart trojan-go >/dev/null 2>&1
+systemctl enable trojan-go >/dev/null 2>&1
+systemctl start trojan-go >/dev/null 2>&1
+sleep 1
+echo -e "[ ${GREEN}ok${NC} ] Restarting Trojan-GO"
+/etc/init.d/shadowsocks-libev stop >/dev/null 2>&1
+/etc/init.d/shadowsocks-libev restart >/dev/null 2>&1
+/etc/init.d/shadowsocks-libev enable >/dev/null 2>&1
+/etc/init.d/shadowsocks-libev start >/dev/null 2>&1
+sleep 1
+echo -e "[ ${GREEN}ok${NC} ] Restarting ShadowSocks-OBFS"
+systemctl stop rc-local.service >/dev/null 2>&1
+systemctl restart rc-local.service >/dev/null 2>&1
+systemctl enable rc-local.service >/dev/null 2>&1
+systemctl start rc-local.service >/dev/null 2>&1
+sleep 1
+echo -e "[ ${GREEN}ok${NC} ] Restarting RC.Local"
+/etc/init.d/openvpn stop >/dev/null 2>&1
+/etc/init.d/openvpn restart >/dev/null 2>&1
+/etc/init.d/openvpn enable >/dev/null 2>&1
+/etc/init.d/openvpn start >/dev/null 2>&1
+sleep 1
+echo -e "[ ${GREEN}ok${NC} ] Restarting openvpn"
+/etc/init.d/cron stop >/dev/null 2>&1
+/etc/init.d/cron restart >/dev/null 2>&1
+/etc/init.d/cron enable >/dev/null 2>&1
+/etc/init.d/cron start >/dev/null 2>&1
+sleep 1
+echo -e "[ ${GREEN}ok${NC} ] Restarting cron"
+/etc/init.d/ssh stop >/dev/null 2>&1
+/etc/init.d/ssh restart >/dev/null 2>&1
+/etc/init.d/ssh enable >/dev/null 2>&1
+/etc/init.d/ssh start >/dev/null 2>&1
+sleep 1
+echo -e "[ ${GREEN}ok${NC} ] Restarting ssh"
+/etc/init.d/dropbear stop >/dev/null 2>&1
+/etc/init.d/dropbear restart >/dev/null 2>&1
+/etc/init.d/dropbear enable >/dev/null 2>&1
+/etc/init.d/dropbear start >/dev/null 2>&1
+sleep 1
+echo -e "[ ${GREEN}ok${NC} ] Restarting dropbear"
+/etc/init.d/fail2ban stop >/dev/null 2>&1
+/etc/init.d/fail2ban restart >/dev/null 2>&1
+/etc/init.d/fail2ban enable >/dev/null 2>&1
+/etc/init.d/fail2ban start >/dev/null 2>&1
+sleep 1
+echo -e "[ ${GREEN}ok${NC} ] Restarting fail2ban"
+/etc/init.d/stunnel5 stop >/dev/null 2>&1
+/etc/init.d/stunnel5 restart >/dev/null 2>&1
+/etc/init.d/stunnel5 enable >/dev/null 2>&1
+/etc/init.d/stunnel5 start >/dev/null 2>&1
+sleep 1
+echo -e "[ ${GREEN}ok${NC} ] Restarting stunnel5"
+/etc/init.d/squid stop >/dev/null 2>&1
+/etc/init.d/squid restart >/dev/null 2>&1
+/etc/init.d/squid enable >/dev/null 2>&1
+/etc/init.d/squid start >/dev/null 2>&1
+sleep 1
+echo -e "[ ${GREEN}ok${NC} ] Restarting squid "
+/etc/init.d/vnstat stop >/dev/null 2>&1
+/etc/init.d/vnstat restart >/dev/null 2>&1
+/etc/init.d/vnstat enable >/dev/null 2>&1
+/etc/init.d/vnstat start >/dev/null 2>&1
+sleep 1
+echo -e "[ ${GREEN}ok${NC} ] Restarting vnstat "
+/etc/init.d/nginx stop >/dev/null 2>&1
+/etc/init.d/nginx restart >/dev/null 2>&1
+/etc/init.d/nginx enable >/dev/null 2>&1
+/etc/init.d/nginx start >/dev/null 2>&1
+chown -R www-data:www-data /home/vps/public_html >/dev/null 2>&1
+sleep 1
+echo -e "[ ${GREEN}ok${NC} ] Restarting nginx "
+#systemctl restart ws-dropbear.service >/dev/null 2>&1
+#sleep 1
+#echo -e "[ ${GREEN}ok${NC} ] Restarting WS-Dropbear"
+#systemctl restart ws-stunnel.service >/dev/null 2>&1
+#sleep 1
+#echo -e "[ ${GREEN}ok${NC} ] Restarting WS-Stunnel"
+#/etc/init.d/sslh restart
+#sleep 1
+#echo -e "[ ${GREEN}ok${NC} ] Restarting sslh "
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 500 >/dev/null 2>&1
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 500 >/dev/null 2>&1
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300 --max-clients 500 >/dev/null 2>&1
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7400 --max-clients 500 >/dev/null 2>&1
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7500 --max-clients 500 >/dev/null 2>&1
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7600 --max-clients 500 >/dev/null 2>&1
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7700 --max-clients 500 >/dev/null 2>&1
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7800 --max-clients 500 >/dev/null 2>&1
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7900 --max-clients 500 >/dev/null 2>&1
+sleep 1
+echo -e "[ ${GREEN}ok${NC} ] Restarting badvpn "
 
 menu

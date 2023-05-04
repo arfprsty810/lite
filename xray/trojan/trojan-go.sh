@@ -33,10 +33,9 @@ curl -sL "${trojango_link}" -o trojan-go.zip
 unzip -q trojan-go.zip && rm -rf trojan-go.zip
 mv trojan-go /usr/local/bin/trojan-go
 chmod +x /usr/local/bin/trojan-go
-mkdir $logtrgo/
+mkdir $logtrgo
 touch $trgo/akun.conf
 touch $logtrgo/trojan-go.log
-clear
 
 # Buat Config Trojan Go
 echo -e "[ ${green}INFO$NC ] MEMBUAT CONFIG TROJAN-GO"
@@ -132,6 +131,35 @@ cat > $trgo/uuid << END
 $uuid
 END
 clear
+
+echo -e "[ ${green}INFO$NC ] INSTALL SCRIPT ..."
+sleep 1
+wget -q -O /usr/bin/menu-trojan "$github/xray/trojan/menu-trojan.sh" && chmod +x /usr/bin/menu-trojan
+wget -q -O /usr/bin/add-tr "$github/xray/trojan/add-tr.sh" && chmod +x /usr/bin/add-tr
+wget -q -O /usr/bin/cek-tr "$github/xray/trojan/cek-tr.sh" && chmod +x /usr/bin/cek-tr
+wget -q -O /usr/bin/del-tr "$github/xray/trojan/del-tr.sh" && chmod +x /usr/bin/del-tr
+wget -q -O /usr/bin/renew-tr "$github/xray/trojan/renew-tr.sh" && chmod +x /usr/bin/renew-tr
+
+sed -i -e 's/\r$//' /bin/menu-trojan
+sed -i -e 's/\r$//' /bin/add-tr
+sed -i -e 's/\r$//' /bin/cek-tr
+sed -i -e 's/\r$//' /bin/del-tr
+sed -i -e 's/\r$//' /bin/renew-tr
+clear
+
+# restart
+echo -e "[ ${green}INFO$NC ] MEMULAI ULANG KONFIGURASI"
+sleep 1
+systemctl daemon-reload
+systemctl enable xray
+systemctl restart xray
+systemctl restart nginx
+systemctl enable runn
+systemctl restart runn
+systemctl stop trojan-go
+systemctl start trojan-go
+clear
+
 echo -e "[ ${green}INFO$NC ] SETTING TROJAN-GO SUKSES !!!"
 sleep 1
 clear

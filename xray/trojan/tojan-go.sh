@@ -15,10 +15,8 @@ xray="/etc/xray"
 trgo="/etc/trojan-go"
 logtrgo="/var/log/trojan-go"
 github="https://raw.githubusercontent.com/arfprsty810/lite/main"
-
 # set random uuid
 uuid=$(cat /proc/sys/kernel/random/uuid)
-
 domain=$(cat $xray/domain)
 sleep 1
 clear

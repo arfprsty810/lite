@@ -115,15 +115,18 @@ clear
 
 # DROPBEAR
 dropbear_status=$(/etc/init.d/dropbear status | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
-dober_service="$(systemctl show /etc/init.d/dropbear.service --no-page)"
-dober=$(echo "${dober_service}" | grep 'ActiveState=' | cut -f2 -d=)  
+#dober_service="$(systemctl show /etc/init.d/dropbear.service --no-page)"
+#dober=$(echo "${dober_service}" | grep 'ActiveState=' | cut -f2 -d=)  
 #wsdrop=$(systemctl status ws-dropbear.service | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
 #ohp=$(systemctl status dropbear-ohp | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
 clear
 
 # STUNNEL
 wstls=$(systemctl status ws-stunnel.service | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
-stunnel_service=$(/etc/init.d/stunnel5 status | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+#stunnel_service=$(/etc/init.d/stunnel5 status | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+stunnel5_service=$(systemctl status stunnel5.service | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+#stunnel5_info="$(systemctl show stunnel5.service --no-page)"
+#stunnel5=$(echo "${stunnel5_info}" | grep 'ActiveState=' | cut -f2 -d=)  
 clear
 
 # SQUID
@@ -263,7 +266,7 @@ fi
 clear
 
 # STATUS SERVICE DROPBEAR
-if [[ $dober == "running" ]]; then 
+if [[ $dropbear_status == "running" ]]; then 
    status_beruangjatuh=" ${GREEN}Running${NC} ( No Error )${NC}"
 else
    status_beruangjatuh="${RED}  Not Running ${NC}  ( Error )${NC}"
@@ -271,7 +274,7 @@ fi
 clear
 
 # STATUS SERVICE STUNNEL
-if [[ $stunnel_service == "running" ]]; then 
+if [[ $stunnel5_service == "running" ]]; then 
    status_stunnel=" ${GREEN}Running ${NC}( No Error )"
 else
    status_stunnel="${RED}  Not Running ${NC}  ( Error )}"
@@ -287,7 +290,7 @@ fi
 clear
 
 # STATUS SERVICE WEBSOCKET DROPBEAR
-if [[ $dropbear_status == "running" ]]; then 
+if [[ $wsdrop == "running" ]]; then 
    swsdrop=" ${GREEN}Running ${NC}( No Error )${NC}"
 else
    swsdrop="${RED}  Not Running ${NC}  ( Error )${NC}"

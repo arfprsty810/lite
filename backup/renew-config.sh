@@ -65,18 +65,13 @@ read -rp "Input ur domain / sub-domain : " -e pp
     else
     mkdir -p $ipvps >/dev/null 2>&1
     mkdir -p $xray/
-    mkdir -p /etc/v2ray/
     mkdir -p $nginx/
     touch $xray/domain
     touch $xray/scdomain
-    touch /etc/v2ray/domain
-    touch /etc/v2ray/scdomain
     touch /root/domain
     touch /root/scdomain
 	echo "$pp" > $xray/domain
 	echo "$pp" > $xray/scdomain
-	echo "$pp" > /etc/v2ray/domain
-	echo "$pp" > /etc/v2ay/scdomain
 	echo "$pp" > /root/domain
     echo "$pp" > /root/scdomain
     echo "IP=" >> $ipvps/ipvps.conf
@@ -190,7 +185,6 @@ sed -i -e 's/\r$//' /bin/backup-user
 sed -i -e 's/\r$//' /bin/cf
 clear
 
-
 cat> /root/.profile << END
 # ~/.profile: executed by Bourne-compatible login shells.
 
@@ -249,6 +243,8 @@ echo "" | tee -a log-install.txt
 secs_to_human "$(($(date +%s) - ${start}))" | tee -a log-install.txt
 echo -e "" | tee -a log-install.txt
 
+echo -e "[ ${green}INFO$NC ] RE-INSTALL FINISHED !"
+sleep 2
 echo -ne "[ ${yell}WARNING${NC} ] Reboot ur VPS ? (y/n)? "
 read answer
 if [ "$answer" == "${answer#[Yy]}" ] ;then
@@ -256,11 +252,6 @@ exit 0
 else
 reboot
 fi
-
-echo -e "[ ${green}INFO$NC ] RE-INSTALL FINISHED !"
-sleep 2
-clear
-reboot
 ;;
 
 2)
@@ -354,6 +345,8 @@ echo "" | tee -a log-install.txt
 secs_to_human "$(($(date +%s) - ${start}))" | tee -a log-install.txt
 echo -e "" | tee -a log-install.txt
 
+echo -e "[ ${green}INFO$NC ] RE-INSTALL FINISHED !"
+sleep 2
 echo -ne "[ ${yell}WARNING${NC} ] Reboot ur VPS ? (y/n)? "
 read answer
 if [ "$answer" == "${answer#[Yy]}" ] ;then
@@ -361,11 +354,6 @@ exit 0
 else
 reboot
 fi
-
-echo -e "[ ${green}INFO$NC ] RE-INSTALL FINISHED !"
-sleep 2
-clear
-reboot
 ;;
 
 3)
@@ -459,6 +447,8 @@ echo "" | tee -a log-install.txt
 secs_to_human "$(($(date +%s) - ${start}))" | tee -a log-install.txt
 echo -e "" | tee -a log-install.txt
 
+echo -e "[ ${green}INFO$NC ] RE-INSTALL FINISHED !"
+sleep 2
 echo -ne "[ ${yell}WARNING${NC} ] Reboot ur VPS ? (y/n)? "
 read answer
 if [ "$answer" == "${answer#[Yy]}" ] ;then
@@ -466,11 +456,6 @@ exit 0
 else
 reboot
 fi
-
-echo -e "[ ${green}INFO$NC ] RE-INSTALL FINISHED !"
-sleep 2
-clear
-reboot
 ;;
 
 
@@ -704,6 +689,8 @@ echo "" | tee -a log-install.txt
 secs_to_human "$(($(date +%s) - ${start}))" | tee -a log-install.txt
 echo -e "" | tee -a log-install.txt
 
+echo -e "[ ${green}INFO$NC ] RE-INSTALL FINISHED !"
+sleep 2
 echo -ne "[ ${yell}WARNING${NC} ] Reboot ur VPS ? (y/n)? "
 read answer
 if [ "$answer" == "${answer#[Yy]}" ] ;then
@@ -711,11 +698,6 @@ exit 0
 else
 reboot
 fi
-
-echo -e "[ ${green}INFO$NC ] RE-INSTALL FINISHED !"
-sleep 2
-clear
-reboot
 ;;
 esac
 

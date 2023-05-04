@@ -86,6 +86,7 @@ echo -e "$green                 AUTOSCRIPT VPS XRAY v.1.0 $NC"
 echo -e "$green               MULTI PORT XRAY 443 + 80 & RANDOM $NC"
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 sleep 3
+apt install curl jq -y
 clear
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "$green      Add Domain for XRAY VPN $NC"

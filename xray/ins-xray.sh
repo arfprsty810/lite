@@ -38,13 +38,6 @@ pwd=$(cat $xray/passwd)
 # set random uuid
 uuid=$(cat /proc/sys/kernel/random/uuid)
 
-mkdir -p $xray
-mkdir -p $ipvps >/dev/null 2>&1
-echo "IP=" >> $ipvps/ipvps.conf
-touch $xray/domain
-touch $xray/scdomain
-clear
-
 date
 echo ""
 domain=$(cat $xray/domain)
@@ -74,7 +67,7 @@ apt install curl socat xz-utils wget apt-transport-https gnupg gnupg2 gnupg1 dns
 clear
 apt-get --reinstall --fix-missing install -y sudo dpkg psmisc jq ruby wondershaper python2 tmux nmap bzip2 gzip coreutils iftop htop unzip vim nano gcc g++ make perl m4 dos2unix libreadline-dev zlib1g-dev git 
 clear
-apt-get --reinstall --fix-missing install -y screen rsyslog sed bc dirmngr libxml-parser-perl neofetch screenfetch lsof easy-rsa fail2ban vnstat libsqlite3-dev dropbear openvpn squid
+apt-get --reinstall --fix-missing install -y screen rsyslog sed bc dirmngr libxml-parser-perl neofetch screenfetch lsof easy-rsa fail2ban vnstat libsqlite3-dev #dropbear openvpn squid
 gem install lolcat
 clear
 apt-get install --no-install-recommends build-essential autoconf libtool libssl-dev libpcre3-dev libev-dev asciidoc xmlto automake -y
@@ -839,8 +832,6 @@ cat > /etc/shadowsocks-libev/config.json <<END
 END
 clear
 
-systemctl enable shadowsocks-libev.service
-systemctl start shadowsocks-libev.service
 clear
 
 echo -e "[ ${green}INFO$NC ] MEMBUAT CLIENT CONFIG"
@@ -884,6 +875,8 @@ systemctl stop trojan-go
 systemctl start trojan-go
 systemctl enable trojan-go
 systemctl restart trojan-go
+systemctl enable shadowsocks-libev.service
+systemctl start shadowsocks-libev.service
 iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2086 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2087 -j ACCEPT
 iptables-save > /etc/iptables.up.rules

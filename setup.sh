@@ -55,6 +55,12 @@ tyblue() { echo -e "\\033[36;1m${*}\\033[0m"; }
 yellow() { echo -e "\\033[33;1m${*}\\033[0m"; }
 green() { echo -e "\\033[32;1m${*}\\033[0m"; }
 red() { echo -e "\\033[31;1m${*}\\033[0m"; }
+clear
+
+secs_to_human() {
+    echo "Installation time : $(( ${1} / 3600 )) hours $(( (${1} / 60) % 60 )) minute's $(( ${1} % 60 )) seconds"
+}
+clear
 
 cd /root
 source /etc/os-release
@@ -74,6 +80,16 @@ if [ "${EUID}" -ne 0 ]; then
 		exit 1
 fi
 
+echo ""
+echo ""
+echo -e "[ ${green}INFO$NC ] INSTALLER AUTO SCRIPT "
+echo " - XRAY => VMESS - VLESS "
+echo " - TROJAN => TROJAN WS - TROJAN-GO "
+echo " - SHADOWSOCKS => SHADOWSOCKS-LIBEV "
+sleep 3
+echo -e ""
+clear
+
 # // Remove File & Directory
 rm -fr /usr/local/bin/stunnel
 rm -fr /usr/local/bin/stunnel5
@@ -92,7 +108,7 @@ date
 echo ""
 echo -e "[ ${green}INFO$NC ] INSTALLING REQUIREMENTS TOOLS"
 sleep 1
-
+clear
 cd /root/
 # // Remove
 apt-get remove --purge nginx* -y
@@ -140,7 +156,6 @@ apt install dos2unix -y
 clear
 
 apt-get install software-properties-common -y
-clear
 if [[ $OS == 'ubuntu' ]]; then
 apt install shadowsocks-libev -y
 apt install simple-obfs -y
@@ -160,11 +175,50 @@ apt -t buster-backports install simple-obfs -y
 clear
 fi
 fi
-
-secs_to_human() {
-    echo "Installation time : $(( ${1} / 3600 )) hours $(( (${1} / 60) % 60 )) minute's $(( ${1} % 60 )) seconds"
-}
 clear
+
+echo -e "[ ${green}INFO$NC ] DISABLE IPV6"
+sleep 1
+echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6 >/dev/null 2>&1
+sed -i '$ i\echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6' /etc/rc.local >/dev/null 2>&1
+apt update -y
+apt upgrade -y
+apt dist-upgrade -y
+clear
+echo -e "[ ${green}INFO${NC} ] CHECKING... "
+apt install iptables iptables-persistent -y
+sleep 1
+clear
+echo -e "[ ${green}INFO$NC ] SETTING NTPDATE"
+apt install ntpdate -y
+ntpdate -u pool.ntp.org
+ntpdate pool.ntp.org 
+timedatectl set-ntp true
+timedatectl set-timezone Asia/Jakarta
+ln -fs /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
+sleep 1
+clear
+echo -e "[ ${green}INFO$NC ] ENABLE CHRONYD"
+apt -y install chrony
+systemctl enable chronyd
+systemctl restart chronyd
+sleep 1
+clear
+echo -e "[ ${green}INFO$NC ] ENABLE CHRONY"
+systemctl enable chrony
+systemctl restart chrony
+clear
+sleep 1
+clear
+echo -e "[ ${green}INFO$NC ] SETTING CHRONY TRACKING"
+chronyc sourcestats -v
+chronyc tracking -v
+clear
+echo -e "[ ${green}INFO$NC ] SETTING SERVICE"
+apt update -y
+apt upgrade -y
+clear
+echo " "
 
 echo ""
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
@@ -187,7 +241,7 @@ read -rp "Input ur domain / sub-domain : " -e pp
     wget -q -O /usr/bin/cf "$github/xray/cf.sh"
     chmod +x /usr/bin/cf
     sed -i -e 's/\r$//' /usr/bin/cf
-    /usr/bin/cf
+    cf
     else
     mkdir -p $ipvps >/dev/null 2>&1
     mkdir -p $xray
@@ -213,6 +267,7 @@ echo -e "$green          INSTALLING SCRIPT $NC"
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "[ ${green}SCRIPT${NC} ] install .... "
 sleep 2
+cd
 
 #Instal Xray
 wget $github/xray/ins-xray.sh && chmod +x ins-xray.sh && sed -i -e 's/\r$//' ins-xray.sh && ./ins-xray.sh

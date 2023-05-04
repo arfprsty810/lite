@@ -109,7 +109,7 @@ echo ""
 echo -e "[ ${green}INFO$NC ] INSTALLING REQUIREMENTS TOOLS"
 sleep 1
 clear
-cd /root/
+cd
 # // Remove
 apt-get remove --purge nginx* -y
 apt-get remove --purge apache2* -y
@@ -238,10 +238,11 @@ read -rp "Input ur domain / sub-domain : " -e pp
     Nothing input for domain!
     Then a random sub-domain will be created"
     sleep 2
-    wget -q -O /usr/bin/cf "$github/xray/cf.sh"
+    rm -rvf /usr/bin/cf
+    wget -q -O /usr/bin/cf "$github/services/cf.sh"
     chmod +x /usr/bin/cf
     sed -i -e 's/\r$//' /usr/bin/cf
-    cf
+    /usr/bin/cf
     else
     mkdir -p $ipvps >/dev/null 2>&1
     mkdir -p $xray

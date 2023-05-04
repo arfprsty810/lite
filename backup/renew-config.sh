@@ -208,6 +208,7 @@ worryfree=$((RANDOM + 10000))
 kuotahabis=$((RANDOM + 10000))
 vmessgrpc=$((RANDOM + 10000))
 trojangrpc=$((RANDOM + 10000))
+clear
 
 # xray config
 echo -e "[ ${green}INFO$NC ] MEMBUAT ULANG CONFIG XRAY"

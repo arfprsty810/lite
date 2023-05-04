@@ -69,7 +69,9 @@ xray_status=$(systemctl status xray | grep Active | awk '{print $3}' | cut -d "(
 clear
 
 # TROJAN-GO
-trojango=$(systemctl status trojan-go.service | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+trgo_info="$(systemctl show trojan-go.service --no-page)"
+trgo_status=$(echo "${trgo_info}" | grep 'ActiveState=' | cut -f2 -d=)  
+#trojango=$(systemctl status trojan-go.service | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
 clear
 
 # TROJAN-GFW
@@ -100,7 +102,9 @@ ssh_service=$(/etc/init.d/ssh status | grep Active | awk '{print $3}' | cut -d "
 clear
 
 # OPENVPN
-status_openvp=$(/etc/init.d/openvpn status | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+ovpn_info="$(systemctl show openvpn --no-page)"
+ovpn_status=$(echo "${ovpn_info}" | grep 'ActiveState=' | cut -f2 -d=)  
+#status_openvp=$(/etc/init.d/openvpn status | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
 #wsovpn=$(systemctl status ws-ovpn | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
 #ohq=$(systemctl status openvpn-ohp | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
 clear
@@ -144,7 +148,7 @@ clear
 #osslh=$(systemctl status sslh | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
 clear
 
-# STATUS SERVICE VMESS TLS 
+# STATUS SERVICE XRAY ( VMESS - VLESS - TROJAN )
 if [[ $xray_status == "running" ]]; then 
    status_xray=" ${GREEN}Running${NC} ( No Error )"
 else
@@ -153,7 +157,7 @@ fi
 clear
 
 # STATUS SERVICE TROJAN GO
-if [[ $trojango == "active" ]]; then
+if [[ $trgo_status == "active" ]]; then
   status_trojan_go=" ${GREEN}Running ${NC}( No Error )${NC}"
 else
   status_trojan_go="${RED}  Not Running ${NC}  ( Error )${NC}"
@@ -169,7 +173,7 @@ fi
 clear
 
 # STATUS SERVICE SHADOWSOCKS OBFS
-if [[ $ss_obfs == "active" ]]; then
+if [[ $ss_status == "active" ]]; then
   status_ss_obfs=" ${GREEN}Running ${NC}( No Error )${NC}"
 else
   status_ss_obfs="${RED}  Not Running ${NC}  ( Error )${NC}"
@@ -177,7 +181,7 @@ fi
 clear
 
 # STATUS SERVICE OPENVPN
-if [[ $status_openvp == "active" ]]; then
+if [[ $ovpn_status == "active" ]]; then
   status_openvpn=" ${GREEN}Running ${NC}( No Error )"
 else
   status_openvpn="${RED}  Not Running ${NC}  ( Error )"
@@ -305,7 +309,6 @@ echo -e "  ❇️ \e[32;1m Time Reboot VPS\e[0m  : 00:00 ( Jam 12 Malam ) "
 echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
 echo -e "\E[39;1;92m             ⇱ Service Information ⇲             \E[0m"
 echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
-echo -e "❇️ SSH / TUN               :$status_ssh"
 echo -e "❇️ OPENVPN                 :$status_openvpn"
 echo -e "❇️ Dropbear                :$status_beruangjatuh"
 echo -e "❇️ Stunnel5                :$status_stunnel"
@@ -313,6 +316,7 @@ echo -e "❇️ Squid                   :$status_squid"
 echo -e "❇️ Fail2Ban                :$status_fail2ban"
 echo -e "❇️ Crons                   :$status_cron"
 echo -e "❇️ Vnstat                  :$status_vnstat"
+echo -e "❇️ SSH                     :$status_ssh"
 echo -e "❇️ XRAYS VMESS TLS         :$status_xray"
 echo -e "❇️ XRAYS VMESS NONE TLS    :$status_xray"
 echo -e "❇️ XRAYS VMESS GRPC        :$status_xray"

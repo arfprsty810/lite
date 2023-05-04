@@ -292,13 +292,13 @@ echo -e "[ ${GREEN}ok${NC} ] Restarting Nginx "
 /etc/init.d/ssh enable >/dev/null 2>&1
 /etc/init.d/ssh start >/dev/null 2>&1
 sleep 1
-echo -e "[ ${GREEN}ok${NC} ] Restarting Ssh"
+echo -e "[ ${GREEN}ok${NC} ] Restarting SSH"
 /etc/init.d/openvpn stop >/dev/null 2>&1
 /etc/init.d/openvpn restart >/dev/null 2>&1
 /etc/init.d/openvpn enable >/dev/null 2>&1
 /etc/init.d/openvpn start >/dev/null 2>&1
 sleep 1
-echo -e "[ ${GREEN}ok${NC} ] Restarting Openvpn"
+echo -e "[ ${GREEN}ok${NC} ] Restarting OpenVpn"
 /etc/init.d/dropbear stop >/dev/null 2>&1
 /etc/init.d/dropbear restart >/dev/null 2>&1
 /etc/init.d/dropbear enable >/dev/null 2>&1
@@ -358,7 +358,7 @@ systemctl restart ws-stunnel.service
 systemctl enable ws-stunnel.service
 systemctl start ws-stunnel.service
 sleep 1
-echo -e "[ ${GREEN}ok${NC} ] WS-Stunnel "
+echo -e "[ ${GREEN}ok${NC} ] Restarting WS-Stunnel "
 #systemctl stop ws-dropbear.service >/dev/null 2>&1
 #systemctl restart ws-dropbear.service >/dev/null 2>&1
 #systemctl enable ws-dropbear.service >/dev/null 2>&1

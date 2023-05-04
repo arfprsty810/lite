@@ -71,7 +71,7 @@ clear
 apt-get remove --purge ufw* -y
 apt-get remove --purge firewalld* -y
 apt-get remove --purge exim4* -y
-apt autoremove -y
+#apt autoremove -y
 clear
 
 # ----------------------------------------------------------------------------------------------------------------
@@ -251,15 +251,15 @@ chmod +x /usr/bin/badvpn-udpgw
 sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 500' /etc/rc.local
 sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 500' /etc/rc.local
 sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300 --max-clients 500' /etc/rc.local
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 500
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 500
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300 --max-clients 500
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7400 --max-clients 500
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7500 --max-clients 500
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7600 --max-clients 500
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7700 --max-clients 500
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7800 --max-clients 500
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7900 --max-clients 500
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 500 >/dev/null 2>&1
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 500 >/dev/null 2>&1
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300 --max-clients 500 >/dev/null 2>&1
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7400 --max-clients 500 >/dev/null 2>&1
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7500 --max-clients 500 >/dev/null 2>&1
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7600 --max-clients 500 >/dev/null 2>&1
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7700 --max-clients 500 >/dev/null 2>&1
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7800 --max-clients 500 >/dev/null 2>&1
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7900 --max-clients 500 >/dev/null 2>&1
 
 # ----------------------------------------------------------------------------------------------------------------
 # Install Squid
@@ -323,7 +323,7 @@ rm -rvf /usr/local/bin/stunnel4
 rm -rvf /usr/local/bin/stunnel5
 apt-get remove --purge stunnel stunnel* -y
 #apt-get install stunnel5 -y
-sudo apt-get autoremove
+#sudo apt-get autoremove
 wget -q -O stunnel5.zip "$github/stunnel5/stunnel5.zip"
 unzip -o stunnel5.zip
 cd /root/stunnel
@@ -513,7 +513,7 @@ fi
 # apt-get -y --purge remove apache2* >/dev/null 2>&1
 # apt-get -y --purge remove bind9* >/dev/null 2>&1
 # apt-get -y remove sendmail* >/dev/null 2>&1
-apt autoremove -y >/dev/null 2>&1
+#apt autoremove -y >/dev/null 2>&1
 
 # ----------------------------------------------------------------------------------------------------------------
 # Install Script

@@ -92,10 +92,6 @@ secs_to_human() {
 }
 clear
 
-#ln -fs /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
-#sysctl -w net.ipv6.conf.all.disable_ipv6=1 >/dev/null 2>&1
-#sysctl -w net.ipv6.conf.default.disable_ipv6=1 >/dev/null 2>&1
-
 echo ""
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "$green                 AUTOSCRIPT VPS XRAY v.1.0 $NC"

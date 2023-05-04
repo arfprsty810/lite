@@ -384,6 +384,7 @@ sleep 1
 echo -e "[ ${GREEN}ok${NC} ] Restarting badvpn "
 echo ""
 
-echo -e "[ ${green}INFO$NC ] Update Successfully ..."
+echo "[      Update Successfully ..."
+echo ""
 read -n 1 -s -r -p "Press any key to back on menu"
 menu

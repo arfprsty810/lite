@@ -74,7 +74,7 @@ echo -e ""
 echo -e "\033[0;34m┌─────────────────────────────────────────────────────┐${NC}"
 echo -e "                     ⇱ \e[32;1mStatus Layanan\e[0m ⇲ "
 echo -e "\033[0;34m└─────────────────────────────────────────────────────┘${NC}"
-echo -e "       🟢🟡🔴  SERVER STATUS       : ${status_nginx}  🔴🟡🟢"
+echo -e "       🟢🟡🔴  SERVER STATUS     : ${status_nginx}  🔴🟡🟢"
 echo -e "\033[0;34m└─────────────────────────────────────────────────────┘${NC}"
 echo -e ""
 echo -e "\033[0;34m┌─────────────────────────────────────────────────────┐${NC}"
@@ -105,7 +105,7 @@ echo -e "\033[0;34m└───────────────────�
 
 echo -e ""
 
-read -p "                         Select Menu : " menu
+read -p "                     Select Menu : " menu
 case $menu in
 
 1)

@@ -15,10 +15,6 @@ source /etc/os-release
 xray="/etc/xray"
 nginx="/etc/nginx"
 ipvps="/var/lib/arf"
-rm -fr $nginx
-rm -fr $ipvps
-rm -fr $xray
-rm -fr /usr/local/bin/xray
 clear
 #apt install jq curl -y
 DOMAIN=d-jumper.me

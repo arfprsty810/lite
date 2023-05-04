@@ -370,14 +370,6 @@ sed -i -e 's/\r$//' shadowsocks.sh
 clear
 sleep 2
 
-#Instal Bbr
-wget $github/bbr/bbr.sh
-chmod +x /root/bbr.sh
-sed -i -e 's/\r$//' /root/bbr.sh
-screen -S bbr /root/bbr
-clear
-sleep 2
-
 /etc/init.d/shadowsocks-libev stop >/dev/null 2>&1
 /etc/init.d/shadowsocks-libev restart >/dev/null 2>&1
 /etc/init.d/shadowsocks-libev enable >/dev/null 2>&1

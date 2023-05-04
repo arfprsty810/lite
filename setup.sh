@@ -138,21 +138,21 @@ sed -i -e 's/\r$//' ins-xray.sh
 clear
 sleep 2
 
-#Instal Trojan-GO
-#wget https://raw.githubusercontent.com/arfprsty810/lite/main/xray/trojan/trojan-go.sh
-#chmod +x trojan-go.sh
-#sed -i -e 's/\r$//' trojan-go.sh
-#./trojan-go.sh
-#clear
-#sleep 2
+Instal Trojan-GO
+wget https://raw.githubusercontent.com/arfprsty810/lite/main/xray/trojan/trojan-go.sh
+chmod +x trojan-go.sh
+sed -i -e 's/\r$//' trojan-go.sh
+./trojan-go.sh
+clear
+sleep 2
 
 #Instal Shadowsocks
-#wget https://raw.githubusercontent.com/arfprsty810/lite/main/shadowsocks/shadowsocks.sh
-#chmod +x shadowsocks.sh 
-#sed -i -e 's/\r$//' shadowsocks.sh
-#./shadowsocks.sh
-#clear
-#sleep 2
+wget https://raw.githubusercontent.com/arfprsty810/lite/main/shadowsocks/shadowsocks.sh
+chmod +x shadowsocks.sh 
+sed -i -e 's/\r$//' shadowsocks.sh
+./shadowsocks.sh
+clear
+sleep 2
 
 #Instal SSH-vpn
 wget https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ssh-vpn.sh
@@ -167,9 +167,33 @@ wget https://raw.githubusercontent.com/arfprsty810/lite/main/bbr/bbr.sh
 chmod +x bbr.sh
 sed -i -e 's/\r$//' bbr.sh
 screen -S bbr ./bbr.sh
+
 clear
 sleep 2
+echo -e "[ ${green}INFO$NC ] MEMULAI ULANG KONFIGURASI"
+sleep 1
+systemctl daemon-reload
+systemctl enable xray
+systemctl restart xray
+systemctl restart nginx
+systemctl enable runn
+systemctl restart runn
+systemctl stop trojan-go
+systemctl start trojan-go
+systemctl enable trojan-go
+systemctl restart trojan-go
+systemctl enable shadowsocks-libev.service
+systemctl start shadowsocks-libev.service
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2086 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2087 -j ACCEPT
+iptables-save > /etc/iptables.up.rules
+iptables-restore -t < /etc/iptables.up.rules
+netfilter-persistent save
+netfilter-persistent reload
+clear
 
+echo -e "[ ${green}INFO$NC ] DOWNLOAD SCRIPT"
+sleep 2
 wget -q -O /usr/bin/restart "$github/services/restart.sh" && chmod +x /usr/bin/restart
 wget -q -O /usr/bin/running "$github/services/running.sh" && chmod +x /usr/bin/running
 wget -q -O /usr/bin/cek-bandwidth "$github/services/cek-bandwidth.sh" && chmod +x /usr/bin/cek-bandwidth

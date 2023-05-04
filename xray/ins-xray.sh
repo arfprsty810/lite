@@ -35,7 +35,8 @@ github="https://raw.githubusercontent.com/arfprsty810/lite/main"
 OS=$ID
 ver=$VERSION_ID
 # set random pwd
-openssl rand -base64 16 > $xray/passwd
+#openssl rand -base64 16 > $xray/passwd
+</dev/urandom tr -dc a-z0-9 | head -c16 > $xray/passwd
 pwd=$(cat $xray/passwd)
 # set random uuid
 uuid=$(cat /proc/sys/kernel/random/uuid)
@@ -49,17 +50,11 @@ date
 echo ""
 echo -e "[ ${green}INFO$NC ] INSTALLING REQUIREMENTS TOOLS"
 sleep 1
+
 cd /root/
 # // Remove
 apt-get remove --purge nginx* -y
-apt-get remove --purge nginx-common* -y
-apt-get remove --purge nginx-full* -y
-apt-get remove --purge dropbear* -y
-apt-get remove --purge stunnel4* -y
 apt-get remove --purge apache2* -y
-apt-get remove --purge ufw* -y
-apt-get remove --purge firewalld* -y
-apt-get remove --purge exim4* -y
 apt autoremove -y
 clear
 
@@ -80,16 +75,24 @@ apt install zip -y
 clear
 apt install net-tools -y
 clear
-apt install -y openvpn #dropbear squid3
+apt install -y openvpn
 clear
-apt install curl socat xz-utils wget apt-transport-https gnupg gnupg2 gnupg1 dnsutils -y
+apt install socat xz-utils wget apt-transport-https gnupg gnupg2 gnupg1 dnsutils -y
 clear
-apt-get --reinstall --fix-missing install -y sudo dpkg psmisc jq ruby wondershaper python2 tmux nmap bzip2 gzip coreutils iftop htop unzip vim nano gcc g++ make perl m4 dos2unix libreadline-dev zlib1g-dev git 
+apt-get --reinstall --fix-missing install -y sudo dpkg psmisc ruby wondershaper python2 tmux nmap bzip2 gzip coreutils iftop htop unzip vim nano gcc g++ perl m4 dos2unix libreadline-dev zlib1g-dev git 
 clear
-apt-get --reinstall --fix-missing install -y screen rsyslog sed bc dirmngr libxml-parser-perl neofetch screenfetch lsof easy-rsa fail2ban vnstat libsqlite3-dev
+apt-get --reinstall --fix-missing install -y screen rsyslog sed bc dirmngr neofetch screenfetch lsof easy-rsa libsqlite3-dev
 gem install lolcat
 clear
-apt-get install --no-install-recommends build-essential autoconf libtool libssl-dev libpcre3-dev libev-dev asciidoc xmlto automake -y
+apt-get install --no-install-recommends build-essential autoconf libtool libssl-dev libpcre3-dev libev-dev asciidoc xmlto -y
+clear
+
+apt -y install php php-fpm php-cli php-mysql libxml-parser-perl
+
+apt install make cmake automake -y
+apt install libz-dev -y
+apt install libssl1.0-dev -y
+apt install dos2unix -y
 clear
 
 apt-get install software-properties-common -y
@@ -132,6 +135,7 @@ ntpdate -u pool.ntp.org
 ntpdate pool.ntp.org 
 timedatectl set-ntp true
 timedatectl set-timezone Asia/Jakarta
+ln -fs /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
 sleep 1
 clear
 echo -e "[ ${green}INFO$NC ] ENABLE CHRONYD"

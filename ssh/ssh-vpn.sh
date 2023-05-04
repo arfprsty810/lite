@@ -516,52 +516,6 @@ fi
 apt autoremove -y >/dev/null 2>&1
 
 # ----------------------------------------------------------------------------------------------------------------
-# Restart Service
-# ----------------------------------------------------------------------------------------------------------------
-cd
-/etc/init.d/openvpn restart >/dev/null 2>&1
-echo -e "[ ${GREEN}ok${NC} ] Restarting openvpn"
-/etc/init.d/cron restart >/dev/null 2>&1
-sleep 1
-echo -e "[ ${GREEN}ok${NC} ] Restarting cron"
-/etc/init.d/ssh restart >/dev/null 2>&1
-sleep 1
-echo -e "[ ${GREEN}ok${NC} ] Restarting ssh"
-/etc/init.d/dropbear restart >/dev/null 2>&1
-sleep 1
-echo -e "[ ${GREEN}ok${NC} ] Restarting dropbear"
-/etc/init.d/fail2ban restart >/dev/null 2>&1
-sleep 1
-echo -e "[ ${GREEN}ok${NC} ] Restarting fail2ban"
-/etc/init.d/stunnel5 restart >/dev/null 2>&1
-sleep 1
-echo -e "[ ${GREEN}ok${NC} ] Restarting stunnel5"
-/etc/init.d/squid restart >/dev/null 2>&1
-sleep 1
-echo -e "[ ${GREEN}ok${NC} ] Restarting squid "
-/etc/init.d/vnstat restart >/dev/null 2>&1
-sleep 1
-echo -e "[ ${GREEN}ok${NC} ] Restarting vnstat "
-/etc/init.d/nginx restart >/dev/null 2>&1
-chown -R www-data:www-data /home/vps/public_html
-sleep 1
-echo -e "[ ${GREEN}ok${NC} ] Restarting nginx "
-#/etc/init.d/sslh restart
-#sleep 1
-#echo -e "[ ${GREEN}ok${NC} ] Restarting sslh "
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 500 >/dev/null 2>&1
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 500 >/dev/null 2>&1
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300 --max-clients 500 >/dev/null 2>&1
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7400 --max-clients 500 >/dev/null 2>&1
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7500 --max-clients 500 >/dev/null 2>&1
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7600 --max-clients 500 >/dev/null 2>&1
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7700 --max-clients 500 >/dev/null 2>&1
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7800 --max-clients 500 >/dev/null 2>&1
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7900 --max-clients 500 >/dev/null 2>&1
-sleep 1
-echo -e "[ ${GREEN}ok${NC} ] Restarting badvpn "
-
-# ----------------------------------------------------------------------------------------------------------------
 # Install Script
 # ----------------------------------------------------------------------------------------------------------------
 wget -q -O /usr/bin/autodel "$github/ssh/autodel.sh"

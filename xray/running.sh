@@ -83,9 +83,9 @@ clear
 #clear
 
 # SHADOWSHOCK
-ss_status=$(systemctl status shadowsocks-libev.service | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
-#ss_info="$(systemctl show shadowsocks-libev.service --no-page)"
-#ss_obfs=$(echo "${ss_info}" | grep 'ActiveState=' | cut -f2 -d=)  
+ss_info="$(systemctl show shadowsocks-libev.service --no-page)"
+ss_obfs=$(echo "${ss_info}" | grep 'ActiveState=' | cut -f2 -d=)  
+#ss_status=$(systemctl status shadowsocks-libev.service | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
 #status_ss_tls="$(systemctl show shadowsocks-libev-server@tls.service --no-page)"
 #ss_tls=$(echo "${status_ss_tls}" | grep 'ActiveState=' | cut -f2 -d=)
 #status_ss_http="$(systemctl show shadowsocks-libev-server@http.service --no-page)"
@@ -173,7 +173,7 @@ fi
 clear
 
 # STATUS SERVICE SHADOWSOCKS OBFS
-if [[ $ss_status == "active" ]]; then
+if [[ $ss_obfs == "active" ]]; then
   status_ss_obfs=" ${GREEN}Running ${NC}( No Error )${NC}"
 else
   status_ss_obfs="${RED}  Not Running ${NC}  ( Error )${NC}"

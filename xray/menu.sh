@@ -74,12 +74,14 @@ echo -e ""
 echo -e "\033[0;34m┌─────────────────────────────────────────────────────┐${NC}"
 echo -e "                     ⇱ \e[32;1mStatus Layanan\e[0m ⇲ "
 echo -e "\033[0;34m└─────────────────────────────────────────────────────┘${NC}"
-echo -e "       🟢🟡🔴  SERVER STATUS     : ${status_nginx}  🔴🟡🟢"
+echo -e "       🟢🟡🔴  SERVER STATUS   : ${status_nginx}  🔴🟡🟢"
 echo -e "\033[0;34m└─────────────────────────────────────────────────────┘${NC}"
+echo""
 echo -e ""
 echo -e "\033[0;34m┌─────────────────────────────────────────────────────┐${NC}"
 echo -e "                     ⇱ \e[32;1mMenu Tunnel\e[0m ⇲ "
 echo -e "\033[0;34m└─────────────────────────────────────────────────────┘${NC}"
+echo ""
 
 echo -e "    ${BICyan}[${BIWhite}01${BICyan}]${RED} •${NC} ${CYAN}SSH/OVPN     $NC  ${BICyan}[${BIWhite}04${BICyan}]${RED} • ${NC}${CYAN}TROJAN-WS/GO $NC"
 
@@ -88,6 +90,7 @@ echo -e "    ${BICyan}[${BIWhite}02${BICyan}]${RED} •${NC} ${CYAN}XRAY - VMESS
 echo -e "    ${BICyan}[${BIWhite}03${BICyan}]${RED} •${NC} ${CYAN}XRAY - VLESS $NC"
 
 echo -e "\033[0;34m└─────────────────────────────────────────────────────┘${NC}"
+echo""
 
 echo -e "\033[0;34m┌─────────────────────────────────────────────────────┐${NC}"
 echo -e "                     ⇱ \e[32;1mMenu Service\e[0m ⇲ "
@@ -105,7 +108,7 @@ echo -e "\033[0;34m└───────────────────�
 
 echo -e ""
 
-read -p "                     Select Menu : " menu
+read -p "                 Select Menu : " menu
 case $menu in
 
 1)

@@ -79,7 +79,7 @@ clear
 # ----------------------------------------------------------------------------------------------------------------
 cd
 # simple password minimal
-wget -q -O /etc/pam.d/common-password "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/password"
+wget -q -O /etc/pam.d/common-password "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/archive/password"
 chmod +x /etc/pam.d/common-password
 
 # ----------------------------------------------------------------------------------------------------------------
@@ -126,9 +126,7 @@ systemctl start rc-local.service >/dev/null 2>&1
 # Setting sshd_config
 # ----------------------------------------------------------------------------------------------------------------
 sed -i 's/Port 22/Port 22/g' /etc/ssh/sshd_config
-#sed -i '/Port 22/a Port 2253' /etc/ssh/sshd_config
-#echo "Port 22" >> /etc/ssh/sshd_config
-#echo "Port 40000" >> /etc/ssh/sshd_config
+sed -i '/Port 22/a Port 88' /etc/ssh/sshd_config
 #echo "X11Forwarding yes" >> /etc/ssh/sshd_config
 #echo "AllowTcpForwarding yes" >> /etc/ssh/sshd_config
 #echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
@@ -149,59 +147,37 @@ systemctl restart ssh >/dev/null 2>&1
 # Setting & Install Dropbear
 apt-get remove --purge dropbear* -y
 apt -y install dropbear
-sed -i 's/NO_START=1/NO_START=0/g' /etc/default/dropbear
 sed -i 's/DROPBEAR_PORT=22/DROPBEAR_PORT=143/g' /etc/default/dropbear
+sed -i '/DROPBEAR_PORT=143/a DROPBEAR_PORT=69' /etc/default/dropbear
+sed -i '/DROPBEAR_PORT=143/a DROPBEAR_PORT=1194' /etc/default/dropbear
+sed -i '/DROPBEAR_PORT=143/a DROPBEAR_PORT=109' /etc/default/dropbear
+sed -i 's/NO_START=1/NO_START=0/g' /etc/default/dropbear
 sed -i 's/DROPBEAR_EXTRA_ARGS=/DROPBEAR_EXTRA_ARGS="-p 109"/g' /etc/default/dropbear
 echo "/bin/false" >> /etc/shells
 echo "/usr/sbin/nologin" >> /etc/shells
 /etc/init.d/dropbear restart
 
-# Getting websocket dropbear
-#wget -q -O /usr/local/bin/ws-dropbear "https://raw.githubusercontent.com/wunuit/0/main/ws-dropbear"
-#chmod +x /usr/local/bin/ws-dropbear
-
-# Installing Service
-#cat > /etc/systemd/system/ws-dropbear.service << END
-#[Unit]
-#Description=Ssh Websocket By Akhir Zaman
-#Documentation=https://xnxx.com
-#After=network.target nss-lookup.target
-
-#[Service]
-#Type=simple
-#User=root
-#CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-#AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-#NoNewPrivileges=true
-#ExecStart=/usr/bin/python2 -O /usr/local/bin/ws-dropbear 8880
-#Restart=on-failure
-
-#[Install]
-#WantedBy=multi-user.target
-#END
-
-#systemctl daemon-reload >/dev/null 2>&1
-#systemctl enable ws-dropbear >/dev/null 2>&1
-#systemctl start ws-dropbear >/dev/null 2>&1
-#systemctl restart ws-dropbear >/dev/null 2>&1
-
 # ----------------------------------------------------------------------------------------------------------------
 # Instalasi Websocket#!/bin/bash
 # ----------------------------------------------------------------------------------------------------------------
 
-# Websocket ssl stunnel
+# Dropbear WebSocket
+#port 69 ( Dropbear) to 8880 (HTTPS Websocket)
+#DEFAULT_HOST = '127.0.0.1:69'
+#LISTENING_PORT = 8880
 cd
-wget -q -O /usr/local/bin/ws-stunnel https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ws-stunnel/ws-stunnel.py && chmod +x /usr/local/bin/ws-stunnel
-wget -O /etc/systemd/system/ws-stunnel.service https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ws-stunnel/ws-stunnel.service && chmod +x /etc/systemd/system/ws-stunnel.service
+wget -O /usr/local/bin/ws-dropbear https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ws-dropbear/https.py && chmod +x /usr/local/bin/ws-dropbear
+wget -O /etc/systemd/system/ws-dropbear.service https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ws-dropbear/https.service && chmod +x /etc/systemd/system/ws-dropbear.service
 
-systemctl daemon-reload >/dev/null 2>&1
-systemctl enable ws-stunnel.service >/dev/null 2>&1
-systemctl start ws-stunnel.service >/dev/null 2>&1
-systemctl restart ws-stunnel.service >/dev/null 2>&1
- 
+systemctl daemon-reload
+systemctl enable ws-dropbear.service
+systemctl start ws-dropbear.service
+systemctl restart ws-dropbear.service
 
-# Websocket OpenSSH
-#port 88 (OpenSSH) to 2082 (HTTP Websocket)
+# OpenSSH Websocket
+#port 88 (OpenSSH) to 80/2082 (HTTP Websocket)
+#DEFAULT_HOST = '127.0.0.1:88'
+#LISTENING_PORT = 80
 cd
 wget -O /usr/local/bin/edu-proxy https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ws-openssh/http.py && chmod +x /usr/local/bin/edu-proxy
 wget -O /etc/systemd/system/edu-proxy.service https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ws-openssh/http.service && chmod +x /etc/systemd/system/edu-proxy.service
@@ -211,50 +187,48 @@ systemctl enable edu-proxy.service
 systemctl start edu-proxy.service
 systemctl restart edu-proxy.service
 
-
-# Dropbear WebSocket
-#port 69 ( Dropbear) to 8880 (HTTPS Websocket)
-cd
-wget -O /usr/local/bin/ws-dropbear https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ws-dropbear/https.py && chmod +x /usr/local/bin/ws-dropbear
-wget -O /etc/systemd/system/ws-dropbear.service https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ws-dropbear/https.service && chmod +x /etc/systemd/system/ws-dropbear.service
-#reboot service
-systemctl daemon-reload
-systemctl enable ws-dropbear.service
-systemctl start ws-dropbear.service
-systemctl restart ws-dropbear.service
-
-
 # OpenVPN WebSocket
 #port 1194 ( Dropbear) to 2086 (HTTP Websocket)
+#DEFAULT_HOST = '127.0.0.1:1194'
+#LISTENING_PORT = 2086  
 wget -O /usr/local/bin/edu-proxyovpn https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ws-openvpn/ovpn.py && chmod +x /usr/local/bin/edu-proxyovpn
 wget -O /etc/systemd/system/edu-proxyovpn.service https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ws-openvpn/ovpn.service && chmod +x /etc/systemd/system/edu-proxyovpn.service
-#reboot service
+
 systemctl daemon-reload
 systemctl enable edu-proxyovpn.service
 systemctl start edu-proxyovpn.service
 systemctl restart edu-proxyovpn.service
 
-
 # SSL/TLS WebSocket
-#port 1194 ( Dropbear) to 2086 (HTTP Websocket)
+#port 1194 ( Dropbear) to 443/2086 (HTTP Websocket)
+#DEFAULT_HOST = '127.0.0.1:1194'
+#LISTENING_PORT = 443  
 wget -O /usr/local/bin/edu-tls https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ws-ssltls/edu-tls.py && chmod +x /usr/local/bin/edu-tls
 wget -O /etc/systemd/system/edu-tls.service https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ws-ssltls/edu-tls.service && chmod +x /etc/systemd/system/edu-tls.service
-#reboot service
+cd
+wget -O /usr/local/bin/ws-tls https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ws-ssltls/ws-tls.py && chmod +x /usr/local/bin/ws-tls
+wget -O /etc/systemd/system/ws-tls.service https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ws-ssltls/ws-tls.service && chmod +x  /etc/systemd/system/ws-tls.service
+
 systemctl daemon-reload.service
 systemctl enable edu-tls.service
 systemctl start edu-tls.service
 systemctl restart edu-tls.service
-
-
-cd
-wget -O /usr/local/bin/ws-tls https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ws-ssltls/ws-tls && chmod +x /usr/local/bin/ws-tls
-wget -O /etc/systemd/system/ws-tls.service https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ws-ssltls/ws-tls.service && chmod +x  /etc/systemd/system/ws-tls.service
-
-systemctl daemon-reload
 systemctl enable ws-tls.service
+systemctl start ws-tls.service
 systemctl restart ws-tls.service
 
-# finihsing
+# Stunnel WebSocket
+#port 109 ( Dropbear) to 700/2086 (HTTP Websocket)
+#DEFAULT_HOST = '127.0.0.1:109'
+#LISTENING_PORT = 700
+cd
+wget -O /usr/local/bin/ws-stunnel https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ws-stunnel/ws-stunnel.py && chmod +x /usr/local/bin/ws-stunnel
+wget -O /etc/systemd/system/ws-stunnel.service https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ws-stunnel/ws-stunnel.service && chmod +x /etc/systemd/system/ws-stunnel.service
+
+systemctl daemon-reload
+systemctl enable ws-stunnel
+systemctl status ws-stunnel
+systemctl restart ws-stunnel
 
 #installer OHP
 wget https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ohp/ohp.sh && chmod +x ohp.sh && ./ohp.sh
@@ -286,8 +260,8 @@ echo -ne
 fi
 cd
 echo -e "[ ${GREEN}INFO$NC ] Installing badvpn for game support..."
-wget -q -O /usr/bin/badvpn-udpgw "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/badvpn-udpgw64"
-#wget -q -O /usr/bin/badvpn-udpgw "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/newudpgw"
+wget -q -O /usr/bin/badvpn-udpgw "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/archive/badvpn-udpgw64"
+#wget -q -O /usr/bin/badvpn-udpgw "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/archive/newudpgw"
 chmod +x /usr/bin/badvpn-udpgw
 sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 500' /etc/rc.local
 sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 500' /etc/rc.local
@@ -305,9 +279,9 @@ screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7900 --max-clients 500 >
 # ----------------------------------------------------------------------------------------------------------------
 # Install Squid
 # ----------------------------------------------------------------------------------------------------------------
-cd
-apt -y install squid
-wget -O /etc/squid/squid.conf "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/squid3.conf"
+#cd
+#apt -y install squid
+#wget -O /etc/squid/squid.conf "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/archive/squid3.conf"
 #sed -i $MYIP2 /etc/squid/squid.conf
 
 # ----------------------------------------------------------------------------------------------------------------
@@ -395,14 +369,24 @@ chmod 644 /etc/stunnel5
 #-subj "/C=ID/ST=Indonesia/L=Indonesia/O=™D-JumPer™/OU=™D-JumPer™/CN=188.166.221.220/emailAddress=arfprsty@my.id"
 #cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
 
-cd /etc/xray/
+#cd /etc/xray/
 rm -rvf /etc/stunnel5/stunnel5.pem
-cat xray.key xray.crt >> /etc/stunnel5/stunnel5.pem
+#cat xray.key xray.crt >> /etc/stunnel5/stunnel5.pem
+#cd
+
 cd
+#buat directory
+mkdir -p /etc/arfvpn
+chmod +x /etc/arfvpn
+wget https://raw.githubusercontent.com/arfprsty810/lite/main/cert/arfvpn.crt
+wget https://raw.githubusercontent.com/arfprsty810/lite/main/cert/arfvpn.key
+#wget -O /etc/arfvpn/stunnel.pem "https://raw.githubusercontent.com/arfprsty810/lite/main/cert/arfvpn.pem"
+cat arfvpn.key arfvpn.crt >> /etc/arfvpn/stunnel.pem
+chmod 600 /etc/arfvpn/stunnel.pem
 
 # Config Stunnel5
 cat > /etc/stunnel5/stunnel5.conf <<-END
-cert = /etc/stunnel5/stunnel5.pem
+cert = /etc/arfvpn/stunnel.pem
 #cert = /etc/xray/xray.crt
 #key = /etc/xray/xray.key
 client = no
@@ -442,7 +426,7 @@ END
 
 # Service Stunnel5 /etc/init.d/stunnel5
 wget -q -O /etc/init.d/stunnel5 "https://raw.githubusercontent.com/arfprsty810/lite/main/stunnel5/stunnel5.init"
-chmod 600 /etc/stunnel5/stunnel5.pem
+#chmod 600 /etc/stunnel5/stunnel5.pem
 chmod +x /etc/init.d/stunnel5
 cp /usr/local/bin/stunnel /usr/local/bin/stunnel5
 
@@ -522,7 +506,7 @@ rm -fr /etc/issue.net
 rm -fr /etc/issue.net.save
 sleep 1
 echo -e "[ ${GREEN}INFO$NC ] Settings banner"
-wget -q -O /etc/issue.net "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/issue.net"
+wget -q -O /etc/issue.net "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/archive/issue.net"
 chmod +x /etc/issue.net
 echo "Banner /etc/issue.net" >> /etc/ssh/sshd_config
 sed -i 's@DROPBEAR_BANNER=""@DROPBEAR_BANNER="/etc/issue.net"@g' /etc/default/dropbear

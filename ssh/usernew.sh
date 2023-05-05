@@ -77,8 +77,14 @@ domen=`cat /etc/xray/domain`
 else
 domen=`cat /etc/v2ray/domain`
 fi
+
+opensh=`cat /root/log-install.txt | grep -w "OpenSSH" | cut -f2 -d: | awk '{print $1}'`
 portsshws=`cat /root/log-install.txt | grep -w "SSH Websocket" | cut -d: -f2 | awk '{print $1}'`
 wsssl=`cat /root/log-install.txt | grep -w "SSH SSL Websocket" | cut -d: -f2 | awk '{print $1}'`
+ovpnws="$(cat /root/log-install.txt | grep -w "OVPN Websocket" | cut -d: -f2)"
+sslws="$(cat /root/log-install.txt | grep -w "Stunnel Websocket" | cut -d: -f2)"
+ssl="$(cat /root/log-install.txt | grep -w "Stunnel5" | cut -d: -f2)"
+db=`cat /root/log-install.txt | grep -w "Dropbear" | cut -f2 -d: | awk '{print $1,$2}'`
 
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\E[0;41;36m            SSH Account            \E[0m"
@@ -89,9 +95,6 @@ read -p "Expired (hari): " masaaktif
 
 IP=$(curl -sS ifconfig.me);
 ossl=`cat /root/log-install.txt | grep -w "OpenVPN" | cut -f2 -d: | awk '{print $6}'`
-opensh=`cat /root/log-install.txt | grep -w "OpenSSH" | cut -f2 -d: | awk '{print $1}'`
-db=`cat /root/log-install.txt | grep -w "Dropbear" | cut -f2 -d: | awk '{print $1,$2}'`
-ssl="$(cat /root/log-install.txt | grep -w "Stunnel5" | cut -d: -f2)"
 sqd="$(cat /root/log-install.txt | grep -w "Squid" | cut -d: -f2)"
 ovpn="$(netstat -nlpt | grep -i openvpn | grep -i 0.0.0.0 | awk '{print $4}' | cut -d: -f2)"
 ovpn2="$(netstat -nlpu | grep -i openvpn | grep -i 0.0.0.0 | awk '{print $4}' | cut -d: -f2)"
@@ -118,10 +121,12 @@ echo -e "----------------------------------" | tee -a /etc/log-create-user.log
 echo -e "IP Address : $IP" | tee -a /etc/log-create-user.log
 echo -e "Host       : $domen" | tee -a /etc/log-create-user.log
 echo -e "OpenSSH    : $opensh" | tee -a /etc/log-create-user.log
-echo -e "Dropbear   : $db" | tee -a /etc/log-create-user.log
 echo -e "SSH-WS     : $portsshws" | tee -a /etc/log-create-user.log
 echo -e "SSH-SSL-WS : $wsssl" | tee -a /etc/log-create-user.log
+echo -e "SSL/WS    : $sslws" | tee -a /etc/log-create-user.log
 echo -e "SSL/TLS    : $ssl" | tee -a /etc/log-create-user.log
+echo -e "OVPN/WS    : $ovpnws" | tee -a /etc/log-create-user.log
+echo -e "Dropbear   : $db" | tee -a /etc/log-create-user.log
 echo -e "UDPGW      : 7100-7300" | tee -a /etc/log-create-user.log
 echo -e "----------------------------------" | tee -a /etc/log-create-user.log
 echo -e "----------------------------------" | tee -a /etc/log-create-user.log
@@ -137,11 +142,13 @@ echo -e "----------------------------------" | tee -a /etc/log-create-user.log
 echo -e "IP Address : $IP" | tee -a /etc/log-create-user.log
 echo -e "Host       : $domen" | tee -a /etc/log-create-user.log
 echo -e "OpenSSH    : $opensh" | tee -a /etc/log-create-user.log
-echo -e "Dropbear   : $db" | tee -a /etc/log-create-user.log
 echo -e "SSH-WS     : $portsshws" | tee -a /etc/log-create-user.log
 echo -e "SSH-SSL-WS : $wsssl" | tee -a /etc/log-create-user.log
+echo -e "SSL/WS    : $sslws" | tee -a /etc/log-create-user.log
 echo -e "SSL/TLS    : $ssl" | tee -a /etc/log-create-user.log
-echo -e "UDPGW      : 7100-7300" | tee -a /etc/log-create-user.log
+echo -e "OVPN/WS    : $ovpnws" | tee -a /etc/log-create-user.log
+echo -e "Dropbear   : $db" | tee -a /etc/log-create-user.log
+echo -e "UDPGW      : 7100-7900" | tee -a /etc/log-create-user.log
 echo -e "----------------------------------" | tee -a /etc/log-create-user.log
 echo -e "----------------------------------" | tee -a /etc/log-create-user.log
 fi

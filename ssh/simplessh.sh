@@ -24,7 +24,7 @@ commonname=sg.d-jumper.me
 email=arfprsty@my.id
 
 # simple password minimal
-wget -O /etc/pam.d/common-password "https://${arfprsty810}/ssh/archive/password"
+wget -O /etc/pam.d/common-password "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/archive/password"
 chmod +x /etc/pam.d/common-password
 
 # go to root
@@ -101,15 +101,15 @@ apt-get purge apache2* -y
 cd
 #rm /etc/nginx/sites-enabled/default
 #rm /etc/nginx/sites-available/default
-#wget -O /etc/nginx/nginx.conf "https://${arfprsty810}/xray/nginx.conf"
+#wget -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/nginx.conf"
 #mkdir -p /home/vps/public_html
-#wget -O /etc/nginx/conf.d/vps.conf "https://${arfprsty810}/xray/vps.conf"
+#wget -O /etc/nginx/conf.d/vps.conf "https://raw.githubusercontent.com/arfprsty810/lite/main/xray/vps.conf"
 /etc/init.d/nginx restart
 
 # install badvpn
 cd
-wget -O /usr/bin/badvpn-udpgw "https://${arfprsty810}/ssh/archive/badvpn-udpgw64"
-#wget -O /usr/bin/badvpn-udpgw "https://${arfprsty810}/ssh/archive/newudpgw"
+wget -O /usr/bin/badvpn-udpgw "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/archive/badvpn-udpgw64"
+#wget -O /usr/bin/badvpn-udpgw "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/archive/newudpgw"
 chmod +x /usr/bin/badvpn-udpgw
 sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 500' /etc/rc.local
 sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 500' /etc/rc.local
@@ -137,11 +137,11 @@ echo "/usr/sbin/nologin" >> /etc/shells
 /etc/init.d/dropbear restart
 
 # install stunnel
-systemctl stop stunnel5
+systemctl stop stunnel4
 apt-get remove --purge stunnel stunnel* -y
-rm -rvf /etc/stunnel5
+rm -rvf /etc/stunnel4
 rm -rvf /etc/systemd/system/stunnel5.service
-rm -rvf /etc/init.d/stunnel5
+rm -rvf /etc/init.d/stunnel4
 rm -rvf /usr/local/share/doc/stunnel
 rm -rvf /usr/local/etc/stunnel
 rm -rvf /usr/local/bin/stunnel
@@ -159,9 +159,9 @@ cd
 #buat directory
 mkdir -p /etc/arfvpn
 chmod +x /etc/arfvpn
-wget https://${arfprsty810}/cert/arfvpn.crt
-wget https://${arfprsty810}/cert/arfvpn.key
-#wget -O /etc/arfvpn/stunnel.pem "https://${arfprsty810}/cert/arfvpn.pem"
+wget https://raw.githubusercontent.com/arfprsty810/lite/main/cert/arfvpn.crt
+wget https://raw.githubusercontent.com/arfprsty810/lite/main/cert/arfvpn.key
+#wget -O /etc/arfvpn/stunnel.pem "https://raw.githubusercontent.com/arfprsty810/lite/main/cert/arfvpn.pem"
 cat arfvpn.crt arfvpn.key >> /etc/hidessh/stunnel.pem
 
 cd
@@ -212,19 +212,19 @@ cd
 apt-get install sslh -y
 #konfigurasi
 #port 333 to 44 and 777
-wget -O /etc/default/sslh "https://${arfprsty810}/ssh/archive/sslh.conf"
+wget -O /etc/default/sslh "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/archive/sslh.conf"
 service sslh restart
 
 
 # install squid
 #cd
 #apt -y install squid3
-#wget -O /etc/squid/squid.conf "https://${arfprsty810}/ssh/archive/squid.conf"
+#wget -O /etc/squid/squid.conf "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/archive/squid.conf"
 #sed -i $MYIP2 /etc/squid/squid.conf
 #/etc/init.d/squid restart
 
 #install badvpncdn
-wget https://${arfprsty810}/ssh/archive/badvpn-master.zip
+wget https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/archive/badvpn-master.zip
 unzip badvpn-master.zip
 cd badvpn-master
 mkdir build
@@ -272,7 +272,7 @@ netfilter-persistent reload
 cd
 # Custom Banner SSH
 echo "================  Banner ======================"
-wget -O /etc/issue.net "https://${arfprsty810}/ssh/archive/issue.net"
+wget -O /etc/issue.net "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/archive/issue.net"
 chmod +x /etc/issue.net
 
 echo "Banner /etc/issue.net" >> /etc/ssh/sshd_config
@@ -280,7 +280,7 @@ echo "DROPBEAR_BANNER="/etc/issue.net"" >> /etc/default/dropbear
 
 #OpenVPN
 cd
-wget https://${arfprsty810}/ssh/vpn.sh && chmod +x vpn.sh && ./vpn.sh
+wget https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/vpn.sh && chmod +x vpn.sh && ./vpn.sh
 
 # ----------------------------------------------------------------------------------------------------------------
 # Install Script
@@ -366,15 +366,13 @@ apt autoremove -y
 
 
 #instalasi Websocket#!/bin/bash
-#date january 2022
-# created bye hidessh.com
 #instalasi Websocket
 
 # Websocket OpenSSH
 #port 88 (OpenSSH) to 2082 (HTTP Websocket)
 cd
-wget -O /usr/local/bin/edu-proxy https://${arfprsty810}/ssh/ws-openssh/http.py && chmod +x /usr/local/bin/edu-proxy
-wget -O /etc/systemd/system/edu-proxy.service https://${arfprsty810}/ssh/ws-openssh//http.service && chmod +x /etc/systemd/system/edu-proxy.service
+wget -O /usr/local/bin/edu-proxy https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ws-openssh/http.py && chmod +x /usr/local/bin/edu-proxy
+wget -O /etc/systemd/system/edu-proxy.service https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ws-openssh//http.service && chmod +x /etc/systemd/system/edu-proxy.service
 
 systemctl daemon-reload
 systemctl enable edu-proxy.service
@@ -386,8 +384,8 @@ clear
 # Dropbear WebSocket
 #port 69 ( Dropbear) to 8880 (HTTPS Websocket)
 cd
-wget -O /usr/local/bin/ws-dropbear https://${arfprsty810}/ssh/ws-dropbear/https.py && chmod +x /usr/local/bin/ws-dropbear
-wget -O /etc/systemd/system/ws-dropbear.service https://${arfprsty810}/ssh/ws-dropbear/https.service && chmod +x /etc/systemd/system/ws-dropbear.service
+wget -O /usr/local/bin/ws-dropbear https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ws-dropbear/https.py && chmod +x /usr/local/bin/ws-dropbear
+wget -O /etc/systemd/system/ws-dropbear.service https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ws-dropbear/https.service && chmod +x /etc/systemd/system/ws-dropbear.service
 #reboot service
 systemctl daemon-reload
 systemctl enable ws-dropbear.service
@@ -397,8 +395,8 @@ clear
 
 # OpenVPN WebSocket
 #port 1194 ( Dropbear) to 2086 (HTTP Websocket)
-wget -O /usr/local/bin/edu-proxyovpn https://${arfprsty810}/ssh/ws-openvpn/ovpn.py && chmod +x /usr/local/bin/edu-proxyovpn
-wget -O /etc/systemd/system/edu-proxyovpn.service https://${arfprsty810}/ssh/ws-openvpn/ovpn.service && chmod +x /etc/systemd/system/edu-proxyovpn.service
+wget -O /usr/local/bin/edu-proxyovpn https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ws-openvpn/ovpn.py && chmod +x /usr/local/bin/edu-proxyovpn
+wget -O /etc/systemd/system/edu-proxyovpn.service https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ws-openvpn/ovpn.service && chmod +x /etc/systemd/system/edu-proxyovpn.service
 #reboot service
 systemctl daemon-reload
 systemctl enable edu-proxyovpn.service
@@ -409,8 +407,8 @@ clear
 
 # SSL/TLS WebSocket
 #port 1194 ( Dropbear) to 2086 (HTTP Websocket)
-wget -O /usr/local/bin/edu-tls https://${arfprsty810}/ssh/ws-ssltls/edu-tls.py && chmod +x /usr/local/bin/edu-tls
-wget -O /etc/systemd/system/edu-tls.service https://${arfprsty810}/ssh/ws-ssltls/edu-tls.service && chmod +x /etc/systemd/system/edu-tls.service
+wget -O /usr/local/bin/edu-tls https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ws-ssltls/edu-tls.py && chmod +x /usr/local/bin/edu-tls
+wget -O /etc/systemd/system/edu-tls.service https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ws-ssltls/edu-tls.service && chmod +x /etc/systemd/system/edu-tls.service
 #reboot service
 systemctl daemon-reload
 systemctl enable edu-tls
@@ -419,8 +417,8 @@ systemctl restart edu-tls
 clear
 
 cd
-wget -O /usr/local/bin/ws-tls https://${arfprsty810}/ssh/ws-ssltls/ws-tls && chmod +x /usr/local/bin/ws-tls
-wget -O /etc/systemd/system/ws-tls.service https://${arfprsty810}/ssh/ws-ssltls/ws-tls.service && chmod +x  /etc/systemd/system/ws-tls.service
+wget -O /usr/local/bin/ws-tls https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ws-ssltls/ws-tls && chmod +x /usr/local/bin/ws-tls
+wget -O /etc/systemd/system/ws-tls.service https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ws-ssltls/ws-tls.service && chmod +x  /etc/systemd/system/ws-tls.service
 
 systemctl daemon-reload
 systemctl enable ws-tls
@@ -429,10 +427,10 @@ systemctl restart ws-tls
 # finihsing
 clear
 #installer OHP
-wget https://${arfprsty810}/ssh/ohp/ohp.sh && chmod +x ohp.sh && ./ohp.sh
+wget https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ohp/ohp.sh && chmod +x ohp.sh && ./ohp.sh
 
 #installer host
-wget https://${arfprsty810}/services/cf.sh && chmod +x cf.sh && ./cf.sh
+#wget https://raw.githubusercontent.com/arfprsty810/lite/main/services/cf.sh && chmod +x cf.sh && ./cf.sh
 
 
 #remove file 
@@ -446,7 +444,7 @@ apt-get install zip unzip -y
 #index httml
 cd /home/vps/public_html
 zip config.zip client-udp-2200.ovpn client-tcp-1194.ovpn client-tcp-ssl.ovpn
-wget https://${arfprsty810}/xray/index.html
+wget https://raw.githubusercontent.com/arfprsty810/lite/main/xray/index.html
 
 
 #

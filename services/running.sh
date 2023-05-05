@@ -255,9 +255,9 @@ clear
 
 # STATUS SERVICE STUNNEL
 if [[ $stunnel5_service == "running" ]]; then 
-   status_stunnel=" ${GREEN}Running ${NC}( No Error )"
+   status_stunnel5=" ${GREEN}Running ${NC}( No Error )"
 else
-   status_stunnel="${RED}  Not Running ${NC}  ( Error )}"
+   status_stunnel5="${RED}  Not Running ${NC}  ( Error )"
 fi
 clear
 
@@ -338,17 +338,17 @@ echo -e "❇️ FAIL2BAN                :$status_fail2ban"
 echo -e "❇️ CRONS                   :$status_cron"
 echo -e "❇️ VNSTAT                  :$status_vnstat"
 echo ""
-echo -e "      🟢🟡🔴  SERVER STATUS     :    ${status_nginx}  🔴🟡🟢"
+echo -e "  🟢🟡🔴  SERVER STATUS     :    ${status_nginx}  🔴🟡🟢"
 echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
 echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
 echo -e "\E[39;1;92m             ⇱ Tunnel Information ⇲             \E[0m"
 echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
 echo -e "❇️ OPENSSH                 :$status_ssh"
 echo -e "❇️ SSH WEBSOCKET           :$status_sshws"
-echo -e "❇️ SSH SSL WEBSOCKET    :$status_sshwstls"
+echo -e "❇️ SSH SSL WEBSOCKET       :$status_sshwstls"
 echo -e "❇️ OPENVPN WEBSOCKET       :$status_openvpnws"
 echo -e "❇️ SSL/WS                  :$swstls"
-echo -e "❇️ SSL/TLS                 :$status_stunnel"
+echo -e "❇️ SSL/TLS                 :$status_stunnel5"
 echo -e "❇️ DROPBEAR                :$status_beruangjatuh"
 echo -e "❇️ XRAYS VMESS TLS         :$status_xray"
 echo -e "❇️ XRAYS VMESS NONE TLS    :$status_xray"

@@ -65,7 +65,8 @@ if [ "${EUID}" -ne 0 ]; then
 fi
 
 # // Exporting IP Address
-export IP=$( curl -s https://ipinfo.io/ip/ )
+arfvpn="/etc/arfvpn"
+IP=$(cat $arfvpn/IP)
 
 # // Exporting Network Interface
 export NETWORK_IFACE="$(ip route show to default | awk '{print $5}')"
@@ -73,9 +74,9 @@ export NETWORK_IFACE="$(ip route show to default | awk '{print $5}')"
 clear
 cekray=`cat /root/log-install.txt | grep -ow "XRAY" | sort | uniq`
 if [ "$cekray" = "XRAY" ]; then
-domen=`cat /etc/xray/domain`
+domen=`cat $arfvpn/domain`
 else
-domen=`cat /etc/v2ray/domain`
+domen=`cat $arfvpn/domain`
 fi
 
 opensh=`cat /root/log-install.txt | grep -w "OpenSSH" | cut -f2 -d: | awk '{print $1}'`

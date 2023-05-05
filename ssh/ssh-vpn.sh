@@ -57,13 +57,16 @@ green() { echo -e "\\033[32;1m${*}\\033[0m"; }
 red() { echo -e "\\033[31;1m${*}\\033[0m"; }
 
 cd /root/
-MYIP=$(cat $xray/IP)
-DOMAIN=$(cat $xray/domain)
-github="https://raw.githubusercontent.com/arfprsty810/lite/main"
+arfvpn="/etc/arfvpn"
+MYIP=$(cat $arfvpn/IP)
+ISP=$(cat $arfvpn/ISP)
+DOMAIN=$(cat $arfvpn/domain)
+github="$github"
 export DEBIAN_FRONTEND=noninteractive
 MYIP2="s/xxxxxxxxx/$MYIP/g";
 NET=$(ip -o $ANU -4 route show to default | awk '{print $5}');
 source /etc/os-release
+OS=$ID
 ver=$VERSION_ID
 clear
 
@@ -79,7 +82,7 @@ clear
 # ----------------------------------------------------------------------------------------------------------------
 cd
 # simple password minimal
-wget -q -O /etc/pam.d/common-password "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/archive/password"
+wget -q -O /etc/pam.d/common-password "$github/ssh/archive/password"
 chmod +x /etc/pam.d/common-password
 
 # ----------------------------------------------------------------------------------------------------------------
@@ -166,8 +169,8 @@ echo "/usr/sbin/nologin" >> /etc/shells
 #DEFAULT_HOST = '127.0.0.1:69'
 #LISTENING_PORT = 8880
 cd
-wget -O /usr/local/bin/ws-dropbear https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ws-dropbear/https.py && chmod +x /usr/local/bin/ws-dropbear
-wget -O /etc/systemd/system/ws-dropbear.service https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ws-dropbear/https.service && chmod +x /etc/systemd/system/ws-dropbear.service
+wget -O /usr/local/bin/ws-dropbear $github/ssh/ws-dropbear/https.py && chmod +x /usr/local/bin/ws-dropbear
+wget -O /etc/systemd/system/ws-dropbear.service $github/ssh/ws-dropbear/https.service && chmod +x /etc/systemd/system/ws-dropbear.service
 
 systemctl daemon-reload
 systemctl enable ws-dropbear.service
@@ -179,8 +182,8 @@ systemctl restart ws-dropbear.service
 #DEFAULT_HOST = '127.0.0.1:88'
 #LISTENING_PORT = 80
 cd
-wget -O /usr/local/bin/edu-proxy https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ws-openssh/http.py && chmod +x /usr/local/bin/edu-proxy
-wget -O /etc/systemd/system/edu-proxy.service https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ws-openssh/http.service && chmod +x /etc/systemd/system/edu-proxy.service
+wget -O /usr/local/bin/edu-proxy $github/ssh/ws-openssh/http.py && chmod +x /usr/local/bin/edu-proxy
+wget -O /etc/systemd/system/edu-proxy.service $github/ssh/ws-openssh/http.service && chmod +x /etc/systemd/system/edu-proxy.service
 
 systemctl daemon-reload
 systemctl enable edu-proxy.service
@@ -191,8 +194,9 @@ systemctl restart edu-proxy.service
 #port 1194 ( Dropbear) to 2086 (HTTP Websocket)
 #DEFAULT_HOST = '127.0.0.1:1194'
 #LISTENING_PORT = 2086  
-wget -O /usr/local/bin/edu-proxyovpn https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ws-openvpn/ovpn.py && chmod +x /usr/local/bin/edu-proxyovpn
-wget -O /etc/systemd/system/edu-proxyovpn.service https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ws-openvpn/ovpn.service && chmod +x /etc/systemd/system/edu-proxyovpn.service
+cd
+wget -O /usr/local/bin/edu-proxyovpn $github/ssh/ws-openvpn/ovpn.py && chmod +x /usr/local/bin/edu-proxyovpn
+wget -O /etc/systemd/system/edu-proxyovpn.service $github/ssh/ws-openvpn/ovpn.service && chmod +x /etc/systemd/system/edu-proxyovpn.service
 
 systemctl daemon-reload
 systemctl enable edu-proxyovpn.service
@@ -203,11 +207,12 @@ systemctl restart edu-proxyovpn.service
 #port 1194 ( Dropbear) to 443/2086 (HTTP Websocket)
 #DEFAULT_HOST = '127.0.0.1:1194'
 #LISTENING_PORT = 443  
-wget -O /usr/local/bin/edu-tls https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ws-ssltls/edu-tls.py && chmod +x /usr/local/bin/edu-tls
-wget -O /etc/systemd/system/edu-tls.service https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ws-ssltls/edu-tls.service && chmod +x /etc/systemd/system/edu-tls.service
 cd
-wget -O /usr/local/bin/ws-tls https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ws-ssltls/ws-tls.py && chmod +x /usr/local/bin/ws-tls
-wget -O /etc/systemd/system/ws-tls.service https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ws-ssltls/ws-tls.service && chmod +x  /etc/systemd/system/ws-tls.service
+wget -O /usr/local/bin/edu-tls $github/ssh/ws-ssltls/edu-tls.py && chmod +x /usr/local/bin/edu-tls
+wget -O /etc/systemd/system/edu-tls.service $github/ssh/ws-ssltls/edu-tls.service && chmod +x /etc/systemd/system/edu-tls.service
+cd
+wget -O /usr/local/bin/ws-tls $github/ssh/ws-ssltls/ws-tls.py && chmod +x /usr/local/bin/ws-tls
+wget -O /etc/systemd/system/ws-tls.service $github/ssh/ws-ssltls/ws-tls.service && chmod +x  /etc/systemd/system/ws-tls.service
 
 systemctl daemon-reload.service
 systemctl enable edu-tls.service
@@ -222,16 +227,16 @@ systemctl restart ws-tls.service
 #DEFAULT_HOST = '127.0.0.1:109'
 #LISTENING_PORT = 700
 cd
-wget -O /usr/local/bin/ws-stunnel https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ws-stunnel/ws-stunnel.py && chmod +x /usr/local/bin/ws-stunnel
-wget -O /etc/systemd/system/ws-stunnel.service https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ws-stunnel/ws-stunnel.service && chmod +x /etc/systemd/system/ws-stunnel.service
+wget -O /usr/local/bin/ws-stunnel $github/ssh/ws-stunnel/ws-stunnel.py && chmod +x /usr/local/bin/ws-stunnel
+wget -O /etc/systemd/system/ws-stunnel.service $github/ssh/ws-stunnel/ws-stunnel.service && chmod +x /etc/systemd/system/ws-stunnel.service
 
 systemctl daemon-reload
 systemctl enable ws-stunnel
-systemctl status ws-stunnel
+systemctl start ws-stunnel
 systemctl restart ws-stunnel
 
 #installer OHP
-#wget https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ohp/ohp.sh && chmod +x ohp.sh && ./ohp.sh
+#wget $github/ssh/ohp/ohp.sh && chmod +x ohp.sh && ./ohp.sh
 
 
 # ----------------------------------------------------------------------------------------------------------------
@@ -260,8 +265,8 @@ echo -ne
 fi
 cd
 echo -e "[ ${GREEN}INFO$NC ] Installing badvpn for game support..."
-wget -q -O /usr/bin/badvpn-udpgw "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/archive/badvpn-udpgw64"
-#wget -q -O /usr/bin/badvpn-udpgw "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/archive/newudpgw"
+wget -q -O /usr/bin/badvpn-udpgw "$github/ssh/archive/badvpn-udpgw64"
+#wget -q -O /usr/bin/badvpn-udpgw "$github/ssh/archive/newudpgw"
 chmod +x /usr/bin/badvpn-udpgw
 sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 500' /etc/rc.local
 sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 500' /etc/rc.local
@@ -281,7 +286,7 @@ screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7900 --max-clients 500 >
 # ----------------------------------------------------------------------------------------------------------------
 #cd
 #apt -y install squid
-#wget -O /etc/squid/squid.conf "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/archive/squid3.conf"
+#wget -O /etc/squid/squid.conf "$github/ssh/archive/squid3.conf"
 #sed -i $MYIP2 /etc/squid/squid.conf
 
 # ----------------------------------------------------------------------------------------------------------------
@@ -322,7 +327,7 @@ screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7900 --max-clients 500 >
 # ----------------------------------------------------------------------------------------------------------------
 cd /root/
 #apt-get install stunnel5 -y
-#wget -q -O /usr/bin/ssh_ssl "https://raw.githubusercontent.com/arfprsty810/lite/main/stunnel5/ssh-ssl.sh"
+#wget -q -O /usr/bin/ssh_ssl "$github/stunnel5/ssh-ssl.sh"
 #chmod +x /usr/bin/ssh_ssl
 #sed -i -e 's/\r$//' /bin/ssh_ssl
 #/usr/bin/ssh_ssl
@@ -341,7 +346,7 @@ rm -rvf /usr/local/bin/stunnel5
 apt autoremove -y
 systemctl daemon-reload
 #apt-get install stunnel5 -y
-wget -q -O stunnel5.zip "https://raw.githubusercontent.com/arfprsty810/lite/main/stunnel5/stunnel5.zip"
+wget -q -O stunnel5.zip "$github/stunnel5/stunnel5.zip"
 unzip -o stunnel5.zip
 cd /root/stunnel
 chmod +x configure
@@ -379,9 +384,9 @@ cd
 mkdir -p /etc/arfvpn
 chmod +x /etc/arfvpn
 cd /etc/arfvpn/
-wget https://raw.githubusercontent.com/arfprsty810/lite/main/cert/arfvpn.crt
-wget https://raw.githubusercontent.com/arfprsty810/lite/main/cert/arfvpn.key
-#wget -O /etc/arfvpn/stunnel.pem "https://raw.githubusercontent.com/arfprsty810/lite/main/cert/arfvpn.pem"
+wget $github/cert/arfvpn.crt
+wget $github/cert/arfvpn.key
+#wget -O /etc/arfvpn/stunnel.pem "$github/cert/arfvpn.pem"
 cat arfvpn.key arfvpn.crt >> /etc/arfvpn/stunnel.pem
 chmod 600 /etc/arfvpn/stunnel.pem
 cd
@@ -427,7 +432,7 @@ WantedBy=multi-user.target
 END
 
 # Service Stunnel5 /etc/init.d/stunnel5
-wget -q -O /etc/init.d/stunnel5 "https://raw.githubusercontent.com/arfprsty810/lite/main/stunnel5/stunnel5.init"
+wget -q -O /etc/init.d/stunnel5 "$github/stunnel5/stunnel5.init"
 #chmod 600 /etc/stunnel5/stunnel5.pem
 chmod +x /etc/init.d/stunnel5
 cp /usr/local/bin/stunnel /usr/local/bin/stunnel5
@@ -452,7 +457,7 @@ systemctl restart stunnel5
 # ----------------------------------------------------------------------------------------------------------------
 # Install OpenVPN
 # ----------------------------------------------------------------------------------------------------------------
-wget https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/vpn.sh &&  chmod +x vpn.sh && ./vpn.sh
+wget $github/ssh/vpn.sh &&  chmod +x vpn.sh && ./vpn.sh
 
 # ----------------------------------------------------------------------------------------------------------------
 # Install Fail2Ban
@@ -508,7 +513,7 @@ rm -fr /etc/issue.net
 rm -fr /etc/issue.net.save
 sleep 1
 echo -e "[ ${GREEN}INFO$NC ] Settings banner"
-wget -q -O /etc/issue.net "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/archive/issue.net"
+wget -q -O /etc/issue.net "$github/ssh/archive/issue.net"
 chmod +x /etc/issue.net
 echo "Banner /etc/issue.net" >> /etc/ssh/sshd_config
 sed -i 's@DROPBEAR_BANNER=""@DROPBEAR_BANNER="/etc/issue.net"@g' /etc/default/dropbear
@@ -552,43 +557,43 @@ fi
 # ----------------------------------------------------------------------------------------------------------------
 # Install Script
 # ----------------------------------------------------------------------------------------------------------------
-wget -q -O /usr/bin/autodel "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/autodel.sh"
+wget -q -O /usr/bin/autodel "$github/ssh/autodel.sh"
 chmod +x /usr/bin/autodel
 sed -i -e 's/\r$//' /bin/autodel
 
-wget -q -O /usr/bin/autokill "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/autokill.sh"
+wget -q -O /usr/bin/autokill "$github/ssh/autokill.sh"
 chmod +x /usr/bin/autokill
 sed -i -e 's/\r$//' /bin/autokill
 
-wget -q -O /usr/bin/cek "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/cek.sh"
+wget -q -O /usr/bin/cek "$github/ssh/cek.sh"
 chmod +x /usr/bin/cek
 sed -i -e 's/\r$//' /bin/cek
 
-wget -q -O /usr/bin/ceklim "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ceklim.sh"
+wget -q -O /usr/bin/ceklim "$github/ssh/ceklim.sh"
 chmod +x /usr/bin/ceklim
 sed -i -e 's/\r$//' /bin/ceklim
 
-wget -q -O /usr/bin/del "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/del.sh"
+wget -q -O /usr/bin/del "$github/ssh/del.sh"
 chmod +x /usr/bin/del
 sed -i -e 's/\r$//' /bin/del
 
-wget -q -O /usr/bin/member "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/member.sh"
+wget -q -O /usr/bin/member "$github/ssh/member.sh"
 chmod +x /usr/bin/member
 sed -i -e 's/\r$//' /bin/member
 
-wget -q -O /usr/bin/menu-ssh "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/menu-ssh.sh"
+wget -q -O /usr/bin/menu-ssh "$github/ssh/menu-ssh.sh"
 chmod +x /usr/bin/menu-ssh
 sed -i -e 's/\r$//' /bin/menu-ssh
 
-wget -q -O /usr/bin/renew "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/renew.sh"
+wget -q -O /usr/bin/renew "$github/ssh/renew.sh"
 chmod +x /usr/bin/renew
 sed -i -e 's/\r$//' /bin/renew
 
-wget -q -O /usr/bin/tendang "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/tendang.sh"
+wget -q -O /usr/bin/tendang "$github/ssh/tendang.sh"
 chmod +x /usr/bin/tendang
 sed -i -e 's/\r$//' /bin/tendang
 
-wget -q -O /usr/bin/usernew "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/usernew.sh"
+wget -q -O /usr/bin/usernew "$github/ssh/usernew.sh"
 chmod +x /usr/bin/usernew
 sed -i -e 's/\r$//' /bin/usernew
 

@@ -64,7 +64,8 @@ if [ "${EUID}" -ne 0 ]; then
 fi
 
 # // Exporting IP Address
-export IP=$( curl -s https://ipinfo.io/ip/ )
+arfvpn="/etc/arfvpn"
+IP=$(cat $arfvpn/IP)
 
 # // Exporting Network Interface
 export NETWORK_IFACE="$(ip route show to default | awk '{print $5}')"

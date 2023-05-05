@@ -12,8 +12,10 @@ CYAN='\033[0;36m'
 LIGHT='\033[0;37m'
 # ==========================================
 
-MYIP=$(cat $xray/IP)
-DOMAIN=$(cat $xray/domain)
+arfvpn="/etc/arfvpn"
+MYIP=$(cat $arfvpn/IP)
+ISP=$(cat $arfvpn/ISP)
+DOMAIN=$(cat $arfvpn/domain)
 github="https://raw.githubusercontent.com/arfprsty810/lite/main"
 export DEBIAN_FRONTEND=noninteractive
 MYIP2="s/xxxxxxxxx/$MYIP/g";
@@ -26,7 +28,7 @@ apt install openvpn easy-rsa unzip -y
 apt install openssl iptables iptables-persistent -y
 mkdir -p /etc/openvpn/server/easy-rsa/
 cd /etc/openvpn/
-wget $github/ssh/vpn.zip
+wget $github/ssh/archive/vpn.zip
 unzip vpn.zip
 rm -f vpn.zip
 chown -R root:root /etc/openvpn/server/easy-rsa/

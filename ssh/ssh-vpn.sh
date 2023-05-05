@@ -231,7 +231,7 @@ systemctl status ws-stunnel
 systemctl restart ws-stunnel
 
 #installer OHP
-wget https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ohp/ohp.sh && chmod +x ohp.sh && ./ohp.sh
+#wget https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ohp/ohp.sh && chmod +x ohp.sh && ./ohp.sh
 
 
 # ----------------------------------------------------------------------------------------------------------------

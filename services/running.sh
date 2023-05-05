@@ -97,15 +97,16 @@ clear
 
 # SSH
 ssh_service=$(/etc/init.d/ssh status | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
-#wsopen=$(systemctl status ws-openssh | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+sshws=$(systemctl status edu-proxy.service | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+sshwstls=$(systemctl status edu-tls.service | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
 #ohr=$(systemctl status ssh-ohp | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
 clear
 
 # OPENVPN
-ovpn_info="$(systemctl show openvpn --no-page)"
-ovpn_status=$(echo "${ovpn_info}" | grep 'ActiveState=' | cut -f2 -d=)  
+#ovpn_info="$(systemctl show openvpn --no-page)"
+#ovpn_status=$(echo "${ovpn_info}" | grep 'ActiveState=' | cut -f2 -d=)  
 #status_openvp=$(/etc/init.d/openvpn status | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
-#wsovpn=$(systemctl status ws-ovpn | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+ovpnws=$(systemctl status edu-proxyovpn.service | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
 #ohq=$(systemctl status openvpn-ohp | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
 clear
 
@@ -181,10 +182,10 @@ fi
 clear
 
 # STATUS SERVICE OPENVPN
-if [[ $ovpn_status == "active" ]]; then
-  status_openvpn=" ${GREEN}Running ${NC}( No Error )"
+if [[ $ovpnws == "active" ]]; then
+  status_openvpnws=" ${GREEN}Running ${NC}( No Error )"
 else
-  status_openvpn="${RED}  Not Running ${NC}  ( Error )"
+  status_openvpnws="${RED}  Not Running ${NC}  ( Error )"
 fi
 clear
 
@@ -193,6 +194,22 @@ if [[ $ssh_service == "running" ]]; then
    status_ssh=" ${GREEN}Running ${NC}( No Error )"
 else
    status_ssh="${RED}  Not Running ${NC}  ( Error )"
+fi
+clear
+
+# STATUS SERVICE  SSH WS
+if [[ $sshws == "running" ]]; then 
+   status_sshws=" ${GREEN}Running ${NC}( No Error )"
+else
+   status_sshws="${RED}  Not Running ${NC}  ( Error )"
+fi
+clear
+
+# STATUS SERVICE  SSH WS/TLS
+if [[ $sshwstls == "running" ]]; then 
+   status_sshwstls=" ${GREEN}Running ${NC}( No Error )"
+else
+   status_sshwstls="${RED}  Not Running ${NC}  ( Error )"
 fi
 clear
 
@@ -260,6 +277,14 @@ else
 fi
 clear
 
+nginx=$( systemctl status nginx | grep Active | awk '{print $3}' | sed 's/(//g' | sed 's/)//g' )
+if [[ $nginx == "running" ]]; then
+ status_nginx="${GREEN}ACTIVE${NC}"
+else
+ status_nginx="${RED}FAILED${NC}"
+fi
+clear
+
 # TOTAL RAM
 total_ram=` grep "MemTotal: " /proc/meminfo | awk '{ print $2}'`
 totalram=$(($total_ram/1024))
@@ -309,14 +334,22 @@ echo -e "  ❇️ \e[32;1m Time Reboot VPS\e[0m  : 00:00 ( Jam 12 Malam ) "
 echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
 echo -e "\E[39;1;92m             ⇱ Service Information ⇲             \E[0m"
 echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
-echo -e "❇️ OPENVPN                 :$status_openvpn"
-echo -e "❇️ DROPBEAR                :$status_beruangjatuh"
-echo -e "❇️ Stunnel5                :$status_stunnel"
-echo -e "❇️ SQUID                   :$status_squid"
 echo -e "❇️ FAIL2BAN                :$status_fail2ban"
 echo -e "❇️ CRONS                   :$status_cron"
 echo -e "❇️ VNSTAT                  :$status_vnstat"
-echo -e "❇️ SSH                     :$status_ssh"
+echo ""
+echo -e "      🟢🟡🔴  SERVER STATUS     :    ${status_nginx}  🔴🟡🟢"
+echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
+echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
+echo -e "\E[39;1;92m             ⇱ Tunnel Information ⇲             \E[0m"
+echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
+echo -e "❇️ OPENSSH                 :$status_ssh"
+echo -e "❇️ SSH WEBSOCKET           :$status_sshws"
+echo -e "❇️ SSH SSL WEBSOCKET    :$status_sshwstls"
+echo -e "❇️ OPENVPN WEBSOCKET       :$status_openvpnws"
+echo -e "❇️ SSL/WS                  :$swstls"
+echo -e "❇️ SSL/TLS                 :$status_stunnel"
+echo -e "❇️ DROPBEAR                :$status_beruangjatuh"
 echo -e "❇️ XRAYS VMESS TLS         :$status_xray"
 echo -e "❇️ XRAYS VMESS NONE TLS    :$status_xray"
 echo -e "❇️ XRAYS VMESS GRPC        :$status_xray"
@@ -328,8 +361,6 @@ echo -e "❇️ TROJAN GRPC             :$status_xray"
 echo -e "❇️ TROJAN GO               :$status_trojan_go"
 #echo -e "❇️ Trojan GFW              :$status_virus_trojangfw"
 echo -e "❇️ SHADOWSOCKS OBFS        :$status_ss_obfs"
-echo -e "❇️ WS-Stunnel TLS          :$swstls"
-echo -e "❇️ WS-Stunnel None TLS     :$swstls"
 echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
 echo ""
 read -n 1 -s -r -p "Press any key to back on menu"

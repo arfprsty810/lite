@@ -30,6 +30,7 @@ secs_to_human() {
 start=$(date +%s)
 
 source /etc/os-release
+arfvpn="/etc/arfvpn"
 xray="/etc/xray"
 logxray="/var/log/xray"
 trgo="/etc/trojan-go"
@@ -285,7 +286,7 @@ clear
 #rm -fr /usr/local/bin/stunnel5
 rm -fr $nginx
 rm -fr $ipvps
-rm -fr $xray
+rm -fr r
 rm -fr $logxray
 rm -fr /usr/local/bin/xray
 rm -fr $trgo
@@ -303,24 +304,19 @@ read -rp "Input ur domain / sub-domain : " -e pp
         /usr/bin/cf
     else
     mkdir -p $ipvps >/dev/null 2>&1
-    mkdir -p $xray/
-    mkdir -p $nginx/
-    touch $xray/domain
-    touch $xray/scdomain
-    touch /root/domain
-    touch /root/scdomain
-	echo "$pp" > $xray/domain
-	echo "$pp" > $xray/scdomain
-	echo "$pp" > /root/domain
-    echo "$pp" > /root/scdomain
-    echo "IP=" >> $ipvps/ipvps.conf
+    mkdir -p $xray
+    mkdir -p $nginx
+    touch $arfvpn/domain
+    touch $arfvpn/scdomain
+	echo "$pp" > $arfvpn/domain
+	echo "$pp" > $arfvpn/scdomain
     echo "IP=$pp" > $ipvps/ipvps.conf
-    touch $xray/ISP
-    touch $xray/IP
-    curl -s ipinfo.io/org/ > $xray/ISP
-    curl -s https://ipinfo.io/ip/ > $xray/IP
+    touch $arfvpn/ISP
+    touch $arfvpn/IP
+    curl -s ipinfo.io/org/ > $arfvpn/ISP
+    curl -s https://ipinfo.io/ip/ > $arfvpn/IP
     fi
-domain=$(cat $xray/domain)
+domain=$(cat $arfvpn/domain)
 sleep 1
 clear
 #Instal Xray

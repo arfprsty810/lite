@@ -15,6 +15,7 @@ source /etc/os-release
 clear
 arfvpn="/etc/arfvpn"
 xray="/etc/xray"
+logxray"/var/log/xray"
 trgo="/etc/trojan-go"
 logtrgo="/var/log/trojan-go"
 ipvps="/var/lib/arf"
@@ -39,13 +40,13 @@ clear
 
 # Make Folder XRay
 echo -e "[ ${green}INFO$NC ] MEMBUAT FOLDER XRAY"
-mkdir -p /var/log/xray
-chown www-data.www-data /var/log/xray
-chmod +x /var/log/xray
-touch /var/log/xray/access.log
-touch /var/log/xray/error.log
-touch /var/log/xray/access2.log
-touch /var/log/xray/error2.log
+mkdir -p $logxray
+chown www-data.www-data $logxray
+chmod +x $logxray
+touch $logxray/access.log
+touch $logxray/error.log
+touch $logxray/access2.log
+touch $logxray/error2.log
 # / / Ambil Xray Core Version Terbaru
 bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.5.6
 clear
@@ -70,8 +71,8 @@ clear
 echo -e "[ ${green}INFO$NC ] INSATLLING CERT SSL"
 ## crt xray
 systemctl stop nginx
-cp /etc/arfvpn/arfvpn.crt /etc/xray
-cp /etc/arfvpn/arfvpn.key /etc/xray
+cp $arfvpn/arfvpn.crt $xray/
+cp $arfvpn/arfvpn.key $xray/
 
 #mkdir /root/.acme.sh
 #curl https://acme-install.netlify.app/acme.sh -o /root/.acme.sh/acme.sh
@@ -114,8 +115,8 @@ sleep 1
 cat > $xray/config.json << END
 {
   "log" : {
-    "access": "/var/log/xray/access.log",
-    "error": "/var/log/xray/error.log",
+    "access": "$logxray/access.log",
+    "error": "$logxray/error.log",
     "loglevel": "warning"
   },
   "inbounds": [
@@ -412,8 +413,8 @@ cat >/etc/nginx/conf.d/xray.conf <<EOF
              listen 443 ssl http2 reuseport;
              listen [::]:443 http2 reuseport;	
              server_name $domain;
-             ssl_certificate /etc/arfvpn/arfvpn.crt;
-             ssl_certificate_key /etc/arfvpn/arfvpn.key;
+             ssl_certificate $arfvpn/arfvpn.crt;
+             ssl_certificate_key $arfvpn/arfvpn.key;
              ssl_ciphers EECDH+CHACHA20:EECDH+CHACHA20-draft:EECDH+ECDSA+AES128:EECDH+aRSA+AES128:RSA+AES128:EECDH+ECDSA+AES256:EECDH+aRSA+AES256:RSA+AES256:EECDH+ECDSA+3DES:EECDH+aRSA+3DES:RSA+3DES:!MD5;
              ssl_protocols TLSv1.1 TLSv1.2 TLSv1.3;
              root /home/vps/public_html;

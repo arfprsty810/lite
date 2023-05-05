@@ -86,7 +86,6 @@ echo -e "$green                 AUTOSCRIPT VPS XRAY v.1.0 $NC"
 echo -e "$green               MULTI PORT XRAY 443 + 80 & RANDOM $NC"
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 sleep 3
-apt install curl jq -y
 clear
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "$green      Add Domain for XRAY VPN $NC"
@@ -99,7 +98,9 @@ read -rp "Input ur domain / sub-domain : " -e pp
     Nothing input for domain!
     Then a random sub-domain will be created"
     sleep 2
+    apt install curl jq -y
     rm -rvf /usr/bin/cf
+    clear
     wget -q -O /usr/bin/cf "$github/services/cf.sh"
     chmod +x /usr/bin/cf
     sed -i -e 's/\r$//' /usr/bin/cf
@@ -131,6 +132,14 @@ echo -e "[ ${green}SCRIPT${NC} ] install .... "
 sleep 2
 cd
 
+#apete
+wget https://raw.githubusercontent.com/arfprsty810/lite/main/services/apete.sh
+chmod +x apete.sh
+sed -i -e 's/\r$//' apete.sh
+./apete.sh
+clear
+sleep 2
+
 #Instal Xray
 wget https://raw.githubusercontent.com/arfprsty810/lite/main/xray/ins-xray.sh
 chmod +x ins-xray.sh
@@ -160,6 +169,14 @@ sleep 2
 #chmod +x ssh-vpn.sh
 #sed -i -e 's/\r$//' ssh-vpn.sh
 #./ssh-vpn.sh
+#clear
+#sleep 2
+
+#Instal SSH-vpn
+#wget https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/simplessh.sh
+#chmod +x simplessh.sh
+#sed -i -e 's/\r$//' simplessh.sh
+#./simplessh.sh
 #clear
 #sleep 2
 
@@ -364,11 +381,11 @@ echo "------------------------------------------------------------" | tee -a log
 echo "" | tee -a log-install.txt
 echo "   >>> Service & Port"  | tee -a log-install.txt
 echo "   - OpenSSH                 : 22"  | tee -a log-install.txt
+echo "   - Dropbear                : 109, 143" | tee -a log-install.txt
 echo "   - SSH Websocket           : 80" | tee -a log-install.txt
 echo "   - SSH SSL Websocket       : 443" | tee -a log-install.txt
-echo "   - Stunnel5                : 447, 777" | tee -a log-install.txt
-echo "   - Dropbear                : 109, 143" | tee -a log-install.txt
-echo "   - Badvpn                  : 7100-7300" | tee -a log-install.txt
+echo "   - Stunnel5                : 447, 777, 990" | tee -a log-install.txt
+echo "   - Badvpn                  : 7100-7900" | tee -a log-install.txt
 echo "   - Nginx                   : 81" | tee -a log-install.txt
 echo "   - XRAY  Vmess TLS         : 443" | tee -a log-install.txt
 echo "   - XRAY  Vmess None TLS    : 80" | tee -a log-install.txt
@@ -378,7 +395,7 @@ echo "   - Trojan GRPC             : 443" | tee -a log-install.txt
 echo "   - Trojan WS               : 443" | tee -a log-install.txt
 echo "   - Trojan GO               : 443" | tee -a log-install.txt
 #echo "   - Trojan GFW              : 443" | tee -a log-install.txt
-echo "   - Sodosok WS/GRPC         : 443" | tee -a log-install.txt
+echo "   - Shadowsocks-Libev       : 443" | tee -a log-install.txt
 echo ""  | tee -a log-install.txt
 echo "   >>> Server Information & Other Features"  | tee -a log-install.txt
 echo "   - Timezone                : Asia/Jakarta (GMT +7)"  | tee -a log-install.txt
@@ -391,6 +408,7 @@ echo "" | tee -a log-install.txt
 echo "------------------------------------------------------------" | tee -a log-install.txt
 echo "" | tee -a log-install.txt
 echo "=========-[ Script Created By @arf.prsty_ ]-==========" | tee -a log-install.txt
+echo "" | tee -a log-install.txt
 echo "" | tee -a log-install.txt
 secs_to_human "$(($(date +%s) - ${start}))" | tee -a log-install.txt
 echo -e "" | tee -a log-install.txt

@@ -14,6 +14,7 @@ cd
 echo ""
 echo ""
 echo -e "[ ${green}INFO$NC ] RE-INSTALLER AUTO SCRIPT "
+echo " - SSH => OPENVPN "
 echo " - XRAY => VMESS - VLESS "
 echo " - TROJAN => TROJAN WS - TROJAN-GO "
 echo " - SHADOWSOCKS => SHADOWSOCKS-LIBEV "
@@ -38,51 +39,6 @@ ipvps="/var/lib/arf"
 github="https://raw.githubusercontent.com/arfprsty810/lite/main"
 OS=$ID
 ver=$VERSION_ID
-clear
-
-# // Remove File & Directory
-#rm -fr /usr/local/bin/stunnel
-#rm -fr /usr/local/bin/stunnel5
-rm -fr $nginx
-rm -fr $ipvps
-rm -fr $xray
-rm -fr $logxray
-rm -fr /usr/local/bin/xray
-rm -fr $trgo
-rm -fr $logtrgo
-rm -fr /usr/bin/trojan-go
-clear
-
-date
-echo ""
-echo -e "[ ${green}INFO$NC ]* BLANK INPUT FOR RANDOM SUB-DOMAIN ! "
-read -rp "Input ur domain / sub-domain : " -e pp
-    if [ -z $pp ]; then
-        echo -e "
-        Nothing input for domain!
-        Then a random sub-domain will be created"
-        /usr/bin/cf
-    else
-    mkdir -p $ipvps >/dev/null 2>&1
-    mkdir -p $xray/
-    mkdir -p $nginx/
-    touch $xray/domain
-    touch $xray/scdomain
-    touch /root/domain
-    touch /root/scdomain
-	echo "$pp" > $xray/domain
-	echo "$pp" > $xray/scdomain
-	echo "$pp" > /root/domain
-    echo "$pp" > /root/scdomain
-    echo "IP=" >> $ipvps/ipvps.conf
-    echo "IP=$pp" > $ipvps/ipvps.conf
-    touch $xray/ISP
-    touch $xray/IP
-    curl -s ipinfo.io/org/ > $xray/ISP
-    curl -s https://ipinfo.io/ip/ > $xray/IP
-    fi
-domain=$(cat $xray/domain)
-sleep 1
 clear
 
 echo -e "[ ${green}INFO$NC ] DISABLE IPV6"
@@ -207,54 +163,6 @@ clear
 rm -rvf /root/*.sh
 rm -rvf /root/*.sh.*
 clear
-
-echo "" | tee -a log-install.txt
-echo "======================-[ SCRIPT INFO ]-=====================" | tee -a log-install.txt
-echo "" | tee -a log-install.txt
-echo "------------------------------------------------------------" | tee -a log-install.txt
-echo "" | tee -a log-install.txt
-echo "   >>> Service & Port"  | tee -a log-install.txt
-echo "   - OpenSSH                 : 22"  | tee -a log-install.txt
-echo "   - SSH Websocket           : 80" | tee -a log-install.txt
-echo "   - SSH SSL Websocket       : 443" | tee -a log-install.txt
-echo "   - Stunnel5                : 447, 777" | tee -a log-install.txt
-echo "   - Dropbear                : 109, 143" | tee -a log-install.txt
-echo "   - Badvpn                  : 7100-7300" | tee -a log-install.txt
-echo "   - Nginx                   : 81" | tee -a log-install.txt
-echo "   - XRAY  Vmess TLS         : 443" | tee -a log-install.txt
-echo "   - XRAY  Vmess None TLS    : 80" | tee -a log-install.txt
-echo "   - XRAY  Vless TLS         : 443" | tee -a log-install.txt
-echo "   - XRAY  Vless None TLS    : 80" | tee -a log-install.txt
-echo "   - Trojan GRPC             : 443" | tee -a log-install.txt
-echo "   - Trojan WS               : 443" | tee -a log-install.txt
-echo "   - Trojan GO               : 443" | tee -a log-install.txt
-#echo "   - Trojan GFW              : 443" | tee -a log-install.txt
-echo "   - Sodosok WS/GRPC         : 443" | tee -a log-install.txt
-echo ""  | tee -a log-install.txt
-echo "   >>> Server Information & Other Features"  | tee -a log-install.txt
-echo "   - Timezone                : Asia/Jakarta (GMT +7)"  | tee -a log-install.txt
-echo "   - Fail2Ban                : [ON]"  | tee -a log-install.txt
-echo "   - Dflate                  : [ON]"  | tee -a log-install.txt
-echo "   - IPtables                : [ON]"  | tee -a log-install.txt
-echo "   - Auto-Reboot             : [ON]"  | tee -a log-install.txt
-echo "   - IPv6                    : [OFF]"  | tee -a log-install.txt
-echo "" | tee -a log-install.txt
-echo "------------------------------------------------------------" | tee -a log-install.txt
-echo "" | tee -a log-install.txt
-echo "=========-[ Script Created By @arf.prsty_ ]-==========" | tee -a log-install.txt
-echo "" | tee -a log-install.txt
-secs_to_human "$(($(date +%s) - ${start}))" | tee -a log-install.txt
-echo -e "" | tee -a log-install.txt
-
-echo -e "[ ${green}INFO$NC ] RE-INSTALL FINISHED !"
-sleep 2
-echo -ne "[ ${yell}WARNING${NC} ] Reboot ur VPS ? (y/n)? "
-read answer
-if [ "$answer" == "${answer#[Yy]}" ] ;then
-exit 0
-else
-reboot
-fi
 ;;
 
 2)
@@ -311,54 +219,6 @@ clear
 rm -rvf /root/*.sh
 rm -rvf /root/*.sh.*
 clear
-
-echo "" | tee -a log-install.txt
-echo "======================-[ SCRIPT INFO ]-=====================" | tee -a log-install.txt
-echo "" | tee -a log-install.txt
-echo "------------------------------------------------------------" | tee -a log-install.txt
-echo "" | tee -a log-install.txt
-echo "   >>> Service & Port"  | tee -a log-install.txt
-echo "   - OpenSSH                 : 22"  | tee -a log-install.txt
-echo "   - SSH Websocket           : 80" | tee -a log-install.txt
-echo "   - SSH SSL Websocket       : 443" | tee -a log-install.txt
-echo "   - Stunnel5                : 447, 777" | tee -a log-install.txt
-echo "   - Dropbear                : 109, 143" | tee -a log-install.txt
-echo "   - Badvpn                  : 7100-7300" | tee -a log-install.txt
-echo "   - Nginx                   : 81" | tee -a log-install.txt
-echo "   - XRAY  Vmess TLS         : 443" | tee -a log-install.txt
-echo "   - XRAY  Vmess None TLS    : 80" | tee -a log-install.txt
-echo "   - XRAY  Vless TLS         : 443" | tee -a log-install.txt
-echo "   - XRAY  Vless None TLS    : 80" | tee -a log-install.txt
-echo "   - Trojan GRPC             : 443" | tee -a log-install.txt
-echo "   - Trojan WS               : 443" | tee -a log-install.txt
-echo "   - Trojan GO               : 443" | tee -a log-install.txt
-#echo "   - Trojan GFW              : 443" | tee -a log-install.txt
-echo "   - Sodosok WS/GRPC         : 443" | tee -a log-install.txt
-echo ""  | tee -a log-install.txt
-echo "   >>> Server Information & Other Features"  | tee -a log-install.txt
-echo "   - Timezone                : Asia/Jakarta (GMT +7)"  | tee -a log-install.txt
-echo "   - Fail2Ban                : [ON]"  | tee -a log-install.txt
-echo "   - Dflate                  : [ON]"  | tee -a log-install.txt
-echo "   - IPtables                : [ON]"  | tee -a log-install.txt
-echo "   - Auto-Reboot             : [ON]"  | tee -a log-install.txt
-echo "   - IPv6                    : [OFF]"  | tee -a log-install.txt
-echo "" | tee -a log-install.txt
-echo "------------------------------------------------------------" | tee -a log-install.txt
-echo "" | tee -a log-install.txt
-echo "=========-[ Script Created By @arf.prsty_ ]-==========" | tee -a log-install.txt
-echo "" | tee -a log-install.txt
-secs_to_human "$(($(date +%s) - ${start}))" | tee -a log-install.txt
-echo -e "" | tee -a log-install.txt
-
-echo -e "[ ${green}INFO$NC ] RE-INSTALL FINISHED !"
-sleep 2
-echo -ne "[ ${yell}WARNING${NC} ] Reboot ur VPS ? (y/n)? "
-read answer
-if [ "$answer" == "${answer#[Yy]}" ] ;then
-exit 0
-else
-reboot
-fi
 ;;
 
 3)
@@ -415,58 +275,53 @@ clear
 rm -rvf /root/*.sh
 rm -rvf /root/*.sh.*
 clear
-
-echo "" | tee -a log-install.txt
-echo "======================-[ SCRIPT INFO ]-=====================" | tee -a log-install.txt
-echo "" | tee -a log-install.txt
-echo "------------------------------------------------------------" | tee -a log-install.txt
-echo "" | tee -a log-install.txt
-echo "   >>> Service & Port"  | tee -a log-install.txt
-echo "   - OpenSSH                 : 22"  | tee -a log-install.txt
-echo "   - SSH Websocket           : 80" | tee -a log-install.txt
-echo "   - SSH SSL Websocket       : 443" | tee -a log-install.txt
-echo "   - Stunnel5                : 447, 777" | tee -a log-install.txt
-echo "   - Dropbear                : 109, 143" | tee -a log-install.txt
-echo "   - Badvpn                  : 7100-7300" | tee -a log-install.txt
-echo "   - Nginx                   : 81" | tee -a log-install.txt
-echo "   - XRAY  Vmess TLS         : 443" | tee -a log-install.txt
-echo "   - XRAY  Vmess None TLS    : 80" | tee -a log-install.txt
-echo "   - XRAY  Vless TLS         : 443" | tee -a log-install.txt
-echo "   - XRAY  Vless None TLS    : 80" | tee -a log-install.txt
-echo "   - Trojan GRPC             : 443" | tee -a log-install.txt
-echo "   - Trojan WS               : 443" | tee -a log-install.txt
-echo "   - Trojan GO               : 443" | tee -a log-install.txt
-#echo "   - Trojan GFW              : 443" | tee -a log-install.txt
-echo "   - Sodosok WS/GRPC         : 443" | tee -a log-install.txt
-echo ""  | tee -a log-install.txt
-echo "   >>> Server Information & Other Features"  | tee -a log-install.txt
-echo "   - Timezone                : Asia/Jakarta (GMT +7)"  | tee -a log-install.txt
-echo "   - Fail2Ban                : [ON]"  | tee -a log-install.txt
-echo "   - Dflate                  : [ON]"  | tee -a log-install.txt
-echo "   - IPtables                : [ON]"  | tee -a log-install.txt
-echo "   - Auto-Reboot             : [ON]"  | tee -a log-install.txt
-echo "   - IPv6                    : [OFF]"  | tee -a log-install.txt
-echo "" | tee -a log-install.txt
-echo "------------------------------------------------------------" | tee -a log-install.txt
-echo "" | tee -a log-install.txt
-echo "=========-[ Script Created By @arf.prsty_ ]-==========" | tee -a log-install.txt
-echo "" | tee -a log-install.txt
-secs_to_human "$(($(date +%s) - ${start}))" | tee -a log-install.txt
-echo -e "" | tee -a log-install.txt
-
-echo -e "[ ${green}INFO$NC ] RE-INSTALL FINISHED !"
-sleep 2
-echo -ne "[ ${yell}WARNING${NC} ] Reboot ur VPS ? (y/n)? "
-read answer
-if [ "$answer" == "${answer#[Yy]}" ] ;then
-exit 0
-else
-reboot
-fi
 ;;
 
 
 4)
+clear
+# // Remove File & Directory
+#rm -fr /usr/local/bin/stunnel
+#rm -fr /usr/local/bin/stunnel5
+rm -fr $nginx
+rm -fr $ipvps
+rm -fr $xray
+rm -fr $logxray
+rm -fr /usr/local/bin/xray
+rm -fr $trgo
+rm -fr $logtrgo
+rm -fr /usr/bin/trojan-go
+clear
+
+echo ""
+echo -e "[ ${green}INFO$NC ]* BLANK INPUT FOR RANDOM SUB-DOMAIN ! "
+read -rp "Input ur domain / sub-domain : " -e pp
+    if [ -z $pp ]; then
+        echo -e "
+        Nothing input for domain!
+        Then a random sub-domain will be created"
+        /usr/bin/cf
+    else
+    mkdir -p $ipvps >/dev/null 2>&1
+    mkdir -p $xray/
+    mkdir -p $nginx/
+    touch $xray/domain
+    touch $xray/scdomain
+    touch /root/domain
+    touch /root/scdomain
+	echo "$pp" > $xray/domain
+	echo "$pp" > $xray/scdomain
+	echo "$pp" > /root/domain
+    echo "$pp" > /root/scdomain
+    echo "IP=" >> $ipvps/ipvps.conf
+    echo "IP=$pp" > $ipvps/ipvps.conf
+    touch $xray/ISP
+    touch $xray/IP
+    curl -s ipinfo.io/org/ > $xray/ISP
+    curl -s https://ipinfo.io/ip/ > $xray/IP
+    fi
+domain=$(cat $xray/domain)
+sleep 1
 clear
 #Instal Xray
 wget https://raw.githubusercontent.com/arfprsty810/lite/main/xray/ins-xray.sh
@@ -664,44 +519,6 @@ clear
 rm -rvf /root/*.sh
 rm -rvf /root/*.sh.*
 clear
-
-echo "" | tee -a log-install.txt
-echo "======================-[ SCRIPT INFO ]-=====================" | tee -a log-install.txt
-echo "" | tee -a log-install.txt
-echo "------------------------------------------------------------" | tee -a log-install.txt
-echo "" | tee -a log-install.txt
-echo "   >>> Service & Port"  | tee -a log-install.txt
-echo "   - OpenSSH                 : 22"  | tee -a log-install.txt
-echo "   - SSH Websocket           : 80" | tee -a log-install.txt
-echo "   - SSH SSL Websocket       : 443" | tee -a log-install.txt
-echo "   - Stunnel5                : 447, 777" | tee -a log-install.txt
-echo "   - Dropbear                : 109, 143" | tee -a log-install.txt
-echo "   - Badvpn                  : 7100-7300" | tee -a log-install.txt
-echo "   - Nginx                   : 81" | tee -a log-install.txt
-echo "   - XRAY  Vmess TLS         : 443" | tee -a log-install.txt
-echo "   - XRAY  Vmess None TLS    : 80" | tee -a log-install.txt
-echo "   - XRAY  Vless TLS         : 443" | tee -a log-install.txt
-echo "   - XRAY  Vless None TLS    : 80" | tee -a log-install.txt
-echo "   - Trojan GRPC             : 443" | tee -a log-install.txt
-echo "   - Trojan WS               : 443" | tee -a log-install.txt
-echo "   - Trojan GO               : 443" | tee -a log-install.txt
-#echo "   - Trojan GFW              : 443" | tee -a log-install.txt
-echo "   - Sodosok WS/GRPC         : 443" | tee -a log-install.txt
-echo ""  | tee -a log-install.txt
-echo "   >>> Server Information & Other Features"  | tee -a log-install.txt
-echo "   - Timezone                : Asia/Jakarta (GMT +7)"  | tee -a log-install.txt
-echo "   - Fail2Ban                : [ON]"  | tee -a log-install.txt
-echo "   - Dflate                  : [ON]"  | tee -a log-install.txt
-echo "   - IPtables                : [ON]"  | tee -a log-install.txt
-echo "   - Auto-Reboot             : [ON]"  | tee -a log-install.txt
-echo "   - IPv6                    : [OFF]"  | tee -a log-install.txt
-echo "" | tee -a log-install.txt
-echo "------------------------------------------------------------" | tee -a log-install.txt
-echo "" | tee -a log-install.txt
-echo "=========-[ Script Created By @arf.prsty_ ]-==========" | tee -a log-install.txt
-echo "" | tee -a log-install.txt
-secs_to_human "$(($(date +%s) - ${start}))" | tee -a log-install.txt
-echo -e "" | tee -a log-install.txt
 
 echo -e "[ ${green}INFO$NC ] RE-INSTALL FINISHED !"
 sleep 2

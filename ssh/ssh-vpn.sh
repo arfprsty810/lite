@@ -71,7 +71,7 @@ clear
 apt-get remove --purge ufw* -y
 apt-get remove --purge firewalld* -y
 apt-get remove --purge exim4* -y
-#apt autoremove -y
+apt autoremove -y
 clear
 
 # ----------------------------------------------------------------------------------------------------------------
@@ -79,7 +79,7 @@ clear
 # ----------------------------------------------------------------------------------------------------------------
 cd
 # simple password minimal
-wget -q -O /etc/pam.d/common-password "$github/ssh/password"
+wget -q -O /etc/pam.d/common-password "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/password"
 chmod +x /etc/pam.d/common-password
 
 # ----------------------------------------------------------------------------------------------------------------
@@ -186,38 +186,79 @@ echo "/usr/sbin/nologin" >> /etc/shells
 #systemctl restart ws-dropbear >/dev/null 2>&1
 
 # ----------------------------------------------------------------------------------------------------------------
-# Install SSL Stunnel
+# Instalasi Websocket#!/bin/bash
 # ----------------------------------------------------------------------------------------------------------------
-# Getting websocket ssl stunnel
-wget -q -O /usr/local/bin/ws-stunnel "$github/ssh/ws-stunnel"
-chmod +x /usr/local/bin/ws-stunnel
-clear
 
-# Installing Service Ovpn Websocket
-cat > /etc/systemd/system/ws-stunnel.service << END
-[Unit]
-Description=Ovpn Websocket 
-Documentation=https://github.com
-After=network.target nss-lookup.target
-
-[Service]
-Type=simple
-User=root
-CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-NoNewPrivileges=true
-ExecStart=/usr/bin/python2 -O /usr/local/bin/ws-stunnel
-Restart=on-failure
-
-[Install]
-WantedBy=multi-user.target
-END
+# Websocket ssl stunnel
+cd
+wget -q -O /usr/local/bin/ws-stunnel https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ws-stunnel/ws-stunnel.py && chmod +x /usr/local/bin/ws-stunnel
+wget -O /etc/systemd/system/ws-stunnel.service https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ws-stunnel/ws-stunnel.service && chmod +x /etc/systemd/system/ws-stunnel.service
 
 systemctl daemon-reload >/dev/null 2>&1
-systemctl enable ws-stunnel >/dev/null 2>&1
-systemctl start ws-stunnel >/dev/null 2>&1
-systemctl restart ws-stunnel >/dev/null 2>&1
-clear
+systemctl enable ws-stunnel.service >/dev/null 2>&1
+systemctl start ws-stunnel.service >/dev/null 2>&1
+systemctl restart ws-stunnel.service >/dev/null 2>&1
+ 
+
+# Websocket OpenSSH
+#port 88 (OpenSSH) to 2082 (HTTP Websocket)
+cd
+wget -O /usr/local/bin/edu-proxy https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ws-openssh/http.py && chmod +x /usr/local/bin/edu-proxy
+wget -O /etc/systemd/system/edu-proxy.service https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ws-openssh/http.service && chmod +x /etc/systemd/system/edu-proxy.service
+
+systemctl daemon-reload
+systemctl enable edu-proxy.service
+systemctl start edu-proxy.service
+systemctl restart edu-proxy.service
+
+
+# Dropbear WebSocket
+#port 69 ( Dropbear) to 8880 (HTTPS Websocket)
+cd
+wget -O /usr/local/bin/ws-dropbear https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ws-dropbear/https.py && chmod +x /usr/local/bin/ws-dropbear
+wget -O /etc/systemd/system/ws-dropbear.service https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ws-dropbear/https.service && chmod +x /etc/systemd/system/ws-dropbear.service
+#reboot service
+systemctl daemon-reload
+systemctl enable ws-dropbear.service
+systemctl start ws-dropbear.service
+systemctl restart ws-dropbear.service
+
+
+# OpenVPN WebSocket
+#port 1194 ( Dropbear) to 2086 (HTTP Websocket)
+wget -O /usr/local/bin/edu-proxyovpn https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ws-openvpn/ovpn.py && chmod +x /usr/local/bin/edu-proxyovpn
+wget -O /etc/systemd/system/edu-proxyovpn.service https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ws-openvpn/ovpn.service && chmod +x /etc/systemd/system/edu-proxyovpn.service
+#reboot service
+systemctl daemon-reload
+systemctl enable edu-proxyovpn.service
+systemctl start edu-proxyovpn.service
+systemctl restart edu-proxyovpn.service
+
+
+# SSL/TLS WebSocket
+#port 1194 ( Dropbear) to 2086 (HTTP Websocket)
+wget -O /usr/local/bin/edu-tls https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ws-ssltls/edu-tls.py && chmod +x /usr/local/bin/edu-tls
+wget -O /etc/systemd/system/edu-tls.service https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ws-ssltls/edu-tls.service && chmod +x /etc/systemd/system/edu-tls.service
+#reboot service
+systemctl daemon-reload.service
+systemctl enable edu-tls.service
+systemctl start edu-tls.service
+systemctl restart edu-tls.service
+
+
+cd
+wget -O /usr/local/bin/ws-tls https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ws-ssltls/ws-tls && chmod +x /usr/local/bin/ws-tls
+wget -O /etc/systemd/system/ws-tls.service https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ws-ssltls/ws-tls.service && chmod +x  /etc/systemd/system/ws-tls.service
+
+systemctl daemon-reload
+systemctl enable ws-tls.service
+systemctl restart ws-tls.service
+
+# finihsing
+
+#installer OHP
+wget https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ohp/ohp.sh && chmod +x ohp.sh && ./ohp.sh
+
 
 # ----------------------------------------------------------------------------------------------------------------
 # Install BadVPN
@@ -245,8 +286,8 @@ echo -ne
 fi
 cd
 echo -e "[ ${GREEN}INFO$NC ] Installing badvpn for game support..."
-wget -q -O /usr/bin/badvpn-udpgw "$github/ssh/badvpn-udpgw64"
-#wget -q -O /usr/bin/badvpn-udpgw "$github/ssh/newudpgw"
+wget -q -O /usr/bin/badvpn-udpgw "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/badvpn-udpgw64"
+#wget -q -O /usr/bin/badvpn-udpgw "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/newudpgw"
 chmod +x /usr/bin/badvpn-udpgw
 sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 500' /etc/rc.local
 sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 500' /etc/rc.local
@@ -266,15 +307,15 @@ screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7900 --max-clients 500 >
 # ----------------------------------------------------------------------------------------------------------------
 cd
 apt -y install squid
-wget -O /etc/squid/squid.conf "$github/ssh/squid3.conf"
-sed -i $MYIP2 /etc/squid/squid.conf
+wget -O /etc/squid/squid.conf "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/squid3.conf"
+#sed -i $MYIP2 /etc/squid/squid.conf
 
 # ----------------------------------------------------------------------------------------------------------------
 # Install SSLH
 # ----------------------------------------------------------------------------------------------------------------
-apt -y install sslh
-rm -f /etc/default/sslh
-cat > /etc/default/sslh <<-END
+#apt -y install sslh
+#rm -f /etc/default/sslh
+#cat > /etc/default/sslh <<-END
 # Default options for sslh initscript
 # sourced by /etc/init.d/sslh
 
@@ -285,22 +326,22 @@ cat > /etc/default/sslh <<-END
 # - sslh(8) via "man sslh" for more configuration details.
 # Once configuration ready, you *must* set RUN to yes here
 # and try to start sslh (standalone mode only)
-RUN=yes
+#RUN=yes
 
 # binary to use: forked (sslh) or single-thread (sslh-select) version
 # systemd users: don't forget to modify /lib/systemd/system/sslh.service
-DAEMON=/usr/sbin/sslh
+#DAEMON=/usr/sbin/sslh
 
-DAEMON_OPTS="--user sslh --listen 0.0.0.0:443 --ssl 127.0.0.1:777 --ssh 127.0.0.1:109 --openvpn 127.0.0.1:1194 --http 127.0.0.1:8880 --pidfile /var/run/sslh/sslh.pid -n"
+#DAEMON_OPTS="--user sslh --listen 0.0.0.0:443 --ssl 127.0.0.1:777 --ssh 127.0.0.1:109 --openvpn 127.0.0.1:1194 --http 127.0.0.1:8880 --pidfile /var/run/sslh/sslh.pid -n"
 
-END
+#END
 
 # Restart Service SSLH
-service sslh restart
-systemctl restart sslh
-/etc/init.d/sslh restart
-/etc/init.d/sslh status
-/etc/init.d/sslh restart
+#service sslh restart
+#systemctl restart sslh
+#/etc/init.d/sslh restart
+#/etc/init.d/sslh status
+#/etc/init.d/sslh restart
 
 # ----------------------------------------------------------------------------------------------------------------
 # Install Stunnel
@@ -312,6 +353,8 @@ cd /root/
 #sed -i -e 's/\r$//' /bin/ssh_ssl
 #/usr/bin/ssh_ssl
 #rm -rvf /usr/bin/ssh_ssl
+systemctl stop stunnel5
+apt-get remove --purge stunnel stunnel* -y
 rm -rvf /etc/stunnel5
 rm -rvf /etc/systemd/system/stunnel5.service
 rm -rvf /etc/init.d/stunnel5
@@ -321,49 +364,54 @@ rm -rvf /usr/local/bin/stunnel
 rm -rvf /usr/local/bin/stunnel3
 rm -rvf /usr/local/bin/stunnel4
 rm -rvf /usr/local/bin/stunnel5
-apt-get remove --purge stunnel stunnel* -y
+apt autoremove -y
+systemctl daemon-reload
 #apt-get install stunnel5 -y
-#sudo apt-get autoremove
-wget -q -O stunnel5.zip "$github/stunnel5/stunnel5.zip"
+wget -q -O stunnel5.zip "https://raw.githubusercontent.com/arfprsty810/lite/main/stunnel5/stunnel5.zip"
 unzip -o stunnel5.zip
 cd /root/stunnel
 chmod +x configure
 ./configure
 make
 make install
-cd /root
+cd
 rm -r -f stunnel
 rm -f stunnel5.zip
 mkdir -p /etc/stunnel5
 chmod 644 /etc/stunnel5
 
 #detail nama perusahaan
-country=ID
-state=Indonesia
-locality=Indonesia
-organization=™D-JumPer™
-organizationalunit=™D-JumPer™
-commonname=™D-JumPer™
-email=arfprsty@my.id
+#country=ID
+#state=Indonesia
+#locality=Indonesia
+#organization=™D-JumPer™
+#organizationalunit=™D-JumPer™
+#commonname=188.166.221.220 # name host / ip droplet
+#email=arfprsty@my.id
 
 # make a certificate
 #openssl genrsa -out key.pem 2048
 #openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
-#-subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
+#-subj "/C=ID/ST=Indonesia/L=Indonesia/O=™D-JumPer™/OU=™D-JumPer™/CN=188.166.221.220/emailAddress=arfprsty@my.id"
 #cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
+
+cd /etc/xray/
+rm -rvf /etc/stunnel5/stunnel5.pem
+cat xray.key xray.crt >> /etc/stunnel5/stunnel5.pem
+cd
 
 # Config Stunnel5
 cat > /etc/stunnel5/stunnel5.conf <<-END
-#cert = /etc/stunnel5/stunnel5.pem
-cert = /etc/xray/xray.crt
-key = /etc/xray/xray.key
+cert = /etc/stunnel5/stunnel5.pem
+#cert = /etc/xray/xray.crt
+#key = /etc/xray/xray.key
 client = no
 socket = a:SO_REUSEADDR=1
 socket = l:TCP_NODELAY=1
 socket = r:TCP_NODELAY=1
 
 [dropbear]
-accept = 445
+accept = 447
 connect = 127.0.0.1:109
 
 [openssh]
@@ -393,8 +441,8 @@ WantedBy=multi-user.target
 END
 
 # Service Stunnel5 /etc/init.d/stunnel5
-wget -q -O /etc/init.d/stunnel5 "$github/stunnel5/stunnel5.init"
-#chmod 600 /etc/stunnel5/stunnel5.pem
+wget -q -O /etc/init.d/stunnel5 "https://raw.githubusercontent.com/arfprsty810/lite/main/stunnel5/stunnel5.init"
+chmod 600 /etc/stunnel5/stunnel5.pem
 chmod +x /etc/init.d/stunnel5
 cp /usr/local/bin/stunnel /usr/local/bin/stunnel5
 
@@ -429,43 +477,43 @@ apt install fail2ban -y
 # Setting VNSTAT
 # ----------------------------------------------------------------------------------------------------------------
 apt -y install vnstat
-/etc/init.d/vnstat restart
-wget https://humdi.net/vnstat/vnstat-2.6.tar.gz
-tar zxvf vnstat-2.6.tar.gz
-cd vnstat-2.6
-./configure --prefix=/usr --sysconfdir=/etc && make && make install
-cd
-vnstat -u -i $NET
-sed -i 's/Interface "'""eth0""'"/Interface "'""$NET""'"/g' /etc/vnstat.conf
-chown vnstat:vnstat /var/lib/vnstat -R
+#/etc/init.d/vnstat restart
+#wget https://humdi.net/vnstat/vnstat-2.6.tar.gz
+#tar zxvf vnstat-2.6.tar.gz
+#cd vnstat-2.6
+#./configure --prefix=/usr --sysconfdir=/etc && make && make install
+#cd
+#vnstat -u -i $NET
+#sed -i 's/Interface "'""eth0""'"/Interface "'""$NET""'"/g' /etc/vnstat.conf
+#chown vnstat:vnstat /var/lib/vnstat -R
 systemctl enable vnstat
 /etc/init.d/vnstat restart
-rm -f /root/vnstat-2.6.tar.gz
-rm -rf /root/vnstat-2.6
+#rm -f /root/vnstat-2.6.tar.gz
+#rm -rf /root/vnstat-2.6
 
 # ----------------------------------------------------------------------------------------------------------------
 # Install DDos Flate
 # ----------------------------------------------------------------------------------------------------------------
-rm -fr /usr/local/ddos
-mkdir -p /usr/local/ddos >/dev/null 2>&1
+#rm -fr /usr/local/ddos
+#mkdir -p /usr/local/ddos >/dev/null 2>&1
 #clear
-sleep 1
-echo -e "[ ${GREEN}INFO$NC ] Install DOS-Deflate"
-sleep 1
-echo -e "[ ${GREEN}INFO$NC ] Downloading source files..."
-wget -q -O /usr/local/ddos/ddos.conf http://www.inetbase.com/scripts/ddos/ddos.conf
-wget -q -O /usr/local/ddos/LICENSE http://www.inetbase.com/scripts/ddos/LICENSE
-wget -q -O /usr/local/ddos/ignore.ip.list http://www.inetbase.com/scripts/ddos/ignore.ip.list
-wget -q -O /usr/local/ddos/ddos.sh http://www.inetbase.com/scripts/ddos/ddos.sh
-chmod 0755 /usr/local/ddos/ddos.sh
-cp -s /usr/local/ddos/ddos.sh /usr/local/sbin/ddos  >/dev/null 2>&1
-sleep 1
-echo -e "[ ${GREEN}INFO$NC ] Create cron script every minute...."
-/usr/local/ddos/ddos.sh --cron > /dev/null 2>&1
-sleep 1
-echo -e "[ ${GREEN}INFO$NC ] Install successfully..."
-sleep 1
-echo -e "[ ${GREEN}INFO$NC ] Config file at /usr/local/ddos/ddos.conf"
+#sleep 1
+#echo -e "[ ${GREEN}INFO$NC ] Install DOS-Deflate"
+#sleep 1
+#echo -e "[ ${GREEN}INFO$NC ] Downloading source files..."
+#wget -q -O /usr/local/ddos/ddos.conf http://www.inetbase.com/scripts/ddos/ddos.conf
+#wget -q -O /usr/local/ddos/LICENSE http://www.inetbase.com/scripts/ddos/LICENSE
+#wget -q -O /usr/local/ddos/ignore.ip.list http://www.inetbase.com/scripts/ddos/ignore.ip.list
+#wget -q -O /usr/local/ddos/ddos.sh http://www.inetbase.com/scripts/ddos/ddos.sh
+#chmod 0755 /usr/local/ddos/ddos.sh
+#cp -s /usr/local/ddos/ddos.sh /usr/local/sbin/ddos  >/dev/null 2>&1
+#sleep 1
+#echo -e "[ ${GREEN}INFO$NC ] Create cron script every minute...."
+#/usr/local/ddos/ddos.sh --cron > /dev/null 2>&1
+#sleep 1
+#echo -e "[ ${GREEN}INFO$NC ] Install successfully..."
+#sleep 1
+#echo -e "[ ${GREEN}INFO$NC ] Config file at /usr/local/ddos/ddos.conf"
 
 # ----------------------------------------------------------------------------------------------------------------
 # Setting Banner
@@ -474,7 +522,7 @@ rm -fr /etc/issue.net
 rm -fr /etc/issue.net.save
 sleep 1
 echo -e "[ ${GREEN}INFO$NC ] Settings banner"
-wget -q -O /etc/issue.net "$github/ssh/issue.net"
+wget -q -O /etc/issue.net "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/issue.net"
 chmod +x /etc/issue.net
 echo "Banner /etc/issue.net" >> /etc/ssh/sshd_config
 sed -i 's@DROPBEAR_BANNER=""@DROPBEAR_BANNER="/etc/issue.net"@g' /etc/default/dropbear
@@ -518,43 +566,43 @@ fi
 # ----------------------------------------------------------------------------------------------------------------
 # Install Script
 # ----------------------------------------------------------------------------------------------------------------
-wget -q -O /usr/bin/autodel "$github/ssh/autodel.sh"
+wget -q -O /usr/bin/autodel "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/autodel.sh"
 chmod +x /usr/bin/autodel
 sed -i -e 's/\r$//' /bin/autodel
 
-wget -q -O /usr/bin/autokill "$github/ssh/autokill.sh"
+wget -q -O /usr/bin/autokill "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/autokill.sh"
 chmod +x /usr/bin/autokill
 sed -i -e 's/\r$//' /bin/autokill
 
-wget -q -O /usr/bin/cek "$github/ssh/cek.sh"
+wget -q -O /usr/bin/cek "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/cek.sh"
 chmod +x /usr/bin/cek
 sed -i -e 's/\r$//' /bin/cek
 
-wget -q -O /usr/bin/ceklim "$github/ssh/ceklim.sh"
+wget -q -O /usr/bin/ceklim "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ceklim.sh"
 chmod +x /usr/bin/ceklim
 sed -i -e 's/\r$//' /bin/ceklim
 
-wget -q -O /usr/bin/del "$github/ssh/del.sh"
+wget -q -O /usr/bin/del "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/del.sh"
 chmod +x /usr/bin/del
 sed -i -e 's/\r$//' /bin/del
 
-wget -q -O /usr/bin/member "$github/ssh/member.sh"
+wget -q -O /usr/bin/member "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/member.sh"
 chmod +x /usr/bin/member
 sed -i -e 's/\r$//' /bin/member
 
-wget -q -O /usr/bin/menu-ssh "$github/ssh/menu-ssh.sh"
+wget -q -O /usr/bin/menu-ssh "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/menu-ssh.sh"
 chmod +x /usr/bin/menu-ssh
 sed -i -e 's/\r$//' /bin/menu-ssh
 
-wget -q -O /usr/bin/renew "$github/ssh/renew.sh"
+wget -q -O /usr/bin/renew "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/renew.sh"
 chmod +x /usr/bin/renew
 sed -i -e 's/\r$//' /bin/renew
 
-wget -q -O /usr/bin/tendang "$github/ssh/tendang.sh"
+wget -q -O /usr/bin/tendang "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/tendang.sh"
 chmod +x /usr/bin/tendang
 sed -i -e 's/\r$//' /bin/tendang
 
-wget -q -O /usr/bin/usernew "$github/ssh/usernew.sh"
+wget -q -O /usr/bin/usernew "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/usernew.sh"
 chmod +x /usr/bin/usernew
 sed -i -e 's/\r$//' /bin/usernew
 

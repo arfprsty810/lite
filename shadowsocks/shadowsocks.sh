@@ -11,11 +11,11 @@ green() { echo -e "\\033[32;1m${*}\\033[0m"; }
 red() { echo -e "\\033[31;1m${*}\\033[0m"; }
 clear
 
-xray="/etc/xray"
+arfvpn="/etc/arfvpn"
 # set random pwd
-#openssl rand -base64 16 > $xray/passwd
-</dev/urandom tr -dc a-z0-9 | head -c16 > $xray/passwd
-pwd=$(cat $xray/passwd)
+#openssl rand -base64 16 > $arfvpn/passwd
+</dev/urandom tr -dc a-z0-9 | head -c16 > $arfvpn/passwd
+pwd=$(cat $arfvpn/passwd)
 github="https://raw.githubusercontent.com/arfprsty810/lite/main"
 
 #Server konfigurasi
@@ -70,23 +70,6 @@ ip6tables-save > /etc/ip6tables.up.rules
 clear
 echo -e "[ ${green}INFO$NC ] SETTING SHADOWSOCKS SUKSES !!!"
 sleep 1
-
-# restart
-echo -e "[ ${green}INFO$NC ] MEMULAI ULANG KONFIGURASI"
-sleep 1
-systemctl daemon-reload
-systemctl enable xray
-systemctl restart xray
-systemctl restart nginx
-systemctl enable runn
-systemctl restart runn
-systemctl stop trojan-go
-systemctl start trojan-go
-systemctl enable trojan-go
-systemctl restart trojan-go
-systemctl enable shadowsocks-libev.service
-systemctl start shadowsocks-libev.service
-clear
 
 #shadowsocks-libev
 wget -q -O /usr/bin/menu-ss "$github/shadowsocks/menu-ss.sh" && chmod +x /usr/bin/menu-ss

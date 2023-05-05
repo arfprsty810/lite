@@ -11,9 +11,10 @@ PURPLE='\033[0;35m'
 CYAN='\033[0;36m'
 LIGHT='\033[0;37m'
 # ==========================================
-
-IP=$(cat /etc/xray/IP)
-DOMAIN=$(cat /etc/xray/domain)
+arfvpn="/etc/arfvpn"
+IP=$(cat $arfvpn/IP)
+ISP=$(cat $arfvpn/ISP)
+DOMAIN=$(cat $arfvpn/domain)
 
 lastport1=$(grep "port_tls" /etc/shadowsocks-libev/akun.conf | tail -n1 | awk '{print $2}')
 lastport2=$(grep "port_http" /etc/shadowsocks-libev/akun.conf | tail -n1 | awk '{print $2}')

@@ -43,6 +43,7 @@ clear
 
 cd /root
 source /etc/os-release
+arfvpn="/etc/arfvpn"
 xray="/etc/xray"
 logxray="/var/log/xray"
 trgo="/etc/trojan-go"
@@ -66,6 +67,11 @@ echo -e "$green               MULTI PORT XRAY 443 + 80 & RANDOM $NC"
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 sleep 3
 clear
+mkdir -p $arfvpn
+chmod +x $arfvpn
+wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
+wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
+    clear
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "$green      Add Domain for XRAY VPN $NC"
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
@@ -88,19 +94,15 @@ read -rp "Input ur domain / sub-domain : " -e pp
     mkdir -p $ipvps >/dev/null 2>&1
     mkdir -p $xray
     mkdir -p $nginx
-    touch $xray/domain
-    touch $xray/scdomain
-    touch /root/domain
-    touch /root/scdomain
-	echo "$pp" > $xray/domain
-	echo "$pp" > $xray/scdomain
-	echo "$pp" > /root/domain
-    echo "$pp" > /root/scdomain
+    touch $arfvpn/domain
+    touch $arfvpn/scdomain
+	echo "$pp" > $arfvpn/domain
+	echo "$pp" > $arfvpn/scdomain
     echo "IP=$pp" > $ipvps/ipvps.conf
-    touch $xray/ISP
-    touch $xray/IP
-    curl -s ipinfo.io/org/ > $xray/ISP
-    curl -s https://ipinfo.io/ip/ > $xray/IP
+    touch $arfvpn/ISP
+    touch $arfvpn/IP
+    curl -s ipinfo.io/org/ > $arfvpn/ISP
+    curl -s https://ipinfo.io/ip/ > $arfvpn/IP
     fi
 clear
 
@@ -112,7 +114,7 @@ sleep 2
 cd
 
 #apete
-wget https://raw.githubusercontent.com/arfprsty810/lite/main/services/apete.sh
+wget $github/services/apete.sh
 chmod +x apete.sh
 sed -i -e 's/\r$//' apete.sh
 ./apete.sh
@@ -120,7 +122,7 @@ clear
 sleep 2
 
 #Instal Xray
-wget https://raw.githubusercontent.com/arfprsty810/lite/main/xray/ins-xray.sh
+wget $github/xray/ins-xray.sh
 chmod +x ins-xray.sh
 sed -i -e 's/\r$//' ins-xray.sh
 ./ins-xray.sh
@@ -128,7 +130,7 @@ clear
 sleep 2
 
 #Instal Trojan-GO
-wget https://raw.githubusercontent.com/arfprsty810/lite/main/xray/trojan/trojan-go.sh
+wget $github/xray/trojan/trojan-go.sh
 chmod +x trojan-go.sh
 sed -i -e 's/\r$//' trojan-go.sh
 ./trojan-go.sh
@@ -136,7 +138,7 @@ clear
 sleep 2
 
 #Instal Shadowsocks
-wget https://raw.githubusercontent.com/arfprsty810/lite/main/shadowsocks/shadowsocks.sh
+wget $github/shadowsocks/shadowsocks.sh
 chmod +x shadowsocks.sh 
 sed -i -e 's/\r$//' shadowsocks.sh
 ./shadowsocks.sh
@@ -144,7 +146,7 @@ clear
 sleep 2
 
 #Instal SSH-vpn
-#wget https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ssh-vpn.sh
+#wget $github/ssh/ssh-vpn.sh
 #chmod +x ssh-vpn.sh
 #sed -i -e 's/\r$//' ssh-vpn.sh
 #./ssh-vpn.sh
@@ -152,7 +154,7 @@ sleep 2
 #sleep 2
 
 #Instal SSH-vpn
-#wget https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/simplessh.sh
+#wget $github/ssh/simplessh.sh
 #chmod +x simplessh.sh
 #sed -i -e 's/\r$//' simplessh.sh
 #./simplessh.sh
@@ -160,7 +162,7 @@ sleep 2
 #sleep 2
 
 #Instal Bbr
-wget https://raw.githubusercontent.com/arfprsty810/lite/main/bbr/bbr.sh
+wget $github/bbr/bbr.sh
 chmod +x bbr.sh
 sed -i -e 's/\r$//' bbr.sh
 screen -S bbr ./bbr.sh

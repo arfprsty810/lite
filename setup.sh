@@ -1,26 +1,5 @@
 #!/bin/bash
 #########################
-BIBlack='\033[1;90m'      # Black
-BIRed='\033[1;91m'        # Red
-BIGREEN='\033[1;92m'      # GREEN
-BIYellow='\033[1;93m'     # Yellow
-BIBlue='\033[1;94m'       # Blue
-BIPurple='\033[1;95m'     # Purple
-BICyan='\033[1;96m'       # Cyan
-BIWhite='\033[1;97m'      # White
-UWhite='\033[4;37m'       # White
-On_IPurple='\033[0;105m'  #
-On_IRed='\033[0;101m'
-IBlack='\033[0;90m'       # Black
-IRed='\033[0;91m'         # Red
-IGREEN='\033[0;92m'       # GREEN
-IYellow='\033[0;93m'      # Yellow
-IBlue='\033[0;94m'        # Blue
-IPurple='\033[0;95m'      # Purple
-ICyan='\033[0;96m'        # Cyan
-IWhite='\033[0;97m'       # White
-NC='\e[0m'
-
 # // Export Color & Information
 export RED='\033[0;31m'
 export GREEN='\033[0;32m'
@@ -239,103 +218,104 @@ echo -e "[ ${green}INFO$NC ] Restart All Service ..."
 systemctl daemon-reload >/dev/null 2>&1
 sleep 1
 echo -e "[ ${GREEN}ok${NC} ] Daemon-Reload"
-systemctl stop rc-local.service >/dev/null 2>&1
 systemctl restart rc-local.service >/dev/null 2>&1
 systemctl enable rc-local.service >/dev/null 2>&1
 systemctl start rc-local.service >/dev/null 2>&1
 sleep 1
 echo -e "[ ${GREEN}ok${NC} ] Restarting RC.Local"
-systemctl stop runn >/dev/null 2>&1
 systemctl restart runn >/dev/null 2>&1
 systemctl enable runn >/dev/null 2>&1
 systemctl start runn >/dev/null 2>&1
 sleep 1
 echo -e "[ ${GREEN}ok${NC} ] Restarting Run"
-/etc/init.d/nginx stop >/dev/null 2>&1
 /etc/init.d/nginx restart >/dev/null 2>&1
 /etc/init.d/nginx enable >/dev/null 2>&1
 /etc/init.d/nginx start >/dev/null 2>&1
 sleep 1
 echo -e "[ ${GREEN}ok${NC} ] Restarting Nginx "
-/etc/init.d/openvpn stop >/dev/null 2>&1
 /etc/init.d/openvpn restart >/dev/null 2>&1
 /etc/init.d/openvpn enable >/dev/null 2>&1
 /etc/init.d/openvpn start >/dev/null 2>&1
 sleep 1
 echo -e "[ ${GREEN}ok${NC} ] Restarting OpenVpn"
-/etc/init.d/dropbear stop >/dev/null 2>&1
 /etc/init.d/dropbear restart >/dev/null 2>&1
 /etc/init.d/dropbear enable >/dev/null 2>&1
 /etc/init.d/dropbear start >/dev/null 2>&1
 sleep 1
 echo -e "[ ${GREEN}ok${NC} ] Restarting Dropbear"
-/etc/init.d/stunnel5 stop >/dev/null 2>&1
 /etc/init.d/stunnel5 restart >/dev/null 2>&1
 /etc/init.d/stunnel5 enable >/dev/null 2>&1
 /etc/init.d/stunnel5 start >/dev/null 2>&1
 sleep 1
 echo -e "[ ${GREEN}ok${NC} ] Restarting Stunnel5"
-/etc/init.d/squid stop >/dev/null 2>&1
-/etc/init.d/squid restart >/dev/null 2>&1
-/etc/init.d/squid enable >/dev/null 2>&1
-/etc/init.d/squid start >/dev/null 2>&1
-sleep 1
-echo -e "[ ${GREEN}ok${NC} ] Restarting Squid "
-/etc/init.d/fail2ban stop >/dev/null 2>&1
+#/etc/init.d/squid restart >/dev/null 2>&1
+#/etc/init.d/squid enable >/dev/null 2>&1
+#/etc/init.d/squid start >/dev/null 2>&1
+#sleep 1
+#echo -e "[ ${GREEN}ok${NC} ] Restarting Squid "
 /etc/init.d/fail2ban restart >/dev/null 2>&1
 /etc/init.d/fail2ban enable >/dev/null 2>&1
 /etc/init.d/fail2ban start >/dev/null 2>&1
 sleep 1
 echo -e "[ ${GREEN}ok${NC} ] Restarting Fail2ban"
-/etc/init.d/cron stop >/dev/null 2>&1
 /etc/init.d/cron restart >/dev/null 2>&1
 /etc/init.d/cron enable >/dev/null 2>&1
 /etc/init.d/cron start >/dev/null 2>&1
 sleep 1
 echo -e "[ ${GREEN}ok${NC} ] Restarting Cron"
-/etc/init.d/vnstat stop >/dev/null 2>&1
 /etc/init.d/vnstat restart >/dev/null 2>&1
 /etc/init.d/vnstat enable >/dev/null 2>&1
 /etc/init.d/vnstat start >/dev/null 2>&1
 sleep 1
 echo -e "[ ${GREEN}ok${NC} ] Restarting Vnstat "
-/etc/init.d/ssh stop >/dev/null 2>&1
 /etc/init.d/ssh restart >/dev/null 2>&1
 /etc/init.d/ssh enable >/dev/null 2>&1
 /etc/init.d/ssh start >/dev/null 2>&1
 sleep 1
 echo -e "[ ${GREEN}ok${NC} ] Restarting SSH"
-systemctl stop xray >/dev/null 2>&1
 systemctl restart xray >/dev/null 2>&1
 systemctl enable xray >/dev/null 2>&1
 systemctl start xray >/dev/null 2>&1
 sleep 1
 echo -e "[ ${GREEN}ok${NC} ] Restarting Xray - VMESS / VLESS / TROJAN"
-systemctl stop trojan-go >/dev/null 2>&1
 systemctl restart trojan-go >/dev/null 2>&1
 systemctl enable trojan-go >/dev/null 2>&1
 systemctl start trojan-go >/dev/null 2>&1
 sleep 1
 echo -e "[ ${GREEN}ok${NC} ] Restarting Trojan-GO"
-/etc/init.d/shadowsocks-libev stop >/dev/null 2>&1
 /etc/init.d/shadowsocks-libev restart >/dev/null 2>&1
 /etc/init.d/shadowsocks-libev enable >/dev/null 2>&1
 /etc/init.d/shadowsocks-libev start >/dev/null 2>&1
 sleep 1
 echo -e "[ ${GREEN}ok${NC} ] Restarting ShadowSocks-OBFS"
-systemctl stop ws-stunnel.service
-systemctl restart ws-stunnel.service
-systemctl enable ws-stunnel.service
-systemctl start ws-stunnel.service
+systemctl restart ws-dropbear.service >/dev/null 2>&1
+systemctl enable ws-dropbear.service >/dev/null 2>&1
+systemctl start ws-dropbear.service >/dev/null 2>&1
 sleep 1
-echo -e "[ ${GREEN}ok${NC} ] Restarting WS-Stunnel "
-#systemctl stop ws-dropbear.service >/dev/null 2>&1
-#systemctl restart ws-dropbear.service >/dev/null 2>&1
-#systemctl enable ws-dropbear.service >/dev/null 2>&1
-#systemctl start ws-dropbear.service >/dev/null 2>&1
-#sleep 1
-#echo -e "[ ${GREEN}ok${NC} ] Restarting WS-Dropbear"
-#/etc/init.d/sslh stop >/dev/null 2>&1
+echo -e "[ ${GREEN}ok${NC} ] Restarting WS-Dropbear"
+systemctl restart edu-proxy.service >/dev/null 2>&1
+systemctl enable edu-proxy.service >/dev/null 2>&1
+systemctl start edu-proxy.service>/dev/null 2>&1
+sleep 1
+echo -e "[ ${GREEN}ok${NC} ] Restarting WS-OpenSSH"
+systemctl restart edu-proxyovpn.service >/dev/null 2>&1
+systemctl enable edu-proxyovpn.service >/dev/null 2>&1
+systemctl start edu-proxyovpn.service >/dev/null 2>&1
+sleep 1
+echo -e "[ ${GREEN}ok${NC} ] Restarting WS-OpenVPN"
+systemctl restart ws-stunnel.service >/dev/null 2>&1
+systemctl enable ws-stunnel.service >/dev/null 2>&1
+systemctl start ws-stunnel.service >/dev/null 2>&1
+sleep 1
+echo -e "[ ${GREEN}ok${NC} ] Restarting WS-SSL "
+systemctl enable edu-tls.service >/dev/null 2>&1
+systemctl start edu-tls.service >/dev/null 2>&1
+systemctl restart edu-tls.service >/dev/null 2>&1
+systemctl enable ws-tls.service >/dev/null 2>&1
+systemctl start ws-tls.service >/dev/null 2>&1
+systemctl restart ws-tls.service >/dev/null 2>&1
+sleep 1
+echo -e "[ ${GREEN}ok${NC} ] Restarting WS-SSL/TLS"
 #/etc/init.d/sslh restart >/dev/null 2>&1
 #/etc/init.d/sslh enable >/dev/null 2>&1
 #/etc/init.d/sslh start >/dev/null 2>&1
@@ -380,12 +360,14 @@ echo "" | tee -a log-install.txt
 echo "------------------------------------------------------------" | tee -a log-install.txt
 echo "" | tee -a log-install.txt
 echo "   >>> Service & Port"  | tee -a log-install.txt
-echo "   - OpenSSH                 : 22"  | tee -a log-install.txt
-echo "   - Dropbear                : 109, 143" | tee -a log-install.txt
-echo "   - SSH Websocket           : 80" | tee -a log-install.txt
-echo "   - SSH SSL Websocket       : 443" | tee -a log-install.txt
-echo "   - Stunnel5                : 447, 777, 990" | tee -a log-install.txt
-echo "   - Badvpn                  : 7100-7900" | tee -a log-install.txt
+echo "   - OpenSSH                 : 22, 88 "  | tee -a log-install.txt
+echo "   - SSH Websocket           : 80 " | tee -a log-install.txt
+echo "   - SSH SSL Websocket       : 443 " | tee -a log-install.txt
+echo "   - OVPN Websocket          : 2086 "  | tee -a log-install.txt
+echo "   - Stunnel Websocket       : 700 " | tee -a log-install.txt
+echo "   - Stunnel5                : 447, 777, 990 " | tee -a log-install.txt
+echo "   - Dropbear                : 69, 109, 1194 " | tee -a log-install.txt
+echo "   - Badvpn                  : 7100-7900 " | tee -a log-install.txt
 echo "   - Nginx                   : 81" | tee -a log-install.txt
 echo "   - XRAY  Vmess TLS         : 443" | tee -a log-install.txt
 echo "   - XRAY  Vmess None TLS    : 80" | tee -a log-install.txt

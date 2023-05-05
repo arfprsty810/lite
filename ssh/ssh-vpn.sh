@@ -378,11 +378,13 @@ cd
 #buat directory
 mkdir -p /etc/arfvpn
 chmod +x /etc/arfvpn
+cd /etc/arfvpn/
 wget https://raw.githubusercontent.com/arfprsty810/lite/main/cert/arfvpn.crt
 wget https://raw.githubusercontent.com/arfprsty810/lite/main/cert/arfvpn.key
 #wget -O /etc/arfvpn/stunnel.pem "https://raw.githubusercontent.com/arfprsty810/lite/main/cert/arfvpn.pem"
 cat arfvpn.key arfvpn.crt >> /etc/arfvpn/stunnel.pem
 chmod 600 /etc/arfvpn/stunnel.pem
+cd
 
 # Config Stunnel5
 cat > /etc/stunnel5/stunnel5.conf <<-END

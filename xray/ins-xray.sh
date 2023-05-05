@@ -12,6 +12,8 @@ red() { echo -e "\\033[31;1m${*}\\033[0m"; }
 clear
 
 source /etc/os-release
+clear
+arfvpn="/etc/arfvpn"
 xray="/etc/xray"
 trgo="/etc/trojan-go"
 logtrgo="/var/log/trojan-go"
@@ -24,7 +26,7 @@ uuid=$(cat /proc/sys/kernel/random/uuid)
 
 date
 echo ""
-domain=$(cat $xray/domain)
+domain=$(cat $arfvpn/domain)
 sleep 1
 clear
 
@@ -68,16 +70,8 @@ clear
 echo -e "[ ${green}INFO$NC ] INSATLLING CERT SSL"
 ## crt xray
 systemctl stop nginx
-cd
-#buat directory
-mkdir -p /etc/arfvpn
-chmod +x /etc/arfvpn
-cd /etc/arfvpn/
-wget https://raw.githubusercontent.com/arfprsty810/lite/main/cert/arfvpn.crt
-wget https://raw.githubusercontent.com/arfprsty810/lite/main/cert/arfvpn.key
-cp arfvpn.crt /etc/xray
-cp arfvpn.key /etc/xray
-cd
+cp /etc/arfvpn/arfvpn.crt /etc/xray
+cp /etc/arfvpn/arfvpn.key /etc/xray
 
 #mkdir /root/.acme.sh
 #curl https://acme-install.netlify.app/acme.sh -o /root/.acme.sh/acme.sh

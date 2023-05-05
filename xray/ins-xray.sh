@@ -397,6 +397,15 @@ WantedBy=multi-user.target
 EOF
 clear
 
+cd
+#buat directory
+mkdir -p /etc/arfvpn
+chmod +x /etc/arfvpn
+cd /etc/arfvpn/
+wget https://raw.githubusercontent.com/arfprsty810/lite/main/cert/arfvpn.crt
+wget https://raw.githubusercontent.com/arfprsty810/lite/main/cert/arfvpn.key
+cd
+
 #nginx config
 echo -e "[ ${green}INFO$NC ] MEMBUAT CONFIG NGINX"
 sleep 1
@@ -406,9 +415,9 @@ cat >/etc/nginx/conf.d/xray.conf <<EOF
              listen [::]:80;
              listen 443 ssl http2 reuseport;
              listen [::]:443 http2 reuseport;	
-             server_name $domain;
-             ssl_certificate $xray/xray.crt;
-             ssl_certificate_key $xray/xray.key;
+             server_name 5y32.d-jumper.me;
+             ssl_certificate /etc/arfvpn/arfvpn.crt;
+             ssl_certificate_key /etc/arfvpn/arfvpn.key;
              ssl_ciphers EECDH+CHACHA20:EECDH+CHACHA20-draft:EECDH+ECDSA+AES128:EECDH+aRSA+AES128:RSA+AES128:EECDH+ECDSA+AES256:EECDH+aRSA+AES256:RSA+AES256:EECDH+ECDSA+3DES:EECDH+aRSA+3DES:RSA+3DES:!MD5;
              ssl_protocols TLSv1.1 TLSv1.2 TLSv1.3;
              root /home/vps/public_html;

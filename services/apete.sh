@@ -47,7 +47,7 @@ clear
 apt-get --reinstall --fix-missing install -y sudo dpkg psmisc ruby wondershaper python2 tmux nmap bzip2 gzip coreutils iftop htop unzip vim nano gcc g++ make perl m4 dos2unix libreadline-dev zlib1g-dev git 
 clear
 apt-get --reinstall --fix-missing install -y screen rsyslog sed bc dirmngr libxml-parser-perl neofetch screenfetch lsof easy-rsa fail2ban vnstat libsqlite3-dev 
-apt install -y openvpn #dropbear squid
+#apt install -y openvpn dropbear squid
 gem install lolcat
 clear
 apt-get install --no-install-recommends build-essential autoconf libtool libssl-dev libpcre3-dev libev-dev asciidoc xmlto automake -y

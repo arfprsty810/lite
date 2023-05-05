@@ -18,10 +18,10 @@ arfprsty810="raw.githubusercontent.com/arfprsty810/lite/main"
 country=ID
 state=Indonesia
 locality=Indonesia
-organization=hidessh.com
-organizationalunit=hidessh.com
-commonname=hidessh.com
-email=admin@hidessh.com
+organization=sg.d-jumper.me
+organizationalunit=sg.d-jumper.me
+commonname=sg.d-jumper.me
+email=arfprsty@my.id
 
 # simple password minimal
 wget -O /etc/pam.d/common-password "https://${arfprsty810}/ssh/archive/password"
@@ -109,10 +109,14 @@ cd
 # install badvpn
 cd
 wget -O /usr/bin/badvpn-udpgw "https://${arfprsty810}/ssh/archive/badvpn-udpgw64"
+#wget -O /usr/bin/badvpn-udpgw "https://${arfprsty810}/ssh/archive/newudpgw"
 chmod +x /usr/bin/badvpn-udpgw
-
-#installer badvpn
-#wget https://${arfprsty810}/ssh/installer-badvpn.sh && chmod +x installer-badvpn.sh && ./installer-badvpn.sh
+sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 500' /etc/rc.local
+sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 500' /etc/rc.local
+sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300 --max-clients 500' /etc/rc.local
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 500 >/dev/null 2>&1
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 500 >/dev/null 2>&1
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300 --max-
 
 
 # setting port ssh
@@ -133,6 +137,19 @@ echo "/usr/sbin/nologin" >> /etc/shells
 /etc/init.d/dropbear restart
 
 # install stunnel
+systemctl stop stunnel5
+apt-get remove --purge stunnel stunnel* -y
+rm -rvf /etc/stunnel5
+rm -rvf /etc/systemd/system/stunnel5.service
+rm -rvf /etc/init.d/stunnel5
+rm -rvf /usr/local/share/doc/stunnel
+rm -rvf /usr/local/etc/stunnel
+rm -rvf /usr/local/bin/stunnel
+rm -rvf /usr/local/bin/stunnel3
+rm -rvf /usr/local/bin/stunnel4
+rm -rvf /usr/local/bin/stunnel5
+apt autoremove -y
+systemctl daemon-reload
 apt install stunnel4 -y
 #certi stunnel
 #wget -O /etc/stunnel/hidessh.pem https://gitlab.com/hidessh/baru/-/raw/main/certi/stunel && chmod +x /etc/stunnel/hidessh.pem
@@ -144,7 +161,7 @@ mkdir -p /etc/arfvpn
 chmod +x /etc/arfvpn
 wget https://${arfprsty810}/cert/arfvpn.crt
 wget https://${arfprsty810}/cert/arfvpn.key
-wget -q -O /etc/arfvpn/stunnel.pem "https://${arfprsty810}/cert/arfvpn.pem"
+#wget -O /etc/arfvpn/stunnel.pem "https://${arfprsty810}/cert/arfvpn.pem"
 cat arfvpn.crt arfvpn.key >> /etc/hidessh/stunnel.pem
 
 cd
@@ -220,13 +237,10 @@ END
 # install fail2ban
 apt -y install fail2ban
 
-# Instal DDOS Flate
-if [ -d '/usr/local/ddos' ]; then
-	echo; echo; echo "Please un-install the previous version first"
-	exit 0
-else
-	mkdir /usr/local/ddos
-fi
+
+# install ddos
+rm -rvf /usr/local/ddos
+mkdir -p /usr/local/ddos
 clear
 echo; echo 'Installing DOS-Deflate 0.6'; echo
 echo; echo -n 'Downloading source files...'
@@ -268,75 +282,53 @@ echo "DROPBEAR_BANNER="/etc/issue.net"" >> /etc/default/dropbear
 cd
 wget https://${arfprsty810}/ssh/vpn.sh && chmod +x vpn.sh && ./vpn.sh
 
-# download script
-cd /usr/bin
-wget -O add-host "https://gitlab.com/hidessh/baru/-/raw/main/add-host1"
-wget -O about "https://gitlab.com/hidessh/baru/-/raw/main/about.sh"
-wget -O menu "https://gitlab.com/hidessh/baru/-/raw/main/menu.sh"
-wget -O usernew "https://gitlab.com/hidessh/baru/-/raw/main/usernew.sh"
-wget -O trial "https://gitlab.com/hidessh/baru/-/raw/main/trial.sh"
-wget -O hapus "https://gitlab.com/hidessh/baru/-/raw/main/hapus.sh"
-wget -O member "https://gitlab.com/hidessh/baru/-/raw/main/member.sh"
-wget -O delete "https://gitlab.com/hidessh/baru/-/raw/main/delete.sh"
-wget -O cek "https://gitlab.com/hidessh/baru/-/raw/main/cek.sh"
-wget -O restart "https://gitlab.com/hidessh/baru/-/raw/main/restart.sh"
-wget -O speedtest "https://gitlab.com/hidessh/baru/-/raw/main/speedtest_cli.py"
-wget -O info "https://gitlab.com/hidessh/baru/-/raw/main/info.sh"
-wget -O ram "https://gitlab.com/hidessh/baru/-/raw/main/ram.sh"
-wget -O renew "https://gitlab.com/hidessh/baru/-/raw/main/renew.sh"
-wget -O autokill "https://gitlab.com/hidessh/baru/-/raw/main/autokill.sh"
-wget -O ceklim "https://gitlab.com/hidessh/baru/-/raw/main/ceklim.sh"
-wget -O tendang "https://gitlab.com/hidessh/baru/-/raw/main/tendang.sh"
+# ----------------------------------------------------------------------------------------------------------------
+# Install Script
+# ----------------------------------------------------------------------------------------------------------------
+wget -q -O /usr/bin/autodel "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/autodel.sh"
+chmod +x /usr/bin/autodel
+sed -i -e 's/\r$//' /bin/autodel
 
-#tambahan baru
-wget -O userdelexpired "https://gitlab.com/hidessh/baru/-/raw/main/userdelexpired.sh"
-wget -O autoreboot "https://gitlab.com/hidessh/baru/-/raw/main/autoreboot.sh"
-wget -O autoservice "https://gitlab.com/hidessh/baru/-/raw/main/autoservice.sh"
+wget -q -O /usr/bin/autokill "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/autokill.sh"
+chmod +x /usr/bin/autokill
+sed -i -e 's/\r$//' /bin/autokill
 
+wget -q -O /usr/bin/cek "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/cek.sh"
+chmod +x /usr/bin/cek
+sed -i -e 's/\r$//' /bin/cek
 
-#permission
-chmod +x autoservice
-chmod +x userdelexpired
-chmod +x user-limit
-chmod +x add-host
-chmod +x menu
-chmod +x usernew
-chmod +x trial
-chmod +x hapus
-chmod +x member
-chmod +x delete
-chmod +x cek
-chmod +x restart
-chmod +x speedtest
-chmod +x info
-chmod +x about
-chmod +x autokill
-chmod +x tendang
-chmod +x ceklim
-chmod +x ram
-chmod +x renew
-chmod +x clear-log
-chmod +x change-port
-chmod +x port-ovpn
-chmod +x port-ssl
-chmod +x port-wg
-chmod +x port-sstp
-chmod +x port-tr
-chmod +x port-squid
-chmod +x port-ws
-chmod +x port-vless
-chmod +x wbmn
-chmod +x xp
-chmod +x update
-chmod +x cfd
-chmod +x cff
-chmod +x cfh
-chmod +x autoreboot
+wget -q -O /usr/bin/ceklim "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ceklim.sh"
+chmod +x /usr/bin/ceklim
+sed -i -e 's/\r$//' /bin/ceklim
+
+wget -q -O /usr/bin/del "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/del.sh"
+chmod +x /usr/bin/del
+sed -i -e 's/\r$//' /bin/del
+
+wget -q -O /usr/bin/member "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/member.sh"
+chmod +x /usr/bin/member
+sed -i -e 's/\r$//' /bin/member
+
+wget -q -O /usr/bin/menu-ssh "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/menu-ssh.sh"
+chmod +x /usr/bin/menu-ssh
+sed -i -e 's/\r$//' /bin/menu-ssh
+
+wget -q -O /usr/bin/renew "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/renew.sh"
+chmod +x /usr/bin/renew
+sed -i -e 's/\r$//' /bin/renew
+
+wget -q -O /usr/bin/tendang "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/tendang.sh"
+chmod +x /usr/bin/tendang
+sed -i -e 's/\r$//' /bin/tendang
+
+wget -q -O /usr/bin/usernew "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/usernew.sh"
+chmod +x /usr/bin/usernew
+sed -i -e 's/\r$//' /bin/usernew
 
 #auto reboot cronjob
-echo "0 5 * * * root clear-log && reboot" >> /etc/crontab
-echo "0 17 * * * root clear-log && reboot" >> /etc/crontab
-echo "50 * * * * root userdelexpired" >> /etc/crontab
+#echo "0 5 * * * root clear-log && reboot" >> /etc/crontab
+#echo "0 17 * * * root clear-log && reboot" >> /etc/crontab
+echo "50 * * * * root xp" >> /etc/crontab
 
 # finishing
 cd

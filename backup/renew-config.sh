@@ -493,12 +493,12 @@ clear
 sleep 2
 
 #Instal SSH-vpn
-wget https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ssh-vpn.sh
-chmod +x ssh-vpn.sh
-sed -i -e 's/\r$//' ssh-vpn.sh
-./ssh-vpn.sh
-clear
-sleep 2
+#wget https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ssh-vpn.sh
+#chmod +x ssh-vpn.sh
+#sed -i -e 's/\r$//' ssh-vpn.sh
+#./ssh-vpn.sh
+#clear
+#sleep 2
 
 sleep 1
 echo -e "[ ${green}INFO$NC ] Restart All Service ..."

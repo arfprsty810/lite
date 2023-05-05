@@ -10,14 +10,15 @@ yellow() { echo -e "\\033[33;1m${*}\\033[0m"; }
 green() { echo -e "\\033[32;1m${*}\\033[0m"; }
 red() { echo -e "\\033[31;1m${*}\\033[0m"; }
 clear
-
+clear
+arfvpn="/etc/arfvpn"
 xray="/etc/xray"
 trgo="/etc/trojan-go"
 logtrgo="/var/log/trojan-go"
 github="https://raw.githubusercontent.com/arfprsty810/lite/main"
 # set random uuid
 uuid=$(cat /proc/sys/kernel/random/uuid)
-domain=$(cat $xray/domain)
+domain=$(cat $arfvpn/domain)
 sleep 1
 clear
 
@@ -57,8 +58,8 @@ cat > $trgo/config.json << END
   "ssl": {
     "verify": false,
     "verify_hostname": false,
-    "cert": "$xray/xray.crt",
-    "key": "$xray/xray.key",
+    "cert": "$arfvpn/arfvpn.crt",
+    "key": "$arfvpn/arfvpn.keu",
     "key_password": "",
     "cipher": "",
     "curves": "",

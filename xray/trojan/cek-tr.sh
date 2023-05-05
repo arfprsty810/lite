@@ -11,15 +11,17 @@ green() { echo -e "\\033[32;1m${*}\\033[0m"; }
 red() { echo -e "\\033[31;1m${*}\\033[0m"; }
 
 clear
+arfvpn="/etc/arfvpn"
 trgo="/etc/trojan-go"
 logtrgo="/var/log/trojan-go"
 ipvps="/var/lib/arf"
 source $ipvps/ipvps.conf
 if [[ "$IP" = "" ]]; then
-domain=$(cat /etc/xray/domain)
+domain=$(cat $arfvpn/domain)
 else
 domain=$IP
-fi 
+fi
+clear 
 
 clear
 echo "-----------------------------------------";

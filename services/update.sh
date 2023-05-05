@@ -11,9 +11,6 @@ green() { echo -e "\\033[32;1m${*}\\033[0m"; }
 red() { echo -e "\\033[31;1m${*}\\033[0m"; }
 clear
 
-trgo="/etc/trojan-go"
-logtrgo="/var/log/trojan-go"
-ipvps="/var/lib/arf"
 github="https://raw.githubusercontent.com/arfprsty810/lite/main"
 clear
 

@@ -58,9 +58,10 @@ fi
 
 #########################
 # VPS INFORMATION
-IP=$(cat /etc/xray/IP)
-ISP=$(cat /etc/xray/ISP)
-DOMAIN=$(cat /etc/xray/domain)
+arfvpn="/etc/arfvpn"
+IP=$(cat $arfvpn/IP)
+ISP=$(cat $arfvpn/ISP)
+DOMAIN=$(cat $arfvpn/domain)
 clear
 
 # CHECK STATUS 

@@ -12,6 +12,7 @@ CYAN='\033[0;36m'
 LIGHT='\033[0;37m'
 # ==========================================
 source /etc/os-release
+arfvpn="/etc/arfvpn"
 xray="/etc/xray"
 nginx="/etc/nginx"
 ipvps="/var/lib/arf"
@@ -28,11 +29,11 @@ mkdir -p $xray
 mkdir -p $nginx
 mkdir -p $ipvps >/dev/null 2>&1
 echo "IP=" >> $ipvps/ipvps.conf
-touch $xray/ISP
-touch $xray/IP
-curl -s ipinfo.io/org/ > $xray/ISP
-curl -s https://ipinfo.io/ip/ > $xray/IP
-IP=$(cat $xray/IP);
+touch $arfvpn/ISP
+touch $arfvpn/IP
+curl -s ipinfo.io/org/ > $arfvpn/ISP
+curl -s https://ipinfo.io/ip/ > $arfvpn/IP
+IP=$(cat $arfvpn/IP);
 
 echo "Updating DNS for ${SUB_DOMAIN}..."
 ZONE=$(curl -sLX GET "https://api.cloudflare.com/client/v4/zones?name=${DOMAIN}&status=active" \
@@ -90,12 +91,8 @@ clear
 echo "Your Sub-Domain : $SUB_DOMAIN"
 sleep 5
 
-touch $xray/domain
-touch $xray/scdomain
-touch /root/domain
-touch /root/scdomain
-echo "$SUB_DOMAIN" > $xray/domain
-echo "$SUB_DOMAIN" > $xray/scdomain
-echo "$SUB_DOMAIN" > /root/domain
-echo "$SUB_DOMAIN" > /root/scdomain
+touch $arfvpn/domain
+touch $arfvpn/scdomain
+echo "$SUB_DOMAIN" > $arfvpn/domain
+echo "$SUB_DOMAIN" > $arfvpn/scdomain
 echo "IP=$SUB_DOMAIN" > $ipvps/ipvps.conf

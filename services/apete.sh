@@ -11,6 +11,11 @@ green() { echo -e "\\033[32;1m${*}\\033[0m"; }
 red() { echo -e "\\033[31;1m${*}\\033[0m"; }
 clear
 
+export DEBIAN_FRONTEND=noninteractive
+source /etc/os-release
+OS=$ID
+ver=$VERSION_ID
+
 echo ""
 echo ""
 echo -e "[ ${green}INFO$NC ] INSTALLER AUTO SCRIPT "

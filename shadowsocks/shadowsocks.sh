@@ -39,10 +39,6 @@ cat > /etc/shadowsocks-libev/config.json <<END
 END
 clear
 
-systemctl enable shadowsocks-libev.service
-systemctl start shadowsocks-libev.service
-clear
-
 echo -e "[ ${green}INFO$NC ] MEMBUAT CLIENT CONFIG"
 sleep 1
 cat > /etc/shadowsocks-libev.json <<END
@@ -60,18 +56,11 @@ cat > /etc/shadowsocks-libev.json <<END
 }
 END
 chmod +x /etc/shadowsocks-libev.json
-clear
-
 echo -e "">>"/etc/shadowsocks-libev/akun.conf"
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2443:3543 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2443:3543 -j ACCEPT
-iptables-save > /etc/iptables.up.rules
-ip6tables-save > /etc/ip6tables.up.rules
 clear
-echo -e "[ ${green}INFO$NC ] SETTING SHADOWSOCKS SUKSES !!!"
-sleep 1
 
-#shadowsocks-libev
+echo -e "[ ${green}INFO$NC ] INSTALL SCRIPT ..."
+sleep 1
 wget -q -O /usr/bin/menu-ss "$github/shadowsocks/menu-ss.sh" && chmod +x /usr/bin/menu-ss
 wget -q -O /usr/bin/addss "$github/shadowsocks/addss.sh" && chmod +x /usr/bin/addss
 wget -q -O /usr/bin/cekss "$github/shadowsocks/cekss.sh" && chmod +x /usr/bin/cekss
@@ -82,8 +71,27 @@ sed -i -e 's/\r$//' /bin/addss
 sed -i -e 's/\r$//' /bin/cekss
 sed -i -e 's/\r$//' /bin/delss
 sed -i -e 's/\r$//' /bin/renewss
-clear
 
+sleep 1
+echo -e "[ ${green}INFO$NC ] Restart Service/s ..."
+systemctl daemon-reload >/dev/null 2>&1
+sleep 1
+echo -e "[ ${GREEN}ok${NC} ] Daemon-Reload"l
+systemctl restart nginx >/dev/null 2>&1
+systemctl enable nginx >/dev/null 2>&1
+systemctl start nginx >/dev/null 2>&1
+sleep 1
+echo -e "[ ${GREEN}ok${NC} ] Restarting Nginx "
+systemctl restart shadowsocks-libev.service >/dev/null 2>&1
+systemctl enable shadowsocks-libev.service >/dev/null 2>&1
+systemctl start shadowsocks-libev.service >/dev/null 2>&1
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2443:3543 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2443:3543 -j ACCEPT
+iptables-save > /etc/iptables.up.rules
+ip6tables-save > /etc/ip6tables.up.rules
+sleep 1
+echo -e "[ ${GREEN}ok${NC} ] Restarting ShadowSocks-OBFS"
+echo ""
 echo -e "[ ${green}INFO$NC ] SETTING SHADOWSOCKS SUKSES !!!"
 sleep 1
 clear

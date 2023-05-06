@@ -28,19 +28,11 @@ CF_ID=arief.prsty@gmail.com
 CF_KEY=3a3ac5ccc9e764de9129fbbb177c161b9dfbd
 set -euo pipefail
 mkdir -p $arfvpn
-mkdir -p $ipvps >/dev/null 2>&1
+mkdir -p $ipvps
 mkdir -p $xray
 mkdir -p $trgo
 mkdir -p $nginx
-touch $arfvpn/IP
-touch $arfvpn/ISP
-touch $arfvpn/domain
-touch $arfvpn/scdomain
 echo "IP=" >> $ipvps/ipvps.conf
-curl -s ipinfo.io/org/ > $arfvpn/ISP
-curl -s https://ipinfo.io/ip/ > $arfvpn/IP
-wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
-wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
 cd
 IP=$(cat $arfvpn/IP);
 

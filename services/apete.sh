@@ -12,6 +12,8 @@ red() { echo -e "\\033[31;1m${*}\\033[0m"; }
 clear
 
 export DEBIAN_FRONTEND=noninteractive
+arfvpn="/etc/arfvpn"
+github="https://raw.githubusercontent.com/arfprsty810/lite/main"
 source /etc/os-release
 OS=$ID
 ver=$VERSION_ID
@@ -31,6 +33,12 @@ echo -e "[ ${green}INFO$NC ] INSTALLING REQRUITMENT"
 sleep 3
 clear
 cd /root/
+curl -s ipinfo.io/org/ > /etc/arfvpn/ISP
+curl -s https://ipinfo.io/ip/ > /etc/arfvpn/IP
+clear
+wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
+wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
+clear
 apt update && apt upgrade -y
 clear
 apt clean all && apt update

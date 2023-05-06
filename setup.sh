@@ -83,6 +83,7 @@ read -rp "Input ur domain / sub-domain : " -e pp
     sed -i -e 's/\r$//' /usr/bin/cf
     /usr/bin/cf
     else
+    apt install curl jq -y
     mkdir -p $arfvpn
     mkdir -p $ipvps >/dev/null 2>&1
     mkdir -p $xray

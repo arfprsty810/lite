@@ -11,10 +11,10 @@ green() { echo -e "\\033[32;1m${*}\\033[0m"; }
 red() { echo -e "\\033[31;1m${*}\\033[0m"; }
 clear
 clear
+clear
 arfvpn="/etc/arfvpn"
-xray="/etc/xray"
-trgo="/etc/trojan-go"
-logtrgo="/var/log/trojan-go"
+trgo="/etc/arfvpn/trojan-go"
+logtrgo="/var/log/arfvpn/trojan-go"
 github="https://raw.githubusercontent.com/arfprsty810/lite/main"
 # set random uuid
 uuid=$(cat /proc/sys/kernel/random/uuid)
@@ -28,15 +28,16 @@ sleep 1
 latest_version="$(curl -s "https://api.github.com/repos/p4gefau1t/trojan-go/releases" | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
 trojango_link="https://github.com/p4gefau1t/trojan-go/releases/download/v${latest_version}/trojan-go-linux-amd64.zip"
 mkdir -p "/usr/bin/trojan-go"
-mkdir -p "$trgo"
+#mkdir -p "$trgo"
 cd `mktemp -d`
 curl -sL "${trojango_link}" -o trojan-go.zip
 unzip -q trojan-go.zip && rm -rf trojan-go.zip
 mv trojan-go /usr/local/bin/trojan-go
 chmod +x /usr/local/bin/trojan-go
-mkdir $logtrgo
+mkdir -p $logtrgo
 touch $trgo/akun.conf
 touch $logtrgo/trojan-go.log
+clear
 
 # Buat Config Trojan Go
 echo -e "[ ${green}INFO$NC ] MEMBUAT CONFIG TROJAN-GO"
@@ -59,7 +60,7 @@ cat > $trgo/config.json << END
     "verify": false,
     "verify_hostname": false,
     "cert": "$arfvpn/arfvpn.crt",
-    "key": "$arfvpn/arfvpn.keu",
+    "key": "$arfvpn/arfvpn.key",
     "key_password": "",
     "cipher": "",
     "curves": "",
@@ -148,18 +149,22 @@ sed -i -e 's/\r$//' /bin/del-tr
 sed -i -e 's/\r$//' /bin/renew-tr
 clear
 
-# restart
-echo -e "[ ${green}INFO$NC ] MEMULAI ULANG KONFIGURASI"
 sleep 1
-systemctl daemon-reload
-systemctl enable xray
-systemctl restart xray
-systemctl restart nginx
-systemctl enable runn
-systemctl restart runn
-systemctl stop trojan-go
-systemctl start trojan-go
-clear
+echo -e "[ ${green}INFO$NC ] Restart Service/s ..."
+systemctl daemon-reload >/dev/null 2>&1
+sleep 1
+echo -e "[ ${GREEN}ok${NC} ] Daemon-Reload"
+systemctl restart nginx >/dev/null 2>&1
+systemctl enable nginx >/dev/null 2>&1
+systemctl start nginx >/dev/null 2>&1
+sleep 1
+echo -e "[ ${GREEN}ok${NC} ] Restarting Nginx "
+systemctl restart trojan-go >/dev/null 2>&1
+systemctl enable trojan-go >/dev/null 2>&1
+systemctl start trojan-go >/dev/null 2>&1
+sleep 1
+echo -e "[ ${GREEN}ok${NC} ] Restarting Trojan-GO"
+echo ""
 
 echo -e "[ ${green}INFO$NC ] SETTING TROJAN-GO SUKSES !!!"
 sleep 1

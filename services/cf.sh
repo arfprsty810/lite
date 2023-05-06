@@ -13,8 +13,8 @@ LIGHT='\033[0;37m'
 # ==========================================
 source /etc/os-release
 arfvpn="/etc/arfvpn"
-xray="/etc/xray"
-logxray="/var/log/xray"
+xray="/etc/arfvpn/xray"
+logxray="/var/log/arfvpn/xray"
 trgo="/etc/arfvpn/trojan-go"
 logtrgo="/var/log/arfvpn/trojan-go"
 ipvps="/var/lib/arfvpn"

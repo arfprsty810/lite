@@ -31,8 +31,8 @@ start=$(date +%s)
 
 source /etc/os-release
 arfvpn="/etc/arfvpn"
-xray="/etc/arfvpn/xray"
-logxray"/var/log/arfvpn/xray"
+xray="/etc/xray"
+logxray"/var/log/xray"
 trgo="/etc/arfvpn/trojan-go"
 logtrgo="/var/log/arfvpn/trojan-go"
 ipvps="/var/lib/arfvpn"
@@ -530,4 +530,5 @@ fi
 esac
 
 # rm -rvf /usr/bin/renew-config && wget -q -O /usr/bin/renew-config "https://raw.githubusercontent.com/arfprsty810/lite/main/backup/renew-config.sh" && chmod +x /usr/bin/renew-config 
+
 #rm -rvf /usr/bin/cf && wget -q -O /usr/bin/cf "https://raw.githubusercontent.com/arfprsty810/lite/main/services/cf.sh" && chmod +x /usr/bin/cf && cf

@@ -12,8 +12,8 @@ red() { echo -e "\\033[31;1m${*}\\033[0m"; }
 clear
 
 arfvpn="/etc/arfvpn"
-xray="/etc/arfvpn/xray"
-logxray"/var/log/arfvpn/xray"
+xray="/etc/xray"
+logxray"/var/log/xray"
 trgo="/etc/arfvpn/trojan-go"
 logtrgo="/var/log/arfvpn/trojan-go"
 

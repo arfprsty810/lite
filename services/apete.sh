@@ -32,10 +32,10 @@ clear
 echo -e "[ ${green}INFO$NC ] INSTALLING REQUIREMENTS"
 sleep 3
 clear
-cd /root/
-wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
-wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
-clear
+#cd /root/
+#wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
+#wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
+#clear
 apt update && apt upgrade -y
 clear
 apt clean all && apt update

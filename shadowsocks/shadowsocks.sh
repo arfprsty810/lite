@@ -76,7 +76,7 @@ sleep 1
 echo -e "[ ${green}INFO$NC ] Restart Service/s ..."
 systemctl daemon-reload >/dev/null 2>&1
 sleep 1
-echo -e "[ ${GREEN}ok${NC} ] Daemon-Reload"l
+echo -e "[ ${GREEN}ok${NC} ] Daemon-Reload"
 systemctl restart nginx >/dev/null 2>&1
 systemctl enable nginx >/dev/null 2>&1
 systemctl start nginx >/dev/null 2>&1

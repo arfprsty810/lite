@@ -13,9 +13,12 @@ LIGHT='\033[0;37m'
 # ==========================================
 source /etc/os-release
 arfvpn="/etc/arfvpn"
-xray="/etc/xray"
+xray="/etc/arfvpn/xray"
+logxray"/var/log/arfvpn/xray"
+trgo="/etc/arfvpn/trojan-go"
+logtrgo="/var/log/arfvpn/trojan-go"
+ipvps="/var/lib/arfvpn"
 nginx="/etc/nginx"
-ipvps="/var/lib/arf"
 clear
 #apt install jq curl -y
 DOMAIN=d-jumper.me
@@ -24,15 +27,21 @@ SUB_DOMAIN=${sub}.d-jumper.me
 CF_ID=arief.prsty@gmail.com
 CF_KEY=3a3ac5ccc9e764de9129fbbb177c161b9dfbd
 set -euo pipefail
-
-mkdir -p $xray
-mkdir -p $nginx
+mkdir -p $arfvpn
 mkdir -p $ipvps >/dev/null 2>&1
-echo "IP=" >> $ipvps/ipvps.conf
-touch $arfvpn/ISP
+mkdir -p $xray
+mkdir -p $trgo
+mkdir -p $nginx
 touch $arfvpn/IP
+touch $arfvpn/ISP
+touch $arfvpn/domain
+touch $arfvpn/scdomain
+echo "IP=" >> $ipvps/ipvps.conf
 curl -s ipinfo.io/org/ > $arfvpn/ISP
 curl -s https://ipinfo.io/ip/ > $arfvpn/IP
+wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
+wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
+cd
 IP=$(cat $arfvpn/IP);
 
 echo "Updating DNS for ${SUB_DOMAIN}..."
@@ -91,8 +100,6 @@ clear
 echo "Your Sub-Domain : $SUB_DOMAIN"
 sleep 5
 
-touch $arfvpn/domain
-touch $arfvpn/scdomain
 echo "$SUB_DOMAIN" > $arfvpn/domain
 echo "$SUB_DOMAIN" > $arfvpn/scdomain
 echo "IP=$SUB_DOMAIN" > $ipvps/ipvps.conf

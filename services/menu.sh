@@ -46,9 +46,10 @@ if [ "${EUID}" -ne 0 ]; then
 fi
 
 # // Exporting IP Address,Domain&ISP
-IP=$(cat /etc/xray/IP)
-ISP=$(cat /etc/xray/ISP)
-DOMAIN=$(cat /etc/xray/domain)
+arfvpn="/etc/arfvpn"
+IP=$(cat $arfvpn/IP)
+ISP=$(cat $arfvpn/ISP)
+DOMAIN=$(cat $arfvpn/domain)
 
 # // nginx
 nginx=$( systemctl status nginx | grep Active | awk '{print $3}' | sed 's/(//g' | sed 's/)//g' )

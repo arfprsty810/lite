@@ -19,7 +19,7 @@ ver=$VERSION_ID
 echo ""
 echo ""
 echo -e "[ ${green}INFO$NC ] INSTALLER AUTO SCRIPT "
-echo " - SSH => OVPN "
+#echo " - SSH => OVPN "
 echo " - XRAY => VMESS - VLESS "
 echo " - TROJAN => TROJAN WS - TROJAN-GO "
 echo " - SHADOWSOCKS => SHADOWSOCKS-LIBEV "
@@ -37,7 +37,7 @@ apt clean all && apt update
 clear
 apt install iptables iptables-persistent -y
 clear
-apt install cron bash-completion -y
+apt install bash-completion -y
 clear
 apt install pwgen openssl netcat -y
 clear
@@ -51,8 +51,9 @@ apt install socat xz-utils wget apt-transport-https gnupg gnupg2 gnupg1 dnsutils
 clear
 apt-get --reinstall --fix-missing install -y sudo dpkg psmisc ruby wondershaper python2 tmux nmap bzip2 gzip coreutils iftop htop unzip vim nano gcc g++ make perl m4 dos2unix libreadline-dev zlib1g-dev git 
 clear
-apt-get --reinstall --fix-missing install -y screen rsyslog sed bc dirmngr libxml-parser-perl neofetch screenfetch lsof easy-rsa fail2ban vnstat libsqlite3-dev 
+apt-get --reinstall --fix-missing install -y screen rsyslog sed bc dirmngr libxml-parser-perl neofetch screenfetch lsof easy-rsa libsqlite3-dev 
 #apt install -y openvpn dropbear squid
+apt install -y fail2ban vnstat cron
 gem install lolcat
 clear
 apt-get install --no-install-recommends build-essential autoconf libtool libssl-dev libpcre3-dev libev-dev asciidoc xmlto automake -y

@@ -11,7 +11,7 @@ green() { echo -e "\\033[32;1m${*}\\033[0m"; }
 red() { echo -e "\\033[31;1m${*}\\033[0m"; }
 
 arfvpn="/etc/arfvpn"
-xray="/etc/arfvpn/xray"
+xray="/etc/xray"
 
 clear
 NUMBER_OF_CLIENTS=$(grep -c -E "^#vl# " "$xray/config.json")

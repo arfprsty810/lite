@@ -70,13 +70,11 @@ sleep 2
 systemctl stop nginx
 
 ## crt ssl cloudflare
-cd $arfvpn
-#wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
-#wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
-cat arfvpn.key >> $xray/xray.key
-cat arfvpn.crt >> $xray/xray.crt
-cd
-clear
+#cd $arfvpn
+#wget -O $arfvpn/arfvpn.crt "$github/cert/*.d-jumper.me.crt"
+#wget -O $arfvpn/arfvpn.key "$github/cert/*.d-jumper.me.key"
+#cd
+#clear
 
 ## crt xray
 #mkdir /root/.acme.sh
@@ -97,7 +95,7 @@ clear
 #' > /usr/local/bin/ssl_renew.sh
 #chmod +x /usr/local/bin/ssl_renew.sh
 #if ! grep -q 'ssl_renew.sh' /var/spool/cron/crontabs/root;then (crontab -l;echo "15 03 */3 * * /usr/local/bin/ssl_renew.sh") | crontab;fi
-#clear
+clear
 
 echo -e "[ ${green}INFO$NC ] MEMBUAT PORT"
 sleep 1
@@ -408,8 +406,6 @@ WantedBy=multi-user.target
 EOF
 clear
 
-#nginx config
-echo -e "[ ${green}INFO$NC ] MEMBUAT CONFIG NGINX"
 sleep 1
 cat >/etc/nginx/conf.d/xray.conf <<EOF
     server {

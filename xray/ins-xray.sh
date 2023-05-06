@@ -70,13 +70,13 @@ sleep 2
 systemctl stop nginx
 
 ## crt ssl cloudflare
-#cd /etc/arfvpn/
+cd $arfvpn
 #wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
 #wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
-#cat arfvpn.key >> $xray/xray.key
-#cat arfvpn.crt >> $xray/xray.crt
-#cd
-#clear
+cat arfvpn.key >> $xray/xray.key
+cat arfvpn.crt >> $xray/xray.crt
+cd
+clear
 
 ## crt xray
 #mkdir /root/.acme.sh

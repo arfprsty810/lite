@@ -38,13 +38,13 @@ clear
 
 # Make Folder XRay
 echo -e "[ ${green}INFO$NC ] MEMBUAT FOLDER XRAY"
-mkdir -p $logxray
-chown www-data.www-data $logxray
-chmod +x $logxray
-touch $logxray/access.log
-touch $logxray/error.log
-touch $logxray/access2.log
-touch $logxray/error2.log
+mkdir -p /var/log/xray
+chown www-data.www-data /var/log/xray
+chmod +x /var/log/xray
+touch /var/log/xray/access.log
+touch /var/log/xray/error.log
+touch /var/log/xray/access2.log
+touch /var/log/xray/error2.log
 # / / Ambil Xray Core Version Terbaru
 bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.5.6
 clear
@@ -109,8 +109,8 @@ sleep 1
 cat > $xray/config.json << END
 {
   "log" : {
-    "access": "$logxray/access.log",
-    "error": "$logxray/error.log",
+    "access": "/var/log/xray/access.log",
+    "error": "/var/log/xray/error.log",
     "loglevel": "warning"
   },
   "inbounds": [

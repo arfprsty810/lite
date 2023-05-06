@@ -44,8 +44,8 @@ cd /root/
 curl -s ipinfo.io/org/ > /etc/arfvpn/ISP
 curl -s https://ipinfo.io/ip/ > /etc/arfvpn/IP
 clear
-wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
-wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
+#wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
+#wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
 clear
 echo -e "[ ${green}INFO$NC ] DISABLE IPV6"
 sleep 1

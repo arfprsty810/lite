@@ -14,7 +14,7 @@ clear
 source /etc/os-release
 arfvpn="/etc/arfvpn"
 xray="/etc/xray"
-logxray"/var/log/arfvpn/xray"
+logxray"/var/log/xray"
 github="https://raw.githubusercontent.com/arfprsty810/lite/main"
 OS=$ID
 ver=$VERSION_ID
@@ -38,13 +38,13 @@ clear
 
 # Make Folder XRay
 echo -e "[ ${green}INFO$NC ] MEMBUAT FOLDER XRAY"
-mkdir -p /var/log/arfvpn/xray
-chown www-data.www-data /var/log/arfvpn/xray
-chmod +x /var/log/arfvpn/xray
-touch /var/log/arfvpn/xray/access.log
-touch /var/log/arfvpn/xray/error.log
-touch /var/log/arfvpn/xray/access2.log
-touch /var/log/arfvpn/xray/error2.log
+mkdir -p /var/log/xray
+chown www-data.www-data /var/log/xray
+chmod +x /var/log/xray
+touch /var/log/xray/access.log
+touch /var/log/xray/error.log
+touch /var/log/xray/access2.log
+touch /var/log/xray/error2.log
 # / / Ambil Xray Core Version Terbaru
 bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.5.6
 clear
@@ -109,8 +109,8 @@ sleep 1
 cat > $xray/config.json << END
 {
   "log" : {
-    "access": "/var/log/arfvpn/xray/access.log",
-    "error": "/var/log/arfvpn/xray/error.log",
+    "access": "/var/log/xray/access.log",
+    "error": "/var/log/xray/error.log",
     "loglevel": "warning"
   },
   "inbounds": [

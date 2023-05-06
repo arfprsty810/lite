@@ -124,6 +124,8 @@ systemctl enable xray >/dev/null 2>&1
 systemctl start xray >/dev/null 2>&1
 sleep 1
 echo -e "[ ${GREEN}ok${NC} ] Restarting Xray - VMESS / VLESS / TROJAN"
+sleep 2
+clear
 
 echo -e "[ ${green}INFO$NC ] INSTALL SCRIPT ..."
 sleep 1
@@ -195,6 +197,7 @@ systemctl enable trojan-go >/dev/null 2>&1
 systemctl start trojan-go >/dev/null 2>&1
 sleep 1
 echo -e "[ ${GREEN}ok${NC} ] Restarting Trojan-GO"
+sleep 2
 clear
 
 echo -e "[ ${green}INFO$NC ] INSTALL SCRIPT ..."
@@ -264,6 +267,7 @@ systemctl enable shadowsocks-libev.service >/dev/null 2>&1
 systemctl start shadowsocks-libev.service >/dev/null 2>&1
 sleep 1
 echo -e "[ ${GREEN}ok${NC} ] Restarting ShadowSocks-OBFS"
+sleep 2
 clear
 
 echo -e "[ ${green}INFO$NC ] INSTALL SCRIPT ..."
@@ -495,6 +499,7 @@ echo -e "[ ${GREEN}ok${NC} ] Restarting ShadowSocks-OBFS"
 #screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7900 --max-clients 500 >/dev/null 2>&1
 #sleep 1
 #echo -e "[ ${GREEN}ok${NC} ] Restarting badvpn "
+sleep 2
 clear
 
 echo -e "[ ${green}INFO$NC ] INSTALL SCRIPT ..."

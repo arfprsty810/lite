@@ -12,7 +12,7 @@ red() { echo -e "\\033[31;1m${*}\\033[0m"; }
 clear
 
 arfvpn="/etc/arfvpn"
-xray="/etc/arfvpn/xray"
+xray="/etc/xray"
 trgo="/etc/arfvpn/trojan-go"
 
 ##----- Auto Remove Vmess

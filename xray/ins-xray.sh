@@ -13,8 +13,8 @@ clear
 
 source /etc/os-release
 arfvpn="/etc/arfvpn"
-xray="/etc/arfvpn/xray"
-logxray"/var/log/arfvpn/xray"
+xray="/etc/xray"
+logxray"/var/log/xray"
 github="https://raw.githubusercontent.com/arfprsty810/lite/main"
 OS=$ID
 ver=$VERSION_ID
@@ -24,7 +24,8 @@ clear
 
 date
 echo ""
-domain=$(cat $arfvpn/domain)
+export domain=$(cat $arfvpn/domain)
+export IP=$(cat $arfvpn/IP)
 sleep 1
 clear
 
@@ -71,20 +72,20 @@ systemctl stop nginx
 
 ## crt ssl cloudflare
 #cd $arfvpn
-#wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
-#wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
+wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
+wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
 #cd
 #clear
 
 ## crt xray
-mkdir /root/.acme.sh
-curl https://acme-install.netlify.app/acme.sh -o /root/.acme.sh/acme.sh
-chmod +x /root/.acme.sh/acme.sh
-/root/.acme.sh/acme.sh --upgrade --auto-upgrade
-/root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
-/root/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-256
-~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath $arfvpn/arfvpn.crt --keypath $arfvpn/arfvpn.key --ecc
-clear
+#mkdir /root/.acme.sh
+#curl https://acme-install.netlify.app/acme.sh -o /root/.acme.sh/acme.sh
+#chmod +x /root/.acme.sh/acme.sh
+#/root/.acme.sh/acme.sh --upgrade --auto-upgrade
+#/root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
+#/root/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-256
+#~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath $arfvpn/arfvpn.crt --keypath $arfvpn/arfvpn.key --ecc
+#clear
 
 #echo -e "[ ${green}INFO$NC ] RENEW CERT SSL"
 # nginx renew ssl

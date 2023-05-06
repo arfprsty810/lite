@@ -14,7 +14,7 @@ cd
 echo ""
 echo ""
 echo -e "[ ${green}INFO$NC ] RE-INSTALLER AUTO SCRIPT "
-echo " - SSH => OPENVPN "
+#echo " - SSH => OPENVPN "
 echo " - XRAY => VMESS - VLESS "
 echo " - TROJAN => TROJAN WS - TROJAN-GO "
 echo " - SHADOWSOCKS => SHADOWSOCKS-LIBEV "
@@ -94,7 +94,11 @@ echo -e "    ${BICyan}[${BIWhite}01${BICyan}]${RED} •${NC} ${CYAN}Re-install X
 echo -e "    ${BICyan}[${BIWhite}02${BICyan}]${RED} •${NC} ${CYAN}Re-install Tojan-GO $NC"
 echo -e "    ${BICyan}[${BIWhite}03${BICyan}]${RED} •${NC} ${CYAN}Re-install Shadowsocks-OBFS $NC"
 echo -e "    ${BICyan}[${BIWhite}04${BICyan}]${RED} •${NC} ${CYAN}Re-install ALL Tunnel $NC"
-
+echo -e "    ${BICyan}[${BIWhite}CTRL + C${BICyan}]${RED} •${NC} ${CYAN}Cancel $NC"
+echo ""
+echo " * Note :"
+echo " Tindakan ini akan menghapus semua data yang akan anda"
+echo " Re-install dan itu termasuk semua akun."
 echo -e "\033[0;34m└─────────────────────────────────────────────────────┘${NC}"
 
 echo -e ""
@@ -190,22 +194,6 @@ sed -i -e 's/\r$//' trojan-go.sh
 clear
 sleep 2
 
-systemctl daemon-reload >/dev/null 2>&1
-sleep 1
-echo -e "[ ${GREEN}ok${NC} ] Daemon-Reload"
-systemctl restart nginx >/dev/null 2>&1
-systemctl enable nginx >/dev/null 2>&1
-systemctl start nginx >/dev/null 2>&1
-sleep 1
-echo -e "[ ${GREEN}ok${NC} ] Restarting Nginx "
-systemctl restart trojan-go >/dev/null 2>&1
-systemctl enable trojan-go >/dev/null 2>&1
-systemctl start trojan-go >/dev/null 2>&1
-sleep 1
-echo -e "[ ${GREEN}ok${NC} ] Restarting Trojan-GO"
-sleep 2
-clear
-
 echo -e "[ ${green}INFO$NC ] INSTALL SCRIPT ..."
 sleep 1
 wget -q -O /usr/bin/restart "$github/services/restart.sh" && chmod +x /usr/bin/restart
@@ -259,22 +247,6 @@ sed -i -e 's/\r$//' shadowsocks.sh
 ./shadowsocks.sh
 clear
 sleep 2
-
-systemctl daemon-reload >/dev/null 2>&1
-sleep 1
-echo -e "[ ${GREEN}ok${NC} ] Daemon-Reload"
-systemctl restart nginx >/dev/null 2>&1
-systemctl enable nginx >/dev/null 2>&1
-systemctl start nginx >/dev/null 2>&1
-sleep 1
-echo -e "[ ${GREEN}ok${NC} ] Restarting Nginx "
-systemctl restart shadowsocks-libev.service >/dev/null 2>&1
-systemctl enable shadowsocks-libev.service >/dev/null 2>&1
-systemctl start shadowsocks-libev.service >/dev/null 2>&1
-sleep 1
-echo -e "[ ${GREEN}ok${NC} ] Restarting ShadowSocks-OBFS"
-sleep 2
-clear
 
 echo -e "[ ${green}INFO$NC ] INSTALL SCRIPT ..."
 sleep 1

@@ -14,7 +14,7 @@ LIGHT='\033[0;37m'
 source /etc/os-release
 arfvpn="/etc/arfvpn"
 xray="/etc/xray"
-logxray"/var/log/xray"
+logxray="/var/log/xray"
 trgo="/etc/arfvpn/trojan-go"
 logtrgo="/var/log/arfvpn/trojan-go"
 ipvps="/var/lib/arfvpn"
@@ -63,33 +63,33 @@ RESULT=$(curl -sLX PUT "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_r
      -H "Content-Type: application/json" \
      --data '{"type":"A","name":"'${SUB_DOMAIN}'","content":"'${IP}'","ttl":120,"proxied":false}')
 
-WILD_DOMAIN="*.$sub"
-set -euo pipefail
-echo ""
-echo "Updating DNS for ${WILD_DOMAIN}..."
-ZONE=$(curl -sLX GET "https://api.cloudflare.com/client/v4/zones?name=${DOMAIN}&status=active" \
-     -H "X-Auth-Email: ${CF_ID}" \
-     -H "X-Auth-Key: ${CF_KEY}" \
-     -H "Content-Type: application/json" | jq -r .result[0].id)
+#WILD_DOMAIN="*.$sub"
+#set -euo pipefail
+#echo ""
+#echo "Updating DNS for ${WILD_DOMAIN}..."
+#ZONE=$(curl -sLX GET "https://api.cloudflare.com/client/v4/zones?name=${DOMAIN}&status=active" \
+#     -H "X-Auth-Email: ${CF_ID}" \
+#     -H "X-Auth-Key: ${CF_KEY}" \
+#     -H "Content-Type: application/json" | jq -r .result[0].id)
 
-RECORD=$(curl -sLX GET "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_records?name=${WILD_DOMAIN}" \
-     -H "X-Auth-Email: ${CF_ID}" \
-     -H "X-Auth-Key: ${CF_KEY}" \
-     -H "Content-Type: application/json" | jq -r .result[0].id)
+#RECORD=$(curl -sLX GET "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_records?name=${WILD_DOMAIN}" \
+#     -H "X-Auth-Email: ${CF_ID}" \
+#     -H "X-Auth-Key: ${CF_KEY}" \
+#     -H "Content-Type: application/json" | jq -r .result[0].id)
 
-if [[ "${#RECORD}" -le 10 ]]; then
-     RECORD=$(curl -sLX POST "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_records" \
-     -H "X-Auth-Email: ${CF_ID}" \
-     -H "X-Auth-Key: ${CF_KEY}" \
-     -H "Content-Type: application/json" \
-     --data '{"type":"A","name":"'${WILD_DOMAIN}'","content":"'${IP}'","ttl":120,"proxied":false}' | jq -r .result.id)
-fi
+#if [[ "${#RECORD}" -le 10 ]]; then
+#     RECORD=$(curl -sLX POST "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_records" \
+#     -H "X-Auth-Email: ${CF_ID}" \
+#     -H "X-Auth-Key: ${CF_KEY}" \
+#     -H "Content-Type: application/json" \
+#     --data '{"type":"A","name":"'${WILD_DOMAIN}'","content":"'${IP}'","ttl":120,"proxied":false}' | jq -r .result.id)
+#fi
 
-RESULT=$(curl -sLX PUT "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_records/${RECORD}" \
-     -H "X-Auth-Email: ${CF_ID}" \
-     -H "X-Auth-Key: ${CF_KEY}" \
-     -H "Content-Type: application/json" \
-     --data '{"type":"A","name":"'${WILD_DOMAIN}'","content":"'${IP}'","ttl":120,"proxied":false}')
+#RESULT=$(curl -sLX PUT "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_records/${RECORD}" \
+#     -H "X-Auth-Email: ${CF_ID}" \
+#     -H "X-Auth-Key: ${CF_KEY}" \
+#     -H "Content-Type: application/json" \
+#     --data '{"type":"A","name":"'${WILD_DOMAIN}'","content":"'${IP}'","ttl":120,"proxied":false}')
 clear
 echo "Your Sub-Domain : $SUB_DOMAIN"
 sleep 5

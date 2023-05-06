@@ -11,55 +11,59 @@ green() { echo -e "\\033[32;1m${*}\\033[0m"; }
 red() { echo -e "\\033[31;1m${*}\\033[0m"; }
 clear
 
+arfvpn="/etc/arfvpn"
+xray="/etc/arfvpn/xray"
+trgo="/etc/arfvpn/trojan-go"
+
 ##----- Auto Remove Vmess
-data=( `cat /etc/xray/config.json | grep '^#vm#' | cut -d ' ' -f 2 | sort | uniq`);
+data=( `cat $xray/config.json | grep '^#vm#' | cut -d ' ' -f 2 | sort | uniq`);
 now=`date +"%Y-%m-%d"`
 for user in "${data[@]}"
 do
-exp=$(grep -w "^#vm# $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+exp=$(grep -w "^#vm# $user" "$xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
 d1=$(date -d "$exp" +%s)
 d2=$(date -d "$now" +%s)
 exp2=$(( (d1 - d2) / 86400 ))
 if [[ "$exp2" -le "0" ]]; then
-sed -i "/^#vm# $user $exp/,/^},{/d" /etc/xray/config.json
-sed -i "/^#vm# $user $exp/,/^},{/d" /etc/xray/config.json
-rm -f /etc/xray/$user-tls.json /etc/xray/$user-none.json
+sed -i "/^#vm# $user $exp/,/^},{/d" $xray/config.json
+sed -i "/^#vm# $user $exp/,/^},{/d" $xray/config.json
+rm -f $xray/$user-tls.json $xray/$user-none.json
 fi
 done
 clear
 
 #----- Auto Remove Vless
-data=( `cat /etc/xray/config.json | grep '^#vl#' | cut -d ' ' -f 2 | sort | uniq`);
+data=( `cat $xray/config.json | grep '^#vl#' | cut -d ' ' -f 2 | sort | uniq`);
 now=`date +"%Y-%m-%d"`
 for user in "${data[@]}"
 do
-exp=$(grep -w "^#vl# $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+exp=$(grep -w "^#vl# $user" "$xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
 d1=$(date -d "$exp" +%s)
 d2=$(date -d "$now" +%s)
 exp2=$(( (d1 - d2) / 86400 ))
 if [[ "$exp2" -le "0" ]]; then
-sed -i "/^#vl# $user $exp/,/^},{/d" /etc/xray/config.json
-sed -i "/^#vl# $user $exp/,/^},{/d" /etc/xray/config.json
+sed -i "/^#vl# $user $exp/,/^},{/d" $xray/config.json
+sed -i "/^#vl# $user $exp/,/^},{/d" $xray/config.json
 fi
 done
 clear
 
 #----- Auto Remove Trojan
-data=( `cat /etc/xray/config.json | grep '^#tr#' | cut -d ' ' -f 2 | sort | uniq`);
+data=( `cat $xray/config.json | grep '^#tr#' | cut -d ' ' -f 2 | sort | uniq`);
 now=`date +"%Y-%m-%d"`
 for user in "${data[@]}"
 do
-exp=$(grep -w "^#tr# $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+exp=$(grep -w "^#tr# $user" "$xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
 d1=$(date -d "$exp" +%s)
 d2=$(date -d "$now" +%s)
 exp2=$(( (d1 - d2) / 86400 ))
 if [[ "$exp2" -le "0" ]]; then
-sed -i "/^#tr# $user $exp/,/^},{/d" /etc/xray/config.json
-sed -i "/^#tr# $user $exp/,/^},{/d" /etc/xray/config.json
-sed -i "/^#trgo# $user $exp/d" /etc/trojan-go/akun.conf
-#sed -i "/^,#trgo# $user $exp/,/^/d" /etc/trojan-go/config.json
-sed -i "/^#trgo# $user $exp/d" /etc/trojan-go/akun.conf
-#sed -i "/^,#trgo# $user $exp/,/^/d" /etc/trojan-go/config.json
+sed -i "/^#tr# $user $exp/,/^},{/d" $xray/config.json
+sed -i "/^#tr# $user $exp/,/^},{/d" $xray/config.json
+sed -i "/^#trgo# $user $exp/d" $trgo/akun.conf
+#sed -i "/^,#trgo# $user $exp/,/^/d" $trgo/config.json
+sed -i "/^#trgo# $user $exp/d" $trgo/akun.conf
+#sed -i "/^,#trgo# $user $exp/,/^/d" $trgo/config.json
 fi
 done
 clear

@@ -12,18 +12,15 @@ red() { echo -e "\\033[31;1m${*}\\033[0m"; }
 clear
 
 source /etc/os-release
-clear
 arfvpn="/etc/arfvpn"
-xray="/etc/xray"
-logxray"/var/log/xray"
-trgo="/etc/trojan-go"
-logtrgo="/var/log/trojan-go"
-ipvps="/var/lib/arf"
+xray="/etc/arfvpn/xray"
+logxray"/var/log/arfvpn/xray"
 github="https://raw.githubusercontent.com/arfprsty810/lite/main"
 OS=$ID
 ver=$VERSION_ID
 # set random uuid
 uuid=$(cat /proc/sys/kernel/random/uuid)
+clear
 
 date
 echo ""
@@ -69,11 +66,19 @@ cd
 clear
 
 echo -e "[ ${green}INFO$NC ] INSATLLING CERT SSL"
-## crt xray
+sleep 2
 systemctl stop nginx
-cp $arfvpn/arfvpn.crt $xray/
-cp $arfvpn/arfvpn.key $xray/
 
+## crt ssl cloudflare
+#cd /etc/arfvpn/
+#wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
+#wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
+#cat arfvpn.key >> $xray/xray.key
+#cat arfvpn.crt >> $xray/xray.crt
+#cd
+#clear
+
+## crt xray
 #mkdir /root/.acme.sh
 #curl https://acme-install.netlify.app/acme.sh -o /root/.acme.sh/acme.sh
 #chmod +x /root/.acme.sh/acme.sh
@@ -81,7 +86,7 @@ cp $arfvpn/arfvpn.key $xray/
 #/root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
 #/root/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-256
 #~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath $xray/xray.crt --keypath $xray/xray.key --ecc
-clear
+#clear
 
 #echo -e "[ ${green}INFO$NC ] RENEW CERT SSL"
 # nginx renew ssl
@@ -522,22 +527,7 @@ sed -i '$ igrpc_pass grpc://127.0.0.1:'"$trojangrpc"';' /etc/nginx/conf.d/xray.c
 sed -i '$ i}' /etc/nginx/conf.d/xray.conf
 clear
 
-echo -e "$yell[SERVICE]$NC RESTART ALL SERVICE"
-systemctl daemon-reload
-sleep 1
-clear
-
-echo -e "[ ${green}ok${NC} ] ENABLE & RESTART XRAY "
-systemctl enable xray
-systemctl restart xray
-systemctl restart nginx
-systemctl enable runn
-systemctl restart runn
-clear
-sleep 1
-
-#vmess
-echo -e "[ ${green}INFO$NC ] DOWNLOAD SCRIPT"
+echo -e "[ ${green}INFO$NC ] INSTALL SCRIPT ..."
 sleep 1
 wget -q -O /usr/bin/menu-vmess "$github/xray/vmess/menu-vmess.sh" && chmod +x /usr/bin/menu-vmess
 wget -q -O /usr/bin/add-ws "$github/xray/vmess/add-ws.sh" && chmod +x /usr/bin/add-ws
@@ -587,16 +577,23 @@ sed -i -e 's/\r$//' /bin/del-tr
 sed -i -e 's/\r$//' /bin/renew-tr
 clear
 
+sleep 1
+echo -e "[ ${green}INFO$NC ] Restart Service/s ..."
+systemctl daemon-reload >/dev/null 2>&1
+sleep 1
+echo -e "[ ${GREEN}ok${NC} ] Daemon-Reload"
+systemctl restart nginx >/dev/null 2>&1
+systemctl enable nginx >/dev/null 2>&1
+systemctl start nginx >/dev/null 2>&1
+sleep 1
+echo -e "[ ${GREEN}ok${NC} ] Restarting Nginx "
+systemctl restart xray >/dev/null 2>&1
+systemctl enable xray >/dev/null 2>&1
+systemctl start xray >/dev/null 2>&1
+sleep 1
+echo -e "[ ${GREEN}ok${NC} ] Restarting Xray - VMESS / VLESS / TROJAN"
+echo ""
+
 echo -e "[ ${green}INFO$NC ] SETTING XRAY VMESS & VLESS  SUKSES !!!"
 sleep 2
-clear
-#mv /root/domain $xray
-#if [ -f /root/scdomain ];then
-#rm /root/scdomain > /dev/null 2>&1
-#fi
-# restart
-
-echo -e "[ ${green}INFO$NC ] INSTALL FINISHED !"
-sleep 2
-rm -f ins-xray.sh
 clear

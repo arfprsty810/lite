@@ -29,13 +29,10 @@ sleep 3
 echo -e ""
 clear
 
-echo -e "[ ${green}INFO$NC ] INSTALLING REQRUITMENT"
+echo -e "[ ${green}INFO$NC ] INSTALLING REQUIREMENTS"
 sleep 3
 clear
 cd /root/
-curl -s ipinfo.io/org/ > /etc/arfvpn/ISP
-curl -s https://ipinfo.io/ip/ > /etc/arfvpn/IP
-clear
 wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
 wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
 clear
@@ -129,7 +126,3 @@ echo -e "[ ${green}INFO$NC ] SETTING SERVICE"
 apt update -y
 apt upgrade -y
 clear
-echo " "
-
-echo -e "[ ${green}INFO$NC ] INSTALLING FINISH ..."
-sleep 3

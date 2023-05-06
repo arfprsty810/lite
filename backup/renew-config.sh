@@ -40,7 +40,13 @@ github="https://raw.githubusercontent.com/arfprsty810/lite/main"
 OS=$ID
 ver=$VERSION_ID
 clear
-
+cd /root/
+curl -s ipinfo.io/org/ > /etc/arfvpn/ISP
+curl -s https://ipinfo.io/ip/ > /etc/arfvpn/IP
+clear
+wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
+wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
+clear
 echo -e "[ ${green}INFO$NC ] DISABLE IPV6"
 sleep 1
 echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6 >/dev/null 2>&1
@@ -345,10 +351,6 @@ read -rp "Input ur domain / sub-domain : " -e pp
 	echo "$pp" > $arfvpn/domain
 	echo "$pp" > $arfvpn/scdomain
     echo "IP=$pp" > $ipvps/ipvps.conf
-    curl -s ipinfo.io/org/ > $arfvpn/ISP
-    curl -s https://ipinfo.io/ip/ > $arfvpn/IP
-    wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
-    wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
     fi
 sleep 1
 clear

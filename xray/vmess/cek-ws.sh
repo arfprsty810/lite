@@ -11,8 +11,8 @@ green() { echo -e "\\033[32;1m${*}\\033[0m"; }
 red() { echo -e "\\033[31;1m${*}\\033[0m"; }
 
 arfvpn="/etc/arfvpn"
-xray="/etc/arfvpn/xray"
-logxray"/var/log/arfvpn/xray"
+xray="/etc/xray"
+logxray"/var/log/xray"
 
 clear
 echo -n > /tmp/other.txt

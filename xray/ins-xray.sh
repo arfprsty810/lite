@@ -71,8 +71,8 @@ systemctl stop nginx
 
 ## crt ssl cloudflare
 #cd $arfvpn
-#wget -O $arfvpn/arfvpn.crt "$github/cert/*.d-jumper.me.crt"
-#wget -O $arfvpn/arfvpn.key "$github/cert/*.d-jumper.me.key"
+#wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
+#wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
 #cd
 #clear
 

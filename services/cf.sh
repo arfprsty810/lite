@@ -21,9 +21,9 @@ ipvps="/var/lib/arfvpn"
 nginx="/etc/nginx"
 clear
 #apt install jq curl -y
-DOMAIN=d-jumper.me
+DOMAIN=sg.d-jumper.me
 sub=$(</dev/urandom tr -dc a-z0-9 | head -c4)
-SUB_DOMAIN=${sub}.d-jumper.me
+SUB_DOMAIN=${sub}.${DOMAIN}
 CF_ID=arief.prsty@gmail.com
 CF_KEY=3a3ac5ccc9e764de9129fbbb177c161b9dfbd
 set -euo pipefail
@@ -33,6 +33,7 @@ mkdir -p $xray
 mkdir -p $trgo
 mkdir -p $nginx
 echo "IP=" >> $ipvps/ipvps.conf
+echo "${DOMAIN}" > ${arfvpn}/DOMAIN_CF
 curl -s ipinfo.io/org/ > ${arfvpn}/ISP
 curl -s https://ipinfo.io/ip/ > ${arfvpn}/IP
 IP=$(cat ${arfvpn}/IP);

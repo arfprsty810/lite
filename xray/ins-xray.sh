@@ -38,13 +38,13 @@ clear
 
 # Make Folder XRay
 echo -e "[ ${green}INFO$NC ] MEMBUAT FOLDER XRAY"
-mkdir -p $logxray
-chown www-data.www-data $logxray
-chmod +x $logxray
-touch $logxray/access.log
-touch $logxray/error.log
-touch $logxray/access2.log
-touch $logxray/error2.log
+mkdir -p /var/log/xray
+chown www-data.www-data /var/log/xray
+chmod +x /var/log/xray
+touch /var/log/xray/access.log
+touch /var/log/xray/error.log
+touch /var/log/xray/access2.log
+touch /var/log/xray/error2.log
 # / / Ambil Xray Core Version Terbaru
 bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.5.6
 clear
@@ -67,35 +67,26 @@ cd
 clear
 
 echo -e "[ ${green}INFO$NC ] INSATLLING CERT SSL"
-sleep 2
-systemctl stop nginx
-
-## crt ssl cloudflare
-#cd $arfvpn
-wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
-wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
-#cd
-#clear
-
 ## crt xray
-#mkdir /root/.acme.sh
-#curl https://acme-install.netlify.app/acme.sh -o /root/.acme.sh/acme.sh
-#chmod +x /root/.acme.sh/acme.sh
-#/root/.acme.sh/acme.sh --upgrade --auto-upgrade
-#/root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
-#/root/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-256
-#~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath $arfvpn/arfvpn.crt --keypath $arfvpn/arfvpn.key --ecc
-#clear
+systemctl stop nginx
+mkdir /root/.acme.sh
+curl https://acme-install.netlify.app/acme.sh -o /root/.acme.sh/acme.sh
+chmod +x /root/.acme.sh/acme.sh
+/root/.acme.sh/acme.sh --upgrade --auto-upgrade
+/root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
+/root/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-256
+~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath $xray/xray.crt --keypath $xray/xray.key --ecc
+clear
 
-#echo -e "[ ${green}INFO$NC ] RENEW CERT SSL"
+echo -e "[ ${green}INFO$NC ] RENEW CERT SSL"
 # nginx renew ssl
-#echo -n '#!/bin/bash
-#/etc/init.d/nginx stop
-#"/root/.acme.sh"/acme.sh --cron --home "/root/.acme.sh" &> /root/renew_ssl.log
-#/etc/init.d/nginx start
-#' > /usr/local/bin/ssl_renew.sh
-#chmod +x /usr/local/bin/ssl_renew.sh
-#if ! grep -q 'ssl_renew.sh' /var/spool/cron/crontabs/root;then (crontab -l;echo "15 03 */3 * * /usr/local/bin/ssl_renew.sh") | crontab;fi
+echo -n '#!/bin/bash
+/etc/init.d/nginx stop
+"/root/.acme.sh"/acme.sh --cron --home "/root/.acme.sh" &> /root/renew_ssl.log
+/etc/init.d/nginx start
+' > /usr/local/bin/ssl_renew.sh
+chmod +x /usr/local/bin/ssl_renew.sh
+if ! grep -q 'ssl_renew.sh' /var/spool/cron/crontabs/root;then (crontab -l;echo "15 03 */3 * * /usr/local/bin/ssl_renew.sh") | crontab;fi
 clear
 
 echo -e "[ ${green}INFO$NC ] MEMBUAT PORT"
@@ -111,7 +102,6 @@ worryfree=$((RANDOM + 10000))
 kuotahabis=$((RANDOM + 10000))
 vmessgrpc=$((RANDOM + 10000))
 trojangrpc=$((RANDOM + 10000))
-clear
 
 # xray config
 echo -e "[ ${green}INFO$NC ] MEMBUAT CONFIG XRAY"
@@ -119,8 +109,8 @@ sleep 1
 cat > $xray/config.json << END
 {
   "log" : {
-    "access": "$logxray/access.log",
-    "error": "$logxray/error.log",
+    "access": "/var/log/xray/access.log",
+    "error": "/var/log/xray/error.log",
     "loglevel": "warning"
   },
   "inbounds": [
@@ -407,6 +397,8 @@ WantedBy=multi-user.target
 EOF
 clear
 
+#nginx config
+echo -e "[ ${green}INFO$NC ] MEMBUAT CONFIG NGINX"
 sleep 1
 cat >/etc/nginx/conf.d/xray.conf <<EOF
     server {
@@ -415,8 +407,8 @@ cat >/etc/nginx/conf.d/xray.conf <<EOF
              listen 443 ssl http2 reuseport;
              listen [::]:443 http2 reuseport;	
              server_name $domain;
-             ssl_certificate $arfvpn/arfvpn.crt;
-             ssl_certificate_key $arfvpn/arfvpn.key;
+             ssl_certificate $xray/xray.crt;
+             ssl_certificate_key $xray/xray.key;
              ssl_ciphers EECDH+CHACHA20:EECDH+CHACHA20-draft:EECDH+ECDSA+AES128:EECDH+aRSA+AES128:RSA+AES128:EECDH+ECDSA+AES256:EECDH+aRSA+AES256:RSA+AES256:EECDH+ECDSA+3DES:EECDH+aRSA+3DES:RSA+3DES:!MD5;
              ssl_protocols TLSv1.1 TLSv1.2 TLSv1.3;
              root /home/vps/public_html;
@@ -523,6 +515,20 @@ sed -i '$ igrpc_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
 sed -i '$ igrpc_pass grpc://127.0.0.1:'"$trojangrpc"';' /etc/nginx/conf.d/xray.conf
 sed -i '$ i}' /etc/nginx/conf.d/xray.conf
 clear
+
+echo -e "$yell[SERVICE]$NC RESTART ALL SERVICE"
+systemctl daemon-reload
+sleep 1
+clear
+
+echo -e "[ ${green}ok${NC} ] ENABLE & RESTART XRAY "
+systemctl enable xray
+systemctl restart xray
+systemctl restart nginx
+systemctl enable runn
+systemctl restart runn
+clear
+sleep 1
 
 echo -e "[ ${green}INFO$NC ] INSTALL SCRIPT ..."
 sleep 1

@@ -85,21 +85,13 @@ read -rp "Input ur domain / sub-domain : " -e pp
     else
     apt install curl jq -y
     mkdir -p $arfvpn
-    mkdir -p $ipvps >/dev/null 2>&1
+    mkdir -p $ipvps
     mkdir -p $xray
     mkdir -p $trgo
     mkdir -p $nginx
-    touch $arfvpn/IP
-    touch $arfvpn/ISP
-    touch $arfvpn/domain
-    touch $arfvpn/scdomain
 	echo "$pp" > $arfvpn/domain
 	echo "$pp" > $arfvpn/scdomain
     echo "IP=$pp" > $ipvps/ipvps.conf
-    curl -s ipinfo.io/org/ > $arfvpn/ISP
-    curl -s https://ipinfo.io/ip/ > $arfvpn/IP
-    wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
-    wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
     fi
 clear
 

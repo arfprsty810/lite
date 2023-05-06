@@ -13,8 +13,8 @@ clear
 
 source /etc/os-release
 arfvpn="/etc/arfvpn"
-xray="/etc/arfvpn/xray"
-logxray="/var/log/arfvpn/xray"
+xray="/etc/xray"
+logxray="/var/log/xray"
 github="https://raw.githubusercontent.com/arfprsty810/lite/main"
 OS=$ID
 ver=$VERSION_ID

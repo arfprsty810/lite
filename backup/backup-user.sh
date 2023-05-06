@@ -11,42 +11,48 @@ green() { echo -e "\\033[32;1m${*}\\033[0m"; }
 red() { echo -e "\\033[31;1m${*}\\033[0m"; }
 clear
 
+arfvpn="/etc/arfvpn"
+xray="/etc/arfvpn/xray"
+logxray"/var/log/arfvpn/xray"
+trgo="/etc/arfvpn/trojan-go"
+logtrgo="/var/log/arfvpn/trojan-go"
+
 # -------------------------------------- delete akun -------------------------------------- #
 # vless
-datavl=( `cat /etc/xray/config.json | grep '#vl#' | cut -d ' ' -f 2 | sort | uniq`);
+datavl=( `cat $xray/config.json | grep '#vl#' | cut -d ' ' -f 2 | sort | uniq`);
 for akun in "${datavl[@]}"
 do
 if [[ -z "$akun" ]]; then
 akun="tidakada"
 fi
-exp=$(grep -wE "^#vl# $akun" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
-sed -i "/^#vl# $akun $exp/,/^},{/d" /etc/xray/config.json
+exp=$(grep -wE "^#vl# $akun" "$xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+sed -i "/^#vl# $akun $exp/,/^},{/d" $xray/config.json
 done
 clear
 
 # vmess
-datavm=( `cat /etc/xray/config.json | grep '#vm#' | cut -d ' ' -f 2 | sort | uniq`);
+datavm=( `cat $xray/config.json | grep '#vm#' | cut -d ' ' -f 2 | sort | uniq`);
 for akun in "${datavm[@]}"
 do
 if [[ -z "$akun" ]]; then
 akun="tidakada"
 fi
-exp=$(grep -wE "^#vm# $akun" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
-sed -i "/^#vm# $akun $exp/,/^},{/d" /etc/xray/config.json
+exp=$(grep -wE "^#vm# $akun" "$xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+sed -i "/^#vm# $akun $exp/,/^},{/d" $xray/config.json
 done
 clear
 
 # trojan
-datatr=( `cat /etc/xray/config.json | grep '#tr#' | cut -d ' ' -f 2 | sort | uniq`);
+datatr=( `cat $xray/config.json | grep '#tr#' | cut -d ' ' -f 2 | sort | uniq`);
 for akun in "${datatr[@]}"
 do
 if [[ -z "$akun" ]]; then
 akun="tidakada"
 fi
-exp=$(grep -wE "^#tr# $akun" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
-sed -i "/^#tr# $akun $exp/,/^},{/d" /etc/xray/config.json
-sed -i "/^,#trgo# $akun $exp/,/^/d" /etc/trojan-go/config.json
-sed -i "/^#trgo# $akun $exp/d" /etc/trojan-go/akun.conf
+exp=$(grep -wE "^#tr# $akun" "$xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+sed -i "/^#tr# $akun $exp/,/^},{/d" $xray/config.json
+sed -i "/^,#trgo# $akun $exp/,/^/d" $trgo/config.json
+sed -i "/^#trgo# $akun $exp/d" $trgo/akun.conf
 done
 clear
 
@@ -75,16 +81,16 @@ UID_VMESS_1="f1a53fef-8533-457b-ab2f-aa915f167519"
 EXP_VMESS_1="2030-01-01"
 # Vmess
 sed -i '/#vmess$/a\#vm# '"$AKUN_VMESS_1 $EXP_VMESS_1"'\
-},{"id": "'""$UID_VMESS_1""'","email": "'""$AKUN_VMESS_1""'"' /etc/xray/config.json
+},{"id": "'""$UID_VMESS_1""'","email": "'""$AKUN_VMESS_1""'"' $xray/config.json
 # Vmess Worry
 sed -i '/#vmessworry$/a\#vm# '"$AKUN_VMESS_1 $EXP_VMESS_1"'\
-},{"id": "'""$UID_VMESS_1""'","alterId": '"0"',"email": "'""$AKUN_VMESS_1""'"' /etc/xray/config.json
+},{"id": "'""$UID_VMESS_1""'","alterId": '"0"',"email": "'""$AKUN_VMESS_1""'"' $xray/config.json
 # Vmess Kuota
 sed -i '/#vmesskuota$/a\#vm# '"$AKUN_VMESS_1 $EXP_VMESS_1"'\
-},{"id": "'""$UID_VMESS_1""'","alterId": '"0"',"email": "'""$AKUN_VMESS_1""'"' /etc/xray/config.json
+},{"id": "'""$UID_VMESS_1""'","alterId": '"0"',"email": "'""$AKUN_VMESS_1""'"' $xray/config.json
 # Vmess gRPC
 sed -i '/#vmessgrpc$/a\#vm# '"$AKUN_VMESS_1 $EXP_VMESS_1"'\
-},{"id": "'""$UID_VMESS_1""'","email": "'""$AKUN_VMESS_1""'"' /etc/xray/config.json
+},{"id": "'""$UID_VMESS_1""'","email": "'""$AKUN_VMESS_1""'"' $xray/config.json
 clear
 
 # vless
@@ -93,28 +99,28 @@ UID_VLESS_1="77f6e656-649b-4caf-9beb-6e9f32290aac"
 EXP_VLESS_1="2030-01-01"
 # Vless
 sed -i '/#vless$/a\#vl# '"$AKUN_VLESS_1 $EXP_VLESS_1"'\
-},{"id": "'""$UID_VLESS_1""'","email": "'""$AKUN_VLESS_1""'"' /etc/xray/config.json
+},{"id": "'""$UID_VLESS_1""'","email": "'""$AKUN_VLESS_1""'"' $xray/config.json
 # Vless gRPC
 sed -i '/#vlessgrpc$/a\#vl# '"$AKUN_VLESS_1 $EXP_VLESS_1"'\
-},{"id": "'""$UID_VLESS_1""'","email": "'""$AKUN_VLESS_1""'"' /etc/xray/config.json
+},{"id": "'""$UID_VLESS_1""'","email": "'""$AKUN_VLESS_1""'"' $xray/config.json
 clear
 
 # trojan
 AKUN_TROJAN_1="trojan_arf"
 PASSWORD_TROJAN_GO_1="trojan_arf"
 UID_TROJAN_1="8394ff55-d075-4d1d-a65a-c82f16dc62d1"
-UID_TROJAN_GO=$(cat /etc/trojan-go/uuid)
+UID_TROJAN_GO=$(cat $trgo/uuid)
 EXP_TROJAN_1="2030-01-01"
 EXP_TROJAN_GO1="2030-01-01"
 # Trojan-WS
 sed -i '/#trojanws$/a\#tr# '"$AKUN_TROJAN_1 $EXP_TROJAN_1"'\
-},{"password": "'""$UID_TROJAN_1""'","email": "'""$AKUN_TROJAN_1""'"' /etc/xray/config.json
+},{"password": "'""$UID_TROJAN_1""'","email": "'""$AKUN_TROJAN_1""'"' $xray/config.json
 # Trojan gRPC
 sed -i '/#trojangrpc$/a\#tr# '"$AKUN_TROJAN_1 $EXP_TROJAN_1"'\
-},{"password": "'""$UID_TROJAN_1""'","email": "'""$AKUN_TROJAN_1""'"' /etc/xray/config.json
+},{"password": "'""$UID_TROJAN_1""'","email": "'""$AKUN_TROJAN_1""'"' $xray/config.json
 # Trojan-GO
-sed -i '/"'""$UID_TROJAN_GO""'"$/a\,"'""$PASSWORD_TROJAN_GO_1""'"' /etc/trojan-go/config.json
-echo -e "#trgo# $PASSWORD_TROJAN_GO_1 $EXP_TROJAN_GO1" >> /etc/trojan-go/akun.conf
+sed -i '/"'""$UID_TROJAN_GO""'"$/a\,"'""$PASSWORD_TROJAN_GO_1""'"' $trgo/config.json
+echo -e "#trgo# $PASSWORD_TROJAN_GO_1 $EXP_TROJAN_GO1" >> $trgo/akun.conf
 clear
 
 # ShadowSocks
@@ -195,17 +201,7 @@ systemctl enable shadowsocks-libev-server@$akun-http.service
 systemctl start shadowsocks-libev-server@$akun-http.service
 #systemctl restart ws-dropbear.service >/dev/null 2>&1
 #systemctl restart ws-stunnel.service >/dev/null 2>&1
-systemctl restart xray.service >/dev/null 2>&1
-/etc/init.d/ssh restart
-/etc/init.d/dropbear restart
-#/etc/init.d/stunnel5 restart
-/etc/init.d/fail2ban restart
-/etc/init.d/cron restart
-/etc/init.d/nginx restart
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 1000
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 1000
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300 --max-clients 1000
-systemctl restart rc-local.service
+systemctl restart xray.service
 clear
 
 echo ""

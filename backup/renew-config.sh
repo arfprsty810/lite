@@ -31,12 +31,11 @@ start=$(date +%s)
 
 source /etc/os-release
 arfvpn="/etc/arfvpn"
-xray="/etc/xray"
-logxray="/var/log/xray"
-trgo="/etc/trojan-go"
-logtrgo="/var/log/trojan-go"
-nginx="/etc/nginx"
-ipvps="/var/lib/arf"
+xray="/etc/arfvpn/xray"
+logxray"/var/log/arfvpn/xray"
+trgo="/etc/arfvpn/trojan-go"
+logtrgo="/var/log/arfvpn/trojan-go"
+ipvps="/var/lib/arfvpn"
 github="https://raw.githubusercontent.com/arfprsty810/lite/main"
 OS=$ID
 ver=$VERSION_ID
@@ -98,6 +97,11 @@ read -p "                    Select Menu : " menu
 case $menu in
 
 1)
+# // Remove File & Directory
+rm -fr $xray
+rm -fr $logxray
+rm -fr /usr/local/bin/xray
+mkdir -p $xray
 clear
 #Instal Xray
 wget https://raw.githubusercontent.com/arfprsty810/lite/main/xray/ins-xray.sh
@@ -107,25 +111,22 @@ sed -i -e 's/\r$//' ins-xray.sh
 clear
 sleep 2
 
-/etc/init.d/nginx stop >/dev/null 2>&1
-/etc/init.d/nginx restart >/dev/null 2>&1
-/etc/init.d/nginx enable >/dev/null 2>&1
-/etc/init.d/nginx start >/dev/null 2>&1
+systemctl daemon-reload >/dev/null 2>&1
+sleep 1
+echo -e "[ ${GREEN}ok${NC} ] Daemon-Reload"
+systemctl restart nginx >/dev/null 2>&1
+systemctl enable nginx >/dev/null 2>&1
+systemctl start nginx >/dev/null 2>&1
 sleep 1
 echo -e "[ ${GREEN}ok${NC} ] Restarting Nginx "
-systemctl stop xray >/dev/null 2>&1
 systemctl restart xray >/dev/null 2>&1
 systemctl enable xray >/dev/null 2>&1
 systemctl start xray >/dev/null 2>&1
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2086 -j ACCEPT >/dev/null 2>&1
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2087 -j ACCEPT >/dev/null 2>&1
-iptables-save > /etc/iptables.up.rules >/dev/null 2>&1
-iptables-restore -t < /etc/iptables.up.rules >/dev/null 2>&1
-netfilter-persistent save >/dev/null 2>&1
-netfilter-persistent reload >/dev/null 2>&1
 sleep 1
 echo -e "[ ${GREEN}ok${NC} ] Restarting Xray - VMESS / VLESS / TROJAN"
 
+echo -e "[ ${green}INFO$NC ] INSTALL SCRIPT ..."
+sleep 1
 wget -q -O /usr/bin/restart "$github/services/restart.sh" && chmod +x /usr/bin/restart
 wget -q -O /usr/bin/running "$github/services/running.sh" && chmod +x /usr/bin/running
 wget -q -O /usr/bin/cek-bandwidth "$github/services/cek-bandwidth.sh" && chmod +x /usr/bin/cek-bandwidth
@@ -167,6 +168,12 @@ clear
 ;;
 
 2)
+# // Remove File & Directory
+rm -fr $trgo
+rm -fr $logtrgo
+rm -fr /usr/bin/trojan-go
+mkdir -p $trgo
+clear
 #Instal Trojan-GO
 wget https://raw.githubusercontent.com/arfprsty810/lite/main/xray/trojan/trojan-go.sh
 chmod +x trojan-go.sh
@@ -175,13 +182,23 @@ sed -i -e 's/\r$//' trojan-go.sh
 clear
 sleep 2
 
-systemctl stop trojan-go >/dev/null 2>&1
+systemctl daemon-reload >/dev/null 2>&1
+sleep 1
+echo -e "[ ${GREEN}ok${NC} ] Daemon-Reload"
+systemctl restart nginx >/dev/null 2>&1
+systemctl enable nginx >/dev/null 2>&1
+systemctl start nginx >/dev/null 2>&1
+sleep 1
+echo -e "[ ${GREEN}ok${NC} ] Restarting Nginx "
 systemctl restart trojan-go >/dev/null 2>&1
 systemctl enable trojan-go >/dev/null 2>&1
 systemctl start trojan-go >/dev/null 2>&1
 sleep 1
 echo -e "[ ${GREEN}ok${NC} ] Restarting Trojan-GO"
+clear
 
+echo -e "[ ${green}INFO$NC ] INSTALL SCRIPT ..."
+sleep 1
 wget -q -O /usr/bin/restart "$github/services/restart.sh" && chmod +x /usr/bin/restart
 wget -q -O /usr/bin/running "$github/services/running.sh" && chmod +x /usr/bin/running
 wget -q -O /usr/bin/cek-bandwidth "$github/services/cek-bandwidth.sh" && chmod +x /usr/bin/cek-bandwidth
@@ -223,6 +240,9 @@ clear
 ;;
 
 3)
+# // Remove File & Directory
+rm -fr /etc/shadowsocks-libev/*
+clear
 #Instal Shadowsocks
 wget https://raw.githubusercontent.com/arfprsty810/lite/main/shadowsocks/shadowsocks.sh
 chmod +x shadowsocks.sh 
@@ -231,13 +251,23 @@ sed -i -e 's/\r$//' shadowsocks.sh
 clear
 sleep 2
 
-/etc/init.d/shadowsocks-libev stop >/dev/null 2>&1
-/etc/init.d/shadowsocks-libev restart >/dev/null 2>&1
-/etc/init.d/shadowsocks-libev enable >/dev/null 2>&1
-/etc/init.d/shadowsocks-libev start >/dev/null 2>&1
+systemctl daemon-reload >/dev/null 2>&1
+sleep 1
+echo -e "[ ${GREEN}ok${NC} ] Daemon-Reload"
+systemctl restart nginx >/dev/null 2>&1
+systemctl enable nginx >/dev/null 2>&1
+systemctl start nginx >/dev/null 2>&1
+sleep 1
+echo -e "[ ${GREEN}ok${NC} ] Restarting Nginx "
+systemctl restart shadowsocks-libev.service >/dev/null 2>&1
+systemctl enable shadowsocks-libev.service >/dev/null 2>&1
+systemctl start shadowsocks-libev.service >/dev/null 2>&1
 sleep 1
 echo -e "[ ${GREEN}ok${NC} ] Restarting ShadowSocks-OBFS"
+clear
 
+echo -e "[ ${green}INFO$NC ] INSTALL SCRIPT ..."
+sleep 1
 wget -q -O /usr/bin/restart "$github/services/restart.sh" && chmod +x /usr/bin/restart
 wget -q -O /usr/bin/running "$github/services/running.sh" && chmod +x /usr/bin/running
 wget -q -O /usr/bin/cek-bandwidth "$github/services/cek-bandwidth.sh" && chmod +x /usr/bin/cek-bandwidth
@@ -282,43 +312,43 @@ clear
 4)
 clear
 # // Remove File & Directory
-#rm -fr /usr/local/bin/stunnel
-#rm -fr /usr/local/bin/stunnel5
-rm -fr $nginx
+rm -fr $xray
 rm -fr $ipvps
-rm -fr r
 rm -fr $logxray
 rm -fr /usr/local/bin/xray
 rm -fr $trgo
 rm -fr $logtrgo
 rm -fr /usr/bin/trojan-go
+rm -fr /etc/shadowsocks-libev/*
 clear
-
 echo ""
 echo -e "[ ${green}INFO$NC ]* BLANK INPUT FOR RANDOM SUB-DOMAIN ! "
 read -rp "Input ur domain / sub-domain : " -e pp
     if [ -z $pp ]; then
-        echo -e "
-        Nothing input for domain!
-        Then a random sub-domain will be created"
-        /usr/bin/cf
+    echo -e "
+    Nothing input for domain!
+    Then a random sub-domain will be created"
+    sleep 2
+    clear
+    wget -q -O /usr/bin/cf "$github/services/cf.sh"
+    chmod +x /usr/bin/cf
+    sed -i -e 's/\r$//' /usr/bin/cf
+    /usr/bin/cf
     else
     mkdir -p $ipvps >/dev/null 2>&1
     mkdir -p $xray
-    mkdir -p $nginx
-    touch $arfvpn/domain
-    touch $arfvpn/scdomain
+    mkdir -p $trgo
 	echo "$pp" > $arfvpn/domain
 	echo "$pp" > $arfvpn/scdomain
     echo "IP=$pp" > $ipvps/ipvps.conf
-    touch $arfvpn/ISP
-    touch $arfvpn/IP
     curl -s ipinfo.io/org/ > $arfvpn/ISP
     curl -s https://ipinfo.io/ip/ > $arfvpn/IP
+    wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
+    wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
     fi
-domain=$(cat $arfvpn/domain)
 sleep 1
 clear
+
 #Instal Xray
 wget https://raw.githubusercontent.com/arfprsty810/lite/main/xray/ins-xray.sh
 chmod +x ins-xray.sh
@@ -343,140 +373,132 @@ sed -i -e 's/\r$//' shadowsocks.sh
 clear
 sleep 2
 
-#Instal SSH-vpn
-#wget https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ssh-vpn.sh
-#chmod +x ssh-vpn.sh
-#sed -i -e 's/\r$//' ssh-vpn.sh
-#./ssh-vpn.sh
-#clear
-#sleep 2
-
+# ----------------------------------------------------------------------------------------------------------------
+# Restart Service
+# ----------------------------------------------------------------------------------------------------------------
 sleep 1
 echo -e "[ ${green}INFO$NC ] Restart All Service ..."
 systemctl daemon-reload >/dev/null 2>&1
 sleep 1
 echo -e "[ ${GREEN}ok${NC} ] Daemon-Reload"
-systemctl stop rc-local.service >/dev/null 2>&1
-systemctl restart rc-local.service >/dev/null 2>&1
-systemctl enable rc-local.service >/dev/null 2>&1
-systemctl start rc-local.service >/dev/null 2>&1
-sleep 1
-echo -e "[ ${GREEN}ok${NC} ] Restarting RC.Local"
-systemctl stop runn >/dev/null 2>&1
+#systemctl restart rc-local.service >/dev/null 2>&1
+#systemctl enable rc-local.service >/dev/null 2>&1
+#systemctl start rc-local.service >/dev/null 2>&1
+#sleep 1
+#echo -e "[ ${GREEN}ok${NC} ] Restarting RC.Local"
 systemctl restart runn >/dev/null 2>&1
 systemctl enable runn >/dev/null 2>&1
 systemctl start runn >/dev/null 2>&1
 sleep 1
-echo -e "[ ${GREEN}ok${NC} ] Restarting Run"
-/etc/init.d/nginx stop >/dev/null 2>&1
-/etc/init.d/nginx restart >/dev/null 2>&1
-/etc/init.d/nginx enable >/dev/null 2>&1
-/etc/init.d/nginx start >/dev/null 2>&1
+echo -e "[ ${GREEN}ok${NC} ] Restarting Runn"
+systemctl restart nginx >/dev/null 2>&1
+systemctl enable nginx >/dev/null 2>&1
+systemctl start nginx >/dev/null 2>&1
 sleep 1
 echo -e "[ ${GREEN}ok${NC} ] Restarting Nginx "
-/etc/init.d/openvpn stop >/dev/null 2>&1
-/etc/init.d/openvpn restart >/dev/null 2>&1
-/etc/init.d/openvpn enable >/dev/null 2>&1
-/etc/init.d/openvpn start >/dev/null 2>&1
-sleep 1
-echo -e "[ ${GREEN}ok${NC} ] Restarting OpenVpn"
-/etc/init.d/dropbear stop >/dev/null 2>&1
-/etc/init.d/dropbear restart >/dev/null 2>&1
-/etc/init.d/dropbear enable >/dev/null 2>&1
-/etc/init.d/dropbear start >/dev/null 2>&1
-sleep 1
-echo -e "[ ${GREEN}ok${NC} ] Restarting Dropbear"
-/etc/init.d/stunnel5 stop >/dev/null 2>&1
-/etc/init.d/stunnel5 restart >/dev/null 2>&1
-/etc/init.d/stunnel5 enable >/dev/null 2>&1
-/etc/init.d/stunnel5 start >/dev/null 2>&1
-sleep 1
-echo -e "[ ${GREEN}ok${NC} ] Restarting Stunnel5"
-/etc/init.d/squid stop >/dev/null 2>&1
-/etc/init.d/squid restart >/dev/null 2>&1
-/etc/init.d/squid enable >/dev/null 2>&1
-/etc/init.d/squid start >/dev/null 2>&1
-sleep 1
-echo -e "[ ${GREEN}ok${NC} ] Restarting Squid "
-/etc/init.d/fail2ban stop >/dev/null 2>&1
+#/etc/init.d/openvpn restart >/dev/null 2>&1
+#/etc/init.d/openvpn enable >/dev/null 2>&1
+#/etc/init.d/openvpn start >/dev/null 2>&1
+#sleep 1
+#echo -e "[ ${GREEN}ok${NC} ] Restarting OpenVpn"
+#/etc/init.d/dropbear restart >/dev/null 2>&1
+#/etc/init.d/dropbear enable >/dev/null 2>&1
+#/etc/init.d/dropbear start >/dev/null 2>&1
+#sleep 1
+#echo -e "[ ${GREEN}ok${NC} ] Restarting Dropbear"
+#/etc/init.d/stunnel5 restart >/dev/null 2>&1
+#/etc/init.d/stunnel5 enable >/dev/null 2>&1
+#/etc/init.d/stunnel5 start >/dev/null 2>&1
+#sleep 1
+#echo -e "[ ${GREEN}ok${NC} ] Restarting Stunnel5"
+#/etc/init.d/squid restart >/dev/null 2>&1
+#/etc/init.d/squid enable >/dev/null 2>&1
+#/etc/init.d/squid start >/dev/null 2>&1
+#sleep 1
+#echo -e "[ ${GREEN}ok${NC} ] Restarting Squid "
 /etc/init.d/fail2ban restart >/dev/null 2>&1
 /etc/init.d/fail2ban enable >/dev/null 2>&1
 /etc/init.d/fail2ban start >/dev/null 2>&1
 sleep 1
 echo -e "[ ${GREEN}ok${NC} ] Restarting Fail2ban"
-/etc/init.d/cron stop >/dev/null 2>&1
 /etc/init.d/cron restart >/dev/null 2>&1
 /etc/init.d/cron enable >/dev/null 2>&1
 /etc/init.d/cron start >/dev/null 2>&1
 sleep 1
 echo -e "[ ${GREEN}ok${NC} ] Restarting Cron"
-/etc/init.d/vnstat stop >/dev/null 2>&1
 /etc/init.d/vnstat restart >/dev/null 2>&1
 /etc/init.d/vnstat enable >/dev/null 2>&1
 /etc/init.d/vnstat start >/dev/null 2>&1
 sleep 1
 echo -e "[ ${GREEN}ok${NC} ] Restarting Vnstat "
-/etc/init.d/ssh stop >/dev/null 2>&1
-/etc/init.d/ssh restart >/dev/null 2>&1
-/etc/init.d/ssh enable >/dev/null 2>&1
-/etc/init.d/ssh start >/dev/null 2>&1
-sleep 1
-echo -e "[ ${GREEN}ok${NC} ] Restarting SSH"
-systemctl stop xray >/dev/null 2>&1
+#/etc/init.d/ssh restart >/dev/null 2>&1
+#/etc/init.d/ssh enable >/dev/null 2>&1
+#/etc/init.d/ssh start >/dev/null 2>&1
+#sleep 1
+#echo -e "[ ${GREEN}ok${NC} ] Restarting SSH"
 systemctl restart xray >/dev/null 2>&1
 systemctl enable xray >/dev/null 2>&1
 systemctl start xray >/dev/null 2>&1
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2086 -j ACCEPT >/dev/null 2>&1
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2087 -j ACCEPT >/dev/null 2>&1
-iptables-save > /etc/iptables.up.rules >/dev/null 2>&1
-iptables-restore -t < /etc/iptables.up.rules >/dev/null 2>&1
-netfilter-persistent save >/dev/null 2>&1
-netfilter-persistent reload >/dev/null 2>&1
 sleep 1
 echo -e "[ ${GREEN}ok${NC} ] Restarting Xray - VMESS / VLESS / TROJAN"
-systemctl stop trojan-go >/dev/null 2>&1
 systemctl restart trojan-go >/dev/null 2>&1
 systemctl enable trojan-go >/dev/null 2>&1
 systemctl start trojan-go >/dev/null 2>&1
 sleep 1
 echo -e "[ ${GREEN}ok${NC} ] Restarting Trojan-GO"
-/etc/init.d/shadowsocks-libev stop >/dev/null 2>&1
-/etc/init.d/shadowsocks-libev restart >/dev/null 2>&1
-/etc/init.d/shadowsocks-libev enable >/dev/null 2>&1
-/etc/init.d/shadowsocks-libev start >/dev/null 2>&1
+systemctl restart shadowsocks-libev.service >/dev/null 2>&1
+systemctl enable shadowsocks-libev.service >/dev/null 2>&1
+systemctl start shadowsocks-libev.service >/dev/null 2>&1
 sleep 1
 echo -e "[ ${GREEN}ok${NC} ] Restarting ShadowSocks-OBFS"
-systemctl stop ws-stunnel.service
-systemctl restart ws-stunnel.service
-systemctl enable ws-stunnel.service
-systemctl start ws-stunnel.service
-sleep 1
-echo -e "[ ${GREEN}ok${NC} ] Restarting WS-Stunnel "
-#systemctl stop ws-dropbear.service >/dev/null 2>&1
 #systemctl restart ws-dropbear.service >/dev/null 2>&1
 #systemctl enable ws-dropbear.service >/dev/null 2>&1
 #systemctl start ws-dropbear.service >/dev/null 2>&1
 #sleep 1
 #echo -e "[ ${GREEN}ok${NC} ] Restarting WS-Dropbear"
-#/etc/init.d/sslh stop >/dev/null 2>&1
+#systemctl restart edu-proxy.service >/dev/null 2>&1
+#systemctl enable edu-proxy.service >/dev/null 2>&1
+#systemctl start edu-proxy.service>/dev/null 2>&1
+#sleep 1
+#echo -e "[ ${GREEN}ok${NC} ] Restarting WS-OpenSSH"
+#systemctl restart edu-proxyovpn.service >/dev/null 2>&1
+#systemctl enable edu-proxyovpn.service >/dev/null 2>&1
+#systemctl start edu-proxyovpn.service >/dev/null 2>&1
+#sleep 1
+#echo -e "[ ${GREEN}ok${NC} ] Restarting WS-OpenVPN"
+#systemctl restart ws-stunnel.service >/dev/null 2>&1
+#systemctl enable ws-stunnel.service >/dev/null 2>&1
+#systemctl start ws-stunnel.service >/dev/null 2>&1
+#sleep 1
+#echo -e "[ ${GREEN}ok${NC} ] Restarting WS-SSL "
+#systemctl enable edu-tls.service >/dev/null 2>&1
+#systemctl start edu-tls.service >/dev/null 2>&1
+#systemctl restart edu-tls.service >/dev/null 2>&1
+#systemctl enable ws-tls.service >/dev/null 2>&1
+#systemctl start ws-tls.service >/dev/null 2>&1
+#systemctl restart ws-tls.service >/dev/null 2>&1
+#sleep 1
+#echo -e "[ ${GREEN}ok${NC} ] Restarting WS-SSL/TLS"
 #/etc/init.d/sslh restart >/dev/null 2>&1
 #/etc/init.d/sslh enable >/dev/null 2>&1
 #/etc/init.d/sslh start >/dev/null 2>&1
 #sleep 1
 #echo -e "[ ${GREEN}ok${NC} ] Restarting Sslh "
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 500 >/dev/null 2>&1
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 500 >/dev/null 2>&1
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300 --max-clients 500 >/dev/null 2>&1
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7400 --max-clients 500 >/dev/null 2>&1
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7500 --max-clients 500 >/dev/null 2>&1
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7600 --max-clients 500 >/dev/null 2>&1
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7700 --max-clients 500 >/dev/null 2>&1
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7800 --max-clients 500 >/dev/null 2>&1
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7900 --max-clients 500 >/dev/null 2>&1
-sleep 1
-echo -e "[ ${GREEN}ok${NC} ] Restarting badvpn "
-echo ""
+#screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 500 >/dev/null 2>&1
+#screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 500 >/dev/null 2>&1
+#screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300 --max-clients 500 >/dev/null 2>&1
+#screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7400 --max-clients 500 >/dev/null 2>&1
+#screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7500 --max-clients 500 >/dev/null 2>&1
+#screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7600 --max-clients 500 >/dev/null 2>&1
+#screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7700 --max-clients 500 >/dev/null 2>&1
+#screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7800 --max-clients 500 >/dev/null 2>&1
+#screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7900 --max-clients 500 >/dev/null 2>&1
+#sleep 1
+#echo -e "[ ${GREEN}ok${NC} ] Restarting badvpn "
+clear
 
+echo -e "[ ${green}INFO$NC ] INSTALL SCRIPT ..."
+sleep 1
 wget -q -O /usr/bin/restart "$github/services/restart.sh" && chmod +x /usr/bin/restart
 wget -q -O /usr/bin/running "$github/services/running.sh" && chmod +x /usr/bin/running
 wget -q -O /usr/bin/cek-bandwidth "$github/services/cek-bandwidth.sh" && chmod +x /usr/bin/cek-bandwidth

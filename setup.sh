@@ -90,13 +90,25 @@ read -rp "Input ur domain / sub-domain : " -e pp
     mkdir -p $xray
     mkdir -p $trgo
     mkdir -p $nginx
-	echo "$pp" > $arfvpn/domain
-	echo "$pp" > $arfvpn/scdomain
+#	echo "$pp" > $arfvpn/domain
+#	echo "$pp" > $arfvpn/scdomain
 	echo "$pp" > $arfvpn/mydomain
     echo "IP=$pp" > $ipvps/ipvps.conf
     curl -s ipinfo.io/org/ > ${arfvpn}/ISP
     curl -s https://ipinfo.io/ip/ > ${arfvpn}/IP
     fi
+export domain_cf=$(cat ${arfvpn}/domain_cf)
+export mydomain=$(cat $arfvpn/mydomain)
+domain=$pp
+if [[ "$domain" == "$mydomain" ]] ;then
+	echo "$mydomain" > $arfvpn/domain
+	echo "$mydomain" > $arfvpn/scdomain
+	echo "IP=$mydomain" > $ipvps/ipvps.conf
+elif [[ $domain == "$domain_cf" ]] ;then
+	echo "$domain_cf" > $arfvpn/domain
+	echo "$domain_cf" > $arfvpn/scdomain
+	echo "IP=$domain_cf" > $ipvps/ipvps.conf
+fi
 clear
 
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"

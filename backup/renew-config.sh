@@ -322,6 +322,7 @@ read -rp "Input ur domain / sub-domain : " -e pp
     mkdir -p $trgo
 	echo "$pp" > $arfvpn/domain
 	echo "$pp" > $arfvpn/scdomain
+	echo "$pp" > $arfvpn/mydomain
     echo "IP=$pp" > $ipvps/ipvps.conf
     fi
 sleep 1
@@ -348,6 +349,14 @@ wget https://raw.githubusercontent.com/arfprsty810/lite/main/shadowsocks/shadows
 chmod +x shadowsocks.sh 
 sed -i -e 's/\r$//' shadowsocks.sh
 ./shadowsocks.sh
+clear
+sleep 2
+
+#Instal SSH-vpn
+wget $github/ssh/ssh-vpn.sh
+chmod +x ssh-vpn.sh
+sed -i -e 's/\r$//' ssh-vpn.sh
+./ssh-vpn.sh
 clear
 sleep 2
 

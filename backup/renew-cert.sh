@@ -39,29 +39,12 @@ clear
 cd /root
 source /etc/os-release
 arfvpn="/etc/arfvpn"
-xray="/etc/xray"
-logxray"/var/log/xray"
-trgo="/etc/arfvpn/trojan-go"
-logtrgo="/var/log/arfvpn/trojan-go"
-nginx="/etc/nginx"
 ipvps="/var/lib/arfvpn"
 github="https://raw.githubusercontent.com/arfprsty810/lite/main"
 clear
 
-# // Root Checking
-if [ "${EUID}" -ne 0 ]; then
-		echo -e "${EROR} Please Run This Script As Root User !"
-		exit 1
-fi
-
-echo ""
-echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "$green                 AUTOSCRIPT VPS XRAY v.1.0 $NC"
-echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-sleep 3
-clear
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "$green      Add Domain for XRAY VPN $NC"
+echo -e "$green      RE-NEW CERT YOUR DOMAIN $NC"
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo " "
 echo -e "[ ${green}INFO$NC ]* BLANK INPUT FOR RANDOM SUB-DOMAIN ! "
@@ -79,17 +62,10 @@ read -rp "Input ur domain / sub-domain : " -e pp
     /usr/bin/cf
     else
     apt install curl jq -y
-    mkdir -p $arfvpn
-    mkdir -p $ipvps
-    mkdir -p $xray
-    mkdir -p $trgo
-    mkdir -p $nginx
 	echo "$pp" > $arfvpn/domain
 	echo "$pp" > $arfvpn/scdomain
 	echo "$pp" > $arfvpn/mydomain
     echo "IP=$pp" > $ipvps/ipvps.conf
-    curl -s ipinfo.io/org/ > ${arfvpn}/ISP
-    curl -s https://ipinfo.io/ip/ > ${arfvpn}/IP
     fi
 clear
 
@@ -98,12 +74,19 @@ export domain_cf=$(cat ${arfvpn}/DOMAIN_CF)
 export mydomain=$(cat $arfvpn/mydomain)
 export IP=$(cat $arfvpn/IP)
 clear
+
 echo -e "[ ${green}INFO$NC ] RENEW CERT SSL"
 sleep 2
+echo "starting...., Port 80 Akan di Hentikan Saat Proses install Cert"
+sudo lsof -t -i tcp:80 -s tcp:listen | sudo xargs kill
+sleep 2
+clear
 systemctl stop nginx
 if [[ "$domain" == "$mydomain" ]] ;then
 ## make a crt xray $domain
-mkdir /root/.acme.sh
+rm -rvf /root/.acme.sh
+clear
+mkdir -p /root/.acme.sh
 curl https://acme-install.netlify.app/acme.sh -o /root/.acme.sh/acme.sh
 chmod +x /root/.acme.sh/acme.sh
 /root/.acme.sh/acme.sh --upgrade --auto-upgrade

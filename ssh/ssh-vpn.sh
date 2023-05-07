@@ -61,8 +61,7 @@ source /etc/os-release
 export DEBIAN_FRONTEND=noninteractive
 arfvpn="/etc/arfvpn"
 export MYIP=$(cat $arfvpn/IP)
-export DOMAIN=$(cat $arfvpn/domain)
-export domain_cf=$(cat ${arfvpn}/DOMAIN_CF)
+DOMAIN=$(cat $arfvpn/domain)
 github="https://raw.githubusercontent.com/arfprsty810/lite/main"
 MYIP2="s/xxxxxxxxx/$MYIP/g";
 NET=$(ip -o $ANU -4 route show to default | awk '{print $5}');
@@ -363,22 +362,15 @@ organization=™D-JumPer™
 organizationalunit=™D-JumPer™
 commonname=sg.d-jumper.me
 email=arfprsty@my.id
-
-if [[ "$DOMAIN" == "$domain_cf" ]] ;then
 ## make a client certificate
-openssl genrsa -out key.pem 2048
-openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
--subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
-cat key.pem cert.pem >> /etc/arfvpn/stunnel5.pem
-else
-## client cert cloudflare *sg.d-jumper.me
+#openssl genrsa -out key.pem 2048
+#openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
+#-subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
+#cat key.pem cert.pem >> /etc/arfvpn/stunnel5.pem
+
+## client cert cloudflare sg.d-jumper.me *.sg.d-jumper.me
 wget -O /etc/arfvpn/stunnel5.pem "https://raw.githubusercontent.com/arfprsty810/lite/main/cert/client.pem"
 chmod 600 /etc/arfvpn/stunnel5.pem
-elif [[ $DOMAIN == 'sg.d-jumper.me' ]]; then
-## client cert cloudflare sg.d-jumper.me
-wget -O /etc/arfvpn/stunnel5.pem "https://raw.githubusercontent.com/arfprsty810/lite/main/cert/client.pem"
-chmod 600 /etc/arfvpn/stunnel5.pem
-fi
 
 # Config Stunnel5
 cat > /etc/stunnel5/stunnel5.conf <<-END

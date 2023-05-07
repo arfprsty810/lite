@@ -28,7 +28,9 @@ export domain=$(cat $arfvpn/domain)
 export IP=$(cat $arfvpn/IP)
 sleep 1
 clear
-
+echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "$green          INSTALLING XRAY $NC"
+echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 # install xray
 echo -e "[ ${green}INFO$NC ] INSTALLING XRAY VMESS - VLESS"
 sleep 1

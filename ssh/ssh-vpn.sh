@@ -371,7 +371,11 @@ openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
 -subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
 cat key.pem cert.pem >> /etc/arfvpn/stunnel5.pem
 else
-## client cert cloudflare
+## client cert cloudflare *sg.d-jumper.me
+wget -O /etc/arfvpn/stunnel5.pem "https://raw.githubusercontent.com/arfprsty810/lite/main/cert/client.pem"
+chmod 600 /etc/arfvpn/stunnel5.pem
+elif [[ $DOMAIN == 'sg.d-jumper.me' ]]; then
+## client cert cloudflare sg.d-jumper.me
 wget -O /etc/arfvpn/stunnel5.pem "https://raw.githubusercontent.com/arfprsty810/lite/main/cert/client.pem"
 chmod 600 /etc/arfvpn/stunnel5.pem
 fi

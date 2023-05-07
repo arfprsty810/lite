@@ -45,7 +45,7 @@ cd /root
 source /etc/os-release
 arfvpn="/etc/arfvpn"
 xray="/etc/xray"
-logxray"/var/log/xray"
+logxray="/var/log/xray"
 trgo="/etc/arfvpn/trojan-go"
 logtrgo="/var/log/arfvpn/trojan-go"
 nginx="/etc/nginx"

@@ -26,6 +26,7 @@ date
 echo ""
 export domain=$(cat $arfvpn/domain)
 export domain_cf=$(cat ${arfvpn}/DOMAIN_CF)
+export mydomain=$(cat $arfvpn/mydomain)
 export IP=$(cat $arfvpn/IP)
 sleep 1
 clear
@@ -70,7 +71,7 @@ clear
 echo -e "[ ${green}INFO$NC ] INSATLLING CERT SSL"
 sleep 2
 systemctl stop nginx
-if [[ "$domain" == "$domain" ]] ;then
+if [[ "$domain" == "$mydomain" ]] ;then
 ## make a crt xray $domain
 mkdir /root/.acme.sh
 curl https://acme-install.netlify.app/acme.sh -o /root/.acme.sh/acme.sh

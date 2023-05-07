@@ -59,6 +59,12 @@ if [ "${EUID}" -ne 0 ]; then
 		echo -e "${EROR} Please Run This Script As Root User !"
 		exit 1
 fi
+mkdir -p $arfvpn
+mkdir -p $ipvps
+mkdir -p $xray
+mkdir -p $trgo
+mkdir -p $nginx
+clear
 
 echo ""
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
@@ -85,11 +91,6 @@ read -rp "Input ur domain / sub-domain : " -e pp
     /usr/bin/cf
     else
     apt install curl jq -y
-    mkdir -p $arfvpn
-    mkdir -p $ipvps
-    mkdir -p $xray
-    mkdir -p $trgo
-    mkdir -p $nginx
 	echo "$pp" > $arfvpn/domain
 	echo "$pp" > $arfvpn/scdomain
     echo "IP=$pp" > $ipvps/ipvps.conf

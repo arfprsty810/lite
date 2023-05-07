@@ -61,7 +61,8 @@ source /etc/os-release
 export DEBIAN_FRONTEND=noninteractive
 arfvpn="/etc/arfvpn"
 export MYIP=$(cat $arfvpn/IP)
-DOMAIN=$(cat $arfvpn/domain)
+export DOMAIN=$(cat $arfvpn/domain)
+export domain_cf=$(cat ${arfvpn}/DOMAIN_CF)
 github="https://raw.githubusercontent.com/arfprsty810/lite/main"
 MYIP2="s/xxxxxxxxx/$MYIP/g";
 NET=$(ip -o $ANU -4 route show to default | awk '{print $5}');
@@ -340,15 +341,6 @@ rm -rvf /usr/local/bin/stunnel5
 apt autoremove -y
 systemctl daemon-reload
 
-#detail nama perusahaan
-country=ID
-state=Indonesia
-locality=Indonesia
-organization=™D-JumPer™
-organizationalunit=™D-JumPer™
-commonname=sg.d-jumper.me
-email=arfprsty@my.id
-
 #apt-get install stunnel5 -y
 wget -q -O stunnel5.zip "https://raw.githubusercontent.com/arfprsty810/lite/main/stunnel5/stunnel5.zip"
 unzip -o stunnel5.zip
@@ -363,23 +355,32 @@ rm -f stunnel5.zip
 mkdir -p /etc/stunnel5
 chmod 644 /etc/stunnel5
 clear
-# make a certificate
-#cd
-#openssl genrsa -out key.pem 2048
-#openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
-#-subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
-#cat key.pem cert.pem >> /etc/arfvpn/stunnel5.pem
-#chmod 600 /etc/arfvpn/stunnel5.pem
 
-# make a client cert cloudflare
-#wget -O /etc/arfvpn/stunnel5.pem "https://raw.githubusercontent.com/arfprsty810/lite/main/cert/client.pem"
-#chmod 600 /etc/arfvpn/stunnel5.pem
+country=ID
+state=Indonesia
+locality=Indonesia
+organization=™D-JumPer™
+organizationalunit=™D-JumPer™
+commonname=sg.d-jumper.me
+email=arfprsty@my.id
+
+if [ "$DOMAIN" == "$domain_cf" ] ;then
+## make a client certificate
+openssl genrsa -out key.pem 2048
+openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
+-subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
+cat key.pem cert.pem >> /etc/arfvpn/stunnel5.pem
+else
+## client cert cloudflare
+wget -O /etc/arfvpn/stunnel5.pem "https://raw.githubusercontent.com/arfprsty810/lite/main/cert/client.pem"
+chmod 600 /etc/arfvpn/stunnel5.pem
+fi
 
 # Config Stunnel5
 cat > /etc/stunnel5/stunnel5.conf <<-END
-#cert = /etc/arfvpn/stunnel5.pem
-cert = /etc/arfvpn/arfvpn.crt
-key = /etc/arfvpn/arfvpn.key
+cert = /etc/arfvpn/stunnel5.pem
+#cert = /etc/arfvpn/arfvpn.crt
+#key = /etc/arfvpn/arfvpn.key
 client = no
 socket = a:SO_REUSEADDR=1
 socket = l:TCP_NODELAY=1

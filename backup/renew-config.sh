@@ -31,8 +31,8 @@ start=$(date +%s)
 
 source /etc/os-release
 arfvpn="/etc/arfvpn"
-xray="/etc/arfvpn/xray"
-logxray="/var/log/arfvpn/xray"
+xray="/etc/xray"
+logxray="/var/log/xray"
 trgo="/etc/arfvpn/trojan-go"
 logtrgo="/var/log/arfvpn/trojan-go"
 ipvps="/var/lib/arfvpn"

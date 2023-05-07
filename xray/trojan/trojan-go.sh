@@ -21,7 +21,9 @@ uuid=$(cat /proc/sys/kernel/random/uuid)
 domain=$(cat $arfvpn/domain)
 sleep 1
 clear
-
+echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "$green          INSTALLING TROJAN-GO $NC"
+echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 # Install Trojan Go
 echo -e "[ ${green}INFO$NC ] INSTALLING TROJAN-GO"
 sleep 1

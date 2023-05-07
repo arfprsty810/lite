@@ -11,19 +11,22 @@ green() { echo -e "\\033[32;1m${*}\\033[0m"; }
 red() { echo -e "\\033[31;1m${*}\\033[0m"; }
 
 clear
-trgo="/etc/trojan-go"
-logtrgo="/var/log/trojan-go"
-ipvps="/var/lib/arf"
+arfvpn="/etc/arfvpn"
+xray="/etc/xray"
+logxray="/var/log/xray"
+trgo="/etc/arfvpn/trojan-go"
+logtrgo="/var/log/arfvpn/trojan-go"
+ipvps="/var/lib/arfvpn"
 source $ipvps/ipvps.conf
 if [[ "$IP" = "" ]]; then
-domain=$(cat /etc/xray/domain)
+domain=$(cat $arfvpn/domain)
 else
 domain=$IP
 fi
 clear 
 
 clear
-NUMBER_OF_CLIENTS=$(grep -c -E "^#tr# " "/etc/xray/config.json")
+NUMBER_OF_CLIENTS=$(grep -c -E "^#tr# " "$xray/config.json")
 	if [[ ${NUMBER_OF_CLIENTS} == '0' ]]; then
 		echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
         echo -e "\\E[0;41;36m       Delete Trojan  Account        \E[0m"
@@ -42,7 +45,7 @@ menu-trojan
     echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
     echo "  User       Expired  " 
 	echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-	grep -E "^#tr# " "/etc/xray/config.json" | cut -d ' ' -f 2-3 | column -t | sort | uniq
+	grep -E "^#tr# " "$xray/config.json" | cut -d ' ' -f 2-3 | column -t | sort | uniq
     echo ""
     red "tap enter to go back"
     echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
@@ -50,11 +53,11 @@ menu-trojan
     if [ -z $user ]; then
     menu-trojan
     else
-    exp=$(grep -wE "^#tr# $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
-    sed -i "/^#tr# $user $exp/,/^},{/d" /etc/xray/config.json
-    #sed -i "/^,#trgo# $user $exp/,/^/d" /etc/trojan-go/config.json
-    sed -i "/^#trgo# $user $exp/d" /etc/trojan-go/akun.conf
-    sed -i '/^,"'"$user"'"$/d' /etc/trojan-go/config.json
+    exp=$(grep -wE "^#tr# $user" "$xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+    sed -i "/^#tr# $user $exp/,/^},{/d" $xray/config.json
+    #sed -i "/^,#trgo# $user $exp/,/^/d" $trgo/config.json
+    sed -i "/^#trgo# $user $exp/d" $trgo/akun.conf
+    sed -i '/^,"'"$user"'"$/d' $trgo/config.json
     systemctl restart xray > /dev/null 2>&1
     clear
     echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"

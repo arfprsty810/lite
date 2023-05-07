@@ -11,32 +11,36 @@ green() { echo -e "\\033[32;1m${*}\\033[0m"; }
 red() { echo -e "\\033[31;1m${*}\\033[0m"; }
 
 clear
-trgo="/etc/trojan-go"
-logtrgo="/var/log/trojan-go"
-ipvps="/var/lib/arf"
+arfvpn="/etc/arfvpn"
+xray="/etc/xray"
+logxray="/var/log/xray"
+trgo="/etc/arfvpn/trojan-go"
+logtrgo="/var/log/arfvpn/trojan-go"
+ipvps="/var/lib/arfvpn"
 source $ipvps/ipvps.conf
 if [[ "$IP" = "" ]]; then
-domain=$(cat /etc/xray/domain)
+domain=$(cat $arfvpn/domain)
 else
 domain=$IP
-fi 
+fi
+clear 
 
 clear
 echo "-----------------------------------------";
 echo "-----=[ Trojan-WS & Trojan-GRPC User Login ]=-----";
 echo "-----------------------------------------";
 echo -n > /tmp/other.txt
-data=( `cat /etc/xray/config.json | grep '#tr#' | cut -d ' ' -f 2 | sort | uniq`);
+data=( `cat $xray/config.json | grep '#tr#' | cut -d ' ' -f 2 | sort | uniq`);
 for akun in "${data[@]}"
 do
 if [[ -z "$akun" ]]; then
 akun="tidakada"
 fi
 echo -n > /tmp/iptrojan.txt
-data2=( `cat /var/log/xray/access.log | tail -n 500 | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | sort | uniq`);
+data2=( `cat $logxray/access.log | tail -n 500 | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | sort | uniq`);
 for ip in "${data2[@]}"
 do
-jum=$(cat /var/log/xray/access.log | grep -w "$akun" | tail -n 500 | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | grep -w "$ip" | sort | uniq)
+jum=$(cat $logxray/access.log | grep -w "$akun" | tail -n 500 | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | grep -w "$ip" | sort | uniq)
 if [[ "$jum" = "$ip" ]]; then
 echo "$jum" >> /tmp/iptrojan.txt
 else
@@ -50,7 +54,7 @@ if [[ -z "$jum" ]]; then
 echo > /dev/null
 else
 jum2=$(cat /tmp/iptrojan.txt | nl)
-lastlogin=$(cat /var/log/xray/access.log | grep -w "$akun" | tail -n 500 | cut -d " " -f 2 | tail -1)
+lastlogin=$(cat $logxray/access.log | grep -w "$akun" | tail -n 500 | cut -d " " -f 2 | tail -1)
 echo -e "user : ${akun}";
 echo "Login dengan IP:"
 echo -e "$jum2 | $lastlogin";

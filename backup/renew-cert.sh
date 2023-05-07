@@ -40,6 +40,10 @@ cd
 arfvpn="/etc/arfvpn"
 ipvps="/var/lib/arfvpn"
 github="https://raw.githubusercontent.com/arfprsty810/lite/main"
+domain=$(cat $arfvpn/domain)
+#domain_cf=$(cat $arfvpn/domain_cf)
+#mydomain=$(cat $arfvpn/mydomain)
+source IP=$(cat $arfvpn/IP)
 clear
 
 rm -fr $arfvpn/domain
@@ -69,14 +73,8 @@ read -rp "Input ur domain / sub-domain : " -e pp
     else
     echo "$pp" > $arfvpn/domain
     echo "$pp" > $arfvpn/scdomain
-	echo "$pp" > $arfvpn/mydomain
+#	echo "$pp" > $arfvpn/mydomain
     fi
-clear
-
-domain=$(cat $arfvpn/domain)
-domain_cf=$(cat $arfvpn/domain_cf)
-mydomain=$(cat $arfvpn/mydomain)
-IP=$(cat $arfvpn/IP)
 clear
 
 echo -e "[ ${green}INFO$NC ] INSTALLING CERT SSL"

@@ -147,14 +147,6 @@ sed -i -e 's/\r$//' ssh-vpn.sh
 clear
 sleep 2
 
-#Instal SSH-vpn
-#wget $github/ssh/simplessh.sh
-#chmod +x simplessh.sh
-#sed -i -e 's/\r$//' simplessh.sh
-#./simplessh.sh
-#clear
-#sleep 2
-
 #Instal Bbr
 wget $github/bbr/bbr.sh
 chmod +x bbr.sh

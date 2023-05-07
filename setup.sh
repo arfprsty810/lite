@@ -276,12 +276,12 @@ systemctl enable ws-stunnel.service >/dev/null 2>&1
 systemctl start ws-stunnel.service >/dev/null 2>&1
 sleep 1
 echo -e "[ ${GREEN}ok${NC} ] Restarting WS-SSL "
+systemctl restart edu-tls.service >/dev/null 2>&1
 systemctl enable edu-tls.service >/dev/null 2>&1
 systemctl start edu-tls.service >/dev/null 2>&1
-systemctl restart edu-tls.service >/dev/null 2>&1
+systemctl restart ws-tls.service >/dev/null 2>&1
 systemctl enable ws-tls.service >/dev/null 2>&1
 systemctl start ws-tls.service >/dev/null 2>&1
-systemctl restart ws-tls.service >/dev/null 2>&1
 sleep 1
 echo -e "[ ${GREEN}ok${NC} ] Restarting WS-SSL/TLS"
 #/etc/init.d/sslh restart >/dev/null 2>&1

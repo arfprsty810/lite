@@ -11,12 +11,10 @@ green() { echo -e "\\033[32;1m${*}\\033[0m"; }
 red() { echo -e "\\033[31;1m${*}\\033[0m"; }
 
 clear
-arfvpn="/etc/arfvpn"
-xray="/etc/arfvpn/xray"
-ipvps="/var/lib/arfvpn"
+ipvps="/var/lib/arf"
 source $ipvps/ipvps.conf
 if [[ "$IP" = "" ]]; then
-domain=$(cat $xray/domain)
+domain=$(cat /etc/xray/domain)
 else
 domain=$IP
 fi
@@ -29,7 +27,7 @@ echo -e "\\E[0;41;36m      Add Xray/Vless Account      \E[0m"
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 
 		read -rp "User: " -e user
-		CLIENT_EXISTS=$(grep -w $user $xray/config.json | wc -l)
+		CLIENT_EXISTS=$(grep -w $user /etc/xray/config.json | wc -l)
 
 		if [[ ${CLIENT_EXISTS} == '1' ]]; then
 clear
@@ -49,9 +47,9 @@ uuid=$(cat /proc/sys/kernel/random/uuid)
 read -p "Expired (days): " masaaktif
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#vless$/a\#vl# '"$user $exp"'\
-},{"id": "'""$uuid""'","email": "'""$user""'"' $xray/config.json
+},{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
 sed -i '/#vlessgrpc$/a\#vl# '"$user $exp"'\
-},{"id": "'""$uuid""'","email": "'""$user""'"' $xray/config.json
+},{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
 vlesslink1="vless://${uuid}@${domain}:$tls?path=/vless&security=tls&encryption=none&type=ws#${user}"
 vlesslink2="vless://${uuid}@${domain}:$none?path=/vless&encryption=none&type=ws#${user}"
 vlesslink3="vless://${uuid}@${domain}:$tls?mode=gun&security=tls&encryption=none&type=grpc&serviceName=vless-grpc&sni=bug.com#${user}"

@@ -10,12 +10,8 @@ yellow() { echo -e "\\033[33;1m${*}\\033[0m"; }
 green() { echo -e "\\033[32;1m${*}\\033[0m"; }
 red() { echo -e "\\033[31;1m${*}\\033[0m"; }
 
-arfvpn="/etc/arfvpn"
-xray="/etc/arfvpn/xray"
-logxray="/var/log/arfvpn/xray"
-
 clear
-NUMBER_OF_CLIENTS=$(grep -c -E "^#vl# " "$xray/config.json")
+NUMBER_OF_CLIENTS=$(grep -c -E "^#vl# " "/etc/xray/config.json")
 	if [[ ${NUMBER_OF_CLIENTS} == '0' ]]; then
 		echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
         echo -e "\\E[0;41;36m       Delete Vless Account        \E[0m"
@@ -34,7 +30,7 @@ menu-vless
     echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
     echo "  User       Expired  " 
 	echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-	grep -E "^#vl# " "$xray/config.json" | cut -d ' ' -f 2-3 | column -t | sort | uniq
+	grep -E "^#vl# " "/etc/xray/config.json" | cut -d ' ' -f 2-3 | column -t | sort | uniq
     echo ""
     red "tap enter to go back"
     echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
@@ -42,8 +38,8 @@ menu-vless
     if [ -z $user ]; then
     menu-vless
     else
-    exp=$(grep -wE "^#vl# $user" "$xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
-    sed -i "/^#vl# $user $exp/,/^},{/d" $xray/config.json
+    exp=$(grep -wE "^#vl# $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+    sed -i "/^#vl# $user $exp/,/^},{/d" /etc/xray/config.json
     systemctl restart xray > /dev/null 2>&1
     clear
     echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"

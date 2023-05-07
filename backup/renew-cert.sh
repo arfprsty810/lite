@@ -46,43 +46,43 @@ domain=$(cat $arfvpn/domain)
 source IP=$(cat $arfvpn/IP)
 clear
 
-rm -fr $arfvpn/domain
-rm -fr $arfvpn/scdomain
-rm -fr $arfvpn/arfvpn.key
-rm -fr $arfvpn/arfvpn.crt
-rm -fr $ipvps/ipvps.conf
-echo "IP=" >> $ipvps/ipvps.conf
-clear
+#rm -fr $arfvpn/domain
+#rm -fr $arfvpn/scdomain
+#rm -fr $arfvpn/arfvpn.key
+#rm -fr $arfvpn/arfvpn.crt
+#rm -fr $ipvps/ipvps.conf
+#echo "IP=" >> $ipvps/ipvps.conf
+#clear
 
-echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "$green      CREATE A NEW CERT YOUR DOMAIN $NC"
-echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo " "
-echo -e "[ ${green}INFO$NC ]* BLANK INPUT FOR RANDOM SUB-DOMAIN ! "
-read -rp "Input ur domain / sub-domain : " -e pp
-    if [ -z $pp ]; then
-    echo -e "
-    Nothing input for domain!
-    Then a random sub-domain will be created"
-    sleep 2
-    clear
-    wget -q -O /usr/bin/cf "$github/services/cf.sh"
-    chmod +x /usr/bin/cf
-    sed -i -e 's/\r$//' /usr/bin/cf
-    /usr/bin/cf
-    else
-    echo "$pp" > $arfvpn/domain
-    echo "$pp" > $arfvpn/scdomain
+#echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+#echo -e "$green      CREATE A NEW CERT YOUR DOMAIN $NC"
+#echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+#echo " "
+#echo -e "[ ${green}INFO$NC ]* BLANK INPUT FOR RANDOM SUB-DOMAIN ! "
+#read -rp "Input ur domain / sub-domain : " -e pp
+#    if [ -z $pp ]; then
+#    echo -e "
+#    Nothing input for domain!
+#    Then a random sub-domain will be created"
+#    sleep 2
+#    clear
+#    wget -q -O /usr/bin/cf "$github/services/cf.sh"
+#    chmod +x /usr/bin/cf
+#    sed -i -e 's/\r$//' /usr/bin/cf
+#    /usr/bin/cf
+#    else
+#    echo "$pp" > $arfvpn/domain
+#    echo "$pp" > $arfvpn/scdomain
 #	echo "$pp" > $arfvpn/mydomain
-    fi
-clear
+#    fi
+#clear
 
 echo -e "[ ${green}INFO$NC ] INSTALLING CERT SSL"
 sleep 2
 #echo "starting...., Port 80 Akan di Hentikan Saat Proses install Cert"
 #sudo lsof -t -i tcp:80 -s tcp:listen | sudo xargs kill
-sleep 2
-clear
+#sleep 2
+#clear
 systemctl stop nginx
 
 ## make a crt xray $domain
@@ -113,6 +113,7 @@ wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
 
 if ! grep -q 'ssl_renew.sh' /var/spool/cron/crontabs/root;then (crontab -l;echo "15 03 */3 * * /usr/local/bin/ssl_renew.sh") | crontab;fi
 chmod +x /usr/local/bin/ssl_renew.sh
+clear
 
 clear
 echo -e "[ ${green}INFO$NC ] MAKE CERT SSL SUCCESSFULLY ..."

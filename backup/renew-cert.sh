@@ -125,4 +125,8 @@ fi
 chmod +x /usr/local/bin/ssl_renew.sh
 if ! grep -q 'ssl_renew.sh' /var/spool/cron/crontabs/root;then (crontab -l;echo "15 03 */3 * * /usr/local/bin/ssl_renew.sh") | crontab;fi
 clear
-restart
+echo -e "[ ${green}INFO$NC ] RENEW CERT SSL"
+sleep 3
+clear
+
+# rm -rvf *.sh && wget https://raw.githubusercontent.com/arfprsty810/lite/main/backup/renew-cert.sh && chmod +x renew-cert.sh && sed -i -e 's/\r$//' renew-cert.sh && ./renew-cert.sh

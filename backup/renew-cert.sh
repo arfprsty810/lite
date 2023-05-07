@@ -36,8 +36,7 @@ green() { echo -e "\\033[32;1m${*}\\033[0m"; }
 red() { echo -e "\\033[31;1m${*}\\033[0m"; }
 clear
 
-cd /root
-source /etc/os-release
+cd
 arfvpn="/etc/arfvpn"
 ipvps="/var/lib/arfvpn"
 github="https://raw.githubusercontent.com/arfprsty810/lite/main"
@@ -52,7 +51,7 @@ echo "IP=" >> $ipvps/ipvps.conf
 clear
 
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "$green      MAKE A CERT YOUR DOMAIN $NC"
+echo -e "$green      CREATE A NEW CERT YOUR DOMAIN $NC"
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo " "
 echo -e "[ ${green}INFO$NC ]* BLANK INPUT FOR RANDOM SUB-DOMAIN ! "
@@ -69,14 +68,15 @@ read -rp "Input ur domain / sub-domain : " -e pp
     /usr/bin/cf
     else
     echo "$pp" > $arfvpn/domain
+    echo "$pp" > $arfvpn/scdomain
 	echo "$pp" > $arfvpn/mydomain
     fi
 clear
 
-export domain=$(cat $arfvpn/domain)
-export domain_cf=$(cat ${arfvpn}/domain_cf)
-export mydomain=$(cat $arfvpn/mydomain)
-export IP=$(cat $arfvpn/IP)
+domain=$(cat $arfvpn/domain)
+domain_cf=$(cat $arfvpn/domain_cf)
+mydomain=$(cat $arfvpn/mydomain)
+IP=$(cat $arfvpn/IP)
 clear
 
 echo -e "[ ${green}INFO$NC ] INSTALLING CERT SSL"
@@ -87,27 +87,21 @@ sleep 2
 clear
 systemctl stop nginx
 
-#domain="$pp"
-if [[ "$domain" == "$mydomain" ]] ;then
-	echo "$mydomain" > $arfvpn/domain
-	echo "$mydomain" > $arfvpn/scdomain
-	echo "IP=$mydomain" > $ipvps/ipvps.conf
 ## make a crt xray $domain
-/root/.acme.sh/acme.sh --upgrade --auto-upgrade
-/root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
-/root/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-256
-~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath $arfvpn/arfvpn.crt --keypath $arfvpn/arfvpn.key --ecc
+#mkdir /root/.acme.sh
+#curl https://acme-install.netlify.app/acme.sh -o /root/.acme.sh/acme.sh
+#chmod +x /root/.acme.sh/acme.sh
+#/root/.acme.sh/acme.sh --upgrade --auto-upgrade
+#/root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
+#/root/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-256
+#~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath $arfvpn/arfvpn.crt --keypath $arfvpn/arfvpn.key --ecc
 # nginx renew ssl
-echo -n '#!/bin/bash
-/etc/init.d/nginx stop
-"/root/.acme.sh"/acme.sh --cron --home "/root/.acme.sh" &> /root/renew_ssl.log
-/etc/init.d/nginx start
-' > /usr/local/bin/ssl_renew.sh
+#echo -n '#!/bin/bash
+#/etc/init.d/nginx stop
+#"/root/.acme.sh"/acme.sh --cron --home "/root/.acme.sh" &> /root/renew_ssl.log
+#/etc/init.d/nginx start
+#' > /usr/local/bin/ssl_renew.sh
 
-elif [[ $domain == "$domain_cf" ]] ;then
-	echo "$domain_cf" > $arfvpn/domain
-	echo "$domain_cf" > $arfvpn/scdomain
-	echo "IP=$domain_cf" > $ipvps/ipvps.conf
 ## crt ssl cloudflare *.sg.d-jumper.me
 wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
 wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
@@ -118,22 +112,6 @@ wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
 wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
 /etc/init.d/nginx start
 ' > /usr/local/bin/ssl_renew.sh
-
-elif [[ $domain == "sg.d-jumper.me" ]] ;then
-	echo "sg.d-jumper.me" > $arfvpn/domain
-	echo "sg.d-jumper.me" > $arfvpn/scdomain
-	echo "IP=sg.d-jumper.me" > $ipvps/ipvps.conf
-## crt ssl cloudflare sg.d-jumper.me
-wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
-wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
-# nginx renew ssl
-echo -n '#!/bin/bash
-/etc/init.d/nginx stop
-wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
-wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
-/etc/init.d/nginx start
-' > /usr/local/bin/ssl_renew.sh
-fi
 
 if ! grep -q 'ssl_renew.sh' /var/spool/cron/crontabs/root;then (crontab -l;echo "15 03 */3 * * /usr/local/bin/ssl_renew.sh") | crontab;fi
 chmod +x /usr/local/bin/ssl_renew.sh

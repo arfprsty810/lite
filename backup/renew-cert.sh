@@ -44,14 +44,11 @@ github="https://raw.githubusercontent.com/arfprsty810/lite/main"
 clear
 
 rm -fr $arfvpn/domain
-rm -fr $arfvpn/mydomain
 rm -fr $arfvpn/scdomain
-rm -fr $arfvpn/domain_cf
 rm -fr $arfvpn/arfvpn.key
 rm -fr $arfvpn/arfvpn.crt
-rm -fr $arfvpn/xray.key
-rm -fr $arfvpn/xray.crt
 rm -fr $ipvps/ipvps.conf
+echo "IP=" >> $ipvps/ipvps.conf
 clear
 
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
@@ -84,8 +81,8 @@ clear
 
 echo -e "[ ${green}INFO$NC ] INSTALLING CERT SSL"
 sleep 2
-echo "starting...., Port 80 Akan di Hentikan Saat Proses install Cert"
-sudo lsof -t -i tcp:80 -s tcp:listen | sudo xargs kill
+#echo "starting...., Port 80 Akan di Hentikan Saat Proses install Cert"
+#sudo lsof -t -i tcp:80 -s tcp:listen | sudo xargs kill
 sleep 2
 clear
 systemctl stop nginx
@@ -99,7 +96,7 @@ if [[ "$domain" == "$mydomain" ]] ;then
 /root/.acme.sh/acme.sh --upgrade --auto-upgrade
 /root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
 /root/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-256
-~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath $arfvpn/xray.crt --keypath $arfvpn/xray.key --ecc
+~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath $arfvpn/arfvpn.crt --keypath $arfvpn/arfvpn.key --ecc
 # nginx renew ssl
 echo -n '#!/bin/bash
 /etc/init.d/nginx stop

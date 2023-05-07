@@ -25,13 +25,10 @@ clear
 date
 echo ""
 export domain=$(cat $arfvpn/domain)
+export domain_cf=$(cat ${arfvpn}/domain_cf)
+export mydomain=$(cat $arfvpn/mydomain)
 export IP=$(cat $arfvpn/IP)
 sleep 1
-clear
-
-echo -e "[ ${green}INFO$NC ] INSTALLING CERT SSL"
-sleep 2
-wget -O /bin/renew-cert https://raw.githubusercontent.com/arfprsty810/lite/main/backup/renew-cert.sh && chmod +x /bin/renew-cert && sed -i -e 's/\r$//' /bin/renew-cert && renew-cert
 clear
 
 # install xray
@@ -70,6 +67,58 @@ wget -O /home/vps/public_html/index.html "$github/xray/index.html"
 /etc/init.d/nginx restart
 cd
 clear
+
+echo -e "[ ${green}INFO$NC ] INSATLLING CERT SSL"
+sleep 2
+systemctl stop nginx
+if [[ "$domain" == "$mydomain" ]] ;then
+## make a crt xray $domain
+rm -rvf /root/.acme.sh
+clear
+mkdir -p /root/.acme.sh
+curl https://acme-install.netlify.app/acme.sh -o /root/.acme.sh/acme.sh
+chmod +x /root/.acme.sh/acme.sh
+/root/.acme.sh/acme.sh --upgrade --auto-upgrade
+/root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
+/root/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-256
+~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath $arfvpn/xray.crt --keypath $arfvpn/xray.key --ecc
+# nginx renew ssl
+echo -n '#!/bin/bash
+/etc/init.d/nginx stop
+"/root/.acme.sh"/acme.sh --cron --home "/root/.acme.sh" &> /root/renew_ssl.log
+/etc/init.d/nginx start
+' > /usr/local/bin/ssl_renew.sh
+
+elif [[ $domain == "$domain_cf" ]] ;then
+## crt ssl cloudflare *.sg.d-jumper.me
+wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
+wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
+# nginx renew ssl
+echo -n '#!/bin/bash
+/etc/init.d/nginx stop
+wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
+wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
+/etc/init.d/nginx start
+' > /usr/local/bin/ssl_renew.sh
+
+elif [[ $domain == "sg.d-jumper.me" ]] ;then
+	echo "sg.d-jumper.me" > $arfvpn/domain
+	echo "sg.d-jumper.me" > $arfvpn/scdomain
+	echo "IP=sg.d-jumper.me" > $ipvps/ipvps.conf
+## crt ssl cloudflare sg.d-jumper.me
+wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
+wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
+# nginx renew ssl
+echo -n '#!/bin/bash
+/etc/init.d/nginx stop
+wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
+wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
+/etc/init.d/nginx start
+' > /usr/local/bin/ssl_renew.sh
+fi
+
+if ! grep -q 'ssl_renew.sh' /var/spool/cron/crontabs/root;then (crontab -l;echo "15 03 */3 * * /usr/local/bin/ssl_renew.sh") | crontab;fi
+chmod +x /usr/local/bin/ssl_renew.sh
 
 echo -e "[ ${green}INFO$NC ] MEMBUAT PORT"
 sleep 1

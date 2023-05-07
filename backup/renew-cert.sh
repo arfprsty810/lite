@@ -43,6 +43,17 @@ ipvps="/var/lib/arfvpn"
 github="https://raw.githubusercontent.com/arfprsty810/lite/main"
 clear
 
+rm -fr $arfvpn/domain
+rm -fr $arfvpn/mydomain
+rm -fr $arfvpn/scdomain
+rm -fr $arfvpn/domain_cf
+rm -fr $arfvpn/arfvpn.key
+rm -fr $arfvpn/arfvpn.crt
+rm -fr $arfvpn/xray.key
+rm -fr $arfvpn/xray.crt
+rm -fr $ipvps/ipvps.conf
+clear
+
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "$green      MAKE A CERT YOUR DOMAIN $NC"
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
@@ -55,17 +66,17 @@ read -rp "Input ur domain / sub-domain : " -e pp
     Then a random sub-domain will be created"
     sleep 2
     clear
-    apt install curl jq -y
     wget -q -O /usr/bin/cf "$github/services/cf.sh"
     chmod +x /usr/bin/cf
     sed -i -e 's/\r$//' /usr/bin/cf
     /usr/bin/cf
     else
-    apt install curl jq -y
+    echo "$pp" > $arfvpn/domain
 	echo "$pp" > $arfvpn/mydomain
     fi
 clear
 
+export domain=$(cat $arfvpn/domain)
 export domain_cf=$(cat ${arfvpn}/domain_cf)
 export mydomain=$(cat $arfvpn/mydomain)
 export IP=$(cat $arfvpn/IP)
@@ -79,7 +90,7 @@ sleep 2
 clear
 systemctl stop nginx
 
-domain="$pp"
+#domain="$pp"
 if [[ "$domain" == "$mydomain" ]] ;then
 	echo "$mydomain" > $arfvpn/domain
 	echo "$mydomain" > $arfvpn/scdomain

@@ -48,6 +48,7 @@ xray="/etc/xray"
 logxray"/var/log/xray"
 trgo="/etc/arfvpn/trojan-go"
 logtrgo="/var/log/arfvpn/trojan-go"
+nginx="/etc/nginx"
 ipvps="/var/lib/arfvpn"
 github="https://raw.githubusercontent.com/arfprsty810/lite/main"
 start=$(date +%s)
@@ -113,7 +114,9 @@ clear
 sleep 2
 
 #Instal Xray
-wget $github/xray/ins-xray.sh
+#cf
+#rm -rvf *.sh
+wget https://raw.githubusercontent.com/arfprsty810/lite/main/xray/ins-xray.sh
 chmod +x ins-xray.sh
 sed -i -e 's/\r$//' ins-xray.sh
 ./ins-xray.sh
@@ -137,12 +140,12 @@ clear
 sleep 2
 
 #Instal SSH-vpn
-#wget $github/ssh/ssh-vpn.sh
-#chmod +x ssh-vpn.sh
-#sed -i -e 's/\r$//' ssh-vpn.sh
-#./ssh-vpn.sh
-#clear
-#sleep 2
+wget $github/ssh/ssh-vpn.sh
+chmod +x ssh-vpn.sh
+sed -i -e 's/\r$//' ssh-vpn.sh
+./ssh-vpn.sh
+clear
+sleep 2
 
 #Instal SSH-vpn
 #wget $github/ssh/simplessh.sh
@@ -157,8 +160,8 @@ wget $github/bbr/bbr.sh
 chmod +x bbr.sh
 sed -i -e 's/\r$//' bbr.sh
 screen -S bbr ./bbr.sh
-
 clear
+sleep 2
 
 echo -e "[ ${green}INFO$NC ] DOWNLOAD SCRIPT"
 sleep 2
@@ -189,11 +192,11 @@ echo -e "[ ${green}INFO$NC ] Restart All Service ..."
 systemctl daemon-reload >/dev/null 2>&1
 sleep 1
 echo -e "[ ${GREEN}ok${NC} ] Daemon-Reload"
-#systemctl restart rc-local.service >/dev/null 2>&1
-#systemctl enable rc-local.service >/dev/null 2>&1
-#systemctl start rc-local.service >/dev/null 2>&1
-#sleep 1
-#echo -e "[ ${GREEN}ok${NC} ] Restarting RC.Local"
+systemctl restart rc-local.service >/dev/null 2>&1
+systemctl enable rc-local.service >/dev/null 2>&1
+systemctl start rc-local.service >/dev/null 2>&1
+sleep 1
+echo -e "[ ${GREEN}ok${NC} ] Restarting RC.Local"
 systemctl restart runn >/dev/null 2>&1
 systemctl enable runn >/dev/null 2>&1
 systemctl start runn >/dev/null 2>&1
@@ -204,26 +207,26 @@ systemctl enable nginx >/dev/null 2>&1
 systemctl start nginx >/dev/null 2>&1
 sleep 1
 echo -e "[ ${GREEN}ok${NC} ] Restarting Nginx "
-#/etc/init.d/openvpn restart >/dev/null 2>&1
-#/etc/init.d/openvpn enable >/dev/null 2>&1
-#/etc/init.d/openvpn start >/dev/null 2>&1
-#sleep 1
-#echo -e "[ ${GREEN}ok${NC} ] Restarting OpenVpn"
-#/etc/init.d/dropbear restart >/dev/null 2>&1
-#/etc/init.d/dropbear enable >/dev/null 2>&1
-#/etc/init.d/dropbear start >/dev/null 2>&1
-#sleep 1
-#echo -e "[ ${GREEN}ok${NC} ] Restarting Dropbear"
-#/etc/init.d/stunnel5 restart >/dev/null 2>&1
-#/etc/init.d/stunnel5 enable >/dev/null 2>&1
-#/etc/init.d/stunnel5 start >/dev/null 2>&1
-#sleep 1
-#echo -e "[ ${GREEN}ok${NC} ] Restarting Stunnel5"
-#/etc/init.d/squid restart >/dev/null 2>&1
-#/etc/init.d/squid enable >/dev/null 2>&1
-#/etc/init.d/squid start >/dev/null 2>&1
-#sleep 1
-#echo -e "[ ${GREEN}ok${NC} ] Restarting Squid "
+/etc/init.d/openvpn restart >/dev/null 2>&1
+/etc/init.d/openvpn enable >/dev/null 2>&1
+/etc/init.d/openvpn start >/dev/null 2>&1
+sleep 1
+echo -e "[ ${GREEN}ok${NC} ] Restarting OpenVpn"
+/etc/init.d/dropbear restart >/dev/null 2>&1
+/etc/init.d/dropbear enable >/dev/null 2>&1
+/etc/init.d/dropbear start >/dev/null 2>&1
+sleep 1
+echo -e "[ ${GREEN}ok${NC} ] Restarting Dropbear"
+/etc/init.d/stunnel5 restart >/dev/null 2>&1
+/etc/init.d/stunnel5 enable >/dev/null 2>&1
+/etc/init.d/stunnel5 start >/dev/null 2>&1
+sleep 1
+echo -e "[ ${GREEN}ok${NC} ] Restarting Stunnel5"
+/etc/init.d/squid restart >/dev/null 2>&1
+/etc/init.d/squid enable >/dev/null 2>&1
+/etc/init.d/squid start >/dev/null 2>&1
+sleep 1
+echo -e "[ ${GREEN}ok${NC} ] Restarting Squid "
 /etc/init.d/fail2ban restart >/dev/null 2>&1
 /etc/init.d/fail2ban enable >/dev/null 2>&1
 /etc/init.d/fail2ban start >/dev/null 2>&1
@@ -239,11 +242,11 @@ echo -e "[ ${GREEN}ok${NC} ] Restarting Cron"
 /etc/init.d/vnstat start >/dev/null 2>&1
 sleep 1
 echo -e "[ ${GREEN}ok${NC} ] Restarting Vnstat "
-#/etc/init.d/ssh restart >/dev/null 2>&1
-#/etc/init.d/ssh enable >/dev/null 2>&1
-#/etc/init.d/ssh start >/dev/null 2>&1
-#sleep 1
-#echo -e "[ ${GREEN}ok${NC} ] Restarting SSH"
+/etc/init.d/ssh restart >/dev/null 2>&1
+/etc/init.d/ssh enable >/dev/null 2>&1
+/etc/init.d/ssh start >/dev/null 2>&1
+sleep 1
+echo -e "[ ${GREEN}ok${NC} ] Restarting SSH"
 systemctl restart xray >/dev/null 2>&1
 systemctl enable xray >/dev/null 2>&1
 systemctl start xray >/dev/null 2>&1
@@ -259,50 +262,50 @@ systemctl enable shadowsocks-libev.service >/dev/null 2>&1
 systemctl start shadowsocks-libev.service >/dev/null 2>&1
 sleep 1
 echo -e "[ ${GREEN}ok${NC} ] Restarting ShadowSocks-OBFS"
-#systemctl restart ws-dropbear.service >/dev/null 2>&1
-#systemctl enable ws-dropbear.service >/dev/null 2>&1
-#systemctl start ws-dropbear.service >/dev/null 2>&1
-#sleep 1
-#echo -e "[ ${GREEN}ok${NC} ] Restarting WS-Dropbear"
-#systemctl restart edu-proxy.service >/dev/null 2>&1
-#systemctl enable edu-proxy.service >/dev/null 2>&1
-#systemctl start edu-proxy.service>/dev/null 2>&1
-#sleep 1
-#echo -e "[ ${GREEN}ok${NC} ] Restarting WS-OpenSSH"
-#systemctl restart edu-proxyovpn.service >/dev/null 2>&1
-#systemctl enable edu-proxyovpn.service >/dev/null 2>&1
-#systemctl start edu-proxyovpn.service >/dev/null 2>&1
-#sleep 1
-#echo -e "[ ${GREEN}ok${NC} ] Restarting WS-OpenVPN"
-#systemctl restart ws-stunnel.service >/dev/null 2>&1
-#systemctl enable ws-stunnel.service >/dev/null 2>&1
-#systemctl start ws-stunnel.service >/dev/null 2>&1
-#sleep 1
-#echo -e "[ ${GREEN}ok${NC} ] Restarting WS-SSL "
-#systemctl enable edu-tls.service >/dev/null 2>&1
-#systemctl start edu-tls.service >/dev/null 2>&1
-#systemctl restart edu-tls.service >/dev/null 2>&1
-#systemctl enable ws-tls.service >/dev/null 2>&1
-#systemctl start ws-tls.service >/dev/null 2>&1
-#systemctl restart ws-tls.service >/dev/null 2>&1
-#sleep 1
-#echo -e "[ ${GREEN}ok${NC} ] Restarting WS-SSL/TLS"
+systemctl restart ws-dropbear.service >/dev/null 2>&1
+systemctl enable ws-dropbear.service >/dev/null 2>&1
+systemctl start ws-dropbear.service >/dev/null 2>&1
+sleep 1
+echo -e "[ ${GREEN}ok${NC} ] Restarting WS-Dropbear"
+systemctl restart edu-proxy.service >/dev/null 2>&1
+systemctl enable edu-proxy.service >/dev/null 2>&1
+systemctl start edu-proxy.service>/dev/null 2>&1
+sleep 1
+echo -e "[ ${GREEN}ok${NC} ] Restarting WS-OpenSSH"
+systemctl restart edu-proxyovpn.service >/dev/null 2>&1
+systemctl enable edu-proxyovpn.service >/dev/null 2>&1
+systemctl start edu-proxyovpn.service >/dev/null 2>&1
+sleep 1
+echo -e "[ ${GREEN}ok${NC} ] Restarting WS-OpenVPN"
+systemctl restart ws-stunnel.service >/dev/null 2>&1
+systemctl enable ws-stunnel.service >/dev/null 2>&1
+systemctl start ws-stunnel.service >/dev/null 2>&1
+sleep 1
+echo -e "[ ${GREEN}ok${NC} ] Restarting WS-SSL "
+systemctl enable edu-tls.service >/dev/null 2>&1
+systemctl start edu-tls.service >/dev/null 2>&1
+systemctl restart edu-tls.service >/dev/null 2>&1
+systemctl enable ws-tls.service >/dev/null 2>&1
+systemctl start ws-tls.service >/dev/null 2>&1
+systemctl restart ws-tls.service >/dev/null 2>&1
+sleep 1
+echo -e "[ ${GREEN}ok${NC} ] Restarting WS-SSL/TLS"
 #/etc/init.d/sslh restart >/dev/null 2>&1
 #/etc/init.d/sslh enable >/dev/null 2>&1
 #/etc/init.d/sslh start >/dev/null 2>&1
 #sleep 1
 #echo -e "[ ${GREEN}ok${NC} ] Restarting Sslh "
-#screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 500 >/dev/null 2>&1
-#screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 500 >/dev/null 2>&1
-#screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300 --max-clients 500 >/dev/null 2>&1
-#screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7400 --max-clients 500 >/dev/null 2>&1
-#screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7500 --max-clients 500 >/dev/null 2>&1
-#screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7600 --max-clients 500 >/dev/null 2>&1
-#screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7700 --max-clients 500 >/dev/null 2>&1
-#screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7800 --max-clients 500 >/dev/null 2>&1
-#screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7900 --max-clients 500 >/dev/null 2>&1
-#sleep 1
-#echo -e "[ ${GREEN}ok${NC} ] Restarting badvpn "
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 500 >/dev/null 2>&1
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 500 >/dev/null 2>&1
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300 --max-clients 500 >/dev/null 2>&1
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7400 --max-clients 500 >/dev/null 2>&1
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7500 --max-clients 500 >/dev/null 2>&1
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7600 --max-clients 500 >/dev/null 2>&1
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7700 --max-clients 500 >/dev/null 2>&1
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7800 --max-clients 500 >/dev/null 2>&1
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7900 --max-clients 500 >/dev/null 2>&1
+sleep 1
+echo -e "[ ${GREEN}ok${NC} ] Restarting badvpn "
 echo ""
 
 cat> /root/.profile << END
@@ -331,15 +334,15 @@ echo "" | tee -a log-install.txt
 echo "------------------------------------------------------------" | tee -a log-install.txt
 echo "" | tee -a log-install.txt
 echo "   >>> Service & Port"  | tee -a log-install.txt
-#echo "   - OpenSSH                 : 22, 88 "  | tee -a log-install.txt
-#echo "   - SSH Websocket           : 80 " | tee -a log-install.txt
-#echo "   - SSH SSL Websocket       : 443 " | tee -a log-install.txt
-#echo "   - OVPN Websocket          : 2086 "  | tee -a log-install.txt
-#echo "   - Stunnel Websocket       : 700 " | tee -a log-install.txt
-#echo "   - Stunnel5                : 447, 777, 990 " | tee -a log-install.txt
-#echo "   - Dropbear                : 69, 109, 1194 " | tee -a log-install.txt
-#echo "   - Badvpn                  : 7100-7900 " | tee -a log-install.txt
-#echo "   - Nginx                   : 81" | tee -a log-install.txt
+echo "   - OpenSSH                 : 22, 88 "  | tee -a log-install.txt
+echo "   - SSH Websocket           : 80 " | tee -a log-install.txt
+echo "   - SSH SSL Websocket       : 443 " | tee -a log-install.txt
+echo "   - OVPN Websocket          : 2086 "  | tee -a log-install.txt
+echo "   - Stunnel Websocket       : 700 " | tee -a log-install.txt
+echo "   - Stunnel5                : 447, 777, 990 " | tee -a log-install.txt
+echo "   - Dropbear                : 69, 109, 1194 " | tee -a log-install.txt
+echo "   - Badvpn                  : 7100-7900 " | tee -a log-install.txt
+echo "   - Nginx                   : 81" | tee -a log-install.txt
 echo "   - XRAY Vmess TLS          : 443" | tee -a log-install.txt
 echo "   - XRAY Vmess None TLS     : 80" | tee -a log-install.txt
 echo "   - XRAY Vless TLS          : 443" | tee -a log-install.txt

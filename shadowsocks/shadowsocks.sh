@@ -17,7 +17,9 @@ arfvpn="/etc/arfvpn"
 </dev/urandom tr -dc a-z0-9 | head -c16 > $arfvpn/passwd
 pwd=$(cat $arfvpn/passwd)
 github="https://raw.githubusercontent.com/arfprsty810/lite/main"
-
+echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "$green          INSTALLING SHADOWSOCKS $NC"
+echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 #Server konfigurasi
 echo -e "[ ${green}INFO$NC ] MENGINSTALL SAHDOWSOCKS-LIBEV"
 sleep 2

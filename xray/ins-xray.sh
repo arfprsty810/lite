@@ -25,6 +25,7 @@ clear
 date
 echo ""
 export domain=$(cat $arfvpn/domain)
+export domain_cf=$(cat ${arfvpn}/DOMAIN_CF)
 export IP=$(cat $arfvpn/IP)
 sleep 1
 clear
@@ -69,30 +70,33 @@ clear
 echo -e "[ ${green}INFO$NC ] INSATLLING CERT SSL"
 sleep 2
 systemctl stop nginx
-
-## crt ssl cloudflare
-wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
-wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
-
-## crt xray
-#mkdir /root/.acme.sh
-#curl https://acme-install.netlify.app/acme.sh -o /root/.acme.sh/acme.sh
-#chmod +x /root/.acme.sh/acme.sh
-#/root/.acme.sh/acme.sh --upgrade --auto-upgrade
-#/root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
-#/root/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-256
-#~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath $arfvpn/arfvpn.crt --keypath $arfvpn/arfvpn.key --ecc
-#clear
-
-echo -e "[ ${green}INFO$NC ] RENEW CERT SSL"
+if [ "$domain" == "$domain_cf" ] ;then
+## make a crt xray $domain
+mkdir /root/.acme.sh
+curl https://acme-install.netlify.app/acme.sh -o /root/.acme.sh/acme.sh
+chmod +x /root/.acme.sh/acme.sh
+/root/.acme.sh/acme.sh --upgrade --auto-upgrade
+/root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
+/root/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-256
+~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath $arfvpn/arfvpn.crt --keypath $arfvpn/arfvpn.key --ecc
 # nginx renew ssl
 echo -n '#!/bin/bash
 /etc/init.d/nginx stop
-#"/root/.acme.sh"/acme.sh --cron --home "/root/.acme.sh" &> /root/renew_ssl.log
+"/root/.acme.sh"/acme.sh --cron --home "/root/.acme.sh" &> /root/renew_ssl.log
+/etc/init.d/nginx start
+' > /usr/local/bin/ssl_renew.sh
+else
+## crt ssl cloudflare *.sg.d-jumper.me
+wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
+wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
+# nginx renew ssl
+echo -n '#!/bin/bash
+/etc/init.d/nginx stop
 wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
 wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
 /etc/init.d/nginx start
 ' > /usr/local/bin/ssl_renew.sh
+fi
 chmod +x /usr/local/bin/ssl_renew.sh
 if ! grep -q 'ssl_renew.sh' /var/spool/cron/crontabs/root;then (crontab -l;echo "15 03 */3 * * /usr/local/bin/ssl_renew.sh") | crontab;fi
 clear

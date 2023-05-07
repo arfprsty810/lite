@@ -13,8 +13,8 @@ clear
 
 source /etc/os-release
 arfvpn="/etc/arfvpn"
-xray="/etc/xray"
-logxray="/var/log/xray"
+xray="/etc/arfvpn/xray"
+logxray="/var/log/arfvpn/xray"
 github="https://raw.githubusercontent.com/arfprsty810/lite/main"
 OS=$ID
 ver=$VERSION_ID
@@ -46,7 +46,8 @@ touch $logxray/error.log
 touch $logxray/access2.log
 touch $logxray/error2.log
 # / / Ambil Xray Core Version Terbaru
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.5.6
+bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.7.5
+#1.5.6
 clear
 
 echo -e "[ ${green}INFO$NC ] INSTALLING NGINX SERVER"
@@ -369,14 +370,14 @@ END
 clear
 
 rm -rf /etc/systemd/system/xray.service.d
-cat <<EOF> /etc/systemd/system/xray.service
+cat > /etc/systemd/system/xray.service << EOF
 Description=Xray Service
 Documentation=https://github.com/xtls
 After=network.target nss-lookup.target
 
 [Service]
 User=www-data
-CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE                                 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
 ExecStart=/usr/local/bin/xray run -config $xray/config.json
 Restart=on-failure
@@ -386,7 +387,6 @@ LimitNOFILE=1000000
 
 [Install]
 WantedBy=multi-user.target
-
 EOF
 clear
 

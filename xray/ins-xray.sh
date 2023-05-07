@@ -70,7 +70,7 @@ clear
 echo -e "[ ${green}INFO$NC ] INSATLLING CERT SSL"
 sleep 2
 systemctl stop nginx
-if [ "$domain" == "$domain_cf" ] ;then
+if [[ "$domain" == "$domain_cf" ]] ;then
 ## make a crt xray $domain
 mkdir /root/.acme.sh
 curl https://acme-install.netlify.app/acme.sh -o /root/.acme.sh/acme.sh
@@ -107,7 +107,6 @@ wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
 wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
 /etc/init.d/nginx start
 ' > /usr/local/bin/ssl_renew.sh
-fi
 fi
 chmod +x /usr/local/bin/ssl_renew.sh
 if ! grep -q 'ssl_renew.sh' /var/spool/cron/crontabs/root;then (crontab -l;echo "15 03 */3 * * /usr/local/bin/ssl_renew.sh") | crontab;fi

@@ -93,6 +93,6 @@ clear
 echo "Your Sub-Domain : $SUB_DOMAIN"
 sleep 5
 echo "$SUB_DOMAIN" > $arfvpn/domain_cf
-#echo "$SUB_DOMAIN" > $arfvpn/domain
+echo "$SUB_DOMAIN" > $arfvpn/domain
 #echo "$SUB_DOMAIN" > $arfvpn/scdomain
 #echo "IP=$SUB_DOMAIN" > $ipvps/ipvps.conf

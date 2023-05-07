@@ -96,6 +96,18 @@ wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
 wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
 /etc/init.d/nginx start
 ' > /usr/local/bin/ssl_renew.sh
+elif [[ $domain == 'sg.d-jumper.me' ]]; then
+## crt ssl cloudflare sg.d-jumper.me
+wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
+wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
+# nginx renew ssl
+echo -n '#!/bin/bash
+/etc/init.d/nginx stop
+wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
+wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
+/etc/init.d/nginx start
+' > /usr/local/bin/ssl_renew.sh
+fi
 fi
 chmod +x /usr/local/bin/ssl_renew.sh
 if ! grep -q 'ssl_renew.sh' /var/spool/cron/crontabs/root;then (crontab -l;echo "15 03 */3 * * /usr/local/bin/ssl_renew.sh") | crontab;fi

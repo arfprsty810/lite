@@ -92,6 +92,7 @@ read -rp "Input ur domain / sub-domain : " -e pp
     mkdir -p $nginx
 	echo "$pp" > $arfvpn/domain
 	echo "$pp" > $arfvpn/scdomain
+	echo "$pp" > $arfvpn/mydomain
     echo "IP=$pp" > $ipvps/ipvps.conf
     curl -s ipinfo.io/org/ > ${arfvpn}/ISP
     curl -s https://ipinfo.io/ip/ > ${arfvpn}/IP

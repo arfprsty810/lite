@@ -46,7 +46,8 @@ touch $logxray/error.log
 touch $logxray/access2.log
 touch $logxray/error2.log
 # / / Ambil Xray Core Version Terbaru
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.7.5
+bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.5.6
+#1.7.5
 #1.5.6
 clear
 
@@ -369,8 +370,8 @@ cat > $xray/config.json << END
 END
 clear
 
-rm -rf /etc/systemd/system/xray.service.d
-cat > /etc/systemd/system/xray.service << EOF
+#rm -rf /etc/systemd/system/xray.service.d
+cat <<EOF> /etc/systemd/system/xray.service
 [Unit]
 Description=Xray Service
 Documentation=https://github.com/xtls
@@ -389,6 +390,27 @@ LimitNOFILE=1000000
 [Install]
 WantedBy=multi-user.target
 EOF
+
+#cat <<EOF> /etc/systemd/system/xray.service
+#Description=Xray Service
+#Documentation=https://github.com/xtls
+#After=network.target nss-lookup.target
+
+#[Service]
+#User=www-data
+#CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+#AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+#NoNewPrivileges=true
+#ExecStart=/usr/local/bin/xray run -config $xray/config.json
+#Restart=on-failure
+#RestartPreventExitStatus=23
+#LimitNPROC=10000
+#LimitNOFILE=1000000
+
+#[Install]
+#WantedBy=multi-user.target
+
+#EOF
 
 cat > /etc/systemd/system/runn.service <<EOF
 [Unit]

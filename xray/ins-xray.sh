@@ -70,7 +70,7 @@ clear
 echo -e "[ ${green}INFO$NC ] INSATLLING CERT SSL"
 sleep 2
 systemctl stop nginx
-if [[ "$domain" == "$domain_cf" ]] ;then
+if [[ "$domain" == "$domain" ]] ;then
 ## make a crt xray $domain
 mkdir /root/.acme.sh
 curl https://acme-install.netlify.app/acme.sh -o /root/.acme.sh/acme.sh
@@ -85,7 +85,7 @@ echo -n '#!/bin/bash
 "/root/.acme.sh"/acme.sh --cron --home "/root/.acme.sh" &> /root/renew_ssl.log
 /etc/init.d/nginx start
 ' > /usr/local/bin/ssl_renew.sh
-else
+elif [[ $domain == "$domain_cf" ]] ;then
 ## crt ssl cloudflare *.sg.d-jumper.me
 wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
 wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
@@ -96,7 +96,7 @@ wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
 wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
 /etc/init.d/nginx start
 ' > /usr/local/bin/ssl_renew.sh
-elif [[ $domain == 'sg.d-jumper.me' ]]; then
+elif [[ $domain == "sg.d-jumper.me" ]] ;then
 ## crt ssl cloudflare sg.d-jumper.me
 wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
 wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"

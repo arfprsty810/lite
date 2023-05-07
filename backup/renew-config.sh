@@ -295,7 +295,6 @@ clear
 clear
 # // Remove File & Directory
 rm -fr $xray
-rm -fr $ipvps
 rm -fr $logxray
 rm -fr /usr/local/bin/xray
 rm -fr $trgo
@@ -303,28 +302,8 @@ rm -fr $logtrgo
 rm -fr /usr/bin/trojan-go
 rm -fr /etc/shadowsocks-libev/*
 clear
-echo ""
-echo -e "[ ${green}INFO$NC ]* BLANK INPUT FOR RANDOM SUB-DOMAIN ! "
-read -rp "Input ur domain / sub-domain : " -e pp
-    if [ -z $pp ]; then
-    echo -e "
-    Nothing input for domain!
-    Then a random sub-domain will be created"
-    sleep 2
-    clear
-    wget -q -O /usr/bin/cf "$github/services/cf.sh"
-    chmod +x /usr/bin/cf
-    sed -i -e 's/\r$//' /usr/bin/cf
-    /usr/bin/cf
-    else
-    mkdir -p $ipvps >/dev/null 2>&1
-    mkdir -p $xray
-    mkdir -p $trgo
-	echo "$pp" > $arfvpn/domain
-	echo "$pp" > $arfvpn/scdomain
-	echo "$pp" > $arfvpn/mydomain
-    echo "IP=$pp" > $ipvps/ipvps.conf
-    fi
+mkdir -p $xray
+mkdir -p $trgo
 sleep 1
 clear
 
@@ -349,14 +328,6 @@ wget https://raw.githubusercontent.com/arfprsty810/lite/main/shadowsocks/shadows
 chmod +x shadowsocks.sh 
 sed -i -e 's/\r$//' shadowsocks.sh
 ./shadowsocks.sh
-clear
-sleep 2
-
-#Instal SSH-vpn
-wget $github/ssh/ssh-vpn.sh
-chmod +x ssh-vpn.sh
-sed -i -e 's/\r$//' ssh-vpn.sh
-./ssh-vpn.sh
 clear
 sleep 2
 

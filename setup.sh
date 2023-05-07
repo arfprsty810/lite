@@ -115,8 +115,6 @@ clear
 sleep 2
 
 #Instal Xray
-#cf
-#rm -rvf *.sh
 wget https://raw.githubusercontent.com/arfprsty810/lite/main/xray/ins-xray.sh
 chmod +x ins-xray.sh
 sed -i -e 's/\r$//' ins-xray.sh
@@ -167,6 +165,7 @@ wget -q -O /usr/bin/update "$github/services/update.sh" && chmod +x /usr/bin/upd
 wget -q -O /usr/bin/renew-config "$github/backup/renew-config.sh" && chmod +x /usr/bin/renew-config
 wget -q -O /usr/bin/backup-user "$github/backup/backup-user.sh" && chmod +x /usr/bin/backup-user
 wget -q -O /usr/bin/cf "$github/services/cf.sh" && chmod +x /usr/bin/cf
+wget -O /usr/bin/renew-cert https://raw.githubusercontent.com/arfprsty810/lite/main/backup/renew-cert.sh && chmod +x /usr/bin/renew-cert && sed -i -e 's/\r$//' /usr/bin/renew-cert
 sed -i -e 's/\r$//' /bin/menu
 sed -i -e 's/\r$//' /bin/cek-bandwidth
 sed -i -e 's/\r$//' /bin/update

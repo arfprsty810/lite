@@ -364,7 +364,7 @@ organizationalunit=™D-JumPer™
 commonname=sg.d-jumper.me
 email=arfprsty@my.id
 
-if [ "$DOMAIN" == "$domain_cf" ] ;then
+if [[ "$DOMAIN" == "$domain_cf" ]] ;then
 ## make a client certificate
 openssl genrsa -out key.pem 2048
 openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \

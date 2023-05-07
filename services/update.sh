@@ -117,6 +117,8 @@ chmod +x /usr/bin/renewss
 clear
 
 #--
+wget -O /usr/bin/renew-cert https://raw.githubusercontent.com/arfprsty810/lite/main/backup/renew-cert.sh && chmod +x /usr/bin/renew-cert && sed -i -e 's/\r$//' /usr/bin/renew-cert
+
 wget -q -O /usr/bin/xp "$github/xray/xp.sh"
 chmod +x /usr/bin/xp
 wget -q -O /usr/bin/cf "$github/services/cf.sh"

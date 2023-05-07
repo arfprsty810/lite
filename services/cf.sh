@@ -33,7 +33,6 @@ mkdir -p $xray
 mkdir -p $trgo
 mkdir -p $nginx
 echo "IP=" >> $ipvps/ipvps.conf
-echo "${DOMAIN}" > ${arfvpn}/DOMAIN_CF
 curl -s ipinfo.io/org/ > ${arfvpn}/ISP
 curl -s https://ipinfo.io/ip/ > ${arfvpn}/IP
 IP=$(cat ${arfvpn}/IP);
@@ -93,7 +92,7 @@ RESULT=$(curl -sLX PUT "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_r
 clear
 echo "Your Sub-Domain : $SUB_DOMAIN"
 sleep 5
-
-echo "$SUB_DOMAIN" > $arfvpn/domain
-echo "$SUB_DOMAIN" > $arfvpn/scdomain
-echo "IP=$SUB_DOMAIN" > $ipvps/ipvps.conf
+echo "$SUB_DOMAIN" > $arfvpn/DOMAIN_CF
+#echo "$SUB_DOMAIN" > $arfvpn/domain
+#echo "$SUB_DOMAIN" > $arfvpn/scdomain
+#echo "IP=$SUB_DOMAIN" > $ipvps/ipvps.conf

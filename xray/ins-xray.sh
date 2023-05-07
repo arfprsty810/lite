@@ -13,8 +13,8 @@ clear
 
 source /etc/os-release
 arfvpn="/etc/arfvpn"
-xray="/etc/arfvpn/xray"
-logxray="/var/log/arfvpn/xray"
+xray="/etc/xray"
+logxray="/var/log/xray"
 github="https://raw.githubusercontent.com/arfprsty810/lite/main"
 OS=$ID
 ver=$VERSION_ID
@@ -370,18 +370,17 @@ cat > $xray/config.json << END
 END
 clear
 
-#rm -rf /etc/systemd/system/xray.service.d
+rm -rf /etc/systemd/system/xray.service.d
 cat <<EOF> /etc/systemd/system/xray.service
-[Unit]
 Description=Xray Service
 Documentation=https://github.com/xtls
 After=network.target nss-lookup.target
 
 [Service]
 User=www-data
-CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE                                 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
-ExecStart=/usr/local/bin/xray run -config /etc/arfvpn/xray/config.json
+ExecStart=/usr/local/bin/xray run -config $xray/config.json
 Restart=on-failure
 RestartPreventExitStatus=23
 LimitNPROC=10000
@@ -389,28 +388,9 @@ LimitNOFILE=1000000
 
 [Install]
 WantedBy=multi-user.target
+
 EOF
-
-#cat <<EOF> /etc/systemd/system/xray.service
-#Description=Xray Service
-#Documentation=https://github.com/xtls
-#After=network.target nss-lookup.target
-
-#[Service]
-#User=www-data
-#CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-#AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-#NoNewPrivileges=true
-#ExecStart=/usr/local/bin/xray run -config $xray/config.json
-#Restart=on-failure
-#RestartPreventExitStatus=23
-#LimitNPROC=10000
-#LimitNOFILE=1000000
-
-#[Install]
-#WantedBy=multi-user.target
-
-#EOF
+clear
 
 cat > /etc/systemd/system/runn.service <<EOF
 [Unit]

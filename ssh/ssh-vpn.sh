@@ -75,7 +75,9 @@ apt-get remove --purge firewalld* -y
 apt-get remove --purge exim4* -y
 apt autoremove -y
 clear
-
+echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "$green          INSTALLING SSH $NC"
+echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 # ----------------------------------------------------------------------------------------------------------------
 # Getting SSH_PASSWORD
 # ----------------------------------------------------------------------------------------------------------------
@@ -127,8 +129,9 @@ systemctl start rc-local.service >/dev/null 2>&1
 # ----------------------------------------------------------------------------------------------------------------
 # Setting sshd_config
 # ----------------------------------------------------------------------------------------------------------------
-sed -i 's/Port 22/Port 22/g' /etc/ssh/sshd_config
+sed -i 's/#Port 22/Port 22/g' /etc/ssh/sshd_config
 sed -i '/Port 22/a Port 88' /etc/ssh/sshd_config
+sed -i '/Port 22/a Port 448' /etc/ssh/sshd_config
 #echo "X11Forwarding yes" >> /etc/ssh/sshd_config
 #echo "AllowTcpForwarding yes" >> /etc/ssh/sshd_config
 #echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
@@ -151,8 +154,9 @@ apt-get remove --purge dropbear* -y
 apt -y install dropbear
 sed -i 's/DROPBEAR_PORT=22/DROPBEAR_PORT=143/g' /etc/default/dropbear
 sed -i '/DROPBEAR_PORT=143/a DROPBEAR_PORT=69' /etc/default/dropbear
-sed -i '/DROPBEAR_PORT=143/a DROPBEAR_PORT=1194' /etc/default/dropbear
-sed -i '/DROPBEAR_PORT=143/a DROPBEAR_PORT=109' /etc/default/dropbear
+sed -i '/DROPBEAR_PORT=143/a DROPBEAR_PORT=1196' /etc/default/dropbear
+#sed -i '/DROPBEAR_PORT=143/a DROPBEAR_PORT=1194' /etc/default/dropbear
+#sed -i '/DROPBEAR_PORT=143/a DROPBEAR_PORT=109' /etc/default/dropbear
 sed -i 's/NO_START=1/NO_START=0/g' /etc/default/dropbear
 sed -i 's/DROPBEAR_EXTRA_ARGS=/DROPBEAR_EXTRA_ARGS="-p 109"/g' /etc/default/dropbear
 echo "/bin/false" >> /etc/shells
@@ -264,8 +268,8 @@ echo -ne
 fi
 cd
 echo -e "[ ${GREEN}INFO$NC ] Installing badvpn for game support..."
-wget -q -O /usr/bin/badvpn-udpgw "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/archive/badvpn-udpgw64"
-#wget -q -O /usr/bin/badvpn-udpgw "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/archive/newudpgw"
+#wget -q -O /usr/bin/badvpn-udpgw "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/archive/badvpn-udpgw64"
+wget -q -O /usr/bin/badvpn-udpgw "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/archive/newudpgw"
 chmod +x /usr/bin/badvpn-udpgw
 sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 500' /etc/rc.local
 sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 500' /etc/rc.local
@@ -383,16 +387,16 @@ socket = l:TCP_NODELAY=1
 socket = r:TCP_NODELAY=1
 
 [dropbear]
-accept = 447
-connect = 127.0.0.1:109
+accept = 221
+connect = 127.0.0.1:69
 
 [openssh]
-accept = 777
-connect = 127.0.0.1:443
+accept = 222
+connect = 127.0.0.1:448
 
 [openvpn]
-accept = 990
-connect = 127.0.0.1:1194
+accept = 223
+connect = 127.0.0.1:112
 
 END
 
@@ -415,14 +419,12 @@ END
 wget -q -O /etc/init.d/stunnel5 "https://raw.githubusercontent.com/arfprsty810/lite/main/stunnel5/stunnel5.init"
 chmod +x /etc/init.d/stunnel5
 cp /usr/local/bin/stunnel /usr/local/bin/stunnel5
-
 # Remove File
 rm -r -f /usr/local/share/doc/stunnel/
 rm -r -f /usr/local/etc/stunnel/
 rm -f /usr/local/bin/stunnel
 rm -f /usr/local/bin/stunnel3
 rm -f /usr/local/bin/stunnel4
-
 # Restart Stunnel 5
 systemctl stop stunnel5.service
 systemctl restart stunnel5.service
@@ -578,8 +580,6 @@ sed -i -e 's/\r$//' /bin/usernew
 # ----------------------------------------------------------------------------------------------------------------
 # Finish
 # ----------------------------------------------------------------------------------------------------------------
-history -c
-echo "unset HISTFILE" >> /etc/profile
 
 cd
 yellow() { echo -e "\\033[33;1m${*}\\033[0m"; }

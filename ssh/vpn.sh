@@ -44,7 +44,7 @@ sed -i 's/#AUTOSTART="all"/AUTOSTART="all"/g' /etc/default/openvpn
 systemctl enable --now openvpn-server@server-tcp
 systemctl enable --now openvpn-server@server-udp
 /etc/init.d/openvpn restart
-/etc/init.d/openvpn status
+/etc/init.d/openvpn start
 
 # aktifkan ip4 forwarding
 echo 1 > /proc/sys/net/ipv4/ip_forward
@@ -55,7 +55,7 @@ cat > /etc/openvpn/tcp.ovpn <<-END
 client
 dev tun
 proto tcp
-remote xxxxxxxxx 1194
+remote xxxxxxxxx 111
 resolv-retry infinite
 route-method exe
 nobind
@@ -73,7 +73,7 @@ cat > /etc/openvpn/udp.ovpn <<-END
 client
 dev tun
 proto udp
-remote xxxxxxxxx 2200
+remote xxxxxxxxx 112
 resolv-retry infinite
 route-method exe
 nobind
@@ -86,12 +86,12 @@ END
 
 sed -i $MYIP2 /etc/openvpn/udp.ovpn;
 
-# Buat config client SSL
+# Buat config client SSL 990
 cat > /etc/openvpn/ssl.ovpn <<-END
 client
 dev tun
 proto tcp
-remote xxxxxxxxx 990
+remote xxxxxxxxx 113
 resolv-retry infinite
 route-method exe
 nobind
@@ -136,7 +136,7 @@ cp /etc/openvpn/ssl.ovpn /home/vps/public_html/ssl.ovpn
 
 iptables -t nat -I POSTROUTING -s 10.6.0.0/24 -o $NET -j MASQUERADE
 iptables -t nat -I POSTROUTING -s 10.7.0.0/24 -o $NET -j MASQUERADE
-iptables-save > /etc/iptables.up.rules
+iptables-save >> /etc/iptables.up.rules
 chmod +x /etc/iptables.up.rules
 
 iptables-restore -t < /etc/iptables.up.rules

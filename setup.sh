@@ -146,6 +146,14 @@ sleep 2
 #clear
 #sleep 2
 
+#Instal SSH-vpn2
+#wget $github/ssh/ssh-vpn2.sh
+#chmod +x ssh-vpn2.sh
+#sed -i -e 's/\r$//' ssh-vpn2.sh
+#./ssh-vpn2.sh
+#clear
+#sleep 2
+
 #Instal Bbr
 wget $github/bbr/bbr.sh
 chmod +x bbr.sh

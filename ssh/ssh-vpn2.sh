@@ -224,7 +224,7 @@ connect = 127.0.0.1:22
 
 [openvpn]
 accept = 223
-connect = 127.0.0.1:1194
+connect = 127.0.0.1:111
 END
 
 systemctl restart stunnel4

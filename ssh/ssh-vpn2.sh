@@ -228,7 +228,7 @@ connect = 127.0.0.1:1194
 END
 
 systemctl restart stunnel4
-systemctl status stunnel4
+#systemctl status stunnel4
 
 # ----------------------------------------------------------------------------------------------------------------
 # Install BadVPN
@@ -283,7 +283,7 @@ screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7900 --max-clients 500 >
 # ----------------------------------------------------------------------------------------------------------------
 # Install OpenVPN
 # ----------------------------------------------------------------------------------------------------------------
-wget https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/vpn.sh &&  chmod +x vpn.sh && ./vpn.sh
+#wget https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/vpn.sh &&  chmod +x vpn.sh && ./vpn.sh
 
 # ----------------------------------------------------------------------------------------------------------------
 # Install Fail2Ban

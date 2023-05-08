@@ -12,7 +12,7 @@ PASS = ''
 # CONST
 BUFLEN = 4096 * 4
 TIMEOUT = 60
-DEFAULT_HOST = '127.0.0.1:1194'
+DEFAULT_HOST = '127.0.0.1:111'
 RESPONSE = 'HTTP/1.1 101 OpenVPN WebScoket Bye Hidessh.com\r\n\r\nContent-Length: 104857600000\r\n\r\n'
 
 class Server(threading.Thread):

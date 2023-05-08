@@ -202,6 +202,12 @@ echo -e "[ ${GREEN}ok${NC} ] Restarting Nginx "
 /etc/init.d/openvpn restart >/dev/null 2>&1
 /etc/init.d/openvpn enable >/dev/null 2>&1
 /etc/init.d/openvpn start >/dev/null 2>&1
+systemctl restart --now openvpn-server@server-tcp  >/dev/null 2>&1
+systemctl enable --now openvpn-server@server-tcp  >/dev/null 2>&1
+systemctl start --now openvpn-server@server-tcp  >/dev/null 2>&1
+systemctl restart --now openvpn-server@server-udp >/dev/null 2>&1
+systemctl enable --now openvpn-server@server-udp >/dev/null 2>&1
+systemctl start --now openvpn-server@server-udp >/dev/null 2>&1
 sleep 1
 echo -e "[ ${GREEN}ok${NC} ] Restarting OpenVpn"
 /etc/init.d/dropbear restart >/dev/null 2>&1
@@ -316,6 +322,10 @@ END
 chmod 644 /root/.profile
 clear
 
+history -c
+echo "unset HISTFILE" >> /etc/profile
+#echo -e "[ ${green}INFO$NC ] CORN EXPIRED USER ..."
+echo "0 0 * * * root xp" >> /etc/crontab
 rm -rvf /root/*.sh
 rm -rvf /root/*.sh.*
 clear

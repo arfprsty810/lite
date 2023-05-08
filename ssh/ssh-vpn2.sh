@@ -160,7 +160,7 @@ chmod +x /etc/issue.net
 # ----------------------------------------------------------------------------------------------------------------
 # Install Stunnel
 # ----------------------------------------------------------------------------------------------------------------
-systemctl stop stunnel4
+systemctl stop stunnel*
 apt-get remove --purge stunnel stunnel* -y
 rm -rvf /etc/stunnel*
 rm -rvf /etc/systemd/system/stunnel*.*
@@ -174,11 +174,11 @@ systemctl daemon-reload
 apt install stunnel4 -y
 country=ID
 state=Indonesia
-locality=Indonesia
+locality=Jakarta
 organization=™D-JumPer™
 organizationalunit=™D-JumPer™
 commonname=sg.d-jumper.me
-email=arfprsty@my.id
+email=arfprsty@d-jumper.me
 
 ## make a client certificate
 #openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \

@@ -293,39 +293,6 @@ screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7900 --max-clients 500 >
 #sed -i $MYIP2 /etc/squid/squid.conf
 
 # ----------------------------------------------------------------------------------------------------------------
-# Install SSLH
-# ----------------------------------------------------------------------------------------------------------------
-#apt -y install sslh
-#rm -f /etc/default/sslh
-#cat > /etc/default/sslh <<-END
-# Default options for sslh initscript
-# sourced by /etc/init.d/sslh
-
-# Disabled by default, to force yourself
-# to read the configuration:
-# - /usr/share/doc/sslh/README.Debian (quick start)
-# - /usr/share/doc/sslh/README, at "Configuration" section
-# - sslh(8) via "man sslh" for more configuration details.
-# Once configuration ready, you *must* set RUN to yes here
-# and try to start sslh (standalone mode only)
-#RUN=yes
-
-# binary to use: forked (sslh) or single-thread (sslh-select) version
-# systemd users: don't forget to modify /lib/systemd/system/sslh.service
-#DAEMON=/usr/sbin/sslh
-
-#DAEMON_OPTS="--user sslh --listen 0.0.0.0:443 --ssl 127.0.0.1:777 --ssh 127.0.0.1:109 --openvpn 127.0.0.1:1194 --http 127.0.0.1:8880 --pidfile /var/run/sslh/sslh.pid -n"
-
-#END
-
-# Restart Service SSLH
-#service sslh restart
-#systemctl restart sslh
-#/etc/init.d/sslh restart
-#/etc/init.d/sslh status
-#/etc/init.d/sslh restart
-
-# ----------------------------------------------------------------------------------------------------------------
 # Install Stunnel
 # ----------------------------------------------------------------------------------------------------------------
 cd /root/
@@ -357,20 +324,8 @@ rm -r -f stunnel
 rm -f stunnel5.zip
 mkdir -p /etc/stunnel5
 chmod 644 /etc/stunnel5
-clear
 
-country=ID
-state=Indonesia
-locality=Indonesia
-organization=™D-JumPer™
-organizationalunit=™D-JumPer™
-commonname=sg.d-jumper.me
-email=arfprsty@my.id
-## make a client certificate
-#openssl genrsa -out key.pem 2048
-#openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
-#-subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
-#cat key.pem cert.pem >> /etc/arfvpn/stunnel5.pem
+#openssl req -new -x509 -days 9999 -nodes -subj "/C=SG/ST=-/L=-/O=-/OU=-/CN=-" -out /etc/arfvpn/stunnel5.pem -keyout /etc/arfvpn/stunnel5.pem &> /dev/null
 
 ## client cert cloudflare sg.d-jumper.me *.sg.d-jumper.me
 wget -O /etc/arfvpn/stunnel5.pem "https://raw.githubusercontent.com/arfprsty810/lite/main/cert/client.pem"
@@ -385,19 +340,15 @@ client = no
 socket = a:SO_REUSEADDR=1
 socket = l:TCP_NODELAY=1
 socket = r:TCP_NODELAY=1
+TIMEOUTclose = 0
 
 [dropbear]
 accept = 221
-connect = 127.0.0.1:69
+connect = 127.0.0.1:550
 
 [openssh]
 accept = 222
-connect = 127.0.0.1:448
-
-[openvpn]
-accept = 223
-connect = 127.0.0.1:112
-
+connect = 127.0.0.1:22
 END
 
 # Service Stunnel5 systemctl restart stunnel5
@@ -426,13 +377,7 @@ rm -f /usr/local/bin/stunnel
 rm -f /usr/local/bin/stunnel3
 rm -f /usr/local/bin/stunnel4
 # Restart Stunnel 5
-systemctl stop stunnel5.service
-systemctl restart stunnel5.service
-systemctl enable stunnel5.service
-systemctl start stunnel5.service
-/etc/init.d/stunnel5 restart
-/etc/init.d/stunnel5 enable
-/etc/init.d/stunnel5 start
+systemctl restart stunnel5
 
 # ----------------------------------------------------------------------------------------------------------------
 # Install OpenVPN
@@ -465,26 +410,26 @@ systemctl enable vnstat
 # ----------------------------------------------------------------------------------------------------------------
 # Install DDos Flate
 # ----------------------------------------------------------------------------------------------------------------
-#rm -fr /usr/local/ddos
-#mkdir -p /usr/local/ddos >/dev/null 2>&1
+rm -fr /usr/local/ddos
+mkdir -p /usr/local/ddos >/dev/null 2>&1
 #clear
-#sleep 1
-#echo -e "[ ${GREEN}INFO$NC ] Install DOS-Deflate"
-#sleep 1
-#echo -e "[ ${GREEN}INFO$NC ] Downloading source files..."
-#wget -q -O /usr/local/ddos/ddos.conf http://www.inetbase.com/scripts/ddos/ddos.conf
-#wget -q -O /usr/local/ddos/LICENSE http://www.inetbase.com/scripts/ddos/LICENSE
-#wget -q -O /usr/local/ddos/ignore.ip.list http://www.inetbase.com/scripts/ddos/ignore.ip.list
-#wget -q -O /usr/local/ddos/ddos.sh http://www.inetbase.com/scripts/ddos/ddos.sh
-#chmod 0755 /usr/local/ddos/ddos.sh
-#cp -s /usr/local/ddos/ddos.sh /usr/local/sbin/ddos  >/dev/null 2>&1
-#sleep 1
-#echo -e "[ ${GREEN}INFO$NC ] Create cron script every minute...."
-#/usr/local/ddos/ddos.sh --cron > /dev/null 2>&1
-#sleep 1
-#echo -e "[ ${GREEN}INFO$NC ] Install successfully..."
-#sleep 1
-#echo -e "[ ${GREEN}INFO$NC ] Config file at /usr/local/ddos/ddos.conf"
+sleep 1
+echo -e "[ ${GREEN}INFO$NC ] Install DOS-Deflate"
+sleep 1
+echo -e "[ ${GREEN}INFO$NC ] Downloading source files..."
+wget -q -O /usr/local/ddos/ddos.conf http://www.inetbase.com/scripts/ddos/ddos.conf
+wget -q -O /usr/local/ddos/LICENSE http://www.inetbase.com/scripts/ddos/LICENSE
+wget -q -O /usr/local/ddos/ignore.ip.list http://www.inetbase.com/scripts/ddos/ignore.ip.list
+wget -q -O /usr/local/ddos/ddos.sh http://www.inetbase.com/scripts/ddos/ddos.sh
+chmod 0755 /usr/local/ddos/ddos.sh
+cp -s /usr/local/ddos/ddos.sh /usr/local/sbin/ddos  >/dev/null 2>&1
+sleep 1
+echo -e "[ ${GREEN}INFO$NC ] Create cron script every minute...."
+/usr/local/ddos/ddos.sh --cron > /dev/null 2>&1
+sleep 1
+echo -e "[ ${GREEN}INFO$NC ] Install successfully..."
+sleep 1
+echo -e "[ ${GREEN}INFO$NC ] Config file at /usr/local/ddos/ddos.conf"
 
 # ----------------------------------------------------------------------------------------------------------------
 # Setting Banner

@@ -20,17 +20,18 @@ OS=$ID
 ver=$VERSION_ID
 # set random uuid
 uuid=$(cat /proc/sys/kernel/random/uuid)
-clear
-
-date
-echo ""
-export domain=$(cat $arfvpn/domain)
-export IP=$(cat $arfvpn/IP)
+domain=$(cat $arfvpn/domain)
+IP=$(cat $arfvpn/IP)
 sleep 1
 clear
+
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "$green          INSTALLING XRAY $NC"
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+date
+sleep 3
+clear
+
 # install xray
 echo -e "[ ${green}INFO$NC ] INSTALLING XRAY VMESS - VLESS"
 sleep 1
@@ -48,29 +49,26 @@ touch $logxray/error.log
 touch $logxray/access2.log
 touch $logxray/error2.log
 # / / Ambil Xray Core Version Terbaru
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.5.6
+bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.7.5
 #1.7.5
 #1.5.6
 clear
 
 echo -e "[ ${green}INFO$NC ] INSTALLING NGINX SERVER"
 # install webserver
-cd
 apt -y install nginx php php-fpm php-cli php-mysql libxml-parser-perl
 rm /etc/nginx/sites-enabled/default
 rm /etc/nginx/sites-available/default
 wget -O /etc/nginx/nginx.conf "$github/xray/nginx.conf"
+wget -O /etc/nginx/conf.d/vps.conf "$github/xray/vps.conf"
 mkdir -p /home/vps/public_html
-curl $github/xray/vps.conf > /etc/nginx/conf.d/vps.conf
 sed -i 's/listen = \/var\/run\/php-fpm.sock/listen = 127.0.0.1:9000/g' /etc/php/fpm/pool.d/www.conf
 useradd -m vps;
 echo "<?php phpinfo() ?>" > /home/vps/public_html/info.php
 chown -R www-data:www-data /home/vps/public_html
 chmod -R g+rw /home/vps/public_html
-cd /home/vps/public_html
 wget -O /home/vps/public_html/index.html "$github/xray/index.html"
 /etc/init.d/nginx restart
-cd
 clear
 
 echo -e "[ ${green}INFO$NC ] INSATLLING CERT SSL"
@@ -560,25 +558,25 @@ clear
 
 echo -e "[ ${green}INFO$NC ] INSTALL SCRIPT ..."
 sleep 1
-sed -i -e 's/\r$//' /bin/xp
+sed -i -e 's/\r$//' /usr/bin/xp
 
-sed -i -e 's/\r$//' /bin/menu-vmess
-sed -i -e 's/\r$//' /bin/add-ws
-sed -i -e 's/\r$//' /bin/cek-ws
-sed -i -e 's/\r$//' /bin/del-vmess
-sed -i -e 's/\r$//' /bin/renew-ws
+sed -i -e 's/\r$//' /usr/bin/menu-vmess
+sed -i -e 's/\r$//' /usr/bin/add-ws
+sed -i -e 's/\r$//' /usr/bin/cek-ws
+sed -i -e 's/\r$//' /usr/bin/del-vmess
+sed -i -e 's/\r$//' /usr/bin/renew-ws
 
-sed -i -e 's/\r$//' /bin/menu-vless
-sed -i -e 's/\r$//' /bin/add-vless
-sed -i -e 's/\r$//' /bin/cek-vless
-sed -i -e 's/\r$//' /bin/del-vless
-sed -i -e 's/\r$//' /bin/renew-ws
+sed -i -e 's/\r$//' /usr/bin/menu-vless
+sed -i -e 's/\r$//' /usr/bin/add-vless
+sed -i -e 's/\r$//' /usr/bin/cek-vless
+sed -i -e 's/\r$//' /usr/bin/del-vless
+sed -i -e 's/\r$//' /usr/bin/renew-ws
 
-sed -i -e 's/\r$//' /bin/menu-trojan
-sed -i -e 's/\r$//' /bin/add-tr
-sed -i -e 's/\r$//' /bin/cek-tr
-sed -i -e 's/\r$//' /bin/del-tr
-sed -i -e 's/\r$//' /bin/renew-tr
+sed -i -e 's/\r$//' /usr/bin/menu-trojan
+sed -i -e 's/\r$//' /usr/bin/add-tr
+sed -i -e 's/\r$//' /usr/bin/cek-tr
+sed -i -e 's/\r$//' /usr/bin/del-tr
+sed -i -e 's/\r$//' /usr/bin/renew-tr
 clear
 
 sleep 1

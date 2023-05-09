@@ -240,11 +240,6 @@ echo -e "[ ${green}INFO$NC ] Update Successfully!"
 sleep 3
 clear
 
-echo -e "[ ${green}INFO$NC ] CHECK EXPIRED USER ..."
-sleep 2
-/usr/bin/xp
-clear
-
 sleep 1
 cat> /root/.profile << END
 # ~/.profile: executed by Bourne-compatible login shells.

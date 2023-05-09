@@ -1,7 +1,7 @@
 ## Update Xray
 xray --version > now
-log=$(cat now)
-$log | grep 'Xray' | cut -d ' ' -f 2 | sort > nowv
+#log=$(cat now)
+cat now | grep 'Xray' | cut -d ' ' -f 2 | sort > nowv
 now_version=$(cat nowv)
 latest_version="$(curl -s https://api.github.com/repos/XTLS/Xray-core/releases | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
 

@@ -1,37 +1,39 @@
 ## Update Xray
+clear
+
 xray --version > now
-#log=$(cat now)
 cat now | grep 'Xray' | cut -d ' ' -f 2 | sort > nowv
 now_version=$(cat nowv)
-latest_version="$(curl -s https://api.github.com/repos/XTLS/Xray-core/releases | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
+
+curl -s https://api.github.com/repos/XTLS/Xray-core/releases | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1 > lastv
+latest_version=$(cat lastv)
 
 if [[ $now_version == $lastest_version ]]; then
-echo -e " Now Version : Xray v$now_version "
-echo -e " Lastest Version : Xray v$lastest_version "
-echo -e " Your Xray is Lastest Version"
-else
 echo -e " Now Version : Xray v$now_version "
 echo -e " Lastest Version : Xray v$lastest_version "
 echo -e " Your Xray is old version"
 echo -e " Auto Update Xray ..."
 sleep 2
-clear
 
 mkdir /etc/arfvpn/backup/xray
 cp /etc/xray/config.json /etc/arfvpn/backup/xray
 bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version $latest_version
-clear
+sleep 2
 
 cp /etc/arfvpn/backup/xray/config.json /etc/xray
 chmod +x /etc/xray/config.json
 systemctl daemon-reload
 systemctl restart xray
-clear
+sleep 2
 
 echo -e " XRAY SUCCESSFULLY UPDATE !"
 echo ""
 echo -e " Your Xray Version is :"
 echo -e " Xray $lastest_version"
+else
+echo -e " Now Version : Xray v$now_version "
+echo -e " Lastest Version : Xray v$lastest_version "
+echo -e " Your Xray is Lastest Version"
 fi
 
 echo -ne "[ ${yell}WARNING${NC} ] Reboot ur VPS ? (y/n)? "

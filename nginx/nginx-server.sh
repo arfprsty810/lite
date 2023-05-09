@@ -39,10 +39,10 @@ apt -y install nginx
 rm /etc/nginx/sites-enabled/default
 rm /etc/nginx/sites-available/default
 wget -O /etc/nginx/nginx.conf "$github/nginx/nginx.conf"
-#wget -O /etc/nginx/conf.d/vps.conf "$github/nginx/vps.conf"
+wget -O /etc/nginx/conf.d/vps.conf "$github/nginx/vps.conf"
 mkdir -p /home/vps/public_html
 #sed -i 's/listen = \/run\/php\/php7.2-fpm.sock/listen = 127.0.0.1:9000/g' /etc/php/7.2/fpm/pool.d/www.conf
-#useradd -m vps;
+useradd -m vps;
 echo "<?php phpinfo() ?>" > /home/vps/public_html/info.php
 chown -R www-data:www-data /home/vps/public_html
 chmod -R g+rw /home/vps/public_html

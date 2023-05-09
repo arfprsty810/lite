@@ -1,16 +1,31 @@
 ## Update Xray
 clear
+echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "$green          XRAY UPDATE $NC"
+echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo ""
 
+echo -e " Checking Now Version ...*
+echo ""
+sleep 2
 xray --version > now
 cat now | grep 'Xray' | cut -d ' ' -f 2 | sort > nowv
 now_version=$(cat nowv)
+sleep 2
 
+echo -e " Checking Lastest Version ...*
+echo ""
+sleep 2
 curl -s https://api.github.com/repos/XTLS/Xray-core/releases | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1 > lastv
 latest_version=$(cat lastv)
 
-if [[ $now_version == $lastest_version ]]; then
+sleep 2
+echo ""
+echo -e " Result :"
 echo -e " Now Version : Xray v$now_version "
 echo -e " Lastest Version : Xray v$lastest_version "
+
+if [[ $now_version == $lastest_version ]]; then
 echo -e " Your Xray is old version"
 echo -e " Auto Update Xray ..."
 sleep 2
@@ -31,15 +46,13 @@ echo ""
 echo -e " Your Xray Version is :"
 echo -e " Xray $lastest_version"
 else
-echo -e " Now Version : Xray v$now_version "
-echo -e " Lastest Version : Xray v$lastest_version "
 echo -e " Your Xray is Lastest Version"
 fi
 
 echo -ne "[ ${yell}WARNING${NC} ] Reboot ur VPS ? (y/n)? "
 read answer
 if [ "$answer" == "${answer#[Yy]}" ] ;then
-exit 0
+exit
 else
-reboot
+exit
 fi

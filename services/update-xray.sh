@@ -19,12 +19,15 @@ echo ""
 sleep 2
 curl -s https://api.github.com/repos/XTLS/Xray-core/releases | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1 > lastv
 latest_version=$(cat lastv)
-
 sleep 2
+
 echo ""
 echo -e " Result :"
 echo -e " Now Version : Xray v$now_version "
 echo -e " Lastest Version : Xray v$lastest_version "
+echo ""
+echo ""
+sleep 2
 
 if [[ $now_version == $lastest_version ]]; then
 echo -e " Your Xray is old version"

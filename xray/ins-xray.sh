@@ -53,54 +53,6 @@ bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release
 sleep 3
 clear
 
-echo -e "[ ${green}INFO$NC ] INSTALLING NGINX SERVER"
-# install webserver
-cd
-apt -y install nginx
-rm /etc/nginx/sites-enabled/default
-rm /etc/nginx/sites-available/default
-wget -O /etc/nginx/nginx.conf "$github/nginx/nginx.conf"
-mkdir -p /home/vps/public_html
-echo "<?php phpinfo() ?>" > /home/vps/public_html/info.php
-chown -R www-data:www-data /home/vps/public_html
-chmod -R g+rw /home/vps/public_html
-cd /home/vps/public_html
-wget -O /home/vps/public_html/index.html "$github/nginx/index.html"
-/etc/init.d/nginx restart
-cd
-clear
-
-echo -e "[ ${green}INFO$NC ] INSATLLING CERT SSL"
-sleep 2
-systemctl stop nginx
-
-## crt ssl cloudflare sg.d-jumper.me *.sg.d-jumper.me
-wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
-wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
-
-## make a crt xray $domain
-#mkdir /root/.acme.sh
-#curl https://acme-install.netlify.app/acme.sh -o /root/.acme.sh/acme.sh
-#chmod +x /root/.acme.sh/acme.sh
-#/root/.acme.sh/acme.sh --upgrade --auto-upgrade
-#/root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
-#/root/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-256
-#~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath $arfvpn/arfvpn.crt --keypath $arfvpn/arfvpn.key --ecc
-#clear
-
-echo -e "[ ${green}INFO$NC ] RENEW CERT SSL"
-# nginx renew ssl
-echo -n '#!/bin/bash
-/etc/init.d/nginx stop
-#"/root/.acme.sh"/acme.sh --cron --home "/root/.acme.sh" &> /root/renew_ssl.log
-wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
-wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
-/etc/init.d/nginx start
-' > /usr/local/bin/ssl_renew.sh
-chmod +x /usr/local/bin/ssl_renew.sh
-if ! grep -q 'ssl_renew.sh' /var/spool/cron/crontabs/root;then (crontab -l;echo "15 03 */3 * * /usr/local/bin/ssl_renew.sh") | crontab;fi
-clear
-
 echo -e "[ ${green}INFO$NC ] MEMBUAT PORT"
 sleep 1
 # Random Port Xray

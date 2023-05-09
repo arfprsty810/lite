@@ -20,17 +20,15 @@ OS=$ID
 ver=$VERSION_ID
 # set random uuid
 uuid=$(cat /proc/sys/kernel/random/uuid)
+domain=$(cat $arfvpn/domain)
+IP=$(cat $arfvpn/IP)
 clear
 
-date
-echo ""
-export domain=$(cat $arfvpn/domain)
-export IP=$(cat $arfvpn/IP)
-sleep 1
-clear
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "$green          INSTALLING XRAY $NC"
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+date
+sleep 2
 # install xray
 echo -e "[ ${green}INFO$NC ] INSTALLING XRAY VMESS - VLESS"
 sleep 1
@@ -47,7 +45,7 @@ touch $logxray/access.log
 touch $logxray/error.log
 touch $logxray/access2.log
 touch $logxray/error2.log
-# / / Install Xray Core << Every>> Lastest Version
+# / / Install Xray Core << Every >> Lastest Version
 latest_version="$(curl -s https://api.github.com/repos/XTLS/Xray-core/releases | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
 bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version $latest_version
 sleep 3

@@ -238,6 +238,9 @@ chmod +x /usr/bin/usernew
 sed -i -e 's/\r$//' /usr/bin/usernew
 clear
 
+echo -e "[ ${green}INFO$NC ] Check Xray Version!"
+wget https://raw.githubusercontent.com/arfprsty810/lite/main/services/update-xray.sh && chmod +x update-xray.sh && ./update-xray.sh
+
 echo -e "[ ${green}INFO$NC ] Update Successfully!"
 sleep 3
 clear
@@ -257,6 +260,7 @@ clear
 menu
 END
 chmod 644 /root/.profile
+rm -rvf /root/*.sh
 clear
 
 echo "      Update Successfully ..."

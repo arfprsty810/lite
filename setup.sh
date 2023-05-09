@@ -114,8 +114,18 @@ sed -i -e 's/\r$//' apete.sh
 clear
 sleep 2
 
+# NGINX-SERVER
+wget $github/nginx/nginx-server.sh
+chmod +x nginx-server.sh
+sed -i -e 's/\r$//' nginx-server.sh
+./nginx-server.sh
+
+#SSL CERT
+wget -O /usr/bin/cert $github/cert/cert.sh && chmod +x /usr/bin/cert && sed -i -e 's/\r$//' /usr/bin/cert
+/usr/bin/cert
+
 #Instal Xray
-wget https://raw.githubusercontent.com/arfprsty810/lite/main/xray/ins-xray.sh
+wget $github/xray/ins-xray.sh
 chmod +x ins-xray.sh
 sed -i -e 's/\r$//' ins-xray.sh
 ./ins-xray.sh
@@ -173,7 +183,6 @@ wget -q -O /usr/bin/update "$github/services/update.sh" && chmod +x /usr/bin/upd
 wget -q -O /usr/bin/renew-config "$github/backup/renew-config.sh" && chmod +x /usr/bin/renew-config
 wget -q -O /usr/bin/backup-user "$github/backup/backup-user.sh" && chmod +x /usr/bin/backup-user
 wget -q -O /usr/bin/cf "$github/services/cf.sh" && chmod +x /usr/bin/cf
-wget -O /usr/bin/renew-cert https://raw.githubusercontent.com/arfprsty810/lite/main/backup/renew-cert.sh && chmod +x /usr/bin/renew-cert && sed -i -e 's/\r$//' /usr/bin/renew-cert
 sed -i -e 's/\r$//' /usr/bin/menu
 sed -i -e 's/\r$//' /usr/bin/cek-bandwidth
 sed -i -e 's/\r$//' /usr/bin/update

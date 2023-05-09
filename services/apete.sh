@@ -62,11 +62,11 @@ gem install lolcat
 clear
 apt-get install --no-install-recommends build-essential autoconf libtool libssl-dev libpcre3-dev libev-dev asciidoc xmlto automake -y
 clear
-apt install make cmake -y
-apt install libz-dev -y
-apt install libssl1.0-dev -y
-echo "clear" >> .profile
-echo "neofetch" >> .profile
+apt install make -y #cmake -y
+#apt install libz-dev -y
+#apt install libssl1.0-dev -y
+#echo "clear" >> .profile
+#echo "neofetch" >> .profile
 
 apt-get install software-properties-common -y
 clear

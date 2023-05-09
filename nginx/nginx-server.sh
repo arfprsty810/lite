@@ -29,7 +29,8 @@ echo -e "[ ${green}INFO$NC ] INSTALLING NGINX SERVER"
 #rm -rvf /etc/nginx
 #apt autoremove -y
 #systemctl daemon-reload
-apt-get -y install nginx
+cd
+apt -y install nginx
 #apt-get -y install php
 #apt-get -y install php-fpm
 #apt-get -y install php-cli
@@ -38,13 +39,15 @@ apt-get -y install nginx
 rm /etc/nginx/sites-enabled/default
 rm /etc/nginx/sites-available/default
 wget -O /etc/nginx/nginx.conf "$github/nginx/nginx.conf"
-wget -O /etc/nginx/conf.d/vps.conf "$github/nginx/vps.conf"
+#wget -O /etc/nginx/conf.d/vps.conf "$github/nginx/vps.conf"
 mkdir -p /home/vps/public_html
 #sed -i 's/listen = \/run\/php\/php7.2-fpm.sock/listen = 127.0.0.1:9000/g' /etc/php/7.2/fpm/pool.d/www.conf
-useradd -m vps;
+#useradd -m vps;
 echo "<?php phpinfo() ?>" > /home/vps/public_html/info.php
 chown -R www-data:www-data /home/vps/public_html
 chmod -R g+rw /home/vps/public_html
+cd /home/vps/public_html
 wget -O /home/vps/public_html/index.html "$github/nginx/index.html"
 /etc/init.d/nginx restart
+cd
 clear

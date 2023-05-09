@@ -32,6 +32,11 @@ clear
 echo -e "[ ${green}INFO$NC ] INSTALLING REQUIREMENTS"
 sleep 3
 clear
+apt-get remove --purge ufw* -y
+apt-get remove --purge firewalld* -y
+apt-get remove --purge exim4* -y
+apt autoremove -y
+clear
 apt update && apt upgrade -y
 clear
 apt clean all && apt update

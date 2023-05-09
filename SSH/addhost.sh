@@ -11,7 +11,10 @@ CYAN='\033[0;36m'
 LIGHT='\033[0;37m'
 # ==========================================
 #Getting
-MYIP=$(wget -qO- ipinfo.io/ip);
+arfvpn="/etc/arfvpn"
+xray="/etc/xray"
+ipvps="/var/lib/arfvpn"
+MYIP=$(cat $arfvpn/IP);
 error1="${RED}[ERROR]${NC}"
 success="${GREEN}[SUCCESS]${NC}"
 clear
@@ -21,19 +24,19 @@ read -rp "Input Domain/Host : " -e domain
 echo -e "========================="
 echo -e "${success} Domain: ${domain} Added..."
 # Delete Files
-rm /etc/xray/*
+rm $arfvpn/domain
 rm /root/domain
-rm /var/lib/gl33ch3rvpn/ipvps.conf
+rm $ipvps
 # Done
-echo $domain >> /etc/xray/domain
+echo $domain >> $arfvpn/domain
 echo $domain >> /root/domain
-echo "IP=$domain" >> /var/lib/gl33ch3rvpn/ipvps.conf
+echo "IP=$domain" >> $ipvps
 
 sleep 1
 
-source /var/lib/gl33ch3rvpn/ipvps.conf
+source $ipvps
 if [[ "$IP" = "" ]]; then
-domain=$(cat /etc/xray/domain)
+domain=$(cat $arfvpn/domain)
 else
 domain=$IP
 fi
@@ -49,7 +52,7 @@ systemctl enable chrony && systemctl restart chrony
 timedatectl set-timezone Asia/Jakarta
 chronyc sourcestats -v
 chronyc tracking -v
-mkdir -p /etc/xray
+mkdir -p $arfvpn
 sudo lsof -t -i tcp:80 -s tcp:listen | sudo xargs kill
 cd /root/
 wget https://raw.githubusercontent.com/acmesh-official/acme.sh/master/acme.sh
@@ -58,5 +61,5 @@ rm acme.sh
 cd .acme.sh
 bash acme.sh --register-account -m senowahyu62@gmail.com
 bash acme.sh --issue --standalone -d $domain --force
-bash acme.sh --installcert -d $domain --fullchainpath /etc/xray/xray.crt --keypath /etc/xray/xray.key
+bash acme.sh --installcert -d $domain --fullchainpath $arfvpn/arfvpn.crt --keypath $arfvpn/arfvpn.key
 sleep 3

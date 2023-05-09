@@ -11,12 +11,13 @@ CYAN='\033[0;36m'
 LIGHT='\033[0;37m'
 # ==========================================
 # Getting
-MYIP=$(wget -qO- ipinfo.io/ip);
+ipvps="/var/lib/arfvpn"
+MYIP=$(cat $arfvpn/IP);
 
 clear
 echo start
 sleep 0.5
-source /var/lib/gl33ch3rvpn/ipvps.conf
+source $ipvps
 domain=$IP
 systemctl enable xray.service
 sudo lsof -t -i tcp:80 -s tcp:listen | sudo xargs kill

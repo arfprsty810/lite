@@ -16,7 +16,8 @@ error1="${RED}[ERROR]${NC}"
 success="${GREEN}[SUCCESS]${NC}"
 
 # Getting
-MYIP=$(wget -qO- ipinfo.io/ip);
+arfvpn="/etc/arfvpn"
+MYIP=$(cat $arfvpn/IP);
 
 clear
 

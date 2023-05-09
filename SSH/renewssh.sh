@@ -10,7 +10,8 @@ PURPLE='\033[0;35m'
 CYAN='\033[0;36m'
 LIGHT='\033[0;37m'
 # ==========================================
-MYIP=$(wget -qO- ipinfo.io/ip);
+arfvpn="/etc/arfvpn"
+MYIP=$(cat $arfvpn/IP);
 
 clear
 read -p "Username : " User

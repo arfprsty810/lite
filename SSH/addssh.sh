@@ -11,14 +11,17 @@ CYAN='\033[0;36m'
 LIGHT='\033[0;37m'
 # ==========================================
 #Getting user
-MYIP=$(wget -qO- ipinfo.io/ip);
+arfvpn="/etc/arfvpn"
+xray="/etc/xray"
+ipvps="/var/lib/arfvpn"
+MYIP=$(cat $arfvpn/IP);
 
 error1="${RED}[ERROR]${NC}"
 success="${GREEN}[SUCCESS]${NC}"
 clear
-source /var/lib/gl33ch3rvpn/ipvps.conf
+source $ipvps
 if [[ "$IP" = "" ]]; then
-domain=$(cat /etc/xray/domain)
+domain=$(cat $arfvpn/domain)
 else
 domain=$IP
 fi

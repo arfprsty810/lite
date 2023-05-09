@@ -10,16 +10,15 @@ PURPLE='\033[0;35m'
 CYAN='\033[0;36m'
 LIGHT='\033[0;37m'
 # ==========================================
-MYIP=$(wget -qO- ipinfo.io/ip);
-
 clear
 
-sshlink="raw.githubusercontent.com/Gl33ch3r/cfsshws/main/ssh"
+sshlink="raw.githubusercontent.com/arfprsty810/lite/main/SSH"
 
 # initialisasi var
 export DEBIAN_FRONTEND=noninteractive
 OS=`uname -m`;
-MYIP=$(wget -qO- ipinfo.io/ip);
+arfvpn="/etc/arfvpn"
+MYIP=$(cat $arfvpn/IP);
 MYIP2="s/xxxxxxxxx/$MYIP/g";
 ANU=$(ip -o $ANU -4 route show to default | awk '{print $5}');
 

@@ -10,36 +10,51 @@ PURPLE='\033[0;35m'
 CYAN='\033[0;36m'
 LIGHT='\033[0;37m'
 # ==========================================
+MYIP=$(wget -qO- ipinfo.io/ip);
 
 clear
 # ==================================================
-# Link
-sshlink="raw.githubusercontent.com/arfprsty810/lite/main/SSH"
-stunnel5link="raw.githubusercontent.com/arfprsty810/lite/main/stunnel5"
-websocketlink="raw.githubusercontent.com/arfprsty810/lite/main/SSH/websocket"
+# Link Hosting Kalian
+sshlink="raw.githubusercontent.com/Gl33ch3r/cfsshws/main/ssh"
 
-# source /etc/os-release
+# Link Hosting Kalian Untuk Xray
+xraylink="raw.githubusercontent.com/Gl33ch3r/cfsshws/main/xray"
+
+# Link Hosting Kalian Untuk Trojan Go
+trojangolink="raw.githubusercontent.com/Gl33ch3r/cfsshws/main/trojango"
+
+# Link Hosting Kalian Untuk Stunnel5
+stunnel5link="raw.githubusercontent.com/Gl33ch3r/cfsshws/main/stunnel5"
+
+#Link Hosting Kalian Untuk Websocket
+websocketlink="raw.githubusercontent.com/Gl33ch3r/cfsshws/main/websocket"
+
+# initializing var
 export DEBIAN_FRONTEND=noninteractive
 arfvpn="/etc/arfvpn"
-ipvps="/var/lib/arfvpn"
 MYIP=$(cat $arfvpn/IP);
-DOMAIN=$(cat $arfvpn/domain)
 MYIP2="s/xxxxxxxxx/$MYIP/g";
 NET=$(ip -o $ANU -4 route show to default | awk '{print $5}');
 source /etc/os-release
 ver=$VERSION_ID
 
-# ----------------------------------------------------------------------------------------------------------------
-# Setting RC.Local
-# ----------------------------------------------------------------------------------------------------------------
-# nano /etc/rc.local
-cat > /etc/rc.local <<-END
-#!/bin/sh -e
-# rc.local
-# By default this script does nothing.
-exit 0
-END
+#detail nama perusahaan
+country=ID
+state=Indonesia
+locality=Indonesia
+organization=gl33ch3rvpn
+organizationalunit=gl33ch3rvpn
+commonname=gl33ch3rvpn
+email=akbarssh21@gmail.com
 
+# simple password minimal
+wget -O /etc/pam.d/common-password "https://${sshlink}/password"
+chmod +x /etc/pam.d/common-password
+
+# go to root
+cd
+
+# Edit file /etc/systemd/system/rc-local.service
 cat > /etc/systemd/system/rc-local.service <<-END
 [Unit]
 Description=/etc/rc.local
@@ -55,24 +70,97 @@ SysVStartPriority=99
 WantedBy=multi-user.target
 END
 
+# nano /etc/rc.local
+cat > /etc/rc.local <<-END
+#!/bin/sh -e
+# rc.local
+# By default this script does nothing.
+exit 0
+END
+
 # Ubah izin akses
 chmod +x /etc/rc.local
-echo -e " "
-date
-echo ""
-# enable rc local
-sleep 1
-echo -e "[ ${GREEN}INFO${NC} ] Checking... "
-sleep 2
-sleep 1
-echo -e "[ ${GREEN}INFO$NC ] Enable system rc local"
-systemctl enable rc-local >/dev/null 2>&1
-systemctl start rc-local.service >/dev/null 2>&1
 
-# ----------------------------------------------------------------------------------------------------------------
-# Install BadVPN
-# ----------------------------------------------------------------------------------------------------------------
+# enable rc local
+systemctl enable rc-local
+systemctl start rc-local.service
+
+# disable ipv6
+echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6
+sed -i '$ i\echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6' /etc/rc.local
+
+#update
+apt update -y
+apt upgrade -y
+apt dist-upgrade -y
+apt-get remove --purge ufw firewalld -y
+apt-get remove --purge exim4 -y
+
+# install wget and curl
+apt -y install wget curl
+
+# Install Requirements Tools
+apt install ruby -y
+apt install python -y
+apt install make -y
+apt install cmake -y
+apt install coreutils -y
+apt install rsyslog -y
+apt install net-tools -y
+apt install zip -y
+apt install unzip -y
+apt install nano -y
+apt install sed -y
+apt install gnupg -y
+apt install gnupg1 -y
+apt install bc -y
+apt install jq -y
+apt install apt-transport-https -y
+apt install build-essential -y
+apt install dirmngr -y
+apt install libxml-parser-perl -y
+apt install neofetch -y
+apt install git -y
+apt install lsof -y
+apt install libsqlite3-dev -y
+apt install libz-dev -y
+apt install gcc -y
+apt install g++ -y
+apt install libreadline-dev -y
+apt install zlib1g-dev -y
+apt install libssl-dev -y
+apt install libssl1.0-dev -y
+apt install dos2unix -y
+
+# set time GMT +7
+ln -fs /usr/share/zoneinfo/Asia/Manila /etc/localtime
+
+# set locale
+sed -i 's/AcceptEnv/#AcceptEnv/g' /etc/ssh/sshd_config
+
+# install
+apt-get --reinstall --fix-missing install -y bzip2 gzip coreutils wget screen rsyslog iftop htop net-tools zip unzip wget net-tools curl nano sed screen gnupg gnupg1 bc apt-transport-https build-essential dirmngr libxml-parser-perl neofetch git lsof
+echo "clear" >> .profile
+echo "neofetch" >> .profile
+
+# install webserver
+apt -y install nginx php php-fpm php-cli php-mysql libxml-parser-perl
+rm /etc/nginx/sites-enabled/default
+rm /etc/nginx/sites-available/default
+curl https://${sshlink}/nginx.conf > /etc/nginx/nginx.conf
+curl https://${sshlink}/vps.conf > /etc/nginx/conf.d/vps.conf
+sed -i 's/listen = \/var\/run\/php-fpm.sock/listen = 127.0.0.1:9000/g' /etc/php/fpm/pool.d/www.conf
+useradd -m vps;
+mkdir -p /home/vps/public_html
+echo "<?php phpinfo() ?>" > /home/vps/public_html/info.php
+chown -R www-data:www-data /home/vps/public_html
+chmod -R g+rw /home/vps/public_html
+cd /home/vps/public_html
+wget -O /home/vps/public_html/index.html "https://${sshlink}/index.html1"
+/etc/init.d/nginx restart
 cd
+
+# install badvpn
 cd
 wget -O /usr/bin/badvpn-udpgw "https://${sshlink}/badvpn-udpgw64"
 chmod +x /usr/bin/badvpn-udpgw
@@ -89,24 +177,10 @@ screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7700 --max-clients 500
 screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7800 --max-clients 500
 screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7900 --max-clients 500
 
-# ----------------------------------------------------------------------------------------------------------------
-# Setting sshd_config
-# ----------------------------------------------------------------------------------------------------------------
-echo "Configuring SSH."
+# setting port ssh
 sed -i 's/Port 22/Port 22/g' /etc/ssh/sshd_config
 
-cd /etc/pam.d
-[ -f "common-password" ] || mv common-password common-pass-old
-cat << common > common-password
-password  [success=1 default=ignore]  pam_unix.so obscure sha512
-password  requisite     pam_deny.so
-password  required      pam_permit.so
-common
-cd; systemctl restart sshd
-
-# ----------------------------------------------------------------------------------------------------------------
-# Install Dropbear
-# ----------------------------------------------------------------------------------------------------------------
+# install dropbear
 apt -y install dropbear
 sed -i 's/NO_START=1/NO_START=0/g' /etc/default/dropbear
 sed -i 's/DROPBEAR_PORT=22/DROPBEAR_PORT=143/g' /etc/default/dropbear
@@ -115,24 +189,13 @@ echo "/bin/false" >> /etc/shells
 echo "/usr/sbin/nologin" >> /etc/shells
 /etc/init.d/dropbear restart
 
-# ----------------------------------------------------------------------------------------------------------------
-# Install Banner
-# ----------------------------------------------------------------------------------------------------------------
-wget -O /etc/issue.net "https://${sshlink}/issue.net"
-echo "Banner /etc/issue.net" >>/etc/ssh/sshd_config
-sed -i 's@DROPBEAR_BANNER=""@DROPBEAR_BANNER="/etc/issue.net"@g' /etc/default/dropbear
-
-# ----------------------------------------------------------------------------------------------------------------
-# Install Squid
-# ----------------------------------------------------------------------------------------------------------------
+# install squid
 cd
 apt -y install squid3
 wget -O /etc/squid/squid.conf "https://${sshlink}/squid3.conf"
 sed -i $MYIP2 /etc/squid/squid.conf
 
-# ----------------------------------------------------------------------------------------------------------------
 # Install SSLH
-# ----------------------------------------------------------------------------------------------------------------
 apt -y install sslh
 rm -f /etc/default/sslh
 
@@ -166,9 +229,7 @@ systemctl restart sslh
 /etc/init.d/sslh status
 /etc/init.d/sslh restart
 
-# ----------------------------------------------------------------------------------------------------------------
-# Install VNSTAT
-# ----------------------------------------------------------------------------------------------------------------
+# setting vnstat
 apt -y install vnstat
 /etc/init.d/vnstat restart
 apt -y install libsqlite3-dev
@@ -185,9 +246,7 @@ systemctl enable vnstat
 rm -f /root/vnstat-2.6.tar.gz
 rm -rf /root/vnstat-2.6
 
-# ----------------------------------------------------------------------------------------------------------------
-# Install Stunnel5
-# ----------------------------------------------------------------------------------------------------------------
+# install stunnel 5 
 cd /root/
 wget -q -O stunnel5.zip "https://${stunnel5link}/stunnel5.zip"
 unzip -o stunnel5.zip
@@ -202,13 +261,10 @@ rm -f stunnel5.zip
 mkdir -p /etc/stunnel5
 chmod 644 /etc/stunnel5
 
-mkdir -p /etc/arfvpn
-wget -O /etc/arfvpn/stunnel.pem "https://raw.githubusercontent.com/arfprsty810/lite/main/cert/client.pem"
-chmod 600 /etc/arfvpn/stunnel.pem
-
 # Download Config Stunnel5
 cat > /etc/stunnel5/stunnel5.conf <<-END
-cert = /etc/arfvpn/stunnel.pem
+cert = /etc/xray/xray.crt
+key = /etc/xray/xray.key
 client = no
 socket = a:SO_REUSEADDR=1
 socket = l:TCP_NODELAY=1
@@ -227,6 +283,12 @@ accept = 990
 connect = 127.0.0.1:1194
 
 END
+
+# make a certificate
+#openssl genrsa -out key.pem 2048
+#openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
+#-subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
+#cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
 
 # Service Stunnel5 systemctl restart stunnel5
 cat > /etc/systemd/system/stunnel5.service << END
@@ -268,19 +330,13 @@ systemctl restart stunnel5
 /etc/init.d/stunnel5 status
 /etc/init.d/stunnel5 restart
 
-# ----------------------------------------------------------------------------------------------------------------
-# Install OpemVPN
-# ----------------------------------------------------------------------------------------------------------------
+#OpenVPN
 wget https://${sshlink}/vpn.sh &&  chmod +x vpn.sh && ./vpn.sh
 
-# ----------------------------------------------------------------------------------------------------------------
-# Install Fail2Ban
-# ----------------------------------------------------------------------------------------------------------------
+# install fail2ban
 apt -y install fail2ban
 
-# ----------------------------------------------------------------------------------------------------------------
-# Install Ddos
-# ----------------------------------------------------------------------------------------------------------------
+# Instal DDOS Flate
 if [ -d '/usr/local/ddos' ]; then
 	echo; echo; echo "Please un-install the previous version first"
 	exit 0
@@ -307,14 +363,17 @@ echo; echo 'Installation has completed.'
 echo 'Config file is at /usr/local/ddos/ddos.conf'
 echo 'Please send in your comments and/or suggestions to zaf@vsnl.com'
 
-# ----------------------------------------------------------------------------------------------------------------
+# banner /etc/issue.net
+echo "Banner /etc/issue.net" >>/etc/ssh/sshd_config
+sed -i 's@DROPBEAR_BANNER=""@DROPBEAR_BANNER="/etc/issue.net"@g' /etc/default/dropbear
+
 # Install BBR
-# ----------------------------------------------------------------------------------------------------------------
 wget https://${sshlink}/bbr.sh && chmod +x bbr.sh && ./bbr.sh
 
-# ----------------------------------------------------------------------------------------------------------------
-# Install Blockir Torrent
-# ----------------------------------------------------------------------------------------------------------------
+# Ganti Banner
+wget -O /etc/issue.net "https://${sshlink}/issue.net"
+
+# blockir torrent
 iptables -A FORWARD -m string --string "get_peers" --algo bm -j DROP
 iptables -A FORWARD -m string --string "announce_peer" --algo bm -j DROP
 iptables -A FORWARD -m string --string "find_node" --algo bm -j DROP
@@ -330,21 +389,12 @@ iptables-save > /etc/iptables.up.rules
 iptables-restore -t < /etc/iptables.up.rules
 netfilter-persistent save
 netfilter-persistent reload
-# ----------------------------------------------------------------------------------------------------------------
-# Install WebSocket
-# ----------------------------------------------------------------------------------------------------------------
-cd
-wget "https://${websocketlink}/edu.sh"
-chmod +x edu.sh
-./edu.sh
 
-# ----------------------------------------------------------------------------------------------------------------
-# Download Script
-# ----------------------------------------------------------------------------------------------------------------
+# download script
 cd /usr/bin
 wget -O addhost "https://${sshlink}/addhost.sh"
 wget -O about "https://${sshlink}/about.sh"
-wget -O menuvpn "https://${sshlink}/menu.sh"
+wget -O menu "https://${sshlink}/menu.sh"
 wget -O addssh "https://${sshlink}/addssh.sh"
 wget -O trialssh "https://${sshlink}/trialssh.sh"
 wget -O delssh "https://${sshlink}/delssh.sh"
@@ -372,12 +422,28 @@ wget -O xp "https://${sshlink}/xp.sh"
 wget -O swapkvm "https://${sshlink}/swapkvm.sh"
 wget -O certsslh "https://${sshlink}/certsslh.sh"
 wget -O cfnhost "https://${sshlink}/cfnhost.sh"
-
+wget -O addvmess "https://${xraylink}/addv2ray.sh"
+wget -O addvless "https://${xraylink}/addvless.sh"
+wget -O addtrojan "https://${xraylink}/addtrojan.sh"
+wget -O delvmess "https://${xraylink}/delv2ray.sh"
+wget -O delvless "https://${xraylink}/delvless.sh"
+wget -O deltrojan "https://${xraylink}/deltrojan.sh"
+wget -O cekvless "https://${xraylink}/cekvless.sh"
+wget -O cektrojan "https://${xraylink}/cektrojan.sh"
+wget -O renewvmess "https://${xraylink}/renewv2ray.sh"
+wget -O renewvless "https://${xraylink}/renewvless.sh"
+wget -O renewtrojan "https://${xraylink}/renewtrojan.sh"
+wget -O addtrgo "https://${trojangolink}/addtrgo.sh"
+wget -O deltrgo "https://${trojangolink}/deltrgo.sh"
+wget -O renewtrgo "https://${trojangolink}/renewtrgo.sh"
+wget -O cektrgo "https://${trojangolink}/cektrgo.sh"
+wget -O cekvmess "https://${xraylink}/cekv2ray.sh"
+wget -O certv2ray "https://${xraylink}/certv2ray.sh"
 wget -O portsshws "https://${websocketlink}/portsshws.sh"
 wget -O portsshnontls "https://${websocketlink}/portsshnontls.sh"
 
 chmod +x addhost
-chmod +x menuvpn
+chmod +x menu
 chmod +x addssh
 chmod +x trialssh
 chmod +x delssh
@@ -404,7 +470,23 @@ chmod +x portvlm
 chmod +x wbmn
 chmod +x xp
 chmod +x swapkvm
-
+chmod +x addvmess
+chmod +x addvless
+chmod +x addtrojan
+chmod +x delvless
+chmod +x delvmess
+chmod +x deltrojan
+chmod +x cekvmess
+chmod +x cekvless
+chmod +x cektrojan
+chmod +x renewvmess
+chmod +x renewvless
+chmod +x renewtrojan
+chmod +x certv2ray
+chmod +x addtrgo
+chmod +x deltrgo
+chmod +x renewtrgo
+chmod +x cektrgo
 chmod +x portsshws
 chmod +x portsshnontls
 chmod +x cfnhost
@@ -412,10 +494,7 @@ chmod +x certsslh
 echo "0 5 * * * root clearlog && reboot" >> /etc/crontab
 echo "0 0 * * * root xp" >> /etc/crontab
 echo "5 0 * * * root delexp && restart " >> /etc/crontab
-
-# ----------------------------------------------------------------------------------------------------------------
-# Remove Unnecessary Files
-# ----------------------------------------------------------------------------------------------------------------
+# remove unnecessary files
 cd
 apt autoclean -y
 apt -y remove --purge unscd
@@ -424,11 +503,7 @@ apt-get -y --purge remove apache2*;
 apt-get -y --purge remove bind9*;
 apt-get -y remove sendmail*
 apt autoremove -y
-
-# ----------------------------------------------------------------------------------------------------------------
-# Finisihing
-# ----------------------------------------------------------------------------------------------------------------
-cd
+# finishing
 cd
 chown -R www-data:www-data /home/vps/public_html
 /etc/init.d/nginx restart

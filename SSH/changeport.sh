@@ -11,7 +11,8 @@ CYAN='\033[0;36m'
 LIGHT='\033[0;37m'
 # ==========================================
 #Getting
-MYIP=$(wget -qO- ipinfo.io/ip);
+arfvpn="/etc/arfvpn"
+MYIP=$(cat $arfvpn/IP);
 
 clear
 echo -e ""

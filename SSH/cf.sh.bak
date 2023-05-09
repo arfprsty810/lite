@@ -11,11 +11,7 @@ CYAN='\033[0;36m'
 LIGHT='\033[0;37m'
 # ==========================================
 #Getting
-arfvpn="/etc/arfvpn"
-xray="/etc/xray"
-logxray="/var/log/xray"
-ipvps="/var/lib/arfvpn"
-MYIP=$(cat $arfvpn/IP);
+MYIP=$(wget -qO- ipinfo.io/ip);
 
 sleep 1
 clear
@@ -27,7 +23,7 @@ SUB_DOMAIN=${sub}.sg.${DOMAIN}
 CF_ID=arief.prsty@gmail.com
 CF_KEY=3a3ac5ccc9e764de9129fbbb177c161b9dfbd
 set -euo pipefail
-IP=$(cat $arfvpn/IP);
+IP=$(wget -qO- ipinfo.io/ip);
 echo "Updating DNS for ${SUB_DOMAIN}..."
 ZONE=$(curl -sLX GET "https://api.cloudflare.com/client/v4/zones?name=${DOMAIN}&status=active" \
      -H "X-Auth-Email: ${CF_ID}" \
@@ -81,8 +77,9 @@ RESULT=$(curl -sLX PUT "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_r
      -H "Content-Type: application/json" \
      --data '{"type":"A","name":"'${WILD_DOMAIN}'","content":"'${IP}'","ttl":120,"proxied":false}')
 echo "Host : $SUB_DOMAIN"
-
-echo $SUB_DOMAIN >> $arfvps/domain
+mkdir -p /usr/bin/xray
+mkdir -p /etc/xray
+echo $SUB_DOMAIN >> /etc/xray/domain
 echo $SUB_DOMAIN >> /root/domain
-echo "IP=$SUB_DOMAIN" >> $ipvps
+echo "IP=$SUB_DOMAIN" >> /var/lib/gl33ch3rvpn/ipvps.conf
 sleep 3

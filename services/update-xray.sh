@@ -8,16 +8,16 @@ echo ""
 echo -e " Checking Now Version ...*
 echo ""
 sleep 2
-xray --version > now
-cat now | grep 'Xray' | cut -d ' ' -f 2 | sort > nowv
-now_version=$(cat nowv)
+xray --version > now >/dev/null 2>&1
+cat now | grep 'Xray' | cut -d ' ' -f 2 | sort > nowv >/dev/null 2>&1
+now_version=$(cat nowv) >/dev/null 2>&1
 sleep 2
 
 echo -e " Checking Lastest Version ...*
 echo ""
 sleep 2
-curl -s https://api.github.com/repos/XTLS/Xray-core/releases | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1 > lastv
-latest_version=$(cat lastv)
+curl -s https://api.github.com/repos/XTLS/Xray-core/releases | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1 > lastv >/dev/null 2>&1
+latest_version=$(cat lastv) >/dev/null 2>&1
 
 sleep 2
 echo ""
@@ -30,13 +30,13 @@ echo -e " Your Xray is old version"
 echo -e " Auto Update Xray ..."
 sleep 2
 
-mkdir -p /etc/arfvpn/backup/xray
-cp /etc/xray/config.json /etc/arfvpn/backup/xray
+mkdir -p /etc/arfvpn/backup/xray >/dev/null 2>&1
+cp /etc/xray/config.json /etc/arfvpn/backup/xray >/dev/null 2>&1
 bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version $latest_version
 sleep 2
 
-cp /etc/arfvpn/backup/xray/config.json /etc/xray
-chmod +x /etc/xray/config.json
+cp /etc/arfvpn/backup/xray/config.json /etc/xray >/dev/null 2>&1
+chmod +x /etc/xray/config.json >/dev/null 2>&1
 systemctl daemon-reload >/dev/null 2>&1
 systemctl restart xray >/dev/null 2>&1
 sleep 2
@@ -45,14 +45,9 @@ echo -e " XRAY SUCCESSFULLY UPDATE !"
 echo ""
 echo -e " Your Xray Version is :"
 echo -e " Xray $lastest_version"
+sleep 5
 else
 echo -e " Your Xray is Lastest Version"
+sleep 5
 fi
-
-echo -ne "[ ${yell}WARNING${NC} ] Reboot ur VPS ? (y/n)? "
-read answer
-if [ "$answer" == "${answer#[Yy]}" ] ;then
-exit
-else
-exit
-fi
+clear

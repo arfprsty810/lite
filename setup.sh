@@ -174,14 +174,14 @@ wget -q -O /usr/bin/renew-config "$github/backup/renew-config.sh" && chmod +x /u
 wget -q -O /usr/bin/backup-user "$github/backup/backup-user.sh" && chmod +x /usr/bin/backup-user
 wget -q -O /usr/bin/cf "$github/services/cf.sh" && chmod +x /usr/bin/cf
 wget -O /usr/bin/renew-cert https://raw.githubusercontent.com/arfprsty810/lite/main/backup/renew-cert.sh && chmod +x /usr/bin/renew-cert && sed -i -e 's/\r$//' /usr/bin/renew-cert
-sed -i -e 's/\r$//' /bin/menu
-sed -i -e 's/\r$//' /bin/cek-bandwidth
-sed -i -e 's/\r$//' /bin/update
-sed -i -e 's/\r$//' /bin/restart
-sed -i -e 's/\r$//' /bin/running
-sed -i -e 's/\r$//' /bin/renew-config
-sed -i -e 's/\r$//' /bin/backup-user
-sed -i -e 's/\r$//' /bin/cf
+sed -i -e 's/\r$//' /usr/bin/menu
+sed -i -e 's/\r$//' /usr/bin/cek-bandwidth
+sed -i -e 's/\r$//' /usr/bin/update
+sed -i -e 's/\r$//' /usr/bin/restart
+sed -i -e 's/\r$//' /usr/bin/running
+sed -i -e 's/\r$//' /usr/bin/renew-config
+sed -i -e 's/\r$//' /usr/bin/backup-user
+sed -i -e 's/\r$//' /usr/bin/cf
 clear
 
 # ----------------------------------------------------------------------------------------------------------------

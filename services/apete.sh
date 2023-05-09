@@ -53,7 +53,7 @@ apt install net-tools -y
 clear
 apt install socat xz-utils wget apt-transport-https gnupg gnupg2 gnupg1 dnsutils -y
 clear
-apt-get --reinstall --fix-missing install -y sudo dpkg psmisc ruby wondershaper python2 tmux nmap bzip2 gzip coreutils iftop htop unzip vim nano gcc g++ perl m4 dos2unix libreadline-dev zlib1g-dev git 
+apt-get --reinstall --fix-missing install -y sudo dpkg psmisc ruby wondershaper python2 python tmux nmap bzip2 gzip coreutils iftop htop unzip vim nano gcc g++ perl m4 dos2unix libreadline-dev zlib1g-dev git 
 clear
 apt-get --reinstall --fix-missing install -y screen rsyslog sed bc dirmngr libxml-parser-perl neofetch screenfetch lsof easy-rsa libsqlite3-dev 
 #apt install -y openvpn dropbear squid

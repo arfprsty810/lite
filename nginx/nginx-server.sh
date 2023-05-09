@@ -24,23 +24,22 @@ date
 sleep 3
 echo -e "[ ${green}INFO$NC ] INSTALLING NGINX SERVER"
 # install webserver
-apt-get remove --purge -y nginx php php-fpm php-cli php-mysql libxml-parser-perl
-rm -rvf /etc/nginx
-apt autoremove -y
-systemctl daemon-reload
+#apt-get remove --purge -y nginx #php php-fpm php-cli php-mysql libxml-parser-perl
+#rm -rvf /etc/nginx
+#apt autoremove -y
+#systemctl daemon-reload
 apt-get -y install nginx
-apt-get -y install php
-apt-get -y install php-fpm
-apt-get -y install php-cli
-apt-get -y install php-mysql
-apt-get -y install libxml-parser-perl
+#apt-get -y install php
+#apt-get -y install php-fpm
+#apt-get -y install php-cli
+#apt-get -y install php-mysql
+#apt-get -y install libxml-parser-perl
 rm /etc/nginx/sites-enabled/default
 rm /etc/nginx/sites-available/default
 wget -O /etc/nginx/nginx.conf "$github/nginx/nginx.conf"
 wget -O /etc/nginx/conf.d/vps.conf "$github/nginx/vps.conf"
 mkdir -p /home/vps/public_html
-sed -i 's/listen = \/run\/php\/php7.2-fpm.sock/listen = 127.0.0.1:9000/g' /etc/php/7.2/fpm/pool.d/www.conf
-#listen = /run/php/php7.2-fpm.sock
+#sed -i 's/listen = \/run\/php\/php7.2-fpm.sock/listen = 127.0.0.1:9000/g' /etc/php/7.2/fpm/pool.d/www.conf
 useradd -m vps;
 echo "<?php phpinfo() ?>" > /home/vps/public_html/info.php
 chown -R www-data:www-data /home/vps/public_html

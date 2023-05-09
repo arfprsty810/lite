@@ -143,7 +143,7 @@ chmod +x /usr/bin/renew-config
 wget -q -O /usr/bin/backup-user "$github/backup/backup-user.sh"
 chmod +x /usr/bin/backup-user
 wget -O /usr/bin/update-xray "$github/services/update-xray.sh"
-chmod +x /usr/bin/update-xray.sh
+chmod +x /usr/bin/update-xray
 clear
 
 echo -e "[ ${green}INFO$NC ] Install New Script ..."

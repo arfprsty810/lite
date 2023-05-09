@@ -15,12 +15,6 @@ arfvpn="/etc/arfvpn"
 github="https://raw.githubusercontent.com/arfprsty810/lite/main"
 domain=$(cat $arfvpn/domain)
 clear
-
-echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "$green          INSTALLING CERT SSL $NC"
-echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-date
-sleep 3
 systemctl stop nginx
 clear
 echo -e "\033[0;34m┌─────────────────────────────────────────────────────┐${NC}"
@@ -80,4 +74,10 @@ chmod +x /usr/local/bin/ssl_renew.sh
 if ! grep -q 'ssl_renew.sh' /var/spool/cron/crontabs/root;then (crontab -l;echo "15 03 */3 * * /usr/local/bin/ssl_renew.sh") | crontab;fi
 clear
 ;;
+
+*)
+clear
+cert
+;;
+
 esac

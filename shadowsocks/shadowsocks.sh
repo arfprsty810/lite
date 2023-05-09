@@ -68,11 +68,11 @@ wget -q -O /usr/bin/addss "$github/shadowsocks/addss.sh" && chmod +x /usr/bin/ad
 wget -q -O /usr/bin/cekss "$github/shadowsocks/cekss.sh" && chmod +x /usr/bin/cekss
 wget -q -O /usr/bin/delss "$github/shadowsocks/delss.sh" && chmod +x /usr/bin/delss
 wget -q -O /usr/bin/renewss "$github/shadowsocks/renewss.sh" && chmod +x /usr/bin/renewss
-sed -i -e 's/\r$//' /bin/menu-ss
-sed -i -e 's/\r$//' /bin/addss
-sed -i -e 's/\r$//' /bin/cekss
-sed -i -e 's/\r$//' /bin/delss
-sed -i -e 's/\r$//' /bin/renewss
+sed -i -e 's/\r$//' /usr/bin/menu-ss
+sed -i -e 's/\r$//' /usr/bin/addss
+sed -i -e 's/\r$//' /usr/bin/cekss
+sed -i -e 's/\r$//' /usr/bin/delss
+sed -i -e 's/\r$//' /usr/bin/renewss
 
 sleep 1
 echo -e "[ ${green}INFO$NC ] Restart Service/s ..."

@@ -60,6 +60,7 @@ rm -rvf /usr/bin/backup-user
 rm -rvf /usr/bin/cekuser
 rm -rvf /usr/bin/xp
 rm -rvf /usr/bin/cf
+rm -rvf /usr/bin/cert
 clear
 
 echo -e "[ ${green}INFO$NC ] Update New Script ..."
@@ -117,8 +118,8 @@ chmod +x /usr/bin/renewss
 clear
 
 #--
-wget -O /usr/bin/renew-cert https://raw.githubusercontent.com/arfprsty810/lite/main/backup/renew-cert.sh && chmod +x /usr/bin/renew-cert && sed -i -e 's/\r$//' /usr/bin/renew-cert
-
+wget -O /usr/bin/cert "$github/cert/cert.sh"
+chmod +x /usr/bin/cert
 wget -q -O /usr/bin/xp "$github/xray/xp.sh"
 chmod +x /usr/bin/xp
 wget -q -O /usr/bin/cf "$github/services/cf.sh"
@@ -145,95 +146,96 @@ clear
 
 echo -e "[ ${green}INFO$NC ] Install New Script ..."
 sleep 2
-sed -i -e 's/\r$//' /bin/cf
-sed -i -e 's/\r$//' /bin/xp
-sed -i -e 's/\r$//' /bin/menu
-sed -i -e 's/\r$//' /bin/update
-sed -i -e 's/\r$//' /bin/restart
-sed -i -e 's/\r$//' /bin/running
-sed -i -e 's/\r$//' /bin/cek-bandwidth
-sed -i -e 's/\r$//' /bin/renew-config
-sed -i -e 's/\r$//' /bin/backup-user
-sed -i -e 's/\r$//' /bin/cekuser
+sed -i -e 's/\r$//' /usr/bin/cert
+sed -i -e 's/\r$//' /usr/bin/cf
+sed -i -e 's/\r$//' /usr/bin/xp
+sed -i -e 's/\r$//' /usr/bin/menu
+sed -i -e 's/\r$//' /usr/bin/update
+sed -i -e 's/\r$//' /usr/bin/restart
+sed -i -e 's/\r$//' /usr/bin/running
+sed -i -e 's/\r$//' /usr/bin/cek-bandwidth
+sed -i -e 's/\r$//' /usr/bin/renew-config
+sed -i -e 's/\r$//' /usr/bin/backup-user
+sed -i -e 's/\r$//' /usr/bin/cekuser
 clear
 
-sed -i -e 's/\r$//' /bin/menu-vmess
-sed -i -e 's/\r$//' /bin/add-ws
-sed -i -e 's/\r$//' /bin/cek-ws
-sed -i -e 's/\r$//' /bin/del-vmess
-sed -i -e 's/\r$//' /bin/renew-ws
+sed -i -e 's/\r$//' /usr/bin/menu-vmess
+sed -i -e 's/\r$//' /usr/bin/add-ws
+sed -i -e 's/\r$//' /usr/bin/cek-ws
+sed -i -e 's/\r$//' /usr/bin/del-vmess
+sed -i -e 's/\r$//' /usr/bin/renew-ws
 clear
 
-sed -i -e 's/\r$//' /bin/menu-vless
-sed -i -e 's/\r$//' /bin/add-vless
-sed -i -e 's/\r$//' /bin/cek-vless
-sed -i -e 's/\r$//' /bin/del-vless
-sed -i -e 's/\r$//' /bin/renew-ws
+sed -i -e 's/\r$//' /usr/bin/menu-vless
+sed -i -e 's/\r$//' /usr/bin/add-vless
+sed -i -e 's/\r$//' /usr/bin/cek-vless
+sed -i -e 's/\r$//' /usr/bin/del-vless
+sed -i -e 's/\r$//' /usr/bin/renew-ws
 clear
 
-sed -i -e 's/\r$//' /bin/menu-trojan
-sed -i -e 's/\r$//' /bin/add-tr
-sed -i -e 's/\r$//' /bin/cek-tr
-sed -i -e 's/\r$//' /bin/del-tr
-sed -i -e 's/\r$//' /bin/renew-tr
+sed -i -e 's/\r$//' /usr/bin/menu-trojan
+sed -i -e 's/\r$//' /usr/bin/add-tr
+sed -i -e 's/\r$//' /usr/bin/cek-tr
+sed -i -e 's/\r$//' /usr/bin/del-tr
+sed -i -e 's/\r$//' /usr/bin/renew-tr
 clear
 
-sed -i -e 's/\r$//' /bin/menu-ss
-sed -i -e 's/\r$//' /bin/addss
-sed -i -e 's/\r$//' /bin/cekss
-sed -i -e 's/\r$//' /bin/delss
-sed -i -e 's/\r$//' /bin/renewss
+sed -i -e 's/\r$//' /usr/bin/menu-ss
+sed -i -e 's/\r$//' /usr/bin/addss
+sed -i -e 's/\r$//' /usr/bin/cekss
+sed -i -e 's/\r$//' /usr/bin/delss
+sed -i -e 's/\r$//' /usr/bin/renewss
 clear
 
 rm -rvf /bin/autodel
 wget -q -O /usr/bin/autodel "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/autodel.sh"
 chmod +x /usr/bin/autodel
-sed -i -e 's/\r$//' /bin/autodel
+sed -i -e 's/\r$//' /usr/bin/autodel
 
 rm -rvf /bin/autokill
 wget -q -O /usr/bin/autokill "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/autokill.sh"
 chmod +x /usr/bin/autokill
-sed -i -e 's/\r$//' /bin/autokill
+sed -i -e 's/\r$//' /usr/bin/autokill
 
 rm -rvf /bin/cek
 wget -q -O /usr/bin/cek "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/cek.sh"
 chmod +x /usr/bin/cek
-sed -i -e 's/\r$//' /bin/cek
+sed -i -e 's/\r$//' /usr/bin/cek
 
 rm -rvf /bin/ceklim
 wget -q -O /usr/bin/ceklim "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ceklim.sh"
 chmod +x /usr/bin/ceklim
-sed -i -e 's/\r$//' /bin/ceklim
+sed -i -e 's/\r$//' /usr/bin/ceklim
 
 rm -rvf /bin/del
 wget -q -O /usr/bin/del "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/del.sh"
 chmod +x /usr/bin/del
-sed -i -e 's/\r$//' /bin/del
+sed -i -e 's/\r$//' /usr/bin/del
 
 rm -rvf /bin/member
 wget -q -O /usr/bin/member "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/member.sh"
 chmod +x /usr/bin/member
-sed -i -e 's/\r$//' /bin/member
+sed -i -e 's/\r$//' /usr/bin/member
 
 rm -rvf /bin/menu-ssh
 wget -q -O /usr/bin/menu-ssh "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/menu-ssh.sh"
 chmod +x /usr/bin/menu-ssh
-sed -i -e 's/\r$//' /bin/menu-ssh
+sed -i -e 's/\r$//' /usr/bin/menu-ssh
 
 rm -rvf /bin/renew
 wget -q -O /usr/bin/renew "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/renew.sh"
 chmod +x /usr/bin/renew
-sed -i -e 's/\r$//' /bin/renew
+sed -i -e 's/\r$//' /usr/bin/renew
 
 rm -rvf /bin/tendang
 wget -q -O /usr/bin/tendang "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/tendang.sh"
 chmod +x /usr/bin/tendang
-sed -i -e 's/\r$//' /bin/tendang
+sed -i -e 's/\r$//' /usr/bin/tendang
 
 rm -rvf /bin/usernew
 wget -q -O /usr/bin/usernew "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/usernew.sh"
 chmod +x /usr/bin/usernew
-sed -i -e 's/\r$//' /bin/usernew
+sed -i -e 's/\r$//' /usr/bin/usernew
 clear
 
 echo -e "[ ${green}INFO$NC ] Update Successfully!"

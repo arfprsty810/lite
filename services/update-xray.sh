@@ -1,7 +1,7 @@
 ## Update Xray
 xray --version > now
 log=$(cat now)
-now_version=( $log | grep 'Xray' | cut -d ' ' -f 2 | sort )
+now_version=$( `$log | grep 'Xray' | cut -d ' ' -f 2 | sort` )
 latest_version="$(curl -s https://api.github.com/repos/XTLS/Xray-core/releases | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
 
 if [[ $now_version == $lastest_version ]]; then

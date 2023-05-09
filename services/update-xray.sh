@@ -30,15 +30,15 @@ echo -e " Your Xray is old version"
 echo -e " Auto Update Xray ..."
 sleep 2
 
-mkdir /etc/arfvpn/backup/xray
+mkdir -p /etc/arfvpn/backup/xray
 cp /etc/xray/config.json /etc/arfvpn/backup/xray
 bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version $latest_version
 sleep 2
 
 cp /etc/arfvpn/backup/xray/config.json /etc/xray
 chmod +x /etc/xray/config.json
-systemctl daemon-reload
-systemctl restart xray
+systemctl daemon-reload >/dev/null 2>&1
+systemctl restart xray >/dev/null 2>&1
 sleep 2
 
 echo -e " XRAY SUCCESSFULLY UPDATE !"

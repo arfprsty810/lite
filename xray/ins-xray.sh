@@ -49,73 +49,10 @@ touch $logxray/error.log
 touch $logxray/access2.log
 touch $logxray/error2.log
 
-# / / Ambil Xray Core Version Terbaru
+# / / Install Xray Core << Every>> Lastest Version
 latest_version="$(curl -s https://api.github.com/repos/XTLS/Xray-core/releases | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
-#xraycore_link="https://github.com/XTLS/Xray-core/releases/download/v$latest_version/xray-linux-64.zip"
-#mkdir -p /usr/bin/xray
-# / / Unzip Xray Linux 64
-#cd `mktemp -d`
-#curl -sL "$xraycore_link" -o xray.zip
-#unzip -q xray.zip && rm -rf xray.zip
-#mv xray /usr/local/bin/xray
-#chmod +x /usr/local/bin/xray
 bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version $latest_version
-#1.7.5
-#1.5.6
-clear
-
-echo -e "[ ${green}INFO$NC ] INSTALLING NGINX SERVER"
-# install webserver
-apt-get -y install nginx
-apt-get -y install php
-apt-get -y install php-fpm
-apt-get -y install php-cli
-apt-get -y install php-mysql
-apt-get -y install libxml-parser-perl
-rm /etc/nginx/sites-enabled/default
-rm /etc/nginx/sites-available/default
-wget -O /etc/nginx/nginx.conf "$github/xray/nginx.conf"
-wget -O /etc/nginx/conf.d/vps.conf "$github/xray/vps.conf"
-mkdir -p /home/vps/public_html
-sed -i 's/listen = \/run\/php\/php7.2-fpm.sock/listen = 127.0.0.1:9000/g' /etc/php/7.2/fpm/pool.d/www.conf
-#listen = /run/php/php7.2-fpm.sock
-useradd -m vps;
-echo "<?php phpinfo() ?>" > /home/vps/public_html/info.php
-chown -R www-data:www-data /home/vps/public_html
-chmod -R g+rw /home/vps/public_html
-wget -O /home/vps/public_html/index.html "$github/xray/index.html"
-/etc/init.d/nginx restart
-clear
-
-echo -e "[ ${green}INFO$NC ] INSATLLING CERT SSL"
-sleep 2
-systemctl stop nginx
-
-## crt ssl cloudflare sg.d-jumper.me *.sg.d-jumper.me
-wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
-wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
-
-## make a crt xray $domain
-#mkdir /root/.acme.sh
-#curl https://acme-install.netlify.app/acme.sh -o /root/.acme.sh/acme.sh
-#chmod +x /root/.acme.sh/acme.sh
-#/root/.acme.sh/acme.sh --upgrade --auto-upgrade
-#/root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
-#/root/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-256
-#~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath $arfvpn/arfvpn.crt --keypath $arfvpn/arfvpn.key --ecc
-#clear
-
-echo -e "[ ${green}INFO$NC ] RENEW CERT SSL"
-# nginx renew ssl
-echo -n '#!/bin/bash
-/etc/init.d/nginx stop
-#"/root/.acme.sh"/acme.sh --cron --home "/root/.acme.sh" &> /root/renew_ssl.log
-wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
-wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
-/etc/init.d/nginx start
-' > /usr/local/bin/ssl_renew.sh
-chmod +x /usr/local/bin/ssl_renew.sh
-if ! grep -q 'ssl_renew.sh' /var/spool/cron/crontabs/root;then (crontab -l;echo "15 03 */3 * * /usr/local/bin/ssl_renew.sh") | crontab;fi
+sleep 3
 clear
 
 echo -e "[ ${green}INFO$NC ] MEMBUAT PORT"

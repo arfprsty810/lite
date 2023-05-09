@@ -142,10 +142,13 @@ wget -q -O /usr/bin/renew-config "$github/backup/renew-config.sh"
 chmod +x /usr/bin/renew-config
 wget -q -O /usr/bin/backup-user "$github/backup/backup-user.sh"
 chmod +x /usr/bin/backup-user
+wget -O /usr/bin/update-xray "$github/services/update-xray.sh"
+chmod +x /usr/bin/update-xray.sh
 clear
 
 echo -e "[ ${green}INFO$NC ] Install New Script ..."
 sleep 2
+sed -i -e 's/\r$//' /usr/bin/update-xray
 sed -i -e 's/\r$//' /usr/bin/cert
 sed -i -e 's/\r$//' /usr/bin/cf
 sed -i -e 's/\r$//' /usr/bin/xp
@@ -239,7 +242,7 @@ sed -i -e 's/\r$//' /usr/bin/usernew
 clear
 
 echo -e "[ ${green}INFO$NC ] Check Xray Version!"
-wget https://raw.githubusercontent.com/arfprsty810/lite/main/services/update-xray.sh && chmod +x update-xray.sh && ./update-xray.sh
+/usr/bin/update-xray
 
 echo -e "[ ${green}INFO$NC ] Update Successfully!"
 sleep 3

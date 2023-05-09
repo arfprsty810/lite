@@ -156,21 +156,21 @@ sleep 2
 #clear
 #sleep 2
 
-#Instal SSH-vpn2
-#wget $github/ssh/ssh-vpn2.sh
-#chmod +x ssh-vpn2.sh
-#sed -i -e 's/\r$//' ssh-vpn2.sh
-#./ssh-vpn2.sh
-#clear
-#sleep 2
-
-#Instal Bbr
-wget $github/bbr/bbr.sh
-chmod +x bbr.sh
-sed -i -e 's/\r$//' bbr.sh
-screen -S bbr ./bbr.sh
+#Instal SSH-vpnn
+wget $github/SSH/ssh-vpnn.sh
+chmod +x ssh-vpnn.sh
+sed -i -e 's/\r$//' ssh-vpnn.sh
+./ssh-vpnn.sh
 clear
 sleep 2
+
+#Instal Bbr
+#wget $github/bbr/bbr.sh
+#chmod +x bbr.sh
+#sed -i -e 's/\r$//' bbr.sh
+#screen -S bbr ./bbr.sh
+#clear
+#sleep 2
 
 echo -e "[ ${green}INFO$NC ] DOWNLOAD SCRIPT"
 sleep 2
@@ -323,21 +323,21 @@ sleep 1
 echo -e "[ ${GREEN}ok${NC} ] Restarting badvpn "
 echo ""
 
-cat> /root/.profile << END
+#cat> /root/.profile << END
 # ~/.profile: executed by Bourne-compatible login shells.
 
-if [ "$BASH" ]; then
-  if [ -f ~/.bashrc ]; then
-    . ~/.bashrc
-  fi
-fi
+#if [ "$BASH" ]; then
+#  if [ -f ~/.bashrc ]; then
+#    . ~/.bashrc
+#  fi
+#fi
 
-mesg n || true
-clear
-menu
-END
-chmod 644 /root/.profile
-clear
+#mesg n || true
+#clear
+#menu
+#END
+#chmod 644 /root/.profile
+#clear
 
 history -c
 echo "unset HISTFILE" >> /etc/profile

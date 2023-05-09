@@ -118,62 +118,6 @@ wget https://raw.githubusercontent.com/arfprsty810/lite/main/xray/ins-xray.sh
 chmod +x ins-xray.sh
 sed -i -e 's/\r$//' ins-xray.sh
 ./ins-xray.sh
-clear
-sleep 2
-
-systemctl daemon-reload >/dev/null 2>&1
-sleep 1
-echo -e "[ ${GREEN}ok${NC} ] Daemon-Reload"
-systemctl restart nginx >/dev/null 2>&1
-systemctl enable nginx >/dev/null 2>&1
-systemctl start nginx >/dev/null 2>&1
-sleep 1
-echo -e "[ ${GREEN}ok${NC} ] Restarting Nginx "
-systemctl restart xray >/dev/null 2>&1
-systemctl enable xray >/dev/null 2>&1
-systemctl start xray >/dev/null 2>&1
-sleep 1
-echo -e "[ ${GREEN}ok${NC} ] Restarting Xray - VMESS / VLESS / TROJAN"
-sleep 2
-clear
-
-echo -e "[ ${green}INFO$NC ] INSTALL SCRIPT ..."
-sleep 1
-wget -q -O /usr/bin/restart "$github/services/restart.sh" && chmod +x /usr/bin/restart
-wget -q -O /usr/bin/running "$github/services/running.sh" && chmod +x /usr/bin/running
-wget -q -O /usr/bin/cek-bandwidth "$github/services/cek-bandwidth.sh" && chmod +x /usr/bin/cek-bandwidth
-wget -q -O /usr/bin/menu "$github/services/menu.sh" && chmod +x /usr/bin/menu
-wget -q -O /usr/bin/speedtest "$github/services/speedtest_cli.py" && chmod +x /usr/bin/speedtest
-wget -q -O /usr/bin/update "$github/services/update.sh" && chmod +x /usr/bin/update
-wget -q -O /usr/bin/renew-config "$github/backup/renew-config.sh" && chmod +x /usr/bin/renew-config
-wget -q -O /usr/bin/backup-user "$github/backup/backup-user.sh" && chmod +x /usr/bin/backup-user
-wget -q -O /usr/bin/cf "$github/services/cf.sh" && chmod +x /usr/bin/cf
-sed -i -e 's/\r$//' /bin/menu
-sed -i -e 's/\r$//' /bin/cek-bandwidth
-sed -i -e 's/\r$//' /bin/update
-sed -i -e 's/\r$//' /bin/restart
-sed -i -e 's/\r$//' /bin/running
-sed -i -e 's/\r$//' /bin/renew-config
-sed -i -e 's/\r$//' /bin/backup-user
-sed -i -e 's/\r$//' /bin/cf
-clear
-
-cat> /root/.profile << END
-# ~/.profile: executed by Bourne-compatible login shells.
-
-if [ "$BASH" ]; then
-  if [ -f ~/.bashrc ]; then
-    . ~/.bashrc
-  fi
-fi
-
-mesg n || true
-clear
-menu
-END
-chmod 644 /root/.profile
-clear
-
 rm -rvf /root/*.sh
 rm -rvf /root/*.sh.*
 clear
@@ -191,46 +135,6 @@ wget https://raw.githubusercontent.com/arfprsty810/lite/main/xray/trojan/trojan-
 chmod +x trojan-go.sh
 sed -i -e 's/\r$//' trojan-go.sh
 ./trojan-go.sh
-clear
-sleep 2
-
-echo -e "[ ${green}INFO$NC ] INSTALL SCRIPT ..."
-sleep 1
-wget -q -O /usr/bin/restart "$github/services/restart.sh" && chmod +x /usr/bin/restart
-wget -q -O /usr/bin/running "$github/services/running.sh" && chmod +x /usr/bin/running
-wget -q -O /usr/bin/cek-bandwidth "$github/services/cek-bandwidth.sh" && chmod +x /usr/bin/cek-bandwidth
-wget -q -O /usr/bin/menu "$github/services/menu.sh" && chmod +x /usr/bin/menu
-wget -q -O /usr/bin/speedtest "$github/services/speedtest_cli.py" && chmod +x /usr/bin/speedtest
-wget -q -O /usr/bin/update "$github/services/update.sh" && chmod +x /usr/bin/update
-wget -q -O /usr/bin/renew-config "$github/backup/renew-config.sh" && chmod +x /usr/bin/renew-config
-wget -q -O /usr/bin/backup-user "$github/backup/backup-user.sh" && chmod +x /usr/bin/backup-user
-wget -q -O /usr/bin/cf "$github/services/cf.sh" && chmod +x /usr/bin/cf
-sed -i -e 's/\r$//' /bin/menu
-sed -i -e 's/\r$//' /bin/cek-bandwidth
-sed -i -e 's/\r$//' /bin/update
-sed -i -e 's/\r$//' /bin/restart
-sed -i -e 's/\r$//' /bin/running
-sed -i -e 's/\r$//' /bin/renew-config
-sed -i -e 's/\r$//' /bin/backup-user
-sed -i -e 's/\r$//' /bin/cf
-clear
-
-cat> /root/.profile << END
-# ~/.profile: executed by Bourne-compatible login shells.
-
-if [ "$BASH" ]; then
-  if [ -f ~/.bashrc ]; then
-    . ~/.bashrc
-  fi
-fi
-
-mesg n || true
-clear
-menu
-END
-chmod 644 /root/.profile
-clear
-
 rm -rvf /root/*.sh
 rm -rvf /root/*.sh.*
 clear
@@ -245,46 +149,6 @@ wget https://raw.githubusercontent.com/arfprsty810/lite/main/shadowsocks/shadows
 chmod +x shadowsocks.sh 
 sed -i -e 's/\r$//' shadowsocks.sh
 ./shadowsocks.sh
-clear
-sleep 2
-
-echo -e "[ ${green}INFO$NC ] INSTALL SCRIPT ..."
-sleep 1
-wget -q -O /usr/bin/restart "$github/services/restart.sh" && chmod +x /usr/bin/restart
-wget -q -O /usr/bin/running "$github/services/running.sh" && chmod +x /usr/bin/running
-wget -q -O /usr/bin/cek-bandwidth "$github/services/cek-bandwidth.sh" && chmod +x /usr/bin/cek-bandwidth
-wget -q -O /usr/bin/menu "$github/services/menu.sh" && chmod +x /usr/bin/menu
-wget -q -O /usr/bin/speedtest "$github/services/speedtest_cli.py" && chmod +x /usr/bin/speedtest
-wget -q -O /usr/bin/update "$github/services/update.sh" && chmod +x /usr/bin/update
-wget -q -O /usr/bin/renew-config "$github/backup/renew-config.sh" && chmod +x /usr/bin/renew-config
-wget -q -O /usr/bin/backup-user "$github/backup/backup-user.sh" && chmod +x /usr/bin/backup-user
-wget -q -O /usr/bin/cf "$github/services/cf.sh" && chmod +x /usr/bin/cf
-sed -i -e 's/\r$//' /bin/menu
-sed -i -e 's/\r$//' /bin/cek-bandwidth
-sed -i -e 's/\r$//' /bin/update
-sed -i -e 's/\r$//' /bin/restart
-sed -i -e 's/\r$//' /bin/running
-sed -i -e 's/\r$//' /bin/renew-config
-sed -i -e 's/\r$//' /bin/backup-user
-sed -i -e 's/\r$//' /bin/cf
-clear
-
-cat> /root/.profile << END
-# ~/.profile: executed by Bourne-compatible login shells.
-
-if [ "$BASH" ]; then
-  if [ -f ~/.bashrc ]; then
-    . ~/.bashrc
-  fi
-fi
-
-mesg n || true
-clear
-menu
-END
-chmod 644 /root/.profile
-clear
-
 rm -rvf /root/*.sh
 rm -rvf /root/*.sh.*
 clear
@@ -455,46 +319,8 @@ sleep 1
 echo -e "[ ${GREEN}ok${NC} ] Restarting badvpn "
 echo ""
 
-echo -e "[ ${green}INFO$NC ] INSTALL SCRIPT ..."
-sleep 1
-wget -q -O /usr/bin/restart "$github/services/restart.sh" && chmod +x /usr/bin/restart
-wget -q -O /usr/bin/running "$github/services/running.sh" && chmod +x /usr/bin/running
-wget -q -O /usr/bin/cek-bandwidth "$github/services/cek-bandwidth.sh" && chmod +x /usr/bin/cek-bandwidth
-wget -q -O /usr/bin/menu "$github/services/menu.sh" && chmod +x /usr/bin/menu
-wget -q -O /usr/bin/speedtest "$github/services/speedtest_cli.py" && chmod +x /usr/bin/speedtest
-wget -q -O /usr/bin/update "$github/services/update.sh" && chmod +x /usr/bin/update
-wget -q -O /usr/bin/renew-config "$github/backup/renew-config.sh" && chmod +x /usr/bin/renew-config
-wget -q -O /usr/bin/backup-user "$github/backup/backup-user.sh" && chmod +x /usr/bin/backup-user
-wget -q -O /usr/bin/cf "$github/services/cf.sh" && chmod +x /usr/bin/cf
-sed -i -e 's/\r$//' /bin/menu
-sed -i -e 's/\r$//' /bin/cek-bandwidth
-sed -i -e 's/\r$//' /bin/update
-sed -i -e 's/\r$//' /bin/restart
-sed -i -e 's/\r$//' /bin/running
-sed -i -e 's/\r$//' /bin/renew-config
-sed -i -e 's/\r$//' /bin/backup-user
-sed -i -e 's/\r$//' /bin/cf
-clear
-
-cat> /root/.profile << END
-# ~/.profile: executed by Bourne-compatible login shells.
-
-if [ "$BASH" ]; then
-  if [ -f ~/.bashrc ]; then
-    . ~/.bashrc
-  fi
-fi
-
-mesg n || true
-clear
-menu
-END
-chmod 644 /root/.profile
-clear
-
 rm -rvf /root/*.sh
 rm -rvf /root/*.sh.*
-clear
 
 echo -e "[ ${green}INFO$NC ] RE-INSTALL FINISHED !"
 sleep 2

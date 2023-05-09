@@ -24,7 +24,7 @@ date
 sleep 3
 echo -e "[ ${green}INFO$NC ] INSTALLING NGINX SERVER"
 # install webserver
-apt-get --purge remove -y nginx php php-fpm php-cli php-mysql libxml-parser-perl
+apt-get remove --purge -y nginx php php-fpm php-cli php-mysql libxml-parser-perl
 rm -rvf /etc/nginx
 apt autoremove -y
 systemctl daemon-reload

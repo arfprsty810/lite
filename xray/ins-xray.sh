@@ -48,8 +48,18 @@ touch $logxray/access.log
 touch $logxray/error.log
 touch $logxray/access2.log
 touch $logxray/error2.log
+
 # / / Ambil Xray Core Version Terbaru
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.7.5
+latest_version="$(curl -s https://api.github.com/repos/XTLS/Xray-core/releases | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
+#xraycore_link="https://github.com/XTLS/Xray-core/releases/download/v$latest_version/xray-linux-64.zip"
+#mkdir -p /usr/bin/xray
+# / / Unzip Xray Linux 64
+#cd `mktemp -d`
+#curl -sL "$xraycore_link" -o xray.zip
+#unzip -q xray.zip && rm -rf xray.zip
+#mv xray /usr/local/bin/xray
+#chmod +x /usr/local/bin/xray
+bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version $latest_version
 #1.7.5
 #1.5.6
 clear
@@ -67,7 +77,8 @@ rm /etc/nginx/sites-available/default
 wget -O /etc/nginx/nginx.conf "$github/xray/nginx.conf"
 wget -O /etc/nginx/conf.d/vps.conf "$github/xray/vps.conf"
 mkdir -p /home/vps/public_html
-sed -i 's/listen = \/var\/run\/php-fpm.sock/listen = 127.0.0.1:9000/g' /etc/php/7.2/fpm/pool.d/www.conf
+sed -i 's/listen = \/run\/php\/php7.2-fpm.sock/listen = 127.0.0.1:9000/g' /etc/php/7.2/fpm/pool.d/www.conf
+#listen = /run/php/php7.2-fpm.sock
 useradd -m vps;
 echo "<?php phpinfo() ?>" > /home/vps/public_html/info.php
 chown -R www-data:www-data /home/vps/public_html

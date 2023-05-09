@@ -32,14 +32,11 @@ clear
 echo -e "[ ${green}INFO$NC ] INSTALLING REQUIREMENTS"
 sleep 3
 clear
-apt-get remove --purge ufw* -y
-apt-get remove --purge firewalld* -y
-apt-get remove --purge exim4* -y
-apt autoremove -y
-clear
 apt update && apt upgrade -y
 clear
 apt clean all && apt update
+clear
+apt install iptables iptables-persistent -y
 clear
 apt install bash-completion -y
 clear
@@ -53,7 +50,7 @@ apt install net-tools -y
 clear
 apt install socat xz-utils wget apt-transport-https gnupg gnupg2 gnupg1 dnsutils -y
 clear
-apt-get --reinstall --fix-missing install -y sudo dpkg psmisc ruby wondershaper python2 tmux nmap bzip2 gzip coreutils iftop htop unzip vim nano gcc g++ perl m4 dos2unix libreadline-dev zlib1g-dev git 
+apt-get --reinstall --fix-missing install -y sudo dpkg psmisc ruby wondershaper python2 tmux nmap bzip2 gzip coreutils iftop htop unzip vim nano gcc g++ make perl m4 dos2unix libreadline-dev zlib1g-dev git 
 clear
 apt-get --reinstall --fix-missing install -y screen rsyslog sed bc dirmngr libxml-parser-perl neofetch screenfetch lsof easy-rsa libsqlite3-dev 
 #apt install -y openvpn dropbear squid
@@ -62,11 +59,6 @@ gem install lolcat
 clear
 apt-get install --no-install-recommends build-essential autoconf libtool libssl-dev libpcre3-dev libev-dev asciidoc xmlto automake -y
 clear
-apt install make -y #cmake -y
-#apt install libz-dev -y
-#apt install libssl1.0-dev -y
-#echo "clear" >> .profile
-#echo "neofetch" >> .profile
 
 apt-get install software-properties-common -y
 clear

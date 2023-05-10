@@ -277,39 +277,11 @@ systemctl enable shadowsocks-libev.service >/dev/null 2>&1
 systemctl start shadowsocks-libev.service >/dev/null 2>&1
 sleep 1
 echo -e "[ ${GREEN}ok${NC} ] Restarting ShadowSocks-OBFS"
-systemctl restart ws-dropbear.service >/dev/null 2>&1
-systemctl enable ws-dropbear.service >/dev/null 2>&1
-systemctl start ws-dropbear.service >/dev/null 2>&1
+/etc/init.d/sslh restart >/dev/null 2>&1
+/etc/init.d/sslh enable >/dev/null 2>&1
+/etc/init.d/sslh start >/dev/null 2>&1
 sleep 1
-echo -e "[ ${GREEN}ok${NC} ] Restarting WS-Dropbear"
-systemctl restart edu-proxy.service >/dev/null 2>&1
-systemctl enable edu-proxy.service >/dev/null 2>&1
-systemctl start edu-proxy.service>/dev/null 2>&1
-sleep 1
-echo -e "[ ${GREEN}ok${NC} ] Restarting WS-OpenSSH"
-systemctl restart edu-proxyovpn.service >/dev/null 2>&1
-systemctl enable edu-proxyovpn.service >/dev/null 2>&1
-systemctl start edu-proxyovpn.service >/dev/null 2>&1
-sleep 1
-echo -e "[ ${GREEN}ok${NC} ] Restarting WS-OpenVPN"
-systemctl restart ws-stunnel.service >/dev/null 2>&1
-systemctl enable ws-stunnel.service >/dev/null 2>&1
-systemctl start ws-stunnel.service >/dev/null 2>&1
-sleep 1
-echo -e "[ ${GREEN}ok${NC} ] Restarting WS-SSL "
-systemctl restart edu-tls.service >/dev/null 2>&1
-systemctl enable edu-tls.service >/dev/null 2>&1
-systemctl start edu-tls.service >/dev/null 2>&1
-systemctl restart ws-tls.service >/dev/null 2>&1
-systemctl enable ws-tls.service >/dev/null 2>&1
-systemctl start ws-tls.service >/dev/null 2>&1
-sleep 1
-echo -e "[ ${GREEN}ok${NC} ] Restarting WS-SSL/TLS"
-#/etc/init.d/sslh restart >/dev/null 2>&1
-#/etc/init.d/sslh enable >/dev/null 2>&1
-#/etc/init.d/sslh start >/dev/null 2>&1
-#sleep 1
-#echo -e "[ ${GREEN}ok${NC} ] Restarting Sslh "
+echo -e "[ ${GREEN}ok${NC} ] Restarting Sslh "
 screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 500 >/dev/null 2>&1
 screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 500 >/dev/null 2>&1
 screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300 --max-clients 500 >/dev/null 2>&1
@@ -323,26 +295,27 @@ sleep 1
 echo -e "[ ${GREEN}ok${NC} ] Restarting badvpn "
 echo ""
 
-#cat> /root/.profile << END
+cat> /root/.profile << END
 # ~/.profile: executed by Bourne-compatible login shells.
 
-#if [ "$BASH" ]; then
-#  if [ -f ~/.bashrc ]; then
-#    . ~/.bashrc
-#  fi
-#fi
+if [ "$BASH" ]; then
+  if [ -f ~/.bashrc ]; then
+    . ~/.bashrc
+  fi
+fi
 
-#mesg n || true
-#clear
-#menu
-#END
-#chmod 644 /root/.profile
-#clear
+mesg n || true
+clear
+menu
+END
+chmod 644 /root/.profile
+clear
 
 history -c
-echo "unset HISTFILE" >> /etc/profile
-#echo -e "[ ${green}INFO$NC ] CORN EXPIRED USER ..."
 echo "0 0 * * * root xp" >> /etc/crontab
+echo "unset HISTFILE" >> .profile
+echo "clear" >> .profile
+echo "neofetch" >> .profile
 rm -rvf /root/*.sh
 rm -rvf /root/*.sh.*
 clear

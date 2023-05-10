@@ -66,6 +66,4 @@ echo -e " Your Xray Version is :"
 echo -e " Xray v$lastest_version"
 sleep 5
 fi
-echo ""
-read -n 1 -s -r -p "Press any key to back on menu"
 clear

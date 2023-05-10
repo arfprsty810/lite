@@ -30,19 +30,14 @@ echo -e "[ ${green}INFO$NC ] INSTALLING NGINX SERVER"
 #apt autoremove -y
 #systemctl daemon-reload
 cd
-apt -y install nginx
-#apt-get -y install php
-#apt-get -y install php-fpm
-#apt-get -y install php-cli
-#apt-get -y install php-mysql
-#apt-get -y install libxml-parser-perl
+apt install nginx php php-fpm php-cli php-mysql libxml-parser-perl -y
 rm /etc/nginx/sites-enabled/default
 rm /etc/nginx/sites-available/default
-wget -O /etc/nginx/nginx.conf "$github/nginx/nginx.conf"
-wget -O /etc/nginx/conf.d/vps.conf "$github/nginx/vps.conf"
-mkdir -p /home/vps/public_html
-#sed -i 's/listen = \/run\/php\/php7.2-fpm.sock/listen = 127.0.0.1:9000/g' /etc/php/7.2/fpm/pool.d/www.conf
+wget -O /etc/nginx/nginx.conf "raw.githubusercontent.com/arfprsty810/lite/main/SSH/nginx.conf"
+wget -O /etc/nginx/conf.d/vps.conf "raw.githubusercontent.com/arfprsty810/lite/main/SSH/vps.conf"
+sed -i 's/listen = \/run\/php\/php7.2-fpm.sock/listen = 127.0.0.1:9000/g' /etc/php/7.2/fpm/pool.d/www.conf
 useradd -m vps;
+mkdir -p /home/vps/public_html
 echo "<?php phpinfo() ?>" > /home/vps/public_html/info.php
 chown -R www-data:www-data /home/vps/public_html
 chmod -R g+rw /home/vps/public_html

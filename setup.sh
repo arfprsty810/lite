@@ -106,14 +106,6 @@ echo -e "[ ${green}SCRIPT${NC} ] install .... "
 sleep 2
 cd
 
-Instal SSH-vpnn
-wget https://raw.githubusercontent.com/arfprsty810/lite/main/SSH/ssh-vpn.sh
-chmod +x ssh-vpn.sh
-sed -i -e 's/\r$//' ssh-vpn.sh
-./ssh-vpn.sh
-clear
-sleep 2
-
 #apete
 wget $github/services/apete.sh
 chmod +x apete.sh
@@ -123,14 +115,22 @@ clear
 sleep 2
 
 # NGINX-SERVER
-#wget https://raw.githubusercontent.com/arfprsty810/lite/main/nginx/nginx-server.sh
-#chmod +x nginx-server.sh
-#sed -i -e 's/\r$//' nginx-server.sh
-#./nginx-server.sh
+wget https://raw.githubusercontent.com/arfprsty810/lite/main/nginx/nginx-server.sh
+chmod +x nginx-server.sh
+sed -i -e 's/\r$//' nginx-server.sh
+./nginx-server.sh
 
 #SSL CERT
 wget -O /usr/bin/cert $github/cert/cert.sh && chmod +x /usr/bin/cert && sed -i -e 's/\r$//' /usr/bin/cert
 /usr/bin/cert
+
+#Instal SSH-vpnn
+#wget https://raw.githubusercontent.com/arfprsty810/lite/main/SSH/ssh-vpn.sh
+#chmod +x ssh-vpn.sh
+#sed -i -e 's/\r$//' ssh-vpn.sh
+#./ssh-vpn.sh
+#clear
+#sleep 2
 
 #Instal Xray
 wget $github/xray/ins-xray.sh

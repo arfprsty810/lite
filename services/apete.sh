@@ -57,16 +57,14 @@ apt-get --reinstall --fix-missing install -y sudo dpkg psmisc ruby wondershaper 
 clear
 apt-get --reinstall --fix-missing install -y screen rsyslog sed bc dirmngr libxml-parser-perl neofetch screenfetch lsof easy-rsa libsqlite3-dev 
 #apt install -y openvpn dropbear squid
-apt install -y fail2ban vnstat cron
+apt install -y cron fail2ban #vnstat
 gem install lolcat
 clear
-apt-get install --no-install-recommends build-essential autoconf libtool libssl-dev libpcre3-dev libev-dev asciidoc xmlto automake -y
+apt-get install --no-install-recommends build-essential autoconf libtool libssl-dev libpcre3-dev libev-dev asciidoc xmlto -y
 clear
-apt install make -y cmake -y
+apt install make cmake automake -y
 apt install libz-dev -y
 apt install libssl1.0-dev -y
-echo "clear" >> .profile
-echo "neofetch" >> .profile
 
 apt-get install software-properties-common -y
 clear

@@ -45,6 +45,7 @@ echo -e " Xray v$lastest_version"
 sleep 2
 else
 echo -e " Your Xray is old version"
+sleep 1
 echo -e " Auto Update Xray ..."
 sleep 2
 

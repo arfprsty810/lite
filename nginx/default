@@ -1,0 +1,17 @@
+server {
+    listen 80;
+    listen [::]:80;
+
+    root /home/vps/public_html;
+
+    index index.html;
+
+    server_name sg.d-jumper.me *.sg.d-jumper.me;
+
+     access_log /var/log/nginx/sg.d-jumper.me.access.log;
+     error_log /var/log/nginx/sg.d-jumper.me.error.log;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}

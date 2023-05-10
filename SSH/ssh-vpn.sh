@@ -10,18 +10,23 @@ PURPLE='\033[0;35m'
 CYAN='\033[0;36m'
 LIGHT='\033[0;37m'
 # ==========================================
-MYIP=$(wget -qO- ipinfo.io/ip);
 
 clear
 # ==================================================
 # Link Hosting Kalian
-sshlink="raw.githubusercontent.com/arfprsty810/lite/main/SSH"
+sshlink="raw.githubusercontent.com/Gl33ch3r/cfsshws/main/ssh"
+
+# Link Hosting Kalian Untuk Xray
+xraylink="raw.githubusercontent.com/Gl33ch3r/cfsshws/main/xray"
+
+# Link Hosting Kalian Untuk Trojan Go
+trojangolink="raw.githubusercontent.com/Gl33ch3r/cfsshws/main/trojango"
 
 # Link Hosting Kalian Untuk Stunnel5
-stunnel5link="raw.githubusercontent.com/arfprsty810/lite/main/SSH/stunnel5"
+stunnel5link="raw.githubusercontent.com/Gl33ch3r/cfsshws/main/stunnel5"
 
 #Link Hosting Kalian Untuk Websocket
-websocketlink="raw.githubusercontent.com/arfprsty810/lite/main/SSH/websocket"
+websocketlink="raw.githubusercontent.com/Gl33ch3r/cfsshws/main/websocket"
 
 # initializing var
 export DEBIAN_FRONTEND=noninteractive
@@ -83,11 +88,76 @@ systemctl start rc-local.service
 echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6
 sed -i '$ i\echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6' /etc/rc.local
 
+#update
+apt update -y
+apt upgrade -y
+apt dist-upgrade -y
+apt-get remove --purge ufw firewalld -y
+apt-get remove --purge exim4 -y
+
+# install wget and curl
+apt -y install wget curl
+
+# Install Requirements Tools
+apt install ruby -y
+apt install python -y
+apt install make -y
+apt install cmake -y
+apt install coreutils -y
+apt install rsyslog -y
+apt install net-tools -y
+apt install zip -y
+apt install unzip -y
+apt install nano -y
+apt install sed -y
+apt install gnupg -y
+apt install gnupg1 -y
+apt install bc -y
+apt install jq -y
+apt install apt-transport-https -y
+apt install build-essential -y
+apt install dirmngr -y
+apt install libxml-parser-perl -y
+apt install neofetch -y
+apt install git -y
+apt install lsof -y
+apt install libsqlite3-dev -y
+apt install libz-dev -y
+apt install gcc -y
+apt install g++ -y
+apt install libreadline-dev -y
+apt install zlib1g-dev -y
+apt install libssl-dev -y
+apt install libssl1.0-dev -y
+apt install dos2unix -y
+
 # set time GMT +7
 ln -fs /usr/share/zoneinfo/Asia/Manila /etc/localtime
 
 # set locale
 sed -i 's/AcceptEnv/#AcceptEnv/g' /etc/ssh/sshd_config
+
+# install
+apt-get --reinstall --fix-missing install -y bzip2 gzip coreutils wget screen rsyslog iftop htop net-tools zip unzip wget net-tools curl nano sed screen gnupg gnupg1 bc apt-transport-https build-essential dirmngr libxml-parser-perl neofetch git lsof
+echo "clear" >> .profile
+echo "neofetch" >> .profile
+
+# install webserver
+apt -y install nginx php php-fpm php-cli php-mysql libxml-parser-perl
+rm /etc/nginx/sites-enabled/default
+rm /etc/nginx/sites-available/default
+curl https://${sshlink}/nginx.conf > /etc/nginx/nginx.conf
+curl https://${sshlink}/vps.conf > /etc/nginx/conf.d/vps.conf
+sed -i 's/listen = \/var\/run\/php-fpm.sock/listen = 127.0.0.1:9000/g' /etc/php/fpm/pool.d/www.conf
+useradd -m vps;
+mkdir -p /home/vps/public_html
+echo "<?php phpinfo() ?>" > /home/vps/public_html/info.php
+chown -R www-data:www-data /home/vps/public_html
+chmod -R g+rw /home/vps/public_html
+cd /home/vps/public_html
+wget -O /home/vps/public_html/index.html "https://${sshlink}/index.html1"
+/etc/init.d/nginx restart
+cd
 
 # install badvpn
 cd
@@ -192,8 +262,8 @@ chmod 644 /etc/stunnel5
 
 # Download Config Stunnel5
 cat > /etc/stunnel5/stunnel5.conf <<-END
-cert = /etc/arfvpn/arfvpn.crt
-key = /etc/arfvpn/arfvpn.key
+cert = /etc/xray/xray.crt
+key = /etc/xray/xray.key
 client = no
 socket = a:SO_REUSEADDR=1
 socket = l:TCP_NODELAY=1
@@ -351,6 +421,25 @@ wget -O xp "https://${sshlink}/xp.sh"
 wget -O swapkvm "https://${sshlink}/swapkvm.sh"
 wget -O certsslh "https://${sshlink}/certsslh.sh"
 wget -O cfnhost "https://${sshlink}/cfnhost.sh"
+wget -O addvmess "https://${xraylink}/addv2ray.sh"
+wget -O addvless "https://${xraylink}/addvless.sh"
+wget -O addtrojan "https://${xraylink}/addtrojan.sh"
+wget -O delvmess "https://${xraylink}/delv2ray.sh"
+wget -O delvless "https://${xraylink}/delvless.sh"
+wget -O deltrojan "https://${xraylink}/deltrojan.sh"
+wget -O cekvless "https://${xraylink}/cekvless.sh"
+wget -O cektrojan "https://${xraylink}/cektrojan.sh"
+wget -O renewvmess "https://${xraylink}/renewv2ray.sh"
+wget -O renewvless "https://${xraylink}/renewvless.sh"
+wget -O renewtrojan "https://${xraylink}/renewtrojan.sh"
+wget -O addtrgo "https://${trojangolink}/addtrgo.sh"
+wget -O deltrgo "https://${trojangolink}/deltrgo.sh"
+wget -O renewtrgo "https://${trojangolink}/renewtrgo.sh"
+wget -O cektrgo "https://${trojangolink}/cektrgo.sh"
+wget -O cekvmess "https://${xraylink}/cekv2ray.sh"
+wget -O certv2ray "https://${xraylink}/certv2ray.sh"
+wget -O portsshws "https://${websocketlink}/portsshws.sh"
+wget -O portsshnontls "https://${websocketlink}/portsshnontls.sh"
 
 chmod +x addhost
 chmod +x menu
@@ -380,6 +469,27 @@ chmod +x portvlm
 chmod +x wbmn
 chmod +x xp
 chmod +x swapkvm
+chmod +x addvmess
+chmod +x addvless
+chmod +x addtrojan
+chmod +x delvless
+chmod +x delvmess
+chmod +x deltrojan
+chmod +x cekvmess
+chmod +x cekvless
+chmod +x cektrojan
+chmod +x renewvmess
+chmod +x renewvless
+chmod +x renewtrojan
+chmod +x certv2ray
+chmod +x addtrgo
+chmod +x deltrgo
+chmod +x renewtrgo
+chmod +x cektrgo
+chmod +x portsshws
+chmod +x portsshnontls
+chmod +x cfnhost
+chmod +x certsslh
 echo "0 5 * * * root clearlog && reboot" >> /etc/crontab
 echo "0 0 * * * root xp" >> /etc/crontab
 echo "5 0 * * * root delexp && restart " >> /etc/crontab

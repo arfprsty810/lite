@@ -33,8 +33,8 @@ cd
 apt install nginx php php-fpm php-cli php-mysql libxml-parser-perl -y
 rm /etc/nginx/sites-enabled/default
 rm /etc/nginx/sites-available/default
-wget -O /etc/nginx/nginx.conf "raw.githubusercontent.com/arfprsty810/lite/main/SSH/nginx.conf"
-wget -O /etc/nginx/conf.d/vps.conf "raw.githubusercontent.com/arfprsty810/lite/main/SSH/vps.conf"
+wget -O /etc/nginx/nginx.conf "$github/nginx/nginx.conf"
+wget -O /etc/nginx/conf.d/vps.conf "$github/nginx/vps.conf"
 sed -i 's/listen = \/run\/php\/php7.2-fpm.sock/listen = 127.0.0.1:9000/g' /etc/php/7.2/fpm/pool.d/www.conf
 useradd -m vps;
 mkdir -p /home/vps/public_html

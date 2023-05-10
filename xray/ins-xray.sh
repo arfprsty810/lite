@@ -45,10 +45,9 @@ touch $logxray/access.log
 touch $logxray/error.log
 touch $logxray/access2.log
 touch $logxray/error2.log
+
 # / / Install Xray Core << Every >> Lastest Version
-latest_version="$(curl -s https://api.github.com/repos/XTLS/Xray-core/releases | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version $latest_version
-sleep 3
+wget $github/services/update-xray.sh && chmod +x update update-xray.sh && ./update-xray.sh
 clear
 
 echo -e "[ ${green}INFO$NC ] MEMBUAT PORT"

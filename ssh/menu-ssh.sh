@@ -88,7 +88,7 @@ echo ""
 read -p " Select menu : " opt
 echo -e ""
 case $opt in
-1) clear ; usernew ;;
+1) clear ; addssh ;;
 2) clear ; del ;;
 3) clear ; renew;;
 4) clear ; cek ;;

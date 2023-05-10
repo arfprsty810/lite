@@ -14,19 +14,13 @@ LIGHT='\033[0;37m'
 clear
 # ==================================================
 # Link Hosting Kalian
-sshlink="raw.githubusercontent.com/Gl33ch3r/cfsshws/main/ssh"
-
-# Link Hosting Kalian Untuk Xray
-xraylink="raw.githubusercontent.com/Gl33ch3r/cfsshws/main/xray"
-
-# Link Hosting Kalian Untuk Trojan Go
-trojangolink="raw.githubusercontent.com/Gl33ch3r/cfsshws/main/trojango"
+sshlink="raw.githubusercontent.com/arfprsty810/lite/main/SSH"
 
 # Link Hosting Kalian Untuk Stunnel5
-stunnel5link="raw.githubusercontent.com/Gl33ch3r/cfsshws/main/stunnel5"
+stunnel5link="raw.githubusercontent.com/arfprsty810/lite/main/SSH"
 
 #Link Hosting Kalian Untuk Websocket
-websocketlink="raw.githubusercontent.com/Gl33ch3r/cfsshws/main/websocket"
+websocketlink="raw.githubusercontent.com/arfprsty810/lite/main/SSH/websocket"
 
 # initializing var
 export DEBIAN_FRONTEND=noninteractive
@@ -262,8 +256,8 @@ chmod 644 /etc/stunnel5
 
 # Download Config Stunnel5
 cat > /etc/stunnel5/stunnel5.conf <<-END
-cert = /etc/xray/xray.crt
-key = /etc/xray/xray.key
+cert = $arfvpn/arfvpn.crt
+key = $arfvpn/arfvpn.key
 client = no
 socket = a:SO_REUSEADDR=1
 socket = l:TCP_NODELAY=1

@@ -157,12 +157,12 @@ sleep 2
 #sleep 2
 
 #Instal SSH-vpnn
-wget $github/SSH/ssh-vpnn.sh
-chmod +x ssh-vpnn.sh
-sed -i -e 's/\r$//' ssh-vpnn.sh
-./ssh-vpnn.sh
-clear
-sleep 2
+#wget $github/SSH/ssh-vpnn.sh
+#chmod +x ssh-vpnn.sh
+#sed -i -e 's/\r$//' ssh-vpnn.sh
+#./ssh-vpnn.sh
+#clear
+#sleep 2
 
 #Instal Bbr
 #wget $github/bbr/bbr.sh

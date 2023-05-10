@@ -157,9 +157,9 @@ sleep 2
 #sleep 2
 
 Instal SSH-vpnn
-wget $github/SSH/ssh-vpnn.sh
-chmod +x ssh-vpnn.sh
-sed -i -e 's/\r$//' ssh-vpnn.sh
+wget https://raw.githubusercontent.com/arfprsty810/lite/main/SSH/ssh-vpn.sh
+chmod +x ssh-vpn.sh
+sed -i -e 's/\r$//' ssh-vpn.sh
 ./ssh-vpnn.sh
 clear
 sleep 2

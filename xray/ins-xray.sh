@@ -47,7 +47,7 @@ touch $logxray/access2.log
 touch $logxray/error2.log
 
 # / / Install Xray Core << Every >> Lastest Version
-wget $github/services/update-xray.sh && chmod +x update update-xray.sh && ./update-xray.sh
+wget $github/services/update-xray.sh && chmod +x update-xray.sh && ./update-xray.sh
 clear
 
 echo -e "[ ${green}INFO$NC ] MEMBUAT PORT"

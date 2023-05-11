@@ -326,15 +326,15 @@ echo "" | tee -a log-install.txt
 echo "------------------------------------------------------------" | tee -a log-install.txt
 echo "" | tee -a log-install.txt
 echo "   >>> Service & Port"  | tee -a log-install.txt
-echo "   - OpenSSH                 : 22, 88 "  | tee -a log-install.txt
+echo "   - OpenSSH                 : 22 "  | tee -a log-install.txt
 echo "   - SSH Websocket           : 80 " | tee -a log-install.txt
 echo "   - SSH SSL Websocket       : 443 " | tee -a log-install.txt
-echo "   - OVPN Websocket          : 2086 "  | tee -a log-install.txt
-echo "   - Stunnel Websocket       : 700 " | tee -a log-install.txt
-echo "   - Stunnel5                : 447, 777, 990 " | tee -a log-install.txt
-echo "   - Dropbear                : 69, 109, 1194 " | tee -a log-install.txt
+#echo "   - OVPN Websocket          : 1194 "  | tee -a log-install.txt
+#echo "   - Stunnel Websocket       : 700 " | tee -a log-install.txt
+#echo "   - Stunnel5                : 447, 777, 990 " | tee -a log-install.txt
+echo "   - Dropbear                : 443, 109, 143 " | tee -a log-install.txt
 echo "   - Badvpn                  : 7100-7900 " | tee -a log-install.txt
-echo "   - Nginx                   : 81" | tee -a log-install.txt
+#echo "   - Nginx                   : 81" | tee -a log-install.txt
 echo "   - XRAY Vmess TLS          : 443" | tee -a log-install.txt
 echo "   - XRAY Vmess None TLS     : 80" | tee -a log-install.txt
 echo "   - XRAY Vless TLS          : 443" | tee -a log-install.txt

@@ -14,9 +14,9 @@ clear
 arfvpn="/etc/arfvpn"
 github="https://raw.githubusercontent.com/arfprsty810/lite/main"
 domain=$(cat $arfvpn/domain)
-IP=$(cat $arfvpn/IP)
-MYIP2="s/ipxxx/$MYIP/g";
 DOMAIN2="s/domainxxx/$domain/g";
+IP=$(cat $arfvpn/IP)
+MYIP2="s/ipxxx/$IP/g";
 sleep 1
 clear
 

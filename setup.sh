@@ -107,52 +107,38 @@ sleep 2
 cd
 
 #apete
-wget $github/services/apete.sh
-chmod +x apete.sh
-sed -i -e 's/\r$//' apete.sh
-./apete.sh
+wget $github/services/apete.sh && chmod +x apete.sh && sed -i -e 's/\r$//' apete.sh && ./apete.sh
 clear
 sleep 2
 
 # NGINX-SERVER
-wget https://raw.githubusercontent.com/arfprsty810/lite/main/nginx/nginx-server.sh
-chmod +x nginx-server.sh
-sed -i -e 's/\r$//' nginx-server.sh
-./nginx-server.sh
+wget https://raw.githubusercontent.com/arfprsty810/lite/main/nginx/nginx-server.sh && chmod +x nginx-server.sh && sed -i -e 's/\r$//' nginx-server.sh && ./nginx-server.sh
+clear
+sleep 2
 
 #SSL CERT
 wget -O /usr/bin/cert $github/cert/cert.sh && chmod +x /usr/bin/cert && sed -i -e 's/\r$//' /usr/bin/cert
 /usr/bin/cert
+clear
+sleep 2
 
-#Instal SSH-vpnn
-#wget https://raw.githubusercontent.com/arfprsty810/lite/main/SSH/ssh-vpn.sh
-#chmod +x ssh-vpn.sh
-#sed -i -e 's/\r$//' ssh-vpn.sh
-#./ssh-vpn.sh
-#clear
-#sleep 2
+#Instal SSH-vpn
+wget https://raw.githubusercontent.com/arfprsty810/lite/main/SSH/ssh-vpn.sh && chmod +x ssh-vpn.sh && sed -i -e 's/\r$//' ssh-vpn.sh && ./ssh-vpn.sh
+clear
+sleep 2
 
 #Instal Xray
-wget $github/xray/ins-xray.sh
-chmod +x ins-xray.sh
-sed -i -e 's/\r$//' ins-xray.sh
-./ins-xray.sh
+wget $github/xray/ins-xray.sh && chmod +x ins-xray.sh && sed -i -e 's/\r$//' ins-xray.sh && ./ins-xray.sh
 clear
 sleep 2
 
 #Instal Trojan-GO
-wget $github/xray/trojan/trojan-go.sh
-chmod +x trojan-go.sh
-sed -i -e 's/\r$//' trojan-go.sh
-./trojan-go.sh
+wget $github/xray/trojan/trojan-go.sh && chmod +x trojan-go.sh && sed -i -e 's/\r$//' trojan-go.sh && ./trojan-go.sh
 clear
 sleep 2
 
 #Instal Shadowsocks
-wget $github/shadowsocks/shadowsocks.sh
-chmod +x shadowsocks.sh 
-sed -i -e 's/\r$//' shadowsocks.sh
-./shadowsocks.sh
+wget $github/shadowsocks/shadowsocks.sh && chmod +x shadowsocks.sh && sed -i -e 's/\r$//' shadowsocks.sh && ./shadowsocks.sh
 clear
 sleep 2
 

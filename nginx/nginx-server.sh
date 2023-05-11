@@ -18,7 +18,7 @@ nginx="/etc/nginx"
 github="https://raw.githubusercontent.com/arfprsty810/lite/main"
 mkdir -p $arfvpn
 mkdir -p $arfvpn/nginx
-mkdir -p $nginx
+#mkdir -p $nginx
 clear
 
 echo ""
@@ -48,7 +48,6 @@ read -rp "Input ur domain / sub-domain : " -e pp
     apt install curl jq -y
 	echo "$pp" > $arfvpn/domain
 	echo "$pp" > $arfvpn/scdomain
-    echo "IP=$pp" > $ipvps/ipvps.conf
     curl -s ipinfo.io/org/ > ${arfvpn}/ISP
     curl -s https://ipinfo.io/ip/ > ${arfvpn}/IP
     fi
@@ -82,7 +81,8 @@ echo "<?php phpinfo() ?>" > /home/vps/public_html/info.php
 chown -R www-data:www-data /home/vps/public_html
 chmod -R g+rw /home/vps/public_html
 cd /home/vps/public_html
-wget -O /home/vps/public_html/index.html "$github/nginx/index.html"
+#wget -O /home/vps/public_html/index.html "$github/nginx/index.html"
+wget -O /home/vps/public_html/index.php "$github/nginx/index.php"
 
 sudo openssl dhparam -out $nginx/dhparam.pem 2048
 

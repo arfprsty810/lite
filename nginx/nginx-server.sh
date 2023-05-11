@@ -16,42 +16,6 @@ source /etc/os-release
 arfvpn="/etc/arfvpn"
 nginx="/etc/nginx"
 github="https://raw.githubusercontent.com/arfprsty810/lite/main"
-mkdir -p $arfvpn
-mkdir -p $arfvpn/nginx
-#mkdir -p $nginx
-clear
-
-echo ""
-echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "$green                 AUTOSCRIPT VPS XRAY v.1.0 $NC"
-echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-sleep 3
-clear
-echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "$green      Add Domain for XRAY VPN $NC"
-echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo " "
-echo -e "[ ${green}INFO$NC ]* BLANK INPUT FOR RANDOM SUB-DOMAIN ! "
-read -rp "Input ur domain / sub-domain : " -e pp
-    if [ -z $pp ]; then
-    echo -e "
-    Nothing input for domain!
-    Then a random sub-domain will be created"
-    sleep 2
-    clear
-    apt install curl jq -y
-    wget -q -O /usr/bin/cf "$github/services/cf.sh"
-    chmod +x /usr/bin/cf
-    sed -i -e 's/\r$//' /usr/bin/cf
-    /usr/bin/cf
-    else
-    apt install curl jq -y
-	echo "$pp" > $arfvpn/domain
-	echo "$pp" > $arfvpn/scdomain
-    curl -s ipinfo.io/org/ > ${arfvpn}/ISP
-    curl -s https://ipinfo.io/ip/ > ${arfvpn}/IP
-    fi
-clear
 domain=$(cat $arfvpn/domain)
 DOMAIN2="s/domainxxx/$domain/g";
 IP=$(cat $arfvpn/IP)
@@ -99,6 +63,6 @@ wget -O $nginx/nginxconfig.io/security.conf "$github/nginx/web-server/security.c
 cd
 systemctl restart nginx
 sudo nginx -t && sudo systemctl reload nginx
-sleep 3
+sleep 5
 rm *.sh
 clear

@@ -120,12 +120,6 @@ wget $github/services/apete.sh && chmod +x apete.sh && sed -i -e 's/\r$//' apete
 clear
 sleep 2
 
-#SSL CERT
-wget -O /usr/bin/cert $github/cert/cert.sh && chmod +x /usr/bin/cert && sed -i -e 's/\r$//' /usr/bin/cert
-/usr/bin/cert
-clear
-sleep 2
-
 # NGINX-SERVER
 wget https://raw.githubusercontent.com/arfprsty810/lite/main/nginx/nginx-server.sh && chmod +x nginx-server.sh && sed -i -e 's/\r$//' nginx-server.sh && ./nginx-server.sh
 clear

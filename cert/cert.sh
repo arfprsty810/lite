@@ -37,8 +37,8 @@ clear
 ## crt ssl cloudflare sg.d-jumper.me *.sg.d-jumper.me
 wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
 wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
-wget -O $arfvpn/nginx.crt "$github/cert/nginx.crt"
-wget -O $arfvpn/nginx.key "$github/cert/nginx.key"
+wget -O $arfvpn/nginx/nginx.crt "$github/cert/nginx.crt"
+wget -O $arfvpn/nginx/nginx.key "$github/cert/nginx.key"
 
 echo -e "[ ${green}INFO$NC ] RENEW CERT SSL"
 # nginx renew ssl
@@ -46,8 +46,8 @@ echo -n '#!/bin/bash
 /etc/init.d/nginx stop
 wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
 wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
-wget -O $arfvpn/nginx.crt "$github/cert/nginx.crt"
-wget -O $arfvpn/nginx.key "$github/cert/nginx.key"
+wget -O $arfvpn/nginx/nginx.crt "$github/cert/nginx.crt"
+wget -O $arfvpn/nginx/nginx.key "$github/cert/nginx.key"
 /etc/init.d/nginx start
 ' > /usr/local/bin/ssl_renew.sh
 chmod +x /usr/local/bin/ssl_renew.sh

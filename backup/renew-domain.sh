@@ -40,6 +40,7 @@ cd /root
 source /etc/os-release
 arfvpn="/etc/arfvpn"
 ipvps="/var/lib/arfvpn"
+github="https://raw.githubusercontent.com/arfprsty810/lite/main"
 rm -rvf domain scdomain IP ISP
 mkdir -p $arfvpn
 mkdir -p $ipvps

@@ -31,6 +31,7 @@ apt install nginx php php-fpm php-cli php-mysql libxml-parser-perl -y
 rm /etc/nginx/sites-enabled/default
 rm /etc/nginx/sites-available/default
 #wget -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/arfprsty810/lite/main/nginx/nginx.conf"
+wget -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/arfprsty810/lite/main/nginx/web-server/nginx.conf"
 wget -O /etc/nginx/conf.d/vps.conf "https://raw.githubusercontent.com/arfprsty810/lite/main/nginx/vps.conf"
 sed -i 's/listen = \/run\/php\/php7.2-fpm.sock/listen = 127.0.0.1:9000/g' /etc/php/7.2/fpm/pool.d/www.conf
 useradd -m vps;
@@ -41,10 +42,10 @@ chmod -R g+rw /home/vps/public_html
 cd /home/vps/public_html
 wget -O /home/vps/public_html/index.html "$github/nginx/index.html"
 
-cd /etc/nginx
-wget -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/arfprsty810/lite/main/nginx/web-server/nginx.conf"
-wget -O /etc/nginx/sites-available/$domain.conf "https://raw.githubusercontent.com/arfprsty810/lite/main/nginx/web-server/domain.conf"
+openssl dhparam -out /etc/nginx/dhparam.pem 2048
 
+cd /etc/nginx
+wget -O /etc/nginx/sites-available/$domain.conf "https://raw.githubusercontent.com/arfprsty810/lite/main/nginx/web-server/domain.conf"
 sed -i "$MYIP2" /etc/nginx/sites-available/$domain.conf
 sed -i "$DOMAIN2" /etc/nginx/sites-available/$domain.conf
 sudo ln -s /etc/nginx/sites-available/$domain.conf /etc/nginx/sites-enabled

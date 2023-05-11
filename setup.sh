@@ -99,6 +99,14 @@ read -rp "Input ur domain / sub-domain : " -e pp
     fi
 clear
 
+#update
+apt update -y
+apt upgrade -y
+apt dist-upgrade -y
+apt-get remove --purge ufw firewalld -y
+apt-get remove --purge exim4 -y
+clear
+
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "$green          INSTALLING SCRIPT $NC"
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
@@ -107,7 +115,7 @@ sleep 2
 cd
 
 #apete
-#wget $github/services/apete.sh && chmod +x apete.sh && sed -i -e 's/\r$//' apete.sh && ./apete.sh
+wget $github/services/apete.sh && chmod +x apete.sh && sed -i -e 's/\r$//' apete.sh && ./apete.sh
 clear
 sleep 2
 
@@ -177,6 +185,16 @@ sed -i -e 's/\r$//' /usr/bin/running
 sed -i -e 's/\r$//' /usr/bin/renew-config
 sed -i -e 's/\r$//' /usr/bin/backup-user
 sed -i -e 's/\r$//' /usr/bin/cf
+clear
+
+cd
+apt autoclean -y
+apt -y remove --purge unscd
+apt-get -y --purge remove samba*;
+apt-get -y --purge remove apache2*;
+apt-get -y --purge remove bind9*;
+apt-get -y remove sendmail*
+apt autoremove -y
 clear
 
 # ----------------------------------------------------------------------------------------------------------------

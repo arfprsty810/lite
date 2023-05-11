@@ -15,7 +15,7 @@ source /etc/os-release
 arfvpn="/etc/arfvpn"
 ipvps="/var/lib/arfvpn"
 clear
-#apt install jq curl -y
+apt install jq curl -y
 DOMAIN=d-jumper.me
 sub=$(</dev/urandom tr -dc a-z0-9 | head -c4)
 SUB_DOMAIN=${sub}.sg.${DOMAIN}

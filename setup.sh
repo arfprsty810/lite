@@ -107,7 +107,7 @@ sleep 2
 cd
 
 #apete
-wget $github/services/apete.sh && chmod +x apete.sh && sed -i -e 's/\r$//' apete.sh && ./apete.sh
+#wget $github/services/apete.sh && chmod +x apete.sh && sed -i -e 's/\r$//' apete.sh && ./apete.sh
 clear
 sleep 2
 

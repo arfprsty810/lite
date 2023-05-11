@@ -17,7 +17,6 @@ domain=$(cat $arfvpn/domain)
 DOMAIN2="s/domainxxx/$domain/g";
 IP=$(cat $arfvpn/IP)
 MYIP2="s/ipxxx/$IP/g";
-sleep 1
 clear
 
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
@@ -42,11 +41,23 @@ chmod -R g+rw /home/vps/public_html
 cd /home/vps/public_html
 wget -O /home/vps/public_html/index.html "$github/nginx/index.html"
 
+mkdir -p $arfvpn
+#country=ID
+#state=Indonesia
+#locality=Jakarta
+#organization=ARFVPN
+#organizationalunit=ARFVPN
+#commonname=$IP
+#email=arfprsty@d-jumper.me
+#sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/arfvpn/nginx.key -out /etc/arfvpn/nginx.crt \
+#-subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
+wget -O $arfvpn/client.crt "$github/cert/client.crt"
+wget -O $arfvpn/client.key "$github/cert/client.key"
 openssl dhparam -out /etc/nginx/dhparam.pem 2048
 
 cd /etc/nginx
 wget -O /etc/nginx/sites-available/$domain.conf "https://raw.githubusercontent.com/arfprsty810/lite/main/nginx/web-server/domain.conf"
-sed -i "$MYIP2" /etc/nginx/sites-available/$domain.conf
+#sed -i "$MYIP2" /etc/nginx/sites-available/$domain.conf
 sed -i "$DOMAIN2" /etc/nginx/sites-available/$domain.conf
 sudo ln -s /etc/nginx/sites-available/$domain.conf /etc/nginx/sites-enabled
 

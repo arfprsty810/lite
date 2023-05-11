@@ -14,63 +14,16 @@ clear
 cd /root
 source /etc/os-release
 arfvpn="/etc/arfvpn"
-xray="/etc/xray"
-logxray="/var/log/xray"
-trgo="/etc/arfvpn/trojan-go"
-logtrgo="/var/log/arfvpn/trojan-go"
 nginx="/etc/nginx"
-ipvps="/var/lib/arfvpn"
 github="https://raw.githubusercontent.com/arfprsty810/lite/main"
-mkdir -p $arfvpn
-mkdir -p $ipvps
-mkdir -p $xray
-mkdir -p $trgo
-mkdir -p $nginx
-clear
-
-echo ""
-echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "$green                 AUTOSCRIPT VPS XRAY v.1.0 $NC"
-echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-sleep 3
-clear
-echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "$green      Add Domain for XRAY VPN $NC"
-echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo " "
-echo -e "[ ${green}INFO$NC ]* BLANK INPUT FOR RANDOM SUB-DOMAIN ! "
-read -rp "Input ur domain / sub-domain : " -e pp
-    if [ -z $pp ]; then
-    echo -e "
-    Nothing input for domain!
-    Then a random sub-domain will be created"
-    sleep 2
-    clear
-    apt install curl jq -y
-    wget -q -O /usr/bin/cf "$github/services/cf.sh"
-    chmod +x /usr/bin/cf
-    sed -i -e 's/\r$//' /usr/bin/cf
-    /usr/bin/cf
-    else
-    apt install curl jq -y
-	echo "$pp" > $arfvpn/domain
-	echo "$pp" > $arfvpn/scdomain
-    echo "IP=$pp" > $ipvps/ipvps.conf
-    curl -s ipinfo.io/org/ > ${arfvpn}/ISP
-    curl -s https://ipinfo.io/ip/ > ${arfvpn}/IP
-    fi
-clear
-
 domain=$(cat $arfvpn/domain)
 DOMAIN2="s/domainxxx/$domain/g";
 IP=$(cat $arfvpn/IP)
 MYIP2="s/ipxxx/$IP/g";
+mkdir -p $arfvpn
+mkdir -p $nginx
 clear
-apt-get remove --purge ufw* -y
-apt-get remove --purge firewalld* -y
-apt-get remove --purge exim4* -y
-apt autoremove -y
-clear
+
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "$green          INSTALLING NGINX SERVER $NC"
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
@@ -78,14 +31,14 @@ date
 sleep 3
 echo -e "[ ${green}INFO$NC ] INSTALLING NGINX SERVER"
 cd
-apt install pwgen openssl netcat -y
+apt install pwgen openssl socat -y
 clear
 apt install nginx php php-fpm php-cli php-mysql libxml-parser-perl -y
-rm /etc/nginx/sites-enabled/default
-rm /etc/nginx/sites-available/default
-#wget -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/arfprsty810/lite/main/nginx/nginx.conf"
-wget -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/arfprsty810/lite/main/nginx/web-server/nginx.conf"
-wget -O /etc/nginx/conf.d/vps.conf "https://raw.githubusercontent.com/arfprsty810/lite/main/nginx/vps.conf"
+rm $nginx/sites-enabled/default
+rm $nginx/sites-available/default
+#wget -O $nginx/nginx.conf "$github/nginx/nginx.conf"
+wget -O $nginx/nginx.conf "$github/nginx/web-server/nginx.conf"
+wget -O $nginx/conf.d/vps.conf "$github/nginx/vps.conf"
 sed -i 's/listen = \/run\/php\/php7.2-fpm.sock/listen = 127.0.0.1:9000/g' /etc/php/7.2/fpm/pool.d/www.conf
 useradd -m vps;
 mkdir -p /home/vps/public_html
@@ -95,38 +48,28 @@ chmod -R g+rw /home/vps/public_html
 cd /home/vps/public_html
 wget -O /home/vps/public_html/index.html "$github/nginx/index.html"
 
-mkdir -p $arfvpn
-country=ID
-state=Indonesia
-locality=Jakarta
-organization=ARFVPN
-organizationalunit=ARFVPN
-commonname=$IP
-email=arfprsty@d-jumper.me
-sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/arfvpn/nginx.key -out /etc/arfvpn/nginx.crt \
--subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
-#wget -O $arfvpn/client.crt "$github/cert/client.crt"
-#wget -O $arfvpn/client.key "$github/cert/client.key"
-openssl dhparam -out /etc/nginx/dhparam.pem 2048
+cd
+systemctl stop nginx
+mkdir /root/.acme.sh
+curl https://acme-install.netlify.app/acme.sh -o /root/.acme.sh/acme.sh
+chmod +x /root/.acme.sh/acme.sh
+/root/.acme.sh/acme.sh --upgrade --auto-upgrade
+/root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
+/root/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-256
+~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath $arfvpn/nginx.crt --keypath $arfvpn/nginx.key --ecc
+sudo openssl dhparam -out $nginx/dhparam.pem 2048
 
-cd /etc/nginx
-wget -O /etc/nginx/sites-available/$domain.conf "https://raw.githubusercontent.com/arfprsty810/lite/main/nginx/web-server/domain.conf"
-sed -i "$MYIP2" /etc/nginx/sites-available/$domain.conf
-sed -i "$DOMAIN2" /etc/nginx/sites-available/$domain.conf
-sudo ln -s /etc/nginx/sites-available/$domain.conf /etc/nginx/sites-enabled
+cd $nginx
+wget -O $nginx/sites-available/$domain.conf "$github/nginx/web-server/domain.conf"
+sed -i "$MYIP2" $nginx/sites-available/$domain.conf
+sed -i "$DOMAIN2" $nginx/sites-available/$domain.conf
+sudo ln -s $nginx/sites-available/$domain.conf $nginx/sites-enabled
 
-mkdir -p /etc/nginx/nginxconfig.io
-wget -O /etc/nginx/nginxconfig.io/general.conf "https://raw.githubusercontent.com/arfprsty810/lite/main/nginx/web-server/general.conf"
-wget -O /etc/nginx/nginxconfig.io/security.conf "https://raw.githubusercontent.com/arfprsty810/lite/main/nginx/web-server/security.conf"
+mkdir -p $nginx/nginxconfig.io
+wget -O $nginx/nginxconfig.io/general.conf "$github/nginx/web-server/general.conf"
+wget -O $nginx/nginxconfig.io/security.conf "$github/nginx/web-server/security.conf"
 
 cd
+systemctl restart
 sudo nginx -t && sudo systemctl reload nginx
-/etc/init.d/nginx restart
-apt autoclean -y
-apt -y remove --purge unscd
-apt-get -y --purge remove samba*;
-apt-get -y --purge remove apache2*;
-apt-get -y --purge remove bind9*;
-apt-get -y remove sendmail*
-apt autoremove -y
 clear

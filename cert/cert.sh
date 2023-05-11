@@ -35,6 +35,7 @@ case $menu in
 1)
 clear
 systemctl stop nginx
+sudo lsof -t -i tcp:80 -s tcp:listen | sudo xargs kill
 ## crt ssl cloudflare sg.d-jumper.me *.sg.d-jumper.me
 wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
 wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
@@ -61,6 +62,7 @@ clear
 apt install socat -y
 ## make a crt xray $domain
 systemctl stop nginx
+sudo lsof -t -i tcp:80 -s tcp:listen | sudo xargs kill
 mkdir /root/.acme.sh
 curl https://acme-install.netlify.app/acme.sh -o /root/.acme.sh/acme.sh
 chmod +x /root/.acme.sh/acme.sh

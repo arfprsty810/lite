@@ -40,6 +40,12 @@ echo -e "[ ${GREEN}ok${NC} ] Restarting Nginx "
 /etc/init.d/openvpn restart >/dev/null 2>&1
 /etc/init.d/openvpn enable >/dev/null 2>&1
 /etc/init.d/openvpn start >/dev/null 2>&1
+systemctl restart --now openvpn-server@server-tcp  >/dev/null 2>&1
+systemctl enable --now openvpn-server@server-tcp  >/dev/null 2>&1
+systemctl start --now openvpn-server@server-tcp  >/dev/null 2>&1
+systemctl restart --now openvpn-server@server-udp >/dev/null 2>&1
+systemctl enable --now openvpn-server@server-udp >/dev/null 2>&1
+systemctl start --now openvpn-server@server-udp >/dev/null 2>&1
 sleep 1
 echo -e "[ ${GREEN}ok${NC} ] Restarting OpenVpn"
 /etc/init.d/dropbear restart >/dev/null 2>&1
@@ -92,39 +98,11 @@ systemctl enable shadowsocks-libev.service >/dev/null 2>&1
 systemctl start shadowsocks-libev.service >/dev/null 2>&1
 sleep 1
 echo -e "[ ${GREEN}ok${NC} ] Restarting ShadowSocks-OBFS"
-systemctl restart ws-dropbear.service >/dev/null 2>&1
-systemctl enable ws-dropbear.service >/dev/null 2>&1
-systemctl start ws-dropbear.service >/dev/null 2>&1
+/etc/init.d/sslh restart >/dev/null 2>&1
+/etc/init.d/sslh enable >/dev/null 2>&1
+/etc/init.d/sslh start >/dev/null 2>&1
 sleep 1
-echo -e "[ ${GREEN}ok${NC} ] Restarting WS-Dropbear"
-systemctl restart edu-proxy.service >/dev/null 2>&1
-systemctl enable edu-proxy.service >/dev/null 2>&1
-systemctl start edu-proxy.service>/dev/null 2>&1
-sleep 1
-echo -e "[ ${GREEN}ok${NC} ] Restarting WS-OpenSSH"
-systemctl restart edu-proxyovpn.service >/dev/null 2>&1
-systemctl enable edu-proxyovpn.service >/dev/null 2>&1
-systemctl start edu-proxyovpn.service >/dev/null 2>&1
-sleep 1
-echo -e "[ ${GREEN}ok${NC} ] Restarting WS-OpenVPN"
-systemctl restart ws-stunnel.service >/dev/null 2>&1
-systemctl enable ws-stunnel.service >/dev/null 2>&1
-systemctl start ws-stunnel.service >/dev/null 2>&1
-sleep 1
-echo -e "[ ${GREEN}ok${NC} ] Restarting WS-SSL "
-systemctl enable edu-tls.service >/dev/null 2>&1
-systemctl start edu-tls.service >/dev/null 2>&1
-systemctl restart edu-tls.service >/dev/null 2>&1
-systemctl enable ws-tls.service >/dev/null 2>&1
-systemctl start ws-tls.service >/dev/null 2>&1
-systemctl restart ws-tls.service >/dev/null 2>&1
-sleep 1
-echo -e "[ ${GREEN}ok${NC} ] Restarting WS-SSL/TLS"
-#/etc/init.d/sslh restart >/dev/null 2>&1
-#/etc/init.d/sslh enable >/dev/null 2>&1
-#/etc/init.d/sslh start >/dev/null 2>&1
-#sleep 1
-#echo -e "[ ${GREEN}ok${NC} ] Restarting Sslh "
+echo -e "[ ${GREEN}ok${NC} ] Restarting Sslh "
 screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 500 >/dev/null 2>&1
 screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 500 >/dev/null 2>&1
 screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300 --max-clients 500 >/dev/null 2>&1

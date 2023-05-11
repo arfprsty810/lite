@@ -21,8 +21,7 @@ DOMAIN2="s/domainxxx/$domain/g";
 IP=$(cat $arfvpn/IP)
 MYIP2="s/ipxxx/$IP/g";
 clear
-wget -O /usr/bin/cert https://raw.githubusercontent.com/arfprsty810/lite/main/cert/cert.sh && chmod +x /usr/bin/cert && sed -i -e 's/\r$//' /usr/bin/cert && cert
-clear
+
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "$green          INSTALLING NGINX SERVER $NC"
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
@@ -48,6 +47,7 @@ cd /home/vps/public_html
 #wget -O /home/vps/public_html/index.html "$github/nginx/index.html"
 wget -O /home/vps/public_html/index.php "$github/nginx/index.php"
 
+wget -O /usr/bin/cert https://raw.githubusercontent.com/arfprsty810/lite/main/cert/cert.sh && chmod +x /usr/bin/cert && sed -i -e 's/\r$//' /usr/bin/cert && cert
 sudo openssl dhparam -out $nginx/dhparam.pem 2048
 
 cd $nginx

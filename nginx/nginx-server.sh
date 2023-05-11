@@ -70,6 +70,16 @@ wget -O $nginx/nginxconfig.io/general.conf "$github/nginx/web-server/general.con
 wget -O $nginx/nginxconfig.io/security.conf "$github/nginx/web-server/security.conf"
 
 cd
+apt autoclean -y
+apt -y remove --purge unscd
+apt-get -y --purge remove samba*;
+apt-get -y --purge remove apache2*;
+apt-get -y --purge remove bind9*;
+apt-get -y remove sendmail*
+apt autoremove -y
+clear
+
+cd
 systemctl restart
 sudo nginx -t && sudo systemctl reload nginx
 clear

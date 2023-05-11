@@ -97,7 +97,8 @@ wget -O $nginx/nginxconfig.io/general.conf "$github/nginx/web-server/general.con
 wget -O $nginx/nginxconfig.io/security.conf "$github/nginx/web-server/security.conf"
 
 cd
-systemctl restart
+systemctl restart nginx
 sudo nginx -t && sudo systemctl reload nginx
+sleep 3
 rm *.sh
 clear

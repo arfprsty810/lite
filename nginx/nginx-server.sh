@@ -61,7 +61,7 @@ openssl dhparam -out /etc/nginx/dhparam.pem 2048
 
 cd /etc/nginx
 wget -O /etc/nginx/sites-available/$domain.conf "https://raw.githubusercontent.com/arfprsty810/lite/main/nginx/web-server/domain.conf"
-#sed -i "$MYIP2" /etc/nginx/sites-available/$domain.conf
+sed -i "$MYIP2" /etc/nginx/sites-available/$domain.conf
 sed -i "$DOMAIN2" /etc/nginx/sites-available/$domain.conf
 sudo ln -s /etc/nginx/sites-available/$domain.conf /etc/nginx/sites-enabled
 

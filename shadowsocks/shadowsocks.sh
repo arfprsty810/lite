@@ -11,12 +11,40 @@ green() { echo -e "\\033[32;1m${*}\\033[0m"; }
 red() { echo -e "\\033[31;1m${*}\\033[0m"; }
 clear
 
+export DEBIAN_FRONTEND=noninteractive
 arfvpn="/etc/arfvpn"
+github="https://raw.githubusercontent.com/arfprsty810/lite/main"
+source /etc/os-release
+OS=$ID
+ver=$VERSION_ID
 # set random pwd
 #openssl rand -base64 16 > $arfvpn/passwd
 </dev/urandom tr -dc a-z0-9 | head -c16 > $arfvpn/passwd
 pwd=$(cat $arfvpn/passwd)
-github="https://raw.githubusercontent.com/arfprsty810/lite/main"
+clear
+
+apt-get install software-properties-common -y
+clear
+if [[ $OS == 'ubuntu' ]]; then
+apt install shadowsocks-libev -y
+apt install simple-obfs -y
+clear
+elif [[ $OS == 'debian' ]]; then
+if [[ "$ver" = "9" ]]; then
+echo "deb http://deb.debian.org/debian stretch-backports main" | tee /etc/apt/sources.list.d/stretch-backports.list
+apt update
+apt -t stretch-backports install shadowsocks-libev -y
+apt -t stretch-backports install simple-obfs -y
+clear
+elif [[ "$ver" = "10" ]]; then
+echo "deb http://deb.debian.org/debian buster-backports main" | tee /etc/apt/sources.list.d/buster-backports.list
+apt update
+apt -t buster-backports install shadowsocks-libev -y
+apt -t buster-backports install simple-obfs -y
+clear
+fi
+fi
+
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "$green          INSTALLING SHADOWSOCKS $NC"
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"

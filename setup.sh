@@ -137,7 +137,7 @@ clear
 sleep 2
 
 #Instal Xray
-wget $github/xray/ins-xray.sh && chmod +x ins-xray.sh && sed -i -e 's/\r$//' ins-xray.sh && ./ins-xray.sh
+#wget $github/xray/ins-xray.sh && chmod +x ins-xray.sh && sed -i -e 's/\r$//' ins-xray.sh && ./ins-xray.sh
 clear
 sleep 2
 
@@ -160,12 +160,12 @@ sleep 2
 #sleep 2
 
 #Instal Bbr
-#wget $github/bbr/bbr.sh
-#chmod +x bbr.sh
-#sed -i -e 's/\r$//' bbr.sh
-#screen -S bbr ./bbr.sh
-#clear
-#sleep 2
+wget $github/bbr/bbr.sh
+chmod +x bbr.sh
+sed -i -e 's/\r$//' bbr.sh
+screen -S bbr ./bbr.sh
+clear
+sleep 2
 
 echo -e "[ ${green}INFO$NC ] DOWNLOAD SCRIPT"
 sleep 2

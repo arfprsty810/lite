@@ -20,8 +20,6 @@ domain=$(cat $arfvpn/domain)
 DOMAIN2="s/domainxxx/$domain/g";
 IP=$(cat $arfvpn/IP)
 MYIP2="s/ipxxx/$IP/g";
-mkdir -p $arfvpn
-mkdir -p $nginx
 clear
 
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"

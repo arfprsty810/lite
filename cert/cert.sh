@@ -39,7 +39,7 @@ wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
 wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
 wget -O $arfvpn/nginx/nginx.crt "$github/cert/nginx.crt"
 wget -O $arfvpn/nginx/nginx.key "$github/cert/nginx.key"
-sleep 10
+sleep 3
 
 echo -e "[ ${green}INFO$NC ] RENEW CERT SSL"
 # nginx renew ssl
@@ -68,7 +68,7 @@ chmod +x /root/.acme.sh/acme.sh
 /root/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-256
 ~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath $arfvpn/arfvpn.crt --keypath $arfvpn/arfvpn.key --ecc
 ~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath $arfvpn/nginx.crt --keypath $arfvpn/nginx.key --ecc
-sleep 10
+sleep 3
 
 echo -e "[ ${green}INFO$NC ] RENEW CERT SSL"
 # nginx renew ssl

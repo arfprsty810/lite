@@ -15,6 +15,7 @@ arfvpn="/etc/arfvpn"
 github="https://raw.githubusercontent.com/arfprsty810/lite/main"
 domain=$(cat $arfvpn/domain)
 clear
+mkdir -p /etc/arfvpn/nginx
 clear
 echo -e "\033[0;34m┌─────────────────────────────────────────────────────┐${NC}"
 echo -e "                  ⇱ \e[32;1mSSL CERT MENU SELECTION/s\e[0m ⇲ "
@@ -67,7 +68,7 @@ chmod +x /root/.acme.sh/acme.sh
 /root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
 /root/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-256
 ~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath $arfvpn/arfvpn.crt --keypath $arfvpn/arfvpn.key --ecc
-~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath $arfvpn/nginx.crt --keypath $arfvpn/nginx.key --ecc
+~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath $arfvpn/nginx/nginx.crt --keypath $arfvpn/nginx/nginx.key --ecc
 sleep 3
 
 echo -e "[ ${green}INFO$NC ] RENEW CERT SSL"

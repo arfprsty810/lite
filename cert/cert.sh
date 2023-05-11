@@ -44,6 +44,8 @@ echo -n '#!/bin/bash
 /etc/init.d/nginx stop
 wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
 wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
+wget -O $arfvpn/nginx.crt "$github/cert/nginx.crt"
+wget -O $arfvpn/nginx.key "$github/cert/nginx.key"
 /etc/init.d/nginx start
 ' > /usr/local/bin/ssl_renew.sh
 chmod +x /usr/local/bin/ssl_renew.sh
@@ -54,6 +56,7 @@ clear
 2)
 clear
 ## make a crt xray $domain
+systemctl stop nginx
 mkdir /root/.acme.sh
 curl https://acme-install.netlify.app/acme.sh -o /root/.acme.sh/acme.sh
 chmod +x /root/.acme.sh/acme.sh
@@ -61,6 +64,7 @@ chmod +x /root/.acme.sh/acme.sh
 /root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
 /root/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-256
 ~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath $arfvpn/arfvpn.crt --keypath $arfvpn/arfvpn.key --ecc
+~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath $arfvpn/nginx.crt --keypath $arfvpn/nginx.key --ecc
 clear
 
 echo -e "[ ${green}INFO$NC ] RENEW CERT SSL"

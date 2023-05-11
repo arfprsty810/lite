@@ -187,16 +187,6 @@ sed -i -e 's/\r$//' /usr/bin/backup-user
 sed -i -e 's/\r$//' /usr/bin/cf
 clear
 
-cd
-apt autoclean -y
-apt -y remove --purge unscd
-apt-get -y --purge remove samba*;
-apt-get -y --purge remove apache2*;
-apt-get -y --purge remove bind9*;
-apt-get -y remove sendmail*
-apt autoremove -y
-clear
-
 # ----------------------------------------------------------------------------------------------------------------
 # Restart Service
 # ----------------------------------------------------------------------------------------------------------------

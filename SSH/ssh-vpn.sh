@@ -31,15 +31,6 @@ NET=$(ip -o $ANU -4 route show to default | awk '{print $5}');
 source /etc/os-release
 ver=$VERSION_ID
 
-#detail nama perusahaan
-country=ID
-state=Indonesia
-locality=Indonesia
-organization=gl33ch3rvpn
-organizationalunit=gl33ch3rvpn
-commonname=gl33ch3rvpn
-email=akbarssh21@gmail.com
-
 # simple password minimal
 wget -O /etc/pam.d/common-password "https://${sshlink}/password"
 chmod +x /etc/pam.d/common-password
@@ -77,81 +68,6 @@ chmod +x /etc/rc.local
 # enable rc local
 systemctl enable rc-local
 systemctl start rc-local.service
-
-# disable ipv6
-echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6
-sed -i '$ i\echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6' /etc/rc.local
-
-#update
-apt update -y
-apt upgrade -y
-apt dist-upgrade -y
-apt-get remove --purge ufw firewalld -y
-apt-get remove --purge exim4 -y
-
-# install wget and curl
-apt -y install wget curl
-
-# Install Requirements Tools
-apt install ruby -y
-apt install python -y
-apt install make -y
-apt install cmake -y
-apt install coreutils -y
-apt install rsyslog -y
-apt install net-tools -y
-apt install zip -y
-apt install unzip -y
-apt install nano -y
-apt install sed -y
-apt install gnupg -y
-apt install gnupg1 -y
-apt install bc -y
-apt install jq -y
-apt install apt-transport-https -y
-apt install build-essential -y
-apt install dirmngr -y
-apt install libxml-parser-perl -y
-apt install neofetch -y
-apt install git -y
-apt install lsof -y
-apt install libsqlite3-dev -y
-apt install libz-dev -y
-apt install gcc -y
-apt install g++ -y
-apt install libreadline-dev -y
-apt install zlib1g-dev -y
-apt install libssl-dev -y
-apt install libssl1.0-dev -y
-apt install dos2unix -y
-
-# set time GMT +7
-ln -fs /usr/share/zoneinfo/Asia/Manila /etc/localtime
-
-# set locale
-sed -i 's/AcceptEnv/#AcceptEnv/g' /etc/ssh/sshd_config
-
-# install
-apt-get --reinstall --fix-missing install -y bzip2 gzip coreutils wget screen rsyslog iftop htop net-tools zip unzip wget net-tools curl nano sed screen gnupg gnupg1 bc apt-transport-https build-essential dirmngr libxml-parser-perl neofetch git lsof
-echo "clear" >> .profile
-echo "neofetch" >> .profile
-
-# install webserver
-apt -y install nginx php php-fpm php-cli php-mysql libxml-parser-perl
-rm /etc/nginx/sites-enabled/default
-rm /etc/nginx/sites-available/default
-curl https://${sshlink}/nginx.conf > /etc/nginx/nginx.conf
-curl https://${sshlink}/vps.conf > /etc/nginx/conf.d/vps.conf
-sed -i 's/listen = \/var\/run\/php-fpm.sock/listen = 127.0.0.1:9000/g' /etc/php/fpm/pool.d/www.conf
-useradd -m vps;
-mkdir -p /home/vps/public_html
-echo "<?php phpinfo() ?>" > /home/vps/public_html/info.php
-chown -R www-data:www-data /home/vps/public_html
-chmod -R g+rw /home/vps/public_html
-cd /home/vps/public_html
-wget -O /home/vps/public_html/index.html "https://${sshlink}/index.html1"
-/etc/init.d/nginx restart
-cd
 
 # install badvpn
 cd
@@ -254,10 +170,12 @@ rm -f stunnel5.zip
 mkdir -p /etc/stunnel5
 chmod 644 /etc/stunnel5
 
+wget -O /etc/arfvpn/stunnel.pem "https://raw.githubusercontent.com/arfprsty810/lite/main/cert/client.pem"
+chmod 600 /etc/arfvpn/stunnel.pem
+
 # Download Config Stunnel5
 cat > /etc/stunnel5/stunnel5.conf <<-END
-cert = $arfvpn/arfvpn.crt
-key = $arfvpn/arfvpn.key
+cert = /etc/arfvpn/stunnel.pem
 client = no
 socket = a:SO_REUSEADDR=1
 socket = l:TCP_NODELAY=1
@@ -385,9 +303,12 @@ netfilter-persistent reload
 
 # download script
 cd /usr/bin
+wget -q -O /usr/bin/menu-ssh "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/menu-ssh.sh"
+chmod +x /usr/bin/menu-ssh
+sed -i -e 's/\r$//' /bin/menu-ssh
 wget -O addhost "https://${sshlink}/addhost.sh"
 wget -O about "https://${sshlink}/about.sh"
-wget -O menu "https://${sshlink}/menu.sh"
+wget -O menussh "https://${sshlink}/menu.sh"
 wget -O addssh "https://${sshlink}/addssh.sh"
 wget -O trialssh "https://${sshlink}/trialssh.sh"
 wget -O delssh "https://${sshlink}/delssh.sh"
@@ -415,28 +336,9 @@ wget -O xp "https://${sshlink}/xp.sh"
 wget -O swapkvm "https://${sshlink}/swapkvm.sh"
 wget -O certsslh "https://${sshlink}/certsslh.sh"
 wget -O cfnhost "https://${sshlink}/cfnhost.sh"
-wget -O addvmess "https://${xraylink}/addv2ray.sh"
-wget -O addvless "https://${xraylink}/addvless.sh"
-wget -O addtrojan "https://${xraylink}/addtrojan.sh"
-wget -O delvmess "https://${xraylink}/delv2ray.sh"
-wget -O delvless "https://${xraylink}/delvless.sh"
-wget -O deltrojan "https://${xraylink}/deltrojan.sh"
-wget -O cekvless "https://${xraylink}/cekvless.sh"
-wget -O cektrojan "https://${xraylink}/cektrojan.sh"
-wget -O renewvmess "https://${xraylink}/renewv2ray.sh"
-wget -O renewvless "https://${xraylink}/renewvless.sh"
-wget -O renewtrojan "https://${xraylink}/renewtrojan.sh"
-wget -O addtrgo "https://${trojangolink}/addtrgo.sh"
-wget -O deltrgo "https://${trojangolink}/deltrgo.sh"
-wget -O renewtrgo "https://${trojangolink}/renewtrgo.sh"
-wget -O cektrgo "https://${trojangolink}/cektrgo.sh"
-wget -O cekvmess "https://${xraylink}/cekv2ray.sh"
-wget -O certv2ray "https://${xraylink}/certv2ray.sh"
-wget -O portsshws "https://${websocketlink}/portsshws.sh"
-wget -O portsshnontls "https://${websocketlink}/portsshnontls.sh"
 
 chmod +x addhost
-chmod +x menu
+chmod +x menussh
 chmod +x addssh
 chmod +x trialssh
 chmod +x delssh
@@ -463,69 +365,6 @@ chmod +x portvlm
 chmod +x wbmn
 chmod +x xp
 chmod +x swapkvm
-chmod +x addvmess
-chmod +x addvless
-chmod +x addtrojan
-chmod +x delvless
-chmod +x delvmess
-chmod +x deltrojan
-chmod +x cekvmess
-chmod +x cekvless
-chmod +x cektrojan
-chmod +x renewvmess
-chmod +x renewvless
-chmod +x renewtrojan
-chmod +x certv2ray
-chmod +x addtrgo
-chmod +x deltrgo
-chmod +x renewtrgo
-chmod +x cektrgo
-chmod +x portsshws
-chmod +x portsshnontls
-chmod +x cfnhost
-chmod +x certsslh
-echo "0 5 * * * root clearlog && reboot" >> /etc/crontab
-echo "0 0 * * * root xp" >> /etc/crontab
-echo "5 0 * * * root delexp && restart " >> /etc/crontab
-# remove unnecessary files
-cd
-apt autoclean -y
-apt -y remove --purge unscd
-apt-get -y --purge remove samba*;
-apt-get -y --purge remove apache2*;
-apt-get -y --purge remove bind9*;
-apt-get -y remove sendmail*
-apt autoremove -y
-# finishing
-cd
-chown -R www-data:www-data /home/vps/public_html
-/etc/init.d/nginx restart
-/etc/init.d/openvpn restart
-/etc/init.d/cron restart
-/etc/init.d/ssh restart
-/etc/init.d/dropbear restart
-/etc/init.d/fail2ban restart
-/etc/init.d/sslh restart
-/etc/init.d/stunnel5 restart
-/etc/init.d/vnstat restart
-/etc/init.d/fail2ban restart
-/etc/init.d/squid restart
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 500
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 500
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300 --max-clients 500
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7400 --max-clients 500
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7500 --max-clients 500
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7600 --max-clients 500
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7700 --max-clients 500
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7800 --max-clients 500
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7900 --max-clients 500
-history -c
-echo "unset HISTFILE" >> /etc/profile
-
-cd
-rm -f /root/key.pem
-rm -f /root/cert.pem
-rm -f /root/ssh-vpn.sh
 
 # finihsing
 clear

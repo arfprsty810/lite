@@ -18,7 +18,11 @@ DOMAIN2="s/domainxxx/$domain/g";
 IP=$(cat $arfvpn/IP)
 MYIP2="s/ipxxx/$IP/g";
 clear
-
+apt-get remove --purge ufw* -y
+apt-get remove --purge firewalld* -y
+apt-get remove --purge exim4* -y
+apt autoremove -y
+clear
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "$green          INSTALLING NGINX SERVER $NC"
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
@@ -68,3 +72,11 @@ wget -O /etc/nginx/nginxconfig.io/security.conf "https://raw.githubusercontent.c
 cd
 sudo nginx -t && sudo systemctl reload nginx
 /etc/init.d/nginx restart
+apt autoclean -y
+apt -y remove --purge unscd
+apt-get -y --purge remove samba*;
+apt-get -y --purge remove apache2*;
+apt-get -y --purge remove bind9*;
+apt-get -y remove sendmail*
+apt autoremove -y
+clear

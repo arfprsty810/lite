@@ -305,7 +305,7 @@ netfilter-persistent reload
 cd /usr/bin
 wget -q -O /usr/bin/menu-ssh "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/menu-ssh.sh"
 chmod +x /usr/bin/menu-ssh
-sed -i -e 's/\r$//' /bin/menu-ssh
+sed -i -e 's/\r$//' /usr/bin/menu-ssh
 wget -O addhost "https://${sshlink}/addhost.sh"
 wget -O about "https://${sshlink}/about.sh"
 wget -O menussh "https://${sshlink}/menu.sh"

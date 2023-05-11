@@ -57,7 +57,7 @@ DOMAIN2="s/domainxxx/$domain/g";
 IP=$(cat $arfvpn/IP)
 MYIP2="s/ipxxx/$IP/g";
 clear
-wget -O /usr/bin/cert https://raw.githubusercontent.com/arfprsty810/lite/main/cert/cert.sh && chmod +x /usr/bin/cert && sed -i -e 's/\r$//' /usr/bin/cert && ./usr/bin/cert
+wget -O /usr/bin/cert https://raw.githubusercontent.com/arfprsty810/lite/main/cert/cert.sh && chmod +x /usr/bin/cert && sed -i -e 's/\r$//' /usr/bin/cert && cert
 clear
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "$green          INSTALLING NGINX SERVER $NC"

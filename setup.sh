@@ -60,6 +60,7 @@ if [ "${EUID}" -ne 0 ]; then
 		exit 1
 fi
 mkdir -p $arfvpn
+mkdir -p $arfvpn/nginx
 mkdir -p $ipvps
 mkdir -p $xray
 mkdir -p $trgo

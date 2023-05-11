@@ -15,7 +15,6 @@ arfvpn="/etc/arfvpn"
 github="https://raw.githubusercontent.com/arfprsty810/lite/main"
 domain=$(cat $arfvpn/domain)
 clear
-systemctl stop nginx
 clear
 echo -e "\033[0;34m┌─────────────────────────────────────────────────────┐${NC}"
 echo -e "                  ⇱ \e[32;1mSSL CERT MENU SELECTION/s\e[0m ⇲ "
@@ -34,11 +33,13 @@ case $menu in
 
 1)
 clear
+systemctl stop nginx
 ## crt ssl cloudflare sg.d-jumper.me *.sg.d-jumper.me
 wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
 wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
 wget -O $arfvpn/nginx/nginx.crt "$github/cert/nginx.crt"
 wget -O $arfvpn/nginx/nginx.key "$github/cert/nginx.key"
+sleep 10
 
 echo -e "[ ${green}INFO$NC ] RENEW CERT SSL"
 # nginx renew ssl
@@ -52,7 +53,6 @@ wget -O $arfvpn/nginx/nginx.key "$github/cert/nginx.key"
 ' > /usr/local/bin/ssl_renew.sh
 chmod +x /usr/local/bin/ssl_renew.sh
 if ! grep -q 'ssl_renew.sh' /var/spool/cron/crontabs/root;then (crontab -l;echo "15 03 */3 * * /usr/local/bin/ssl_renew.sh") | crontab;fi
-clear
 ;;
 
 2)
@@ -67,7 +67,7 @@ chmod +x /root/.acme.sh/acme.sh
 /root/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-256
 ~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath $arfvpn/arfvpn.crt --keypath $arfvpn/arfvpn.key --ecc
 ~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath $arfvpn/nginx.crt --keypath $arfvpn/nginx.key --ecc
-clear
+sleep 10
 
 echo -e "[ ${green}INFO$NC ] RENEW CERT SSL"
 # nginx renew ssl
@@ -78,11 +78,10 @@ echo -n '#!/bin/bash
 ' > /usr/local/bin/ssl_renew.sh
 chmod +x /usr/local/bin/ssl_renew.sh
 if ! grep -q 'ssl_renew.sh' /var/spool/cron/crontabs/root;then (crontab -l;echo "15 03 */3 * * /usr/local/bin/ssl_renew.sh") | crontab;fi
-clear
 ;;
 
 *)
-clear
+invalid selected !
 cert
 ;;
 

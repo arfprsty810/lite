@@ -142,12 +142,12 @@ clear
 sleep 2
 
 #Instal Trojan-GO
-wget $github/xray/trojan/trojan-go.sh && chmod +x trojan-go.sh && sed -i -e 's/\r$//' trojan-go.sh && ./trojan-go.sh
+#wget $github/xray/trojan/trojan-go.sh && chmod +x trojan-go.sh && sed -i -e 's/\r$//' trojan-go.sh && ./trojan-go.sh
 clear
 sleep 2
 
 #Instal Shadowsocks
-wget $github/shadowsocks/shadowsocks.sh && chmod +x shadowsocks.sh && sed -i -e 's/\r$//' shadowsocks.sh && ./shadowsocks.sh
+#wget $github/shadowsocks/shadowsocks.sh && chmod +x shadowsocks.sh && sed -i -e 's/\r$//' shadowsocks.sh && ./shadowsocks.sh
 clear
 sleep 2
 

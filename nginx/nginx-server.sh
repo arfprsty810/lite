@@ -101,7 +101,7 @@ state=Indonesia
 locality=Jakarta
 organization=ARFVPN
 organizationalunit=ARFVPN
-commonname=$domain
+commonname=$IP
 email=arfprsty@d-jumper.me
 sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/arfvpn/nginx.key -out /etc/arfvpn/nginx.crt \
 -subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"

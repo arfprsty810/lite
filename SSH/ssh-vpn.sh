@@ -99,17 +99,17 @@ echo "/usr/sbin/nologin" >> /etc/shells
 /etc/init.d/dropbear restart
 
 # install squid
-cd
-apt -y install squid3
-wget -O /etc/squid/squid.conf "https://${sshlink}/squid3.conf"
-sed -i $MYIP2 /etc/squid/squid.conf
+#cd
+#apt -y install squid3
+#wget -O /etc/squid/squid.conf "https://${sshlink}/squid3.conf"
+#sed -i $MYIP2 /etc/squid/squid.conf
 
 # Install SSLH
-apt -y install sslh
-rm -f /etc/default/sslh
+#apt -y install sslh
+#rm -f /etc/default/sslh
 
 # Settings SSLH
-cat > /etc/default/sslh <<-END
+#cat > /etc/default/sslh <<-END
 # Default options for sslh initscript
 # sourced by /etc/init.d/sslh
 
@@ -121,22 +121,22 @@ cat > /etc/default/sslh <<-END
 # Once configuration ready, you *must* set RUN to yes here
 # and try to start sslh (standalone mode only)
 
-RUN=yes
+#RUN=yes
 
 # binary to use: forked (sslh) or single-thread (sslh-select) version
 # systemd users: don't forget to modify /lib/systemd/system/sslh.service
-DAEMON=/usr/sbin/sslh
+#DAEMON=/usr/sbin/sslh
 
-DAEMON_OPTS="--user sslh --listen 0.0.0.0:443 --ssl 127.0.0.1:777 --ssh 127.0.0.1:109 --openvpn 127.0.0.1:1194 --http 127.0.0.1:8880 --pidfile /var/run/sslh/sslh.pid -n"
+#DAEMON_OPTS="--user sslh --listen 0.0.0.0:443 --ssl 127.0.0.1:777 --ssh 127.0.0.1:109 --openvpn 127.0.0.1:1194 --http 127.0.0.1:8880 --pidfile /var/run/sslh/sslh.pid -n"
 
-END
+#END
 
 # Restart Service SSLH
-service sslh restart
-systemctl restart sslh
-/etc/init.d/sslh restart
-/etc/init.d/sslh status
-/etc/init.d/sslh restart
+#service sslh restart
+#systemctl restart sslh
+#/etc/init.d/sslh restart
+#/etc/init.d/sslh status
+#/etc/init.d/sslh restart
 
 # setting vnstat
 apt -y install vnstat

@@ -78,6 +78,8 @@ date
 sleep 3
 echo -e "[ ${green}INFO$NC ] INSTALLING NGINX SERVER"
 cd
+apt install pwgen openssl netcat -y
+clear
 apt install nginx php php-fpm php-cli php-mysql libxml-parser-perl -y
 rm /etc/nginx/sites-enabled/default
 rm /etc/nginx/sites-available/default
@@ -94,17 +96,17 @@ cd /home/vps/public_html
 wget -O /home/vps/public_html/index.html "$github/nginx/index.html"
 
 mkdir -p $arfvpn
-#country=ID
-#state=Indonesia
-#locality=Jakarta
-#organization=ARFVPN
-#organizationalunit=ARFVPN
-#commonname=$IP
-#email=arfprsty@d-jumper.me
-#sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/arfvpn/nginx.key -out /etc/arfvpn/nginx.crt \
-#-subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
-wget -O $arfvpn/client.crt "$github/cert/client.crt"
-wget -O $arfvpn/client.key "$github/cert/client.key"
+country=ID
+state=Indonesia
+locality=Jakarta
+organization=ARFVPN
+organizationalunit=ARFVPN
+commonname=$domain
+email=arfprsty@d-jumper.me
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/arfvpn/nginx.key -out /etc/arfvpn/nginx.crt \
+-subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
+#wget -O $arfvpn/client.crt "$github/cert/client.crt"
+#wget -O $arfvpn/client.key "$github/cert/client.key"
 openssl dhparam -out /etc/nginx/dhparam.pem 2048
 
 cd /etc/nginx

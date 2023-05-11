@@ -74,7 +74,7 @@ echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━�
 sleep 3
 clear
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "$green      Add Domain for XRAY VPN $NC"
+echo -e "$green      Add Domain for Server VPN $NC"
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo " "
 echo -e "[ ${green}INFO$NC ]* BLANK INPUT FOR RANDOM SUB-DOMAIN ! "

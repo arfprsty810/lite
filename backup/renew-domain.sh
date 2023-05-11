@@ -62,7 +62,7 @@ read -rp "Input ur domain / sub-domain : " -e pp
     wget -q -O /usr/bin/cf "$github/services/cf.sh"
     chmod +x /usr/bin/cf
     sed -i -e 's/\r$//' /usr/bin/cf
-    /usr/bin/cf
+    cf
     else
     apt install curl jq -y
 	echo "$pp" > $arfvpn/domain

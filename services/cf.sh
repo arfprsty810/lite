@@ -13,12 +13,7 @@ LIGHT='\033[0;37m'
 # ==========================================
 source /etc/os-release
 arfvpn="/etc/arfvpn"
-xray="/etc/xray"
-logxray="/var/log/xray"
-trgo="/etc/arfvpn/trojan-go"
-logtrgo="/var/log/arfvpn/trojan-go"
 ipvps="/var/lib/arfvpn"
-nginx="/etc/nginx"
 clear
 #apt install jq curl -y
 DOMAIN=d-jumper.me
@@ -27,6 +22,8 @@ SUB_DOMAIN=${sub}.sg.${DOMAIN}
 CF_ID=arief.prsty@gmail.com
 CF_KEY=3a3ac5ccc9e764de9129fbbb177c161b9dfbd
 set -euo pipefail
+mkdir -p $arfvpn
+mkdir -p $ipvps
 echo "IP=" >> $ipvps/ipvps.conf
 curl -s ipinfo.io/org/ > ${arfvpn}/ISP
 curl -s https://ipinfo.io/ip/ > ${arfvpn}/IP

@@ -57,6 +57,7 @@ if ! grep -q 'ssl_renew.sh' /var/spool/cron/crontabs/root;then (crontab -l;echo 
 
 2)
 clear
+apt install socat -y
 ## make a crt xray $domain
 systemctl stop nginx
 mkdir /root/.acme.sh

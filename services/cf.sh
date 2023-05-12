@@ -28,6 +28,7 @@ echo "IP=" >> $ipvps/ipvps.conf
 curl -s ipinfo.io/org/ > ${arfvpn}/ISP
 curl -s https://ipinfo.io/ip/ > ${arfvpn}/IP
 IP=$(cat ${arfvpn}/IP);
+clear
 
 echo "Updating DNS for ${SUB_DOMAIN}..."
 ZONE=$(curl -sLX GET "https://api.cloudflare.com/client/v4/zones?name=${DOMAIN}&status=active" \

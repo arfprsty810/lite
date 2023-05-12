@@ -145,14 +145,6 @@ wget $github/shadowsocks/shadowsocks.sh && chmod +x shadowsocks.sh && sed -i -e 
 clear
 sleep 2
 
-#Instal SSH-vpn
-#wget $github/ssh/ssh-vpn.sh
-#chmod +x ssh-vpn.sh
-#sed -i -e 's/\r$//' ssh-vpn.sh
-#./ssh-vpn.sh
-#clear
-#sleep 2
-
 #Instal Bbr
 wget $github/bbr/bbr.sh
 chmod +x bbr.sh

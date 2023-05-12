@@ -138,7 +138,7 @@ wget -q -O /usr/bin/speedtest "$github/services/speedtest_cli.py"
 chmod +x /usr/bin/speedtest
 wget -q -O /usr/bin/update "$github/services/update.sh"
 chmod +x /usr/bin/update
-wget -q -O /usr/bin/wbmn "$arfvpn/services/webmin.sh"
+wget -q -O /usr/bin/wbmn "$github/services/webmin.sh"
 chmod +x /usr/bin/wbmn
 wget -q -O /usr/bin/update-xray "$github/services/update-xray.sh"
 chmod +x /usr/bin/update-xray

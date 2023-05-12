@@ -364,15 +364,7 @@ clear
 
 sed -i '$ ilocation /' /etc/nginx/sites-available/$domain.conf
 sed -i '$ i{' /etc/nginx/sites-available/$domain.conf
-sed -i '$ try_files $uri $uri/ /index.html;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iproxy_redirect off;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iproxy_pass http://127.0.0.1:700'';' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iproxy_http_version 1.1;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/sites-available/$domain.conf
+sed -i '$ itry_files $uri $uri/ /index.html;' /etc/nginx/sites-available/$domain.conf
 sed -i '$ i}' /etc/nginx/sites-available/$domain.conf
 
 sed -i '$ ilocation = /vless' /etc/nginx/sites-available/$domain.conf

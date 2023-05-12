@@ -373,7 +373,6 @@ sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/n
 sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/sites-available/$domain.conf
 sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/sites-available/$domain.conf
 sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iinclude nginxconfig.io/proxy.conf;' /etc/nginx/sites-available/$domain.conf
 sed -i '$ i}' /etc/nginx/sites-available/$domain.conf
 
 sed -i '$ ilocation = /vless' /etc/nginx/sites-available/$domain.conf
@@ -386,7 +385,6 @@ sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/n
 sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/sites-available/$domain.conf
 sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/sites-available/$domain.conf
 sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iinclude nginxconfig.io/proxy.conf;' /etc/nginx/sites-available/$domain.conf
 sed -i '$ i}' /etc/nginx/sites-available/$domain.conf
 
 sed -i '$ ilocation = /vmess' /etc/nginx/sites-available/$domain.conf
@@ -399,7 +397,6 @@ sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/n
 sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/sites-available/$domain.conf
 sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/sites-available/$domain.conf
 sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iinclude nginxconfig.io/proxy.conf;' /etc/nginx/sites-available/$domain.conf
 sed -i '$ i}' /etc/nginx/sites-available/$domain.conf
 
 sed -i '$ ilocation = /worryfree' /etc/nginx/sites-available/$domain.conf
@@ -412,7 +409,6 @@ sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/n
 sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/sites-available/$domain.conf
 sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/sites-available/$domain.conf
 sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iinclude nginxconfig.io/proxy.conf;' /etc/nginx/sites-available/$domain.conf
 sed -i '$ i}' /etc/nginx/sites-available/$domain.conf
 
 sed -i '$ ilocation = /kuota-habis' /etc/nginx/sites-available/$domain.conf
@@ -425,7 +421,6 @@ sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/n
 sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/sites-available/$domain.conf
 sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/sites-available/$domain.conf
 sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iinclude nginxconfig.io/proxy.conf;' /etc/nginx/sites-available/$domain.conf
 sed -i '$ i}' /etc/nginx/sites-available/$domain.conf
 
 sed -i '$ ilocation = /trojan-ws' /etc/nginx/sites-available/$domain.conf
@@ -438,7 +433,6 @@ sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/n
 sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/sites-available/$domain.conf
 sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/sites-available/$domain.conf
 sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iinclude nginxconfig.io/proxy.conf;' /etc/nginx/sites-available/$domain.conf
 sed -i '$ i}' /etc/nginx/sites-available/$domain.conf
 
 sed -i '$ ilocation ^~ /vless-grpc' /etc/nginx/sites-available/$domain.conf
@@ -448,7 +442,6 @@ sed -i '$ igrpc_set_header X-Real-IP \$remote_addr;' /etc/nginx/sites-available/
 sed -i '$ igrpc_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/sites-available/$domain.conf
 sed -i '$ igrpc_set_header Host \$http_host;' /etc/nginx/sites-available/$domain.conf
 sed -i '$ igrpc_pass grpc://127.0.0.1:'"$vlessgrpc"';' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iinclude nginxconfig.io/proxy.conf;' /etc/nginx/sites-available/$domain.conf
 sed -i '$ i}' /etc/nginx/sites-available/$domain.conf
 
 sed -i '$ ilocation ^~ /vmess-grpc' /etc/nginx/sites-available/$domain.conf
@@ -458,7 +451,6 @@ sed -i '$ igrpc_set_header X-Real-IP \$remote_addr;' /etc/nginx/sites-available/
 sed -i '$ igrpc_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/sites-available/$domain.conf
 sed -i '$ igrpc_set_header Host \$http_host;' /etc/nginx/sites-available/$domain.conf
 sed -i '$ igrpc_pass grpc://127.0.0.1:'"$vmessgrpc"';' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iinclude nginxconfig.io/proxy.conf;' /etc/nginx/sites-available/$domain.conf
 sed -i '$ i}' /etc/nginx/sites-available/$domain.conf
 
 sed -i '$ ilocation ^~ /trojan-grpc' /etc/nginx/sites-available/$domain.conf
@@ -468,7 +460,6 @@ sed -i '$ igrpc_set_header X-Real-IP \$remote_addr;' /etc/nginx/sites-available/
 sed -i '$ igrpc_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/sites-available/$domain.conf
 sed -i '$ igrpc_set_header Host \$http_host;' /etc/nginx/sites-available/$domain.conf
 sed -i '$ igrpc_pass grpc://127.0.0.1:'"$trojangrpc"';' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iinclude nginxconfig.io/proxy.conf;' /etc/nginx/sites-available/$domain.conf
 sed -i '$ i}' /etc/nginx/sites-available/$domain.conf
 clear
 sleep 2

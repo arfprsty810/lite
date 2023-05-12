@@ -14,6 +14,7 @@ clear
 arfvpn="/etc/arfvpn"
 github="https://raw.githubusercontent.com/arfprsty810/lite/main"
 domain=$(cat $arfvpn/domain)
+MYIP=$(cat $arfvpn/IP)
 clear
 #mkdir -p $arfvpn/nginx
 apt install socat cron -y
@@ -40,8 +41,8 @@ sudo lsof -t -i tcp:80 -s tcp:listen | sudo xargs kill
 ## crt ssl cloudflare sg.d-jumper.me *.sg.d-jumper.me
 wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
 wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
-#wget -O $arfvpn/nginx/nginx.crt "$github/cert/nginx.crt"
-#wget -O $arfvpn/nginx/nginx.key "$github/cert/nginx.key"
+wget -O $arfvpn/stunnel5.crt "$github/cert/client.crt"
+wget -O $arfvpn/stunnel5.key "$github/cert/client.key"
 sleep 3
 
 echo -e "[ ${green}INFO$NC ] RENEW CERT SSL"
@@ -50,12 +51,12 @@ echo -n '#!/bin/bash
 /etc/init.d/nginx stop
 wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
 wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
-#wget -O $arfvpn/nginx/nginx.crt "$github/cert/nginx.crt"
-#wget -O $arfvpn/nginx/nginx.key "$github/cert/nginx.key"
+wget -O $arfvpn/stunnel5.crt "$github/cert/client.crt"
+wget -O $arfvpn/stunnel5.key "$github/cert/client.key"
 /etc/init.d/nginx start
-' > /usr/local/bin/ssl_renew.sh
-chmod +x /usr/local/bin/ssl_renew.sh
-if ! grep -q 'ssl_renew.sh' /var/spool/cron/crontabs/root;then (crontab -l;echo "15 03 */3 * * /usr/local/bin/ssl_renew.sh") | crontab;fi
+' > /usr/bin/ssl_renew.sh
+chmod +x /usr/bin/ssl_renew.sh
+if ! grep -q 'ssl_renew.sh' /var/spool/cron/crontabs/root;then (crontab -l;echo "15 03 */3 * * /usr/bin/ssl_renew.sh") | crontab;fi
 ;;
 
 2)
@@ -70,7 +71,17 @@ chmod +x /root/.acme.sh/acme.sh
 /root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
 /root/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-256
 ~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath $arfvpn/arfvpn.crt --keypath $arfvpn/arfvpn.key --ecc
-#~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath $arfvpn/nginx/nginx.crt --keypath $arfvpn/nginx/nginx.key --ecc
+
+# make a certificate stunnel5
+country=ID
+state=Indonesia
+locality=Indonesia
+organization=™D-JumPer™
+organizationalunit=ARF-VPN
+commonname=$domain
+email=arfprsty@d-jumper.me
+openssl req -new -x509 -key $arfvpn/stunnel5.key -out $arfvpn/stunnel5.crt -days 1095 \
+-subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
 sleep 3
 
 echo -e "[ ${green}INFO$NC ] RENEW CERT SSL"
@@ -79,9 +90,9 @@ echo -n '#!/bin/bash
 /etc/init.d/nginx stop
 "/root/.acme.sh"/acme.sh --cron --home "/root/.acme.sh" &> /root/renew_ssl.log
 /etc/init.d/nginx start
-' > /usr/local/bin/ssl_renew.sh
-chmod +x /usr/local/bin/ssl_renew.sh
-if ! grep -q 'ssl_renew.sh' /var/spool/cron/crontabs/root;then (crontab -l;echo "15 03 */3 * * /usr/local/bin/ssl_renew.sh") | crontab;fi
+' > /usr/bin/ssl_renew.sh
+chmod +x /usr/bin/ssl_renew.sh
+if ! grep -q 'ssl_renew.sh' /var/spool/cron/crontabs/root;then (crontab -l;echo "15 03 */3 * * /usr/bin/ssl_renew.sh") | crontab;fi
 ;;
 
 *)

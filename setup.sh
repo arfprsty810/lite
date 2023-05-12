@@ -74,7 +74,7 @@ echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━�
 sleep 3
 clear
 
-wget https://raw.githubusercontent.com/arfprsty810/lite/main/backup/renew-domain.sh && chmod +x renew-domain.sh && sed -i -e 's/\r$//' renew-domain.sh && ./renew-domain.sh
+wget -O /usr/bin/renew-domain https://raw.githubusercontent.com/arfprsty810/lite/main/backup/renew-domain.sh && chmod +x /usr/bin/renew-domain && sed -i -e 's/\r$//' /usr/bin/renew-domain && renew-domain
 
 clear
 
@@ -143,19 +143,23 @@ echo -e "[ ${green}INFO$NC ] DOWNLOAD SCRIPT"
 sleep 2
 wget -q -O /usr/bin/restart "$github/services/restart.sh" && chmod +x /usr/bin/restart
 wget -q -O /usr/bin/running "$github/services/running.sh" && chmod +x /usr/bin/running
+wget -q -O /usr/bin/update-xray "$github/services/update-xray.sh" && chmod +x /usr/bin/update-xray
 wget -q -O /usr/bin/cek-bandwidth "$github/services/cek-bandwidth.sh" && chmod +x /usr/bin/cek-bandwidth
 wget -q -O /usr/bin/menu "$github/services/menu.sh" && chmod +x /usr/bin/menu
 wget -q -O /usr/bin/speedtest "$github/services/speedtest_cli.py" && chmod +x /usr/bin/speedtest
 wget -q -O /usr/bin/update "$github/services/update.sh" && chmod +x /usr/bin/update
 wget -q -O /usr/bin/renew-config "$github/backup/renew-config.sh" && chmod +x /usr/bin/renew-config
+wget -q -O /usr/bin/renew-domain "$github/backup/renew-domain.sh" && chmod +x /usr/bin/renew-domain
 wget -q -O /usr/bin/backup-user "$github/backup/backup-user.sh" && chmod +x /usr/bin/backup-user
 wget -q -O /usr/bin/cf "$github/services/cf.sh" && chmod +x /usr/bin/cf
 sed -i -e 's/\r$//' /usr/bin/menu
 sed -i -e 's/\r$//' /usr/bin/cek-bandwidth
 sed -i -e 's/\r$//' /usr/bin/update
+sed -i -e 's/\r$//' /usr/bin/update-xray
 sed -i -e 's/\r$//' /usr/bin/restart
 sed -i -e 's/\r$//' /usr/bin/running
 sed -i -e 's/\r$//' /usr/bin/renew-config
+sed -i -e 's/\r$//' /usr/bin/renew-domain
 sed -i -e 's/\r$//' /usr/bin/backup-user
 sed -i -e 's/\r$//' /usr/bin/cf
 clear

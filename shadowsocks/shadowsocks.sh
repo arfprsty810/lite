@@ -75,6 +75,7 @@ sed -i -e 's/\r$//' /usr/bin/addss
 sed -i -e 's/\r$//' /usr/bin/cekss
 sed -i -e 's/\r$//' /usr/bin/delss
 sed -i -e 's/\r$//' /usr/bin/renewss
+clear
 
 sleep 1
 echo -e "[ ${green}INFO$NC ] Restart Service/s ..."

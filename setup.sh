@@ -162,7 +162,7 @@ wget -q -O /usr/bin/cek-bandwidth "$github/services/cek-bandwidth.sh" && chmod +
 wget -q -O /usr/bin/menu "$github/services/menu.sh" && chmod +x /usr/bin/menu
 wget -q -O /usr/bin/speedtest "$github/services/speedtest_cli.py" && chmod +x /usr/bin/speedtest
 wget -q -O /usr/bin/update "$github/services/update.sh" && chmod +x /usr/bin/update
-wget -q -O /usr/bin/wbmn "$arfvpn/services/webmin.sh" && chmod +x /usr/bin/wbmn
+wget -q -O /usr/bin/wbmn "$hithub/services/webmin.sh" && chmod +x /usr/bin/wbmn
 wget -q -O /usr/bin/renew-config "$github/backup/renew-config.sh" && chmod +x /usr/bin/renew-config
 wget -q -O /usr/bin/renew-domain "$github/backup/renew-domain.sh" && chmod +x /usr/bin/renew-domain
 wget -q -O /usr/bin/backup-user "$github/backup/backup-user.sh" && chmod +x /usr/bin/backup-user

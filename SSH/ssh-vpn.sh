@@ -190,8 +190,8 @@ chmod 644 /etc/stunnel5
 
 # Download Config Stunnel5
 cat > /etc/stunnel5/stunnel5.conf <<-END
-cert = /etc/arfvpn/stunnel5.crt
-key = /etc/arfvpn/stunnel5.key
+cert = /etc/arfvpn/arfvpn.crt
+key = /etc/arfvpn/arfvpn.key
 options = -NO_SSLv2
 options = -NO_SSLv3
 client = no

@@ -195,10 +195,6 @@ sed -i -e 's/\r$//' /usr/bin/delss
 sed -i -e 's/\r$//' /usr/bin/renewss
 clear
 
-
-echo -e "[ ${green}INFO$NC ] Check Xray Version!"
-/usr/bin/update-xray
-
 echo -e "[ ${green}INFO$NC ] Update Successfully!"
 sleep 3
 clear

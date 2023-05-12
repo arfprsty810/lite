@@ -88,7 +88,7 @@ echo -e "    ${BICyan}[${BIWhite}02${BICyan}]${RED} •${NC} ${CYAN}XRAY - VLESS
 echo -e "\033[0;34m└─────────────────────────────────────────────────────┘${NC}"
 echo""
 echo -e "\033[0;34m┌─────────────────────────────────────────────────────┐${NC}"
-echo -e "                         ⇱ \e[32;1mAddOn\e[0m ⇲ "
+echo -e "                      ⇱ \e[32;1mAddOn\e[0m ⇲ "
 echo -e "\033[0;34m└─────────────────────────────────────────────────────┘${NC}"
 
 echo -e "    ${BICyan}[${BIWhite}05${BICyan}]${RED} •${NC} ${CYAN}RENEW-CERT   $NC  ${BICyan}[${BIWhite}09${BICyan}]${RED} • ${NC}${CYAN}CEK BANDWIDTH $NC"

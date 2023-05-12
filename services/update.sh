@@ -195,10 +195,6 @@ sed -i -e 's/\r$//' /usr/bin/delss
 sed -i -e 's/\r$//' /usr/bin/renewss
 clear
 
-echo -e "[ ${green}INFO$NC ] Update Successfully!"
-sleep 3
-clear
-
 sleep 1
 cat> /root/.profile << END
 # ~/.profile: executed by Bourne-compatible login shells.
@@ -215,9 +211,8 @@ menu
 END
 chmod 644 /root/.profile
 rm -rvf /root/*.sh
-clear
 
-echo "      Update Successfully ..."
+echo -e "[ ${green}INFO$NC ] Update Successfully!"
 echo ""
 read -n 1 -s -r -p "Press any key to back on menu"
 menu

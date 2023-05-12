@@ -29,15 +29,6 @@ DOMAIN=$(cat $arfvpn/domain)
 MYIP2="s/xxxxxxxxx/MYIP/g";
 NET=$(ip -o $ANU -4 route show to default | awk '{print $5}');
 
-#detail nama perusahaan
-country=ID
-state=Indonesia
-locality=Indonesia
-organization=gl33ch3rvpn
-organizationalunit=gl33ch3rvpn
-commonname=gl33ch3rvpn
-email=akbarssh21@gmail.com
-
 # simple password minimal
 wget -O /etc/pam.d/common-password "https://${sshlink}/password"
 chmod +x /etc/pam.d/common-password
@@ -199,8 +190,8 @@ chmod 644 /etc/stunnel5
 
 # Download Config Stunnel5
 cat > /etc/stunnel5/stunnel5.conf <<-END
-cert = /etc/arfvpn/arfvpn.crt
-key = /etc/arfvpn/arfvpn.key
+cert = /etc/arfvpn/stunnel5.crt
+key = /etc/arfvpn/stunnel5.key
 options = -NO_SSLv2
 options = -NO_SSLv3
 client = no
@@ -221,12 +212,6 @@ accept = 990
 connect = 127.0.0.1:1194
 
 END
-
-# make a certificate
-#openssl genrsa -out key.pem 2048
-#openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
-#-subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
-#cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
 
 # Service Stunnel5 systemctl restart stunnel5
 cat > /etc/systemd/system/stunnel5.service << END

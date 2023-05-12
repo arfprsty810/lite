@@ -87,20 +87,30 @@ echo -e "    ${BICyan}[${BIWhite}02${BICyan}]${RED} •${NC} ${CYAN}XRAY - VLESS
 
 echo -e "\033[0;34m└─────────────────────────────────────────────────────┘${NC}"
 echo""
+echo -e "\033[0;34m┌─────────────────────────────────────────────────────┐${NC}"
+echo -e "                  ⇱ \e[32;1mAddOn/s\e[0m ⇲ "
+echo -e "\033[0;34m└─────────────────────────────────────────────────────┘${NC}"
 
+echo -e "    ${BICyan}[${BIWhite}05${BICyan}]${RED} •${NC} ${CYAN}RENEW-CERT   $NC  ${BICyan}[${BIWhite}09${BICyan}]${RED} • ${NC}${CYAN}CEK BANDWIDTH $NC"
+
+echo -e "    ${BICyan}[${BIWhite}06${BICyan}]${RED} •${NC} ${CYAN}UPDATE-XRAY  $NC  ${BICyan}[${BIWhite}10${BICyan}]${RED} • ${NC}${CYAN}CEK RUNNING SERVICE $NC"
+
+echo -e "    ${BICyan}[${BIWhite}07${BICyan}]${RED} •${NC} ${CYAN}UPDATE-SCRIPT$NC  ${BICyan}[${BIWhite}11${BICyan}]${RED} • ${NC}${CYAN}RESTART SERVICE$NC"
+
+echo -e "    ${BICyan}[${BIWhite}08${BICyan}]${RED} •${NC} ${CYAN}SPEEDTEST    $NC  ${BICyan}[${BIWhite}12${BICyan}]${RED} • ${NC}${CYAN}INSTALL-WEBMIN$NC"
+
+echo -e "\033[0;34m└─────────────────────────────────────────────────────┘${NC}"
+echo ""
 echo -e "\033[0;34m┌─────────────────────────────────────────────────────┐${NC}"
 echo -e "                  ⇱ \e[32;1mMenu Service/s\e[0m ⇲ "
 echo -e "\033[0;34m└─────────────────────────────────────────────────────┘${NC}"
 
-echo -e "    ${BICyan}[${BIWhite}05${BICyan}]${RED} •${NC} ${CYAN}SPEEDTEST    $NC  ${BICyan}[${BIWhite}09${BICyan}]${RED} • ${NC}${CYAN}CEK BANDWIDTH $NC"
+echo -e "    ${BICyan}[${BIWhite}13${BICyan}]${RED} •${NC} ${CYAN}INFO-SCRIPT  $NC  ${BICyan}[${BIWhite}14${BICyan}]${RED} • ${NC}${CYAN}REBOOT VPS   $NC"
 
-echo -e "    ${BICyan}[${BIWhite}06${BICyan}]${RED} •${NC} ${CYAN}SCRIPT INFO  $NC  ${BICyan}[${BIWhite}10${BICyan}]${RED} • ${NC}${CYAN}CEK RUNNING SERVICE $NC"
-
-echo -e "    ${BICyan}[${BIWhite}07${BICyan}]${RED} •${NC} ${CYAN}UPDATE SCRIPT$NC  ${BICyan}[${BIWhite}11${BICyan}]${RED} • ${NC}${CYAN}RESTART SERVICE $NC"
-
-echo -e "    ${BICyan}[${BIWhite}08${BICyan}]${RED} •${NC} ${CYAN}REBOOT VPS   $NC  ${BICyan}[${BIWhite}xx${BICyan}]${RED} • ${NC}${CYAN}x TO EXIT $NC"
+echo -e "    ${BICyan}[${BIWhite}xx${BICyan}]${RED} •${NC} ${CYAN}x TO EXIT    $NC"
 
 echo -e "\033[0;34m└─────────────────────────────────────────────────────┘${NC}"
+
 
 echo -e ""
 
@@ -129,21 +139,12 @@ menu-ss
 
 5)
 clear
-speedtest
-sleep 2
-echo "please wait ... "
-sleep 3
-echo ""
-read -n 1 -s -r -p "Press any key to back on menu"
-menu
+cert
 ;;
 
 6)
 clear
-cat /root/log-install.txt
-echo ""
-read -n 1 -s -r -p "Press any key to back on menu"
-menu
+update-xray
 ;;
 
 7)
@@ -152,8 +153,14 @@ update
 ;;
 
 8)
-reboot
-exit
+clear
+speedtest
+sleep 2
+echo "please wait ... "
+sleep 3
+echo ""
+read -n 1 -s -r -p "Press any key to back on menu"
+menu
 ;;
 
 9)
@@ -169,6 +176,24 @@ running
 11)
 clear
 restart
+;;
+
+12)
+clear
+wbmn
+;;
+
+13)
+clear
+cat /root/log-install.txt
+echo ""
+read -n 1 -s -r -p "Press any key to back on menu"
+menu
+;;
+
+8)
+reboot
+exit
 ;;
 
 x)

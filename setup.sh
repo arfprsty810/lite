@@ -72,9 +72,32 @@ echo -e "$green                 AUTOSCRIPT VPS v.1.0 $NC"
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 sleep 3
 clear
-
-wget -O /usr/bin/renew-domain https://raw.githubusercontent.com/arfprsty810/lite/main/backup/renew-domain.sh && chmod +x /usr/bin/renew-domain && sed -i -e 's/\r$//' /usr/bin/renew-domain && renew-domain
-
+apt install curl jq -y
+clear
+echo ""
+echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "$green      Add Domain for Server VPN $NC"
+echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo " "
+echo -e "[ ${green}INFO$NC ]* BLANK INPUT FOR RANDOM SUB-DOMAIN ! "
+read -rp "Input ur domain / sub-domain : " -e pp
+    if [ -z $pp ]; then
+    echo -e "
+    Nothing input for domain!
+    Then a random sub-domain will be created"
+    sleep 2
+    clear
+    wget -q -O /usr/bin/cf "$github/services/cf.sh"
+    chmod +x /usr/bin/cf
+    sed -i -e 's/\r$//' /usr/bin/cf
+    cf
+    else
+	echo "$pp" > $arfvpn/domain
+	echo "$pp" > $arfvpn/scdomain
+    echo "IP=$pp" > $ipvps/ipvps.conf
+    curl -s ipinfo.io/org/ > ${arfvpn}/ISP
+    curl -s https://ipinfo.io/ip/ > ${arfvpn}/IP
+    fi
 clear
 
 #update

@@ -70,16 +70,11 @@ echo -e "  ❇️ \e[32;1m Current Domain\e[0m   : $DOMAIN "
 echo -e "  ❇️ \e[32;1m Current Isp Name\e[0m : $ISP "
 echo -e "  ❇️ \e[32;1m Server IP\e[0m        : $IP "
 echo -e "  ❇️ \e[32;1m Time Reboot VPS\e[0m  : 00:00 ( Jam 12 Malam ) "
-echo -e "\033[0;34m└─────────────────────────────────────────────────────┘${NC}"
-echo -e ""
-echo -e "\033[0;34m┌─────────────────────────────────────────────────────┐${NC}"
-echo -e "                  ⇱ \e[32;1mStatus Layanan\e[0m ⇲ "
-echo -e "\033[0;34m└─────────────────────────────────────────────────────┘${NC}"
 echo -e "      🟢🟡🔴  SERVER STATUS     :    ${status_nginx}  🔴🟡🟢"
 echo -e "\033[0;34m└─────────────────────────────────────────────────────┘${NC}"
 echo -e ""
 echo -e "\033[0;34m┌─────────────────────────────────────────────────────┐${NC}"
-echo -e "                    ⇱ \e[32;1mMenu Tunnel\e[0m ⇲ "
+echo -e "                  ⇱ \e[32;1mTunnel/s Menu\e[0m ⇲ "
 echo -e "\033[0;34m└─────────────────────────────────────────────────────┘${NC}"
 echo -e "    ${BICyan}[${BIWhite}01${BICyan}]${RED} •${NC} ${CYAN}XRAY - VMESS $NC  ${BICyan}[${BIWhite}03${BICyan}]${RED} • ${NC}${CYAN}TROJAN-WS/GO $NC"
 
@@ -88,7 +83,7 @@ echo -e "    ${BICyan}[${BIWhite}02${BICyan}]${RED} •${NC} ${CYAN}XRAY - VLESS
 echo -e "\033[0;34m└─────────────────────────────────────────────────────┘${NC}"
 echo""
 echo -e "\033[0;34m┌─────────────────────────────────────────────────────┐${NC}"
-echo -e "                      ⇱ \e[32;1mAddOn\e[0m ⇲ "
+echo -e "                  ⇱ \e[32;1mMenu Service/s\e[0m ⇲ "
 echo -e "\033[0;34m└─────────────────────────────────────────────────────┘${NC}"
 
 echo -e "    ${BICyan}[${BIWhite}05${BICyan}]${RED} •${NC} ${CYAN}RENEW-CERT   $NC  ${BICyan}[${BIWhite}09${BICyan}]${RED} • ${NC}${CYAN}CEK BANDWIDTH $NC"
@@ -100,9 +95,9 @@ echo -e "    ${BICyan}[${BIWhite}07${BICyan}]${RED} •${NC} ${CYAN}UPDATE-SCRIP
 echo -e "    ${BICyan}[${BIWhite}08${BICyan}]${RED} •${NC} ${CYAN}SPEEDTEST    $NC  ${BICyan}[${BIWhite}12${BICyan}]${RED} • ${NC}${CYAN}INSTALL-WEBMIN$NC"
 
 echo -e "\033[0;34m└─────────────────────────────────────────────────────┘${NC}"
-echo ""
+echo -e ""
 echo -e "\033[0;34m┌─────────────────────────────────────────────────────┐${NC}"
-echo -e "                  ⇱ \e[32;1mMenu Service/s\e[0m ⇲ "
+echo -e "                      ⇱ \e[32;1mAbout\e[0m ⇲ "
 echo -e "\033[0;34m└─────────────────────────────────────────────────────┘${NC}"
 
 echo -e "    ${BICyan}[${BIWhite}13${BICyan}]${RED} •${NC} ${CYAN}INFO-SCRIPT  $NC  ${BICyan}[${BIWhite}14${BICyan}]${RED} • ${NC}${CYAN}REBOOT VPS   $NC"
@@ -110,8 +105,6 @@ echo -e "    ${BICyan}[${BIWhite}13${BICyan}]${RED} •${NC} ${CYAN}INFO-SCRIPT 
 echo -e "    ${BICyan}[${BIWhite}xx${BICyan}]${RED} •${NC} ${CYAN}x TO EXIT    $NC"
 
 echo -e "\033[0;34m└─────────────────────────────────────────────────────┘${NC}"
-
-
 echo -e ""
 
 read -p "                    Select Menu : " menu

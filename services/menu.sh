@@ -111,7 +111,7 @@ case $menu in
 
 1)
 clear
-menu-ssh
+menuvpn
 ;;
 
 2)

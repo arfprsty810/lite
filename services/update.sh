@@ -57,7 +57,8 @@ rm -rvf /usr/bin/running
 rm -rvf /bin/cek-bandwidth
 rm -rvf /usr/bin/renew-config
 rm -rvf /usr/bin/backup-user
-rm -rvf /usr/bin/cekuser
+rm -rvf /usr/bin/renew-domain
+rm -rvf /usr/bin/update-xray
 rm -rvf /usr/bin/xp
 rm -rvf /usr/bin/cf
 rm -rvf /usr/bin/cert
@@ -136,8 +137,8 @@ wget -q -O /usr/bin/speedtest "$github/services/speedtest_cli.py"
 chmod +x /usr/bin/speedtest
 wget -q -O /usr/bin/update "$github/services/update.sh"
 chmod +x /usr/bin/update
-wget -q -O /usr/bin/cekuser "$github/services/cekuser.sh"
-chmod +x /usr/bin/cekuser
+wget -q -O /usr/bin/renew-domain "$github/backup/renew-domain.sh"
+chmod +x /usr/bin/renew-domain
 wget -q -O /usr/bin/renew-config "$github/backup/renew-config.sh"
 chmod +x /usr/bin/renew-config
 wget -q -O /usr/bin/backup-user "$github/backup/backup-user.sh"
@@ -159,7 +160,7 @@ sed -i -e 's/\r$//' /usr/bin/running
 sed -i -e 's/\r$//' /usr/bin/cek-bandwidth
 sed -i -e 's/\r$//' /usr/bin/renew-config
 sed -i -e 's/\r$//' /usr/bin/backup-user
-sed -i -e 's/\r$//' /usr/bin/cekuser
+sed -i -e 's/\r$//' /usr/bin/renew-domain
 clear
 
 sed -i -e 's/\r$//' /usr/bin/menu-vmess

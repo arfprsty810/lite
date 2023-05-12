@@ -44,6 +44,7 @@ github="https://raw.githubusercontent.com/arfprsty810/lite/main"
 rm -rvf domain scdomain IP ISP
 mkdir -p $arfvpn
 mkdir -p $ipvps
+apt install curl jq -y
 clear
 
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
@@ -58,13 +59,11 @@ read -rp "Input ur domain / sub-domain : " -e pp
     Then a random sub-domain will be created"
     sleep 2
     clear
-    apt install curl jq -y
     wget -q -O /usr/bin/cf "$github/services/cf.sh"
     chmod +x /usr/bin/cf
     sed -i -e 's/\r$//' /usr/bin/cf
     cf
     else
-    apt install curl jq -y
 	echo "$pp" > $arfvpn/domain
 	echo "$pp" > $arfvpn/scdomain
     echo "IP=$pp" > $ipvps/ipvps.conf

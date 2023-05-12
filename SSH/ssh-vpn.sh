@@ -26,7 +26,7 @@ arfvpn="/etc/arfvpn"
 ipvps="/var/lib/arfvpn"
 MYIP=$(cat $arfvpn/IP);
 DOMAIN=$(cat $arfvpn/domain)
-MYIP2="s/xxxxxxxxx/139.59.110.197/g";
+MYIP2="s/xxxxxxxxx/MYIP/g";
 NET=$(ip -o $ANU -4 route show to default | awk '{print $5}');
 
 #detail nama perusahaan
@@ -199,8 +199,10 @@ chmod 644 /etc/stunnel5
 
 # Download Config Stunnel5
 cat > /etc/stunnel5/stunnel5.conf <<-END
-cert = /etc/xray/xray.crt
-key = /etc/xray/xray.key
+cert = /etc/arfvpn/arfvpn.crt
+key = /etc/arfvpn/arfvpn.key
+options = -NO_SSLv2
+options = -NO_SSLv3
 client = no
 socket = a:SO_REUSEADDR=1
 socket = l:TCP_NODELAY=1

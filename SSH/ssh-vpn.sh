@@ -373,13 +373,13 @@ chmod +x certsslh
 
 # remove unnecessary files
 cd
-apt autoclean -y
-apt -y remove --purge unscd
-apt-get -y --purge remove samba*;
-apt-get -y --purge remove apache2*;
-apt-get -y --purge remove bind9*;
-apt-get -y remove sendmail*
-apt autoremove -y
+#apt autoclean -y
+#apt -y remove --purge unscd
+#apt-get -y --purge remove samba*;
+#apt-get -y --purge remove apache2*;
+#apt-get -y --purge remove bind9*;
+#apt-get -y remove sendmail*
+#apt autoremove -y
 # finishing
 cd
 chown -R www-data:www-data /home/vps/public_html

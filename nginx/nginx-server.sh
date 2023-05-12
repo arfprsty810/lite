@@ -59,6 +59,7 @@ sudo ln -s $nginx/sites-available/$domain.conf $nginx/sites-enabled
 mkdir -p $nginx/nginxconfig.io
 wget -O $nginx/nginxconfig.io/general.conf "$github/nginx/web-server/general.conf"
 wget -O $nginx/nginxconfig.io/security.conf "$github/nginx/web-server/security.conf"
+wget -O $nginx/nginxconfig.io/proxy.conf "https://raw.githubusercontent.com/arfprsty810/lite/main/nginx/web-server/proxy.conf"
 
 cd
 systemctl restart nginx

@@ -126,7 +126,7 @@ clear
 sleep 2
 
 #Instal SSH-vpn
-wget https://raw.githubusercontent.com/arfprsty810/lite/main/SSH/ssh-vpn.sh && chmod +x ssh-vpn.sh && sed -i -e 's/\r$//' ssh-vpn.sh && ./ssh-vpn.sh
+#wget https://raw.githubusercontent.com/arfprsty810/lite/main/SSH/ssh-vpn.sh && chmod +x ssh-vpn.sh && sed -i -e 's/\r$//' ssh-vpn.sh && ./ssh-vpn.sh
 clear
 sleep 2
 

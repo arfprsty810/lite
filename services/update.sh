@@ -62,6 +62,7 @@ rm -rvf /usr/bin/update-xray
 rm -rvf /usr/bin/xp
 rm -rvf /usr/bin/cf
 rm -rvf /usr/bin/cert
+rm -rvf /usr/bin/wbmn
 clear
 
 echo -e "[ ${green}INFO$NC ] Update New Script ..."
@@ -119,7 +120,7 @@ chmod +x /usr/bin/renewss
 clear
 
 #--
-wget -O /usr/bin/cert "$github/cert/cert.sh"
+wget -q -O /usr/bin/cert "$github/cert/cert.sh"
 chmod +x /usr/bin/cert
 wget -q -O /usr/bin/xp "$github/xray/xp.sh"
 chmod +x /usr/bin/xp
@@ -137,20 +138,23 @@ wget -q -O /usr/bin/speedtest "$github/services/speedtest_cli.py"
 chmod +x /usr/bin/speedtest
 wget -q -O /usr/bin/update "$github/services/update.sh"
 chmod +x /usr/bin/update
+wget -q -O /usr/bin/wbmn "$arfvpn/services/webmin.sh"
+chmod +x /usr/bin/wbmn
+wget -q -O /usr/bin/update-xray "$github/services/update-xray.sh"
+chmod +x /usr/bin/update-xray
 wget -q -O /usr/bin/renew-domain "$github/backup/renew-domain.sh"
 chmod +x /usr/bin/renew-domain
 wget -q -O /usr/bin/renew-config "$github/backup/renew-config.sh"
 chmod +x /usr/bin/renew-config
 wget -q -O /usr/bin/backup-user "$github/backup/backup-user.sh"
 chmod +x /usr/bin/backup-user
-wget -O /usr/bin/update-xray "$github/services/update-xray.sh"
-chmod +x /usr/bin/update-xray
 clear
 
 echo -e "[ ${green}INFO$NC ] Install New Script ..."
 sleep 2
 sed -i -e 's/\r$//' /usr/bin/update-xray
 sed -i -e 's/\r$//' /usr/bin/cert
+sed -i -e 's/\r$//' /usr/bin/wbmn
 sed -i -e 's/\r$//' /usr/bin/cf
 sed -i -e 's/\r$//' /usr/bin/xp
 sed -i -e 's/\r$//' /usr/bin/menu
@@ -191,56 +195,6 @@ sed -i -e 's/\r$//' /usr/bin/delss
 sed -i -e 's/\r$//' /usr/bin/renewss
 clear
 
-rm -rvf /bin/autodel
-wget -q -O /usr/bin/autodel "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/autodel.sh"
-chmod +x /usr/bin/autodel
-sed -i -e 's/\r$//' /usr/bin/autodel
-
-rm -rvf /bin/autokill
-wget -q -O /usr/bin/autokill "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/autokill.sh"
-chmod +x /usr/bin/autokill
-sed -i -e 's/\r$//' /usr/bin/autokill
-
-rm -rvf /bin/cek
-wget -q -O /usr/bin/cek "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/cek.sh"
-chmod +x /usr/bin/cek
-sed -i -e 's/\r$//' /usr/bin/cek
-
-rm -rvf /bin/ceklim
-wget -q -O /usr/bin/ceklim "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/ceklim.sh"
-chmod +x /usr/bin/ceklim
-sed -i -e 's/\r$//' /usr/bin/ceklim
-
-rm -rvf /bin/del
-wget -q -O /usr/bin/del "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/del.sh"
-chmod +x /usr/bin/del
-sed -i -e 's/\r$//' /usr/bin/del
-
-rm -rvf /bin/member
-wget -q -O /usr/bin/member "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/member.sh"
-chmod +x /usr/bin/member
-sed -i -e 's/\r$//' /usr/bin/member
-
-rm -rvf /bin/menu-ssh
-wget -q -O /usr/bin/menu-ssh "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/menu-ssh.sh"
-chmod +x /usr/bin/menu-ssh
-sed -i -e 's/\r$//' /usr/bin/menu-ssh
-
-rm -rvf /bin/renew
-wget -q -O /usr/bin/renew "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/renew.sh"
-chmod +x /usr/bin/renew
-sed -i -e 's/\r$//' /usr/bin/renew
-
-rm -rvf /bin/tendang
-wget -q -O /usr/bin/tendang "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/tendang.sh"
-chmod +x /usr/bin/tendang
-sed -i -e 's/\r$//' /usr/bin/tendang
-
-rm -rvf /bin/usernew
-wget -q -O /usr/bin/usernew "https://raw.githubusercontent.com/arfprsty810/lite/main/ssh/usernew.sh"
-chmod +x /usr/bin/usernew
-sed -i -e 's/\r$//' /usr/bin/usernew
-clear
 
 echo -e "[ ${green}INFO$NC ] Check Xray Version!"
 /usr/bin/update-xray

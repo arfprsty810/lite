@@ -15,7 +15,8 @@ arfvpn="/etc/arfvpn"
 github="https://raw.githubusercontent.com/arfprsty810/lite/main"
 domain=$(cat $arfvpn/domain)
 clear
-mkdir -p $arfvpn/nginx
+#mkdir -p $arfvpn/nginx
+apt install socat cron -y
 clear
 echo -e "\033[0;34m┌─────────────────────────────────────────────────────┐${NC}"
 echo -e "                  ⇱ \e[32;1mSSL CERT MENU SELECTION/s\e[0m ⇲ "
@@ -39,8 +40,8 @@ sudo lsof -t -i tcp:80 -s tcp:listen | sudo xargs kill
 ## crt ssl cloudflare sg.d-jumper.me *.sg.d-jumper.me
 wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
 wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
-wget -O $arfvpn/nginx/nginx.crt "$github/cert/nginx.crt"
-wget -O $arfvpn/nginx/nginx.key "$github/cert/nginx.key"
+#wget -O $arfvpn/nginx/nginx.crt "$github/cert/nginx.crt"
+#wget -O $arfvpn/nginx/nginx.key "$github/cert/nginx.key"
 sleep 3
 
 echo -e "[ ${green}INFO$NC ] RENEW CERT SSL"
@@ -49,8 +50,8 @@ echo -n '#!/bin/bash
 /etc/init.d/nginx stop
 wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
 wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
-wget -O $arfvpn/nginx/nginx.crt "$github/cert/nginx.crt"
-wget -O $arfvpn/nginx/nginx.key "$github/cert/nginx.key"
+#wget -O $arfvpn/nginx/nginx.crt "$github/cert/nginx.crt"
+#wget -O $arfvpn/nginx/nginx.key "$github/cert/nginx.key"
 /etc/init.d/nginx start
 ' > /usr/local/bin/ssl_renew.sh
 chmod +x /usr/local/bin/ssl_renew.sh
@@ -59,7 +60,6 @@ if ! grep -q 'ssl_renew.sh' /var/spool/cron/crontabs/root;then (crontab -l;echo 
 
 2)
 clear
-apt install socat -y
 ## make a crt xray $domain
 systemctl stop nginx
 sudo lsof -t -i tcp:80 -s tcp:listen | sudo xargs kill
@@ -70,7 +70,7 @@ chmod +x /root/.acme.sh/acme.sh
 /root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
 /root/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-256
 ~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath $arfvpn/arfvpn.crt --keypath $arfvpn/arfvpn.key --ecc
-~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath $arfvpn/nginx/nginx.crt --keypath $arfvpn/nginx/nginx.key --ecc
+#~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath $arfvpn/nginx/nginx.crt --keypath $arfvpn/nginx/nginx.key --ecc
 sleep 3
 
 echo -e "[ ${green}INFO$NC ] RENEW CERT SSL"

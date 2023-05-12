@@ -39,11 +39,10 @@ clear
 cd /root
 source /etc/os-release
 arfvpn="/etc/arfvpn"
+nginx="/etc/nginx"
 ipvps="/var/lib/arfvpn"
 github="https://raw.githubusercontent.com/arfprsty810/lite/main"
 rm -rvf domain scdomain IP ISP
-mkdir -p $arfvpn
-mkdir -p $ipvps
 apt install curl jq -y
 clear
 
@@ -71,3 +70,28 @@ read -rp "Input ur domain / sub-domain : " -e pp
     curl -s https://ipinfo.io/ip/ > ${arfvpn}/IP
     fi
 clear
+
+domain=$(cat $arfvpn/domain)
+DOMAIN2="s/domainxxx/$domain/g";
+IP=$(cat $arfvpn/IP)
+MYIP2="s/ipxxx/$IP/g";
+
+wget -O /usr/bin/cert https://raw.githubusercontent.com/arfprsty810/lite/main/cert/cert.sh && chmod +x /usr/bin/cert && sed -i -e 's/\r$//' /usr/bin/cert && cert
+clear
+
+cd $nginx
+wget -O $nginx/sites-available/$domain.conf "$github/nginx/web-server/domain.conf"
+sed -i "$MYIP2" $nginx/sites-available/$domain.conf
+sed -i "$DOMAIN2" $nginx/sites-available/$domain.conf
+sudo ln -s $nginx/sites-available/$domain.conf $nginx/sites-enabled
+
+mkdir -p $nginx/nginxconfig.io
+wget -O $nginx/nginxconfig.io/general.conf "$github/nginx/web-server/general.conf"
+wget -O $nginx/nginxconfig.io/security.conf "$github/nginx/web-server/security.conf"
+wget -O $nginx/nginxconfig.io/proxy.conf "https://raw.githubusercontent.com/arfprsty810/lite/main/nginx/web-server/proxy.conf"
+
+cd
+systemctl restart nginx
+sudo nginx -t && sudo systemctl reload nginx
+sleep 5
+rm *.sh

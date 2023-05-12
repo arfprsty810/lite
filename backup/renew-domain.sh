@@ -82,20 +82,16 @@ clear
 systemctl stop nginx
 sudo lsof -t -i tcp:80 -s tcp:listen | sudo xargs kill
 cd $nginx
-rm $nginx/sites-enabled/default
-rm $nginx/sites-available/default
-rm $nginx/nginx.conf
+rm -rvf $nginx/sites-enabled/*
+rm -rvf $nginx/sites-available/*
 sleep 2
 
-wget -O /home/vps/public_html/index.html "https://raw.githubusercontent.com/arfprsty810/lite/main/nginx/index.html"
 wget -O $nginx/nginx.conf "$github/nginx/web-server/nginx.conf"
 wget -O $nginx/sites-available/$domain.conf "$github/nginx/web-server/domain.conf"
 sed -i "$MYIP2" $nginx/sites-available/$domain.conf
 sed -i "$DOMAIN2" $nginx/sites-available/$domain.conf
 sudo ln -s $nginx/sites-available/$domain.conf $nginx/sites-enabled
 
-rm -rvf $nginx/nginxconfig.io
-mkdir -p $nginx/nginxconfig.io
 wget -O $nginx/nginxconfig.io/general.conf "$github/nginx/web-server/general.conf"
 wget -O $nginx/nginxconfig.io/security.conf "$github/nginx/web-server/security.conf"
 wget -O $nginx/nginxconfig.io/proxy.conf "https://raw.githubusercontent.com/arfprsty810/lite/main/nginx/web-server/proxy.conf"

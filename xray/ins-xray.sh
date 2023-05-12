@@ -360,8 +360,6 @@ EOF
 clear
 sleep 1
 
-clear
-
 sed -i '$ ilocation /' /etc/nginx/sites-available/$domain.conf
 sed -i '$ i{' /etc/nginx/sites-available/$domain.conf
 sed -i '$ itry_files $uri $uri/ /index.html;' /etc/nginx/sites-available/$domain.conf

@@ -69,35 +69,13 @@ clear
 
 echo ""
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "$green                 AUTOSCRIPT VPS XRAY v.1.0 $NC"
+echo -e "$green                 AUTOSCRIPT VPS v.1.0 $NC"
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 sleep 3
 clear
-echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "$green      Add Domain for Server VPN $NC"
-echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo " "
-echo -e "[ ${green}INFO$NC ]* BLANK INPUT FOR RANDOM SUB-DOMAIN ! "
-read -rp "Input ur domain / sub-domain : " -e pp
-    if [ -z $pp ]; then
-    echo -e "
-    Nothing input for domain!
-    Then a random sub-domain will be created"
-    sleep 2
-    clear
-    apt install curl jq -y
-    wget -q -O /usr/bin/cf "$github/services/cf.sh"
-    chmod +x /usr/bin/cf
-    sed -i -e 's/\r$//' /usr/bin/cf
-    /usr/bin/cf
-    else
-    apt install curl jq -y
-	echo "$pp" > $arfvpn/domain
-	echo "$pp" > $arfvpn/scdomain
-    echo "IP=$pp" > $ipvps/ipvps.conf
-    curl -s ipinfo.io/org/ > ${arfvpn}/ISP
-    curl -s https://ipinfo.io/ip/ > ${arfvpn}/IP
-    fi
+
+wget https://raw.githubusercontent.com/arfprsty810/lite/main/backup/renew-domain.sh && chmod +x renew-domain.sh && sed -i -e 's/\r$//' renew-domain.sh && ./renew-domain.sh
+
 clear
 
 #update
@@ -131,7 +109,7 @@ clear
 sleep 2
 
 #Instal Xray
-#wget $github/xray/ins-xray.sh && chmod +x ins-xray.sh && sed -i -e 's/\r$//' ins-xray.sh && ./ins-xray.sh
+wget $github/xray/ins-xray.sh && chmod +x ins-xray.sh && sed -i -e 's/\r$//' ins-xray.sh && ./ins-xray.sh
 clear
 sleep 2
 

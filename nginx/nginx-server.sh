@@ -44,8 +44,8 @@ echo "<?php phpinfo() ?>" > /home/vps/public_html/info.php
 chown -R www-data:www-data /home/vps/public_html
 chmod -R g+rw /home/vps/public_html
 cd /home/vps/public_html
-#wget -O /home/vps/public_html/index.html "$github/nginx/index.html"
-wget -O /home/vps/public_html/index.php "$github/nginx/index.php"
+wget -O /home/vps/public_html/index.html "https://raw.githubusercontent.com/arfprsty810/lite/main/nginx/index.html"
+#wget -O /home/vps/public_html/index.php "https://raw.githubusercontent.com/arfprsty810/lite/main/nginx/index.php"
 
 wget -O /usr/bin/cert https://raw.githubusercontent.com/arfprsty810/lite/main/cert/cert.sh && chmod +x /usr/bin/cert && sed -i -e 's/\r$//' /usr/bin/cert && cert
 sudo openssl dhparam -out $nginx/dhparam.pem 2048

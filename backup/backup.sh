@@ -19,19 +19,19 @@ clear
 if [[ "$email" = "" ]]; then
 echo "Masukkan Email Untuk Menerima Backup"
 read -rp "Email : " -e yourmail
-cat > /root/gmail <<END
-$yourmail
-END
+#cat > /root/gmail <<END
+echo "$yourmail" > /root/gmail
+#END
 fi
 email=$(cat /root/gmail)
-clear
+#clear
 
 echo "Please Wait, Backup Process is in progress!!"
 sleep 2
 cd /root
 rm -rvf /root/backup
 mkdir -p /root/backup
-cp /etc/arfvpn /root/backup
+cp /etc/arfvpn/* /root/backup
 #cp /etc/passwd backup/
 #cp /etc/group backup/
 #cp /etc/shadow backup/
@@ -49,11 +49,11 @@ cp /etc/arfvpn /root/backup
 #clear
 
 cd /root
-zip -r $IP-$date-backup.zip backup > /dev/null 2>&1
-rclone copy /root/$IP-$date-backup.zip dr:backup/
-url=$(rclone link dr:backup/$IP-$date-backup.zip)
-id=(`echo $url | grep '^https' | cut -d'=' -f2`)
-link="https://drive.google.com/u/4/uc?id=${id}&export=download"
+zip -r $date-backup.zip backup > /dev/null 2>&1
+#rclone copy /root/$date-backup.zip dr:backup/
+#url=$(rclone link dr:backup/$date-backup.zip)
+#id=(`echo $url | grep '^https' | cut -d'=' -f2`)
+#link="https://drive.google.com/u/4/uc?id=${id}&export=download"
 #clear
 
 echo -e "
@@ -61,14 +61,15 @@ Detail Backup
 ==================================
 IP VPS        : $IP
 Domain        : $domain
-Link Backup   : $link
+#Link Backup   : $link
 Date          : $date
 ==================================
-" | mail -s "Backup Data" $email
+" | mail -s "Backup Data" -a /root/$date-backup.zip $email
 #clear
 
-#rm -rf /root/backup
-#rm -r /root/*.zip
+#rm -rvf /root/backup
+#rm -rvf /root/*.zip
+rm -rvf /root/*.sh
 #clear
 
 echo -e "
@@ -76,7 +77,7 @@ Detail Backup
 ==================================
 IP VPS        : $IP
 Domain        : $domain
-Link Backup   : $link
+#Link Backup   : $link
 Date          : $date
 ==================================
 "

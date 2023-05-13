@@ -13,18 +13,17 @@ LIGHT='\033[0;37m'
 date=$(date +"%Y-%m-%d")
 IP=$(cat /etc/arfvpn/IP);
 domain=$(cat /etc/arfvpn/domain)
-email=$(cat /home/email)
+email=$(cat /root/gmail)
 clear
 
 if [[ "$email" = "" ]]; then
-mkdir -p /home/email
 echo "Masukkan Email Untuk Menerima Backup"
-read -rp "Email : " -e email
-cat <<EOF>>/home/email
-$email
-EOF
+read -rp "Email : " -e yourmail
+cat > /root/gmail <<END
+$yourmail
+END
 fi
-email=$(cat /home/email)
+email=$(cat /root/gmail)
 clear
 
 echo "Please Wait, Backup Process is in progress!!"

@@ -30,7 +30,7 @@ echo "Please Wait, Backup Process is in progress!!"
 sleep 2
 cd /root
 rm -rvf /root/backup
-mkdir /root/backup
+mkdir -p /root/backup
 cp /etc/arfvpn /root/backup
 #cp /etc/passwd backup/
 #cp /etc/group backup/
@@ -46,7 +46,7 @@ cp /etc/arfvpn /root/backup
 #cp -r /etc/trojan-go backup/trojan-go
 #cp -r /usr/local/shadowsocksr/ backup/shadowsocksr
 #cp -r /home/vps/public_html backup/public_html
-clear
+#clear
 
 cd /root
 zip -r $IP-$date-backup.zip backup > /dev/null 2>&1
@@ -54,7 +54,7 @@ rclone copy /root/$IP-$date-backup.zip dr:backup/
 url=$(rclone link dr:backup/$IP-$date-backup.zip)
 id=(`echo $url | grep '^https' | cut -d'=' -f2`)
 link="https://drive.google.com/u/4/uc?id=${id}&export=download"
-clear
+#clear
 
 echo -e "
 Detail Backup 
@@ -65,11 +65,11 @@ Link Backup   : $link
 Date          : $date
 ==================================
 " | mail -s "Backup Data" $email
-clear
+#clear
 
-rm -rf /root/backup
-rm -r /root/*.zip
-clear
+#rm -rf /root/backup
+#rm -r /root/*.zip
+#clear
 
 echo -e "
 Detail Backup 
@@ -81,4 +81,4 @@ Date          : $date
 ==================================
 "
 read -n 1 -s -r -p "Please check the Inbox/Spam $email"
-clear
+#clear

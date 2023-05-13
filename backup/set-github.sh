@@ -13,6 +13,7 @@ clear
 
 cd
 rm -rvf /root/backup
+clear
 mkdir -p /root/backup
 #cp /etc/arfvpn/* /root/backup/
 cp /root/github.git /root/backup/
@@ -26,6 +27,7 @@ echo "# backup" > README.md
 git init
 git remote add origin $github
 git commit -m "backup"
+git branch -M main
 #git push -u origin master
 git push -u origin main
 read -n 1 -s -r -p "Press any key to back on menu"

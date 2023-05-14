@@ -57,6 +57,8 @@ cd && wget -P /root -N --no-check-certificate "https://raw.githubusercontent.com
 Pada saat installasi, isi beberapa data yang di butuhkan seperti nama domain/subdomain dan pilihan unduhan untuk memasang sertifikat.
 Setelah itu, tunggu hingga installasi selesai.
 
+![Info Status](https://raw.githubusercontent.com/arfprsty810/lite/main/screenshot/Screenshot_20230514-143128_JuiceSSH%20(1).jpg)
+
 # NOT FOR SALE !
  - Base Script by @bhoikfost_yahya
  - Re-pack & Re-mod by @arfprsty810

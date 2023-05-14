@@ -1,7 +1,7 @@
 # Autoscript VPN
 
-Ini merupakan sebuah script yang memudahkan para Pengguna VPN untuk install package-package yang diperlukan
-Selain itu Script yang sangat ringan Dan Fast Respon
+Ini merupakan sebuah script yang memudahkan para Pengguna VPN untuk menginstall package-package yang diperlukan untuk membangun VPN Server.
+Selain itu Script ini sangat ringan Dan Fast Respon.
 
 ### Tunnel Service & Port:
 - XRAY Vmess TLS          : 443

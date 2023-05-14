@@ -24,6 +24,7 @@ Selain itu Script ini sangat ringan Dan Fast Respon.
 ## Other Service/s & Command:
  - Re-New Cert > cert
  - Re-New Config > renew-config
+ - Re-New Domain > renew-domain
  - Update Xray > update-xray
  - Update Script > update
  - Speedtest Cli > speedtest

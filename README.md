@@ -1,9 +1,12 @@
 # Autoscript VPN
+![ARF-VPN](https://raw.githubusercontent.com/arfprsty810/lite/main/screenshot/Screenshot_20230514-135629_JuiceSSH%20(1).jpg)
 
 Ini merupakan sebuah script yang memudahkan para pengguna VPS untuk menginstall package-package yang diperlukan untuk membangun sebuah VPN Server.
 Selain itu Script ini sangat ringan Dan Fast Respon.
 
 ## Tunnel Service & Port:
+![Tunnel Service](https://raw.githubusercontent.com/arfprsty810/lite/main/screenshot/Screenshot_20230514-135701_JuiceSSH%20(1).jpg)
+
 - XRAY Vmess TLS          : 443
 - XRAY Vmess None TLS     : 80
 - XRAY Vless TLS          : 443
@@ -13,8 +16,8 @@ Selain itu Script ini sangat ringan Dan Fast Respon.
 - Trojan GO               : 2087
 - Shadowsocks-Libev TLS   : 2443 - 3442
 - Shadowsocks-Libev NTLS  : 3443 - 4442
- 
-## Features:
+
+>> Server Information & Other Fitures:
 - Timezone: Asia/Jakarta 
 - IPv6 disabled
 - BBR Fast Connection
@@ -22,6 +25,8 @@ Selain itu Script ini sangat ringan Dan Fast Respon.
 - Auto reboot daily
 
 ## Other Service/s & Command:
+![Other Service/s](https://raw.githubusercontent.com/arfprsty810/lite/main/screenshot/Screenshot_20230514-135544_JuiceSSH%20(1).jpg)
+
  - Re-New Cert > cert
  - Re-New Config > renew-config
  - Re-New Domain > renew-domain

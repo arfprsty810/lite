@@ -1,6 +1,6 @@
 # Autoscript VPN
 
-Ini merupakan sebuah script yang memudahkan para Pengguna VPN untuk menginstall package-package yang diperlukan untuk membangun VPN Server.
+Ini merupakan sebuah script yang memudahkan para pengguna VPS untuk menginstall package-package yang diperlukan untuk membangun sebuah VPN Server.
 Selain itu Script ini sangat ringan Dan Fast Respon.
 
 ### Tunnel Service & Port:

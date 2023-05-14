@@ -3,7 +3,7 @@
 Ini merupakan sebuah script yang memudahkan para pengguna VPS untuk menginstall package-package yang diperlukan untuk membangun sebuah VPN Server.
 Selain itu Script ini sangat ringan Dan Fast Respon.
 
-### Tunnel Service & Port:
+## Tunnel Service & Port:
 - XRAY Vmess TLS          : 443
 - XRAY Vmess None TLS     : 80
 - XRAY Vless TLS          : 443
@@ -14,14 +14,14 @@ Selain itu Script ini sangat ringan Dan Fast Respon.
 - Shadowsocks-Libev TLS   : 2443 - 3442
 - Shadowsocks-Libev NTLS  : 3443 - 4442
  
-### Features:
+## Features:
 - Timezone: Asia/Jakarta 
 - IPv6 disabled
 - BBR Fast Connection
 - Auto delete expired users
 - Auto reboot daily
 
-### Other Services:
+## Other Services:
  - Re-New Cert
  - Update Xray
  - Update Script
@@ -51,3 +51,8 @@ Pada saat installasi, isi beberapa data yang di butuhkan seperti nama domain/sub
 Setelah itu, tunggu hingga installasi selesai.
 
 ## NOT FOR SALE !
+ - Base Script by @bhoikfost_yahya
+ - Re-pack & Re-mod by @arfprsty810
+ 
+Gunakan Sc free ni sebaiknya, **JANGAN DI JUAL**.
+Jika menemukan bug, silahkan hubungi saya di Telegram [@arfprsty](https://t.me/arfprsty)

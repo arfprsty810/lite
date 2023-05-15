@@ -155,7 +155,6 @@ wget -q -O /usr/bin/menu "$github/services/menu.sh" && chmod +x /usr/bin/menu
 wget -q -O /usr/bin/speedtest "$github/services/speedtest_cli.py" && chmod +x /usr/bin/speedtest
 wget -q -O /usr/bin/update "$github/services/update.sh" && chmod +x /usr/bin/update
 wget -q -O /usr/bin/wbmn "$github/services/webmin.sh" && chmod +x /usr/bin/wbmn
-wget -q -O /usr/bin/renew-config "$github/backup/renew-config.sh" && chmod +x /usr/bin/renew-config
 wget -q -O /usr/bin/renew-domain "$github/backup/renew-domain.sh" && chmod +x /usr/bin/renew-domain
 wget -q -O /usr/bin/cf "$github/services/cf.sh" && chmod +x /usr/bin/cf
 sed -i -e 's/\r$//' /usr/bin/menu
@@ -165,7 +164,6 @@ sed -i -e 's/\r$//' /usr/bin/update
 sed -i -e 's/\r$//' /usr/bin/update-xray
 sed -i -e 's/\r$//' /usr/bin/restart
 sed -i -e 's/\r$//' /usr/bin/running
-sed -i -e 's/\r$//' /usr/bin/renew-config
 sed -i -e 's/\r$//' /usr/bin/renew-domain
 sed -i -e 's/\r$//' /usr/bin/cf
 clear

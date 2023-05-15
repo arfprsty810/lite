@@ -34,7 +34,8 @@ sleep 3
 clear
 apt-get remove --purge ufw* -y
 apt-get remove --purge firewalld* -y
-apt-get remove --purge exim4* -y
+apt-get remove --purge exim exim* -y
+apt-get remove --purge apache apache* -y
 apt autoremove -y
 clear
 apt update && apt upgrade -y

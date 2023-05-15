@@ -28,7 +28,6 @@ Selain itu Script ini sangat ringan Dan Fast Respon.
 ![Other Service/s](https://raw.githubusercontent.com/arfprsty810/lite/main/screenshot/Screenshot_20230514-135544_JuiceSSH%20(1).jpg)
 
  - Re-New Cert > cert
- - Re-New Config > renew-config
  - Re-New Domain > renew-domain
  - Update Xray > update-xray
  - Update Script > update

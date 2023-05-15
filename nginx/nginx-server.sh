@@ -15,6 +15,7 @@ cd /root
 source /etc/os-release
 arfvpn="/etc/arfvpn"
 nginx="/etc/nginx"
+vps="/home/vps/public_html"
 github="https://raw.githubusercontent.com/arfprsty810/lite/main"
 domain=$(cat $arfvpn/domain)
 DOMAIN2="s/domainxxx/$domain/g";
@@ -32,38 +33,34 @@ cd
 apt install pwgen openssl socat -y
 clear
 apt install nginx php php-fpm php-cli php-mysql libxml-parser-perl -y
-rm $nginx/sites-enabled/default
-rm $nginx/sites-available/default
-#wget -O $nginx/nginx.conf "$github/nginx/nginx.conf"
-wget -O $nginx/nginx.conf "$github/nginx/web-server/nginx.conf"
+systemctl stop nginx
+apt-get remove --purge apache apache* -y
+rm $nginx/sites-enabled/*
+rm $nginx/sites-available/*
+wget -O $nginx/nginx.conf "$github/nginx/nginx.conf"
 wget -O $nginx/conf.d/vps.conf "$github/nginx/vps.conf"
 sed -i 's/listen = \/run\/php\/php7.2-fpm.sock/listen = 127.0.0.1:9000/g' /etc/php/7.2/fpm/pool.d/www.conf
 useradd -m vps;
-mkdir -p /home/vps/public_html
-echo "<?php phpinfo() ?>" > /home/vps/public_html/info.php
-chown -R www-data:www-data /home/vps/public_html
-chmod -R g+rw /home/vps/public_html
-cd /home/vps/public_html
-wget -O /home/vps/public_html/index.html "https://raw.githubusercontent.com/arfprsty810/lite/main/nginx/index.html"
-#wget -O /home/vps/public_html/index.php "https://raw.githubusercontent.com/arfprsty810/lite/main/nginx/index.php"
+mkdir -p $vps
+echo "<?php phpinfo() ?>" > $vps/info.php
+chown -R www-data:www-data $vps
+chmod -R g+rw $vps
+cd $vps
+wget -O $vps/index.html "$github/nginx/index.html"
 
-wget -O /usr/bin/cert https://raw.githubusercontent.com/arfprsty810/lite/main/cert/cert.sh && chmod +x /usr/bin/cert && sed -i -e 's/\r$//' /usr/bin/cert && cert
+cd
+wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
+wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
 sudo openssl dhparam -out $nginx/dhparam.pem 2048
 
 cd $nginx
-wget -O $nginx/sites-available/$domain.conf "$github/nginx/web-server/domain.conf"
+wget -O $nginx/sites-available/$domain.conf "$github/nginx/domain.conf"
 sed -i "$MYIP2" $nginx/sites-available/$domain.conf
 sed -i "$DOMAIN2" $nginx/sites-available/$domain.conf
 sudo ln -s $nginx/sites-available/$domain.conf $nginx/sites-enabled
-
-mkdir -p $nginx/nginxconfig.io
-wget -O $nginx/nginxconfig.io/general.conf "$github/nginx/web-server/general.conf"
-wget -O $nginx/nginxconfig.io/security.conf "$github/nginx/web-server/security.conf"
-wget -O $nginx/nginxconfig.io/proxy.conf "https://raw.githubusercontent.com/arfprsty810/lite/main/nginx/web-server/proxy.conf"
 
 cd
 systemctl restart nginx
 sudo nginx -t && sudo systemctl reload nginx
 sleep 5
-rm *.sh
 clear

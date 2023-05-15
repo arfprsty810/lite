@@ -25,7 +25,7 @@ echo -e "\033[0;34m└───────────────────�
 
 echo -e "    ${BICyan}[${BIWhite}01${BICyan}]${RED} •${NC} ${CYAN}SSL CERT CLOUDFLARE$NC"
 
-echo -e "    ${BICyan}[${BIWhite}02${BICyan}]${RED} •${NC} ${CYAN}SSL CERT ACME$NC"
+echo -e "    ${BICyan}[${BIWhite}02${BICyan}]${RED} •${NC} ${CYAN}SSL CERT ACME ( *Recomended )$NC"
 
 echo -e "\033[0;34m└─────────────────────────────────────────────────────┘${NC}"
 
@@ -41,8 +41,6 @@ sudo lsof -t -i tcp:80 -s tcp:listen | sudo xargs kill
 ## crt ssl cloudflare sg.d-jumper.me *.sg.d-jumper.me
 wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
 wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
-wget -O $arfvpn/stunnel5.crt "$github/cert/client.crt"
-wget -O $arfvpn/stunnel5.key "$github/cert/client.key"
 sleep 3
 
 echo -e "[ ${green}INFO$NC ] RENEW CERT SSL"
@@ -69,17 +67,6 @@ chmod +x /root/.acme.sh/acme.sh
 /root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
 /root/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-256
 ~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath $arfvpn/arfvpn.crt --keypath $arfvpn/arfvpn.key --ecc
-
-# make a certificate stunnel5
-#country=ID
-#state=Indonesia
-#locality=Indonesia
-#organization=™D-JumPer™
-#organizationalunit=ARF-VPN
-#commonname=$domain
-#email=arfprsty@d-jumper.me
-#sudo openssl req -new -x509 -key $arfvpn/stunnel5.key -out $arfvpn/stunnel5.crt -days 1095 \
-#-subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
 sleep 3
 
 echo -e "[ ${green}INFO$NC ] RENEW CERT SSL"

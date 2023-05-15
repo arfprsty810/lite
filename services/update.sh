@@ -55,7 +55,6 @@ rm -rvf /usr/bin/update
 rm -rvf /usr/bin/restart
 rm -rvf /usr/bin/running
 rm -rvf /bin/cek-bandwidth
-rm -rvf /usr/bin/renew-config
 rm -rvf /usr/bin/renew-domain
 rm -rvf /usr/bin/update-xray
 rm -rvf /usr/bin/xp
@@ -143,8 +142,6 @@ wget -q -O /usr/bin/update-xray "$github/services/update-xray.sh"
 chmod +x /usr/bin/update-xray
 wget -q -O /usr/bin/renew-domain "$github/backup/renew-domain.sh"
 chmod +x /usr/bin/renew-domain
-wget -q -O /usr/bin/renew-config "$github/backup/renew-config.sh"
-chmod +x /usr/bin/renew-config
 clear
 
 echo -e "[ ${green}INFO$NC ] Install New Script ..."
@@ -159,7 +156,6 @@ sed -i -e 's/\r$//' /usr/bin/update
 sed -i -e 's/\r$//' /usr/bin/restart
 sed -i -e 's/\r$//' /usr/bin/running
 sed -i -e 's/\r$//' /usr/bin/cek-bandwidth
-sed -i -e 's/\r$//' /usr/bin/renew-config
 sed -i -e 's/\r$//' /usr/bin/renew-domain
 clear
 

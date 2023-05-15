@@ -39,15 +39,19 @@ clear
 cd /root
 source /etc/os-release
 arfvpn="/etc/arfvpn"
+xray="/etc/xray"
+logxray="/var/log/xray"
 nginx="/etc/nginx"
+vps="/home/vps/public_html"
 ipvps="/var/lib/arfvpn"
 github="https://raw.githubusercontent.com/arfprsty810/lite/main"
+
+cd $arfvpn
 rm -rvf domain scdomain IP ISP
-apt install curl jq -y
-clear
+cd && clear
 
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "$green      Add Domain for Server VPN $NC"
+echo -e "$green      Renew your Domain for Server VPN $NC"
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo " "
 echo -e "[ ${green}INFO$NC ]* BLANK INPUT FOR RANDOM SUB-DOMAIN ! "
@@ -76,28 +80,132 @@ DOMAIN2="s/domainxxx/$domain/g";
 IP=$(cat $arfvpn/IP)
 MYIP2="s/ipxxx/$IP/g";
 
-wget -O /usr/bin/cert https://raw.githubusercontent.com/arfprsty810/lite/main/cert/cert.sh && chmod +x /usr/bin/cert && sed -i -e 's/\r$//' /usr/bin/cert && cert
+systemctl stop nginx
+rm $nginx/sites-enabled/*
+rm $nginx/sites-available/*
+wget -O $nginx/nginx.conf "$github/nginx/nginx.conf"
+cd $vps
+chown -R www-data:www-data $vps
+chmod -R g+rw $vps
+wget -O $vps/index.html "$github/nginx/index.html"
+
+cd
+wget -O /usr/bin/cert $github/cert/cert.sh && chmod +x /usr/bin/cert && sed -i -e 's/\r$//' /usr/bin/cert && cert
 clear
 
-systemctl stop nginx
-sudo lsof -t -i tcp:80 -s tcp:listen | sudo xargs kill
 cd $nginx
-rm -rvf $nginx/sites-enabled/*
-rm -rvf $nginx/sites-available/*
-sleep 2
-
-wget -O $nginx/nginx.conf "$github/nginx/web-server/nginx.conf"
-wget -O $nginx/sites-available/$domain.conf "$github/nginx/web-server/domain.conf"
+wget -O $nginx/sites-available/$domain.conf "$github/nginx/domain.conf"
 sed -i "$MYIP2" $nginx/sites-available/$domain.conf
 sed -i "$DOMAIN2" $nginx/sites-available/$domain.conf
 sudo ln -s $nginx/sites-available/$domain.conf $nginx/sites-enabled
-
-wget -O $nginx/nginxconfig.io/general.conf "$github/nginx/web-server/general.conf"
-wget -O $nginx/nginxconfig.io/security.conf "$github/nginx/web-server/security.conf"
-wget -O $nginx/nginxconfig.io/proxy.conf "https://raw.githubusercontent.com/arfprsty810/lite/main/nginx/web-server/proxy.conf"
 
 cd
 systemctl restart nginx
 sudo nginx -t && sudo systemctl reload nginx
 sleep 5
+
+# Random Port Xray
+trojanws=$((RANDOM + 10000))
+ssws=$((RANDOM + 10000))
+ssgrpc=$((RANDOM + 10000))
+vless=$((RANDOM + 10000))
+vlessgrpc=$((RANDOM + 10000))
+vmess=$((RANDOM + 10000))
+worryfree=$((RANDOM + 10000))
+kuotahabis=$((RANDOM + 10000))
+vmessgrpc=$((RANDOM + 10000))
+trojangrpc=$((RANDOM + 10000))
+sed -i '$ ilocation /' /etc/nginx/sites-available/$domain.conf
+sed -i '$ i{' /etc/nginx/sites-available/$domain.conf
+sed -i '$ itry_files $uri $uri/ /index.html;' /etc/nginx/sites-available/$domain.conf
+sed -i '$ i}' /etc/nginx/sites-available/$domain.conf
+
+sed -i '$ ilocation = /vless' /etc/nginx/sites-available/$domain.conf
+sed -i '$ i{' /etc/nginx/sites-available/$domain.conf
+sed -i '$ iproxy_redirect off;' /etc/nginx/sites-available/$domain.conf
+sed -i '$ iproxy_pass http://127.0.0.1:'"$vless"';' /etc/nginx/sites-available/$domain.conf
+sed -i '$ iproxy_http_version 1.1;' /etc/nginx/sites-available/$domain.conf
+sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/sites-available/$domain.conf
+sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/sites-available/$domain.conf
+sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/sites-available/$domain.conf
+sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/sites-available/$domain.conf
+sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/sites-available/$domain.conf
+sed -i '$ i}' /etc/nginx/sites-available/$domain.conf
+
+sed -i '$ ilocation = /vmess' /etc/nginx/sites-available/$domain.conf
+sed -i '$ i{' /etc/nginx/sites-available/$domain.conf
+sed -i '$ iproxy_redirect off;' /etc/nginx/sites-available/$domain.conf
+sed -i '$ iproxy_pass http://127.0.0.1:'"$vmess"';' /etc/nginx/sites-available/$domain.conf
+sed -i '$ iproxy_http_version 1.1;' /etc/nginx/sites-available/$domain.conf
+sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/sites-available/$domain.conf
+sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/sites-available/$domain.conf
+sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/sites-available/$domain.conf
+sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/sites-available/$domain.conf
+sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/sites-available/$domain.conf
+sed -i '$ i}' /etc/nginx/sites-available/$domain.conf
+
+sed -i '$ ilocation = /worryfree' /etc/nginx/sites-available/$domain.conf
+sed -i '$ i{' /etc/nginx/sites-available/$domain.conf
+sed -i '$ iproxy_redirect off;' /etc/nginx/sites-available/$domain.conf
+sed -i '$ iproxy_pass http://127.0.0.1:'"$worryfree"';' /etc/nginx/sites-available/$domain.conf
+sed -i '$ iproxy_http_version 1.1;' /etc/nginx/sites-available/$domain.conf
+sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/sites-available/$domain.conf
+sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/sites-available/$domain.conf
+sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/sites-available/$domain.conf
+sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/sites-available/$domain.conf
+sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/sites-available/$domain.conf
+sed -i '$ i}' /etc/nginx/sites-available/$domain.conf
+
+sed -i '$ ilocation = /kuota-habis' /etc/nginx/sites-available/$domain.conf
+sed -i '$ i{' /etc/nginx/sites-available/$domain.conf
+sed -i '$ iproxy_redirect off;' /etc/nginx/sites-available/$domain.conf
+sed -i '$ iproxy_pass http://127.0.0.1:'"$kuotahabis"';' /etc/nginx/sites-available/$domain.conf
+sed -i '$ iproxy_http_version 1.1;' /etc/nginx/sites-available/$domain.conf
+sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/sites-available/$domain.conf
+sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/sites-available/$domain.conf
+sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/sites-available/$domain.conf
+sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/sites-available/$domain.conf
+sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/sites-available/$domain.conf
+sed -i '$ i}' /etc/nginx/sites-available/$domain.conf
+
+sed -i '$ ilocation = /trojan-ws' /etc/nginx/sites-available/$domain.conf
+sed -i '$ i{' /etc/nginx/sites-available/$domain.conf
+sed -i '$ iproxy_redirect off;' /etc/nginx/sites-available/$domain.conf
+sed -i '$ iproxy_pass http://127.0.0.1:'"$trojanws"';' /etc/nginx/sites-available/$domain.conf
+sed -i '$ iproxy_http_version 1.1;' /etc/nginx/sites-available/$domain.conf
+sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/sites-available/$domain.conf
+sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/sites-available/$domain.conf
+sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/sites-available/$domain.conf
+sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/sites-available/$domain.conf
+sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/sites-available/$domain.conf
+sed -i '$ i}' /etc/nginx/sites-available/$domain.conf
+
+sed -i '$ ilocation ^~ /vless-grpc' /etc/nginx/sites-available/$domain.conf
+sed -i '$ i{' /etc/nginx/sites-available/$domain.conf
+sed -i '$ iproxy_redirect off;' /etc/nginx/sites-available/$domain.conf
+sed -i '$ igrpc_set_header X-Real-IP \$remote_addr;' /etc/nginx/sites-available/$domain.conf
+sed -i '$ igrpc_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/sites-available/$domain.conf
+sed -i '$ igrpc_set_header Host \$http_host;' /etc/nginx/sites-available/$domain.conf
+sed -i '$ igrpc_pass grpc://127.0.0.1:'"$vlessgrpc"';' /etc/nginx/sites-available/$domain.conf
+sed -i '$ i}' /etc/nginx/sites-available/$domain.conf
+
+sed -i '$ ilocation ^~ /vmess-grpc' /etc/nginx/sites-available/$domain.conf
+sed -i '$ i{' /etc/nginx/sites-available/$domain.conf
+sed -i '$ iproxy_redirect off;' /etc/nginx/sites-available/$domain.conf
+sed -i '$ igrpc_set_header X-Real-IP \$remote_addr;' /etc/nginx/sites-available/$domain.conf
+sed -i '$ igrpc_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/sites-available/$domain.conf
+sed -i '$ igrpc_set_header Host \$http_host;' /etc/nginx/sites-available/$domain.conf
+sed -i '$ igrpc_pass grpc://127.0.0.1:'"$vmessgrpc"';' /etc/nginx/sites-available/$domain.conf
+sed -i '$ i}' /etc/nginx/sites-available/$domain.conf
+
+sed -i '$ ilocation ^~ /trojan-grpc' /etc/nginx/sites-available/$domain.conf
+sed -i '$ i{' /etc/nginx/sites-available/$domain.conf
+sed -i '$ iproxy_redirect off;' /etc/nginx/sites-available/$domain.conf
+sed -i '$ igrpc_set_header X-Real-IP \$remote_addr;' /etc/nginx/sites-available/$domain.conf
+sed -i '$ igrpc_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/sites-available/$domain.conf
+sed -i '$ igrpc_set_header Host \$http_host;' /etc/nginx/sites-available/$domain.conf
+sed -i '$ igrpc_pass grpc://127.0.0.1:'"$trojangrpc"';' /etc/nginx/sites-available/$domain.conf
+sed -i '$ i}' /etc/nginx/sites-available/$domain.conf
+
 rm *.sh
+clear

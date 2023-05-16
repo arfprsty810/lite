@@ -49,8 +49,7 @@ cd $vps
 wget -O $vps/index.html "$github/nginx/index.html"
 
 cd
-wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
-wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
+wget -O /usr/bin/cert https://raw.githubusercontent.com/arfprsty810/lite/main/cert/cert.sh && chmod +x /usr/bin/cert && sed -i -e 's/\r$//' /usr/bin/cert && cert
 sudo openssl dhparam -out $nginx/dhparam.pem 2048
 
 cd $nginx

@@ -23,9 +23,9 @@ echo -e "\033[0;34m┌───────────────────�
 echo -e "                  ⇱ \e[32;1mSSL CERT MENU SELECTION/s\e[0m ⇲ "
 echo -e "\033[0;34m└─────────────────────────────────────────────────────┘${NC}"
 
-echo -e "    ${BICyan}[${BIWhite}01${BICyan}]${RED} •${NC} ${CYAN}SSL CERT CLOUDFLARE$NC"
+echo -e "    ${BICyan}[${BIWhite}01${BICyan}]${RED} •${NC} ${CYAN}SSL CERT CLOUDFLARE ( * Recomended for random sub-domain )$NC"
 
-echo -e "    ${BICyan}[${BIWhite}02${BICyan}]${RED} •${NC} ${CYAN}SSL CERT ACME ( *Recomended )$NC"
+echo -e "    ${BICyan}[${BIWhite}02${BICyan}]${RED} •${NC} ${CYAN}SSL CERT ACME ( * Recomended for u domain )$NC"
 
 echo -e "\033[0;34m└─────────────────────────────────────────────────────┘${NC}"
 
@@ -38,7 +38,7 @@ case $menu in
 clear
 systemctl stop nginx
 sudo lsof -t -i tcp:80 -s tcp:listen | sudo xargs kill
-## crt ssl cloudflare sg.d-jumper.me *.sg.d-jumper.me
+## crt ssl cloudflare d-jumper.me *.d-jumper.me
 wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
 wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
 sleep 3
@@ -82,6 +82,7 @@ if ! grep -q 'ssl_renew.sh' /var/spool/cron/crontabs/root;then (crontab -l;echo 
 
 *)
 invalid selected !
+sleep 2
 cert
 ;;
 

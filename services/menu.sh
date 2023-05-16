@@ -197,7 +197,8 @@ exit
 ;;
 
 *)
-Invalid Selected!!!
+invalid selected !
+sleep 2
 clear
 menu
 ;;

@@ -18,7 +18,7 @@ logtrgo="/var/log/arfvpn/trojan-go"
 github="https://raw.githubusercontent.com/arfprsty810/lite/main"
 # set random uuid
 uuid=$(cat /proc/sys/kernel/random/uuid)
-domain=$(cat $arfvpn/domain)
+domain=$(cat ${arfvpn}/domain)
 sleep 1
 clear
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
@@ -30,21 +30,21 @@ sleep 1
 latest_version="$(curl -s "https://api.github.com/repos/p4gefau1t/trojan-go/releases" | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
 trojango_link="https://github.com/p4gefau1t/trojan-go/releases/download/v${latest_version}/trojan-go-linux-amd64.zip"
 mkdir -p "/usr/bin/trojan-go"
-#mkdir -p "$trgo"
+#mkdir -p "${trgo}"
 cd `mktemp -d`
 curl -sL "${trojango_link}" -o trojan-go.zip
 unzip -q trojan-go.zip && rm -rf trojan-go.zip
 mv trojan-go /usr/local/bin/trojan-go
 chmod +x /usr/local/bin/trojan-go
-mkdir -p $logtrgo
-touch $trgo/akun.conf
-touch $logtrgo/trojan-go.log
+mkdir -p ${logtrgo}
+touch ${trgo}/akun.conf
+touch ${logtrgo}/trojan-go.log
 clear
 
 # Buat Config Trojan Go
 echo -e "[ ${green}INFO$NC ] MEMBUAT CONFIG TROJAN-GO"
 sleep 1
-cat > $trgo/config.json << END
+cat > ${trgo}/config.json << END
 {
   "run_type": "server",
   "local_addr": "0.0.0.0",
@@ -52,22 +52,22 @@ cat > $trgo/config.json << END
   "remote_addr": "127.0.0.1",
   "remote_port": 89,
   "log_level": 1,
-  "log_file": "$logtrgo/trojan-go.log",
+  "log_file": "${logtrgo}/trojan-go.log",
   "password": [
-      "$uuid"
+      "${uuid}"
   ],
   "disable_http_check": true,
   "udp_timeout": 60,
   "ssl": {
     "verify": false,
     "verify_hostname": false,
-    "cert": "$arfvpn/arfvpn.crt",
-    "key": "$arfvpn/arfvpn.key",
+    "cert": "${arfvpn}/arfvpn.crt",
+    "key": "${arfvpn}/arfvpn.key",
     "key_password": "",
     "cipher": "",
     "curves": "",
     "prefer_server_cipher": false,
-    "sni": "$domain",
+    "sni": "${domain}",
     "alpn": [
       "http/1.1"
     ],
@@ -91,7 +91,7 @@ cat > $trgo/config.json << END
   "websocket": {
     "enabled": true,
     "path": "/trojango",
-    "host": "$domain"
+    "host": "${domain}"
   },
     "api": {
     "enabled": false,
@@ -121,7 +121,7 @@ User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
-ExecStart=/usr/local/bin/trojan-go -config $trgo/config.json
+ExecStart=/usr/local/bin/trojan-go -config ${trgo}/config.json
 Restart=on-failure
 RestartPreventExitStatus=23
 
@@ -131,18 +131,18 @@ END
 clear
 
 # Trojan Go Uuid
-cat > $trgo/uuid << END
-$uuid
+cat > ${trgo}/uuid << END
+${uuid}
 END
 clear
 
 echo -e "[ ${green}INFO$NC ] INSTALL SCRIPT ..."
 sleep 1
-wget -q -O /usr/bin/menu-trojan "$github/xray/trojan/menu-trojan.sh" && chmod +x /usr/bin/menu-trojan
-wget -q -O /usr/bin/add-tr "$github/xray/trojan/add-tr.sh" && chmod +x /usr/bin/add-tr
-wget -q -O /usr/bin/cek-tr "$github/xray/trojan/cek-tr.sh" && chmod +x /usr/bin/cek-tr
-wget -q -O /usr/bin/del-tr "$github/xray/trojan/del-tr.sh" && chmod +x /usr/bin/del-tr
-wget -q -O /usr/bin/renew-tr "$github/xray/trojan/renew-tr.sh" && chmod +x /usr/bin/renew-tr
+wget -q -O /usr/bin/menu-trojan "${github}/xray/trojan/menu-trojan.sh" && chmod +x /usr/bin/menu-trojan
+wget -q -O /usr/bin/add-tr "${github}/xray/trojan/add-tr.sh" && chmod +x /usr/bin/add-tr
+wget -q -O /usr/bin/cek-tr "${github}/xray/trojan/cek-tr.sh" && chmod +x /usr/bin/cek-tr
+wget -q -O /usr/bin/del-tr "${github}/xray/trojan/del-tr.sh" && chmod +x /usr/bin/del-tr
+wget -q -O /usr/bin/renew-tr "${github}/xray/trojan/renew-tr.sh" && chmod +x /usr/bin/renew-tr
 
 sed -i -e 's/\r$//' /bin/menu-trojan
 sed -i -e 's/\r$//' /bin/add-tr

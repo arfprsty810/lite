@@ -59,9 +59,9 @@ fi
 #########################
 # VPS INFORMATION
 arfvpn="/etc/arfvpn"
-IP=$(cat $arfvpn/IP)
-ISP=$(cat $arfvpn/ISP)
-DOMAIN=$(cat $arfvpn/domain)
+IP=$(cat ${arfvpn}/IP)
+ISP=$(cat ${arfvpn}/ISP)
+DOMAIN=$(cat ${arfvpn}/domain)
 clear
 
 # CHECK STATUS 
@@ -316,8 +316,8 @@ cpu_usage="$((${cpu_usage1/\.*} / ${corediilik:-1}))"
 
 # DNS PATCH
 #tipeos2=$(uname -m)
-#Name=$(curl -sS https://raw.githubusercontent.com/Fahmiiiiiiii/anjim/main/anjay/allow | grep $IP | awk '{print $2}')
-#Exp=$(curl -sS https://raw.githubusercontent.com/Fahmiiiiiiii/anjim/main/anjay/allow | grep $IP | awk '{print $3}')
+#Name=$(curl -sS https://raw.githubusercontent.com/Fahmiiiiiiii/anjim/main/anjay/allow | grep ${IP} | awk '{print $2}')
+#Exp=$(curl -sS https://raw.githubusercontent.com/Fahmiiiiiiii/anjim/main/anjay/allow | grep ${IP} | awk '{print $3}')
 # GETTING DOMAIN NAME
 
 echo -e ""
@@ -328,9 +328,9 @@ echo -e "  ❇️ \e[32;1m Sever Uptime\e[0m     : $( uptime -p  | cut -d " " -f
 echo -e "  ❇️ \e[32;1m Current Time\e[0m     : $( date -d "0 days" +"%d-%m-%Y | %X" ) "
 echo -e "  ❇️ \e[32;1m Operating System\e[0m : $( cat /etc/os-release | grep -w PRETTY_NAME | sed 's/PRETTY_NAME//g' | sed 's/=//g' | sed 's/"//g' ) ( $( uname -m) ) "
 echo -e "  ❇️ \e[32;1m Processor\e[0m        : $tipeprosesor"
-echo -e "  ❇️ \e[32;1m Current Isp Name\e[0m : $ISP "
-echo -e "  ❇️ \e[32;1m Server IP\e[0m        : $IP "
-echo -e "  ❇️ \e[32;1m Current Domain\e[0m   : $DOMAIN "
+echo -e "  ❇️ \e[32;1m Current Isp Name\e[0m : ${ISP} "
+echo -e "  ❇️ \e[32;1m Server IP\e[0m        : ${IP} "
+echo -e "  ❇️ \e[32;1m Current Domain\e[0m   : ${DOMAIN} "
 echo -e "  ❇️ \e[32;1m Time Reboot VPS\e[0m  : 00:00 ( Jam 12 Malam ) "
 echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
 echo -e "\E[39;1;92m             ⇱ Service Information ⇲             \E[0m"

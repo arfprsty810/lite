@@ -45,6 +45,9 @@ mkdir -p ${vps}
 echo "<?php phpinfo() ?>" > ${vps}/info.php
 chown -R www-data:www-data ${vps}
 chmod -R g+rw ${vps}
+chmod +x /home/
+chmod +x /home/vps/
+chmod +x ${vps}/
 cd ${vps}
 wget -O ${vps}/index.html "${github}/nginx/index.html"
 

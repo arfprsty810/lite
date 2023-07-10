@@ -35,25 +35,25 @@ NUMBER_OF_CLIENTS=$(grep -c -E "^#ss# " "/etc/shadowsocks-libev/akun.conf")
     red "tap enter to go back"
     echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 	read -rp "Input Username : " user
-    if [ -z $user ]; then
+    if [ -z ${user} ]; then
     menu-ss
     else
-    exp=$(grep -wE "^#ss# $user" "/etc/shadowsocks-libev/akun.conf" | cut -d ' ' -f 3 | sort | uniq)
-    sed -i "/^#ss# $user $exp/,/^port_http/d" "/etc/shadowsocks-libev/akun.conf"
+    exp=$(grep -wE "^#ss# ${user}" "/etc/shadowsocks-libev/akun.conf" | cut -d ' ' -f 3 | sort | uniq)
+    sed -i "/^#ss# ${user} ${exp}/,/^port_http/d" "/etc/shadowsocks-libev/akun.conf"
 service cron restart
-systemctl disable shadowsocks-libev-server@$user-tls.service
-systemctl disable shadowsocks-libev-server@$user-http.service
-systemctl stop shadowsocks-libev-server@$user-tls.service
-systemctl stop shadowsocks-libev-server@$user-http.service
-rm -f "/etc/shadowsocks-libev/$user-tls.json"
-rm -f "/etc/shadowsocks-libev/$user-http.json"
+systemctl disable shadowsocks-libev-server@${user}-tls.service
+systemctl disable shadowsocks-libev-server@${user}-http.service
+systemctl stop shadowsocks-libev-server@${user}-tls.service
+systemctl stop shadowsocks-libev-server@${user}-http.service
+rm -f "/etc/shadowsocks-libev/${user}-tls.json"
+rm -f "/etc/shadowsocks-libev/${user}-http.json"
 clear
     clear
     echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
     echo " ShadowSocks Account Deleted Successfully"
     echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-    echo " Client Name : $user"
-    echo " Expired On  : $exp"
+    echo " Client Name : ${user}"
+    echo " Expired On  : ${exp}"
     echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
     echo ""
     read -n 1 -s -r -p "Press any key to back on menu"

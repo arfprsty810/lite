@@ -17,15 +17,15 @@ logxray="/var/log/xray"
 trgo="/etc/arfvpn/trojan-go"
 logtrgo="/var/log/arfvpn/trojan-go"
 ipvps="/var/lib/arfvpn"
-source $ipvps/ipvps.conf
-if [[ "$IP" = "" ]]; then
-domain=$(cat $arfvpn/domain)
+source ${ipvps}/ipvps.conf
+if [[ "${IP}" = "" ]]; then
+domain=$(cat ${arfvpn}/domain)
 else
-domain=$IP
+domain=${IP}
 fi
 clear 
 
-NUMBER_OF_CLIENTS=$(grep -c -E "^#tr# " "$xray/config.json")
+NUMBER_OF_CLIENTS=$(grep -c -E "^#tr# " "${xray}/config.json")
 	if [[ ${NUMBER_OF_CLIENTS} == '0' ]]; then
 		clear
         echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
@@ -45,33 +45,32 @@ menu-trojan
     echo -e "\\E[0;41;36m            Renew Trojan             \E[0m"
     echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
     echo ""
-  	grep -E "^#tr# " "$xray/config.json" | cut -d ' ' -f 2-3 | column -t | sort | uniq
+  	grep -E "^#tr# " "${xray}/config.json" | cut -d ' ' -f 2-3 | column -t | sort | uniq
     echo ""
     red "tap enter to go back"
     echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 	read -rp "Input Username : " user
-    if [ -z $user ]; then
+    if [ -z ${user} ]; then
     menu-trojan
     else
     read -p "Expired (days): " masaaktif
-    exp=$(grep -wE "^#tr# $user" "$xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+    exp=$(grep -wE "^#tr# ${user}" "${xray}/config.json" | cut -d ' ' -f 3 | sort | uniq)
     now=$(date +%Y-%m-%d)
-    d1=$(date -d "$exp" +%s)
-    d2=$(date -d "$now" +%s)
+    d1=$(date -d "${exp}" +%s)
+    d2=$(date -d "${now}" +%s)
     exp2=$(( (d1 - d2) / 86400 ))
-    exp3=$(($exp2 + $masaaktif))
-    exp4=`date -d "$exp3 days" +"%Y-%m-%d"`
-    sed -i "/#tr# $user/c\#tr# $user $exp4" $xray/config.json
-    sed -i "s/#trgo# $user $exp/#trgo# $user $exp4/g" $trgo/akun.conf
-    #sed -i "s/#trgo# $user $exp/#trgo# $user $exp4/g" /etc/trojan-go/config.json
+    exp3=$((${exp2} + ${masaaktif}))
+    exp4=`date -d "${exp3} days" +"%Y-%m-%d"`
+    sed -i "/#tr# ${user}/c\#tr# ${user} ${exp4}" ${xray}/config.json
+    sed -i "s/#trgo# ${user} ${exp}/#trgo# ${user} ${exp4}/g" ${trgo}/akun.conf
     systemctl restart xray > /dev/null 2>&1
     clear
     echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
     echo " Trojan  Account Was Successfully Renewed"
     echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
     echo ""
-    echo " Client Name : $user"
-    echo " Expired On  : $exp4"
+    echo " Client Name : ${user}"
+    echo " Expired On  : ${exp4}"
     echo ""
     echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
     echo ""

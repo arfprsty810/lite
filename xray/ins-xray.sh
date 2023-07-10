@@ -20,8 +20,8 @@ OS=$ID
 ver=$VERSION_ID
 # set random uuid
 uuid=$(cat /proc/sys/kernel/random/uuid)
-domain=$(cat $arfvpn/domain)
-IP=$(cat $arfvpn/IP)
+domain=$(cat ${arfvpn}/domain)
+IP=$(cat ${arfvpn}/IP)
 clear
 
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
@@ -38,16 +38,16 @@ clear
 
 # Make Folder XRay
 echo -e "[ ${green}INFO$NC ] MEMBUAT FOLDER XRAY"
-mkdir -p $logxray
-chown www-data.www-data $logxray
-chmod +x $logxray
-touch $logxray/access.log
-touch $logxray/error.log
-touch $logxray/access2.log
-touch $logxray/error2.log
+mkdir -p ${logxray}
+chown www-data.www-data ${logxray}
+chmod +x ${logxray}
+touch ${logxray}/access.log
+touch ${logxray}/error.log
+touch ${logxray}/access2.log
+touch ${logxray}/error2.log
 
 # / / Install Xray Core << Every >> Lastest Version
-wget $github/services/update-xray.sh && chmod +x update-xray.sh && ./update-xray.sh
+wget ${github}/services/update-xray.sh && chmod +x update-xray.sh && ./update-xray.sh
 clear
 
 echo -e "[ ${green}INFO$NC ] MEMBUAT PORT"
@@ -68,11 +68,11 @@ clear
 # xray config
 echo -e "[ ${green}INFO$NC ] MEMBUAT CONFIG XRAY"
 sleep 1
-cat > $xray/config.json << END
+cat > ${xray}/config.json << END
 {
   "log" : {
-    "access": "$logxray/access.log",
-    "error": "$logxray/error.log",
+    "access": "${logxray}/access.log",
+    "error": "${logxray}/error.log",
     "loglevel": "warning"
   },
   "inbounds": [
@@ -87,7 +87,7 @@ cat > $xray/config.json << END
     },
     {
       "listen": "127.0.0.1",
-      "port": "$trojanws",
+      "port": "${trojanws}",
       "protocol": "trojan",
       "settings": {
           "decryption":"none",		
@@ -108,7 +108,7 @@ cat > $xray/config.json << END
      },
      {
         "listen": "127.0.0.1",
-        "port": "$trojangrpc",
+        "port": "${trojangrpc}",
         "protocol": "trojan",
         "settings": {
           "decryption":"none",
@@ -128,7 +128,7 @@ cat > $xray/config.json << END
    },
    {
      "listen": "127.0.0.1",
-     "port": "$vless",
+     "port": "${vless}",
      "protocol": "vless",
       "settings": {
           "decryption":"none",
@@ -148,7 +148,7 @@ cat > $xray/config.json << END
      },
       {
         "listen": "127.0.0.1",
-        "port": "$vlessgrpc",
+        "port": "${vlessgrpc}",
         "protocol": "vless",
         "settings": {
          "decryption":"none",
@@ -168,7 +168,7 @@ cat > $xray/config.json << END
      },
      {
      "listen": "127.0.0.1",
-     "port": "$vmess",
+     "port": "${vmess}",
      "protocol": "vmess",
       "settings": {
             "clients": [
@@ -188,7 +188,7 @@ cat > $xray/config.json << END
      },
      {
       "listen": "127.0.0.1",
-      "port": "$vmessgrpc",
+      "port": "${vmessgrpc}",
      "protocol": "vmess",
       "settings": {
             "clients": [
@@ -208,7 +208,7 @@ cat > $xray/config.json << END
      },
      {
      "listen": "127.0.0.1",
-     "port": "$worryfree",
+     "port": "${worryfree}",
      "protocol": "vmess",
       "settings": {
             "clients": [
@@ -228,7 +228,7 @@ cat > $xray/config.json << END
      },
      {
      "listen": "127.0.0.1",
-     "port": "$kuotahabis",
+     "port": "${kuotahabis}",
      "protocol": "vmess",
       "settings": {
             "clients": [
@@ -331,7 +331,7 @@ After=network.target nss-lookup.target
 User=www-data
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE                                 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
-ExecStart=/usr/local/bin/xray run -config $xray/config.json
+ExecStart=/usr/local/bin/xray run -config ${xray}/config.json
 Restart=on-failure
 RestartPreventExitStatus=23
 LimitNPROC=10000
@@ -360,124 +360,124 @@ EOF
 clear
 sleep 1
 
-sed -i '$ ilocation /' /etc/nginx/sites-available/$domain.conf
-sed -i '$ i{' /etc/nginx/sites-available/$domain.conf
-sed -i '$ itry_files $uri $uri/ /index.html;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ i}' /etc/nginx/sites-available/$domain.conf
+sed -i '$ ilocation /' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ i{' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ itry_files $uri $uri/ /index.html;' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ i}' /etc/nginx/sites-available/${domain}.conf
 
-sed -i '$ ilocation = /vless' /etc/nginx/sites-available/$domain.conf
-sed -i '$ i{' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iproxy_redirect off;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iproxy_pass http://127.0.0.1:'"$vless"';' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iproxy_http_version 1.1;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ i}' /etc/nginx/sites-available/$domain.conf
+sed -i '$ ilocation = /vless' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ i{' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ iproxy_redirect off;' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ iproxy_pass http://127.0.0.1:'"${vless}"';' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ iproxy_http_version 1.1;' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ i}' /etc/nginx/sites-available/${domain}.conf
 
-sed -i '$ ilocation = /vmess' /etc/nginx/sites-available/$domain.conf
-sed -i '$ i{' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iproxy_redirect off;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iproxy_pass http://127.0.0.1:'"$vmess"';' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iproxy_http_version 1.1;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ i}' /etc/nginx/sites-available/$domain.conf
+sed -i '$ ilocation = /vmess' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ i{' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ iproxy_redirect off;' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ iproxy_pass http://127.0.0.1:'"${vmess}"';' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ iproxy_http_version 1.1;' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ i}' /etc/nginx/sites-available/${domain}.conf
 
-sed -i '$ ilocation = /worryfree' /etc/nginx/sites-available/$domain.conf
-sed -i '$ i{' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iproxy_redirect off;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iproxy_pass http://127.0.0.1:'"$worryfree"';' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iproxy_http_version 1.1;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ i}' /etc/nginx/sites-available/$domain.conf
+sed -i '$ ilocation = /worryfree' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ i{' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ iproxy_redirect off;' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ iproxy_pass http://127.0.0.1:'"${worryfree}"';' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ iproxy_http_version 1.1;' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ i}' /etc/nginx/sites-available/${domain}.conf
 
-sed -i '$ ilocation = /kuota-habis' /etc/nginx/sites-available/$domain.conf
-sed -i '$ i{' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iproxy_redirect off;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iproxy_pass http://127.0.0.1:'"$kuotahabis"';' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iproxy_http_version 1.1;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ i}' /etc/nginx/sites-available/$domain.conf
+sed -i '$ ilocation = /kuota-habis' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ i{' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ iproxy_redirect off;' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ iproxy_pass http://127.0.0.1:'"${kuotahabis}"';' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ iproxy_http_version 1.1;' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ i}' /etc/nginx/sites-available/${domain}.conf
 
-sed -i '$ ilocation = /trojan-ws' /etc/nginx/sites-available/$domain.conf
-sed -i '$ i{' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iproxy_redirect off;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iproxy_pass http://127.0.0.1:'"$trojanws"';' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iproxy_http_version 1.1;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ i}' /etc/nginx/sites-available/$domain.conf
+sed -i '$ ilocation = /trojan-ws' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ i{' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ iproxy_redirect off;' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ iproxy_pass http://127.0.0.1:'"${trojanws}"';' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ iproxy_http_version 1.1;' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ i}' /etc/nginx/sites-available/${domain}.conf
 
-sed -i '$ ilocation ^~ /vless-grpc' /etc/nginx/sites-available/$domain.conf
-sed -i '$ i{' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iproxy_redirect off;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ igrpc_set_header X-Real-IP \$remote_addr;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ igrpc_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ igrpc_set_header Host \$http_host;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ igrpc_pass grpc://127.0.0.1:'"$vlessgrpc"';' /etc/nginx/sites-available/$domain.conf
-sed -i '$ i}' /etc/nginx/sites-available/$domain.conf
+sed -i '$ ilocation ^~ /vless-grpc' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ i{' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ iproxy_redirect off;' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ igrpc_set_header X-Real-IP \$remote_addr;' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ igrpc_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ igrpc_set_header Host \$http_host;' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ igrpc_pass grpc://127.0.0.1:'"${vlessgrpc}"';' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ i}' /etc/nginx/sites-available/${domain}.conf
 
-sed -i '$ ilocation ^~ /vmess-grpc' /etc/nginx/sites-available/$domain.conf
-sed -i '$ i{' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iproxy_redirect off;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ igrpc_set_header X-Real-IP \$remote_addr;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ igrpc_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ igrpc_set_header Host \$http_host;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ igrpc_pass grpc://127.0.0.1:'"$vmessgrpc"';' /etc/nginx/sites-available/$domain.conf
-sed -i '$ i}' /etc/nginx/sites-available/$domain.conf
+sed -i '$ ilocation ^~ /vmess-grpc' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ i{' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ iproxy_redirect off;' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ igrpc_set_header X-Real-IP \$remote_addr;' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ igrpc_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ igrpc_set_header Host \$http_host;' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ igrpc_pass grpc://127.0.0.1:'"${vmessgrpc}"';' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ i}' /etc/nginx/sites-available/${domain}.conf
 
-sed -i '$ ilocation ^~ /trojan-grpc' /etc/nginx/sites-available/$domain.conf
-sed -i '$ i{' /etc/nginx/sites-available/$domain.conf
-sed -i '$ iproxy_redirect off;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ igrpc_set_header X-Real-IP \$remote_addr;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ igrpc_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ igrpc_set_header Host \$http_host;' /etc/nginx/sites-available/$domain.conf
-sed -i '$ igrpc_pass grpc://127.0.0.1:'"$trojangrpc"';' /etc/nginx/sites-available/$domain.conf
-sed -i '$ i}' /etc/nginx/sites-available/$domain.conf
+sed -i '$ ilocation ^~ /trojan-grpc' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ i{' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ iproxy_redirect off;' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ igrpc_set_header X-Real-IP \$remote_addr;' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ igrpc_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ igrpc_set_header Host \$http_host;' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ igrpc_pass grpc://127.0.0.1:'"${trojangrpc}"';' /etc/nginx/sites-available/${domain}.conf
+sed -i '$ i}' /etc/nginx/sites-available/${domain}.conf
 clear
 sleep 2
 
 echo -e "[ ${green}INFO$NC ] DOWNLOAD SCRIPT ..."
 sleep 1
-wget -q -O /usr/bin/menu-vmess "$github/xray/vmess/menu-vmess.sh" && chmod +x /usr/bin/menu-vmess
-wget -q -O /usr/bin/add-ws "$github/xray/vmess/add-ws.sh" && chmod +x /usr/bin/add-ws
-wget -q -O /usr/bin/cek-ws "$github/xray/vmess/cek-ws.sh" && chmod +x /usr/bin/cek-ws
-wget -q -O /usr/bin/del-ws "$github/xray/vmess/del-ws.sh" && chmod +x /usr/bin/del-ws
-wget -q -O /usr/bin/renew-ws "$github/xray/vmess/renew-ws.sh" && chmod +x /usr/bin/renew-ws
+wget -q -O /usr/bin/menu-vmess "${github}/xray/vmess/menu-vmess.sh" && chmod +x /usr/bin/menu-vmess
+wget -q -O /usr/bin/add-ws "${github}/xray/vmess/add-ws.sh" && chmod +x /usr/bin/add-ws
+wget -q -O /usr/bin/cek-ws "${github}/xray/vmess/cek-ws.sh" && chmod +x /usr/bin/cek-ws
+wget -q -O /usr/bin/del-ws "${github}/xray/vmess/del-ws.sh" && chmod +x /usr/bin/del-ws
+wget -q -O /usr/bin/renew-ws "${github}/xray/vmess/renew-ws.sh" && chmod +x /usr/bin/renew-ws
 
 #vless
-wget -q -O /usr/bin/menu-vless "$github/xray/vless/menu-vless.sh" && chmod +x /usr/bin/menu-vless
-wget -q -O /usr/bin/add-vless "$github/xray/vless/add-vless.sh" && chmod +x /usr/bin/add-vless
-wget -q -O /usr/bin/cek-vless "$github/xray/vless/cek-vless.sh" && chmod +x /usr/bin/cek-vless
-wget -q -O /usr/bin/del-vless "$github/xray/vless/del-vless.sh" && chmod +x /usr/bin/del-vless
-wget -q -O /usr/bin/renew-vless "$github/xray/vless/renew-vless.sh" && chmod +x /usr/bin/renew-vless
+wget -q -O /usr/bin/menu-vless "${github}/xray/vless/menu-vless.sh" && chmod +x /usr/bin/menu-vless
+wget -q -O /usr/bin/add-vless "${github}/xray/vless/add-vless.sh" && chmod +x /usr/bin/add-vless
+wget -q -O /usr/bin/cek-vless "${github}/xray/vless/cek-vless.sh" && chmod +x /usr/bin/cek-vless
+wget -q -O /usr/bin/del-vless "${github}/xray/vless/del-vless.sh" && chmod +x /usr/bin/del-vless
+wget -q -O /usr/bin/renew-vless "${github}/xray/vless/renew-vless.sh" && chmod +x /usr/bin/renew-vless
 
 #trojan
-wget -q -O /usr/bin/menu-trojan "$github/xray/trojan/menu-trojan.sh" && chmod +x /usr/bin/menu-trojan
-wget -q -O /usr/bin/add-tr "$github/xray/trojan/add-tr.sh" && chmod +x /usr/bin/add-tr
-wget -q -O /usr/bin/cek-tr "$github/xray/trojan/cek-tr.sh" && chmod +x /usr/bin/cek-tr
-wget -q -O /usr/bin/del-tr "$github/xray/trojan/del-tr.sh" && chmod +x /usr/bin/del-tr
-wget -q -O /usr/bin/renew-tr "$github/xray/trojan/renew-tr.sh" && chmod +x /usr/bin/renew-tr
+wget -q -O /usr/bin/menu-trojan "${github}/xray/trojan/menu-trojan.sh" && chmod +x /usr/bin/menu-trojan
+wget -q -O /usr/bin/add-tr "${github}/xray/trojan/add-tr.sh" && chmod +x /usr/bin/add-tr
+wget -q -O /usr/bin/cek-tr "${github}/xray/trojan/cek-tr.sh" && chmod +x /usr/bin/cek-tr
+wget -q -O /usr/bin/del-tr "${github}/xray/trojan/del-tr.sh" && chmod +x /usr/bin/del-tr
+wget -q -O /usr/bin/renew-tr "${github}/xray/trojan/renew-tr.sh" && chmod +x /usr/bin/renew-tr
 
 #--
-wget -q -O /usr/bin/xp "$github/xray/xp.sh" && chmod +x /usr/bin/xp
+wget -q -O /usr/bin/xp "${github}/xray/xp.sh" && chmod +x /usr/bin/xp
 sleep 1
 clear
 

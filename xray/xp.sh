@@ -16,54 +16,52 @@ xray="/etc/xray"
 trgo="/etc/arfvpn/trojan-go"
 
 ##----- Auto Remove Vmess
-data=( `cat $xray/config.json | grep '^#vm#' | cut -d ' ' -f 2 | sort | uniq`);
+data=( `cat ${xray}/config.json | grep '^#vm#' | cut -d ' ' -f 2 | sort | uniq`);
 now=`date +"%Y-%m-%d"`
 for user in "${data[@]}"
 do
-exp=$(grep -w "^#vm# $user" "$xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
-d1=$(date -d "$exp" +%s)
-d2=$(date -d "$now" +%s)
+exp=$(grep -w "^#vm# ${user}" "${xray}/config.json" | cut -d ' ' -f 3 | sort | uniq)
+d1=$(date -d "${exp}" +%s)
+d2=$(date -d "${now}" +%s)
 exp2=$(( (d1 - d2) / 86400 ))
-if [[ "$exp2" -le "0" ]]; then
-sed -i "/^#vm# $user $exp/,/^},{/d" $xray/config.json
-sed -i "/^#vm# $user $exp/,/^},{/d" $xray/config.json
-rm -f $xray/$user-tls.json $xray/$user-none.json
+if [[ "${exp2}" -le "0" ]]; then
+sed -i "/^#vm# ${user} ${exp}/,/^},{/d" ${xray}/config.json
+sed -i "/^#vm# ${user} ${exp}/,/^},{/d" ${xray}/config.json
+rm -f ${xray}/${user}-tls.json ${xray}/${user}-none.json
 fi
 done
 clear
 
 #----- Auto Remove Vless
-data=( `cat $xray/config.json | grep '^#vl#' | cut -d ' ' -f 2 | sort | uniq`);
+data=( `cat ${xray}/config.json | grep '^#vl#' | cut -d ' ' -f 2 | sort | uniq`);
 now=`date +"%Y-%m-%d"`
 for user in "${data[@]}"
 do
-exp=$(grep -w "^#vl# $user" "$xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
-d1=$(date -d "$exp" +%s)
-d2=$(date -d "$now" +%s)
+exp=$(grep -w "^#vl# ${user}" "${xray}/config.json" | cut -d ' ' -f 3 | sort | uniq)
+d1=$(date -d "${exp}" +%s)
+d2=$(date -d "${now}" +%s)
 exp2=$(( (d1 - d2) / 86400 ))
-if [[ "$exp2" -le "0" ]]; then
-sed -i "/^#vl# $user $exp/,/^},{/d" $xray/config.json
-sed -i "/^#vl# $user $exp/,/^},{/d" $xray/config.json
+if [[ "${exp2}" -le "0" ]]; then
+sed -i "/^#vl# ${user} ${exp}/,/^},{/d" ${xray}/config.json
+sed -i "/^#vl# ${user} ${exp}/,/^},{/d" ${xray}/config.json
 fi
 done
 clear
 
 #----- Auto Remove Trojan
-data=( `cat $xray/config.json | grep '^#tr#' | cut -d ' ' -f 2 | sort | uniq`);
+data=( `cat ${xray}/config.json | grep '^#tr#' | cut -d ' ' -f 2 | sort | uniq`);
 now=`date +"%Y-%m-%d"`
 for user in "${data[@]}"
 do
-exp=$(grep -w "^#tr# $user" "$xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
-d1=$(date -d "$exp" +%s)
-d2=$(date -d "$now" +%s)
+exp=$(grep -w "^#tr# ${user}" "${xray}/config.json" | cut -d ' ' -f 3 | sort | uniq)
+d1=$(date -d "${exp}" +%s)
+d2=$(date -d "${now}" +%s)
 exp2=$(( (d1 - d2) / 86400 ))
-if [[ "$exp2" -le "0" ]]; then
-sed -i "/^#tr# $user $exp/,/^},{/d" $xray/config.json
-sed -i "/^#tr# $user $exp/,/^},{/d" $xray/config.json
-sed -i "/^#trgo# $user $exp/d" $trgo/akun.conf
-#sed -i "/^,#trgo# $user $exp/,/^/d" $trgo/config.json
-sed -i "/^#trgo# $user $exp/d" $trgo/akun.conf
-#sed -i "/^,#trgo# $user $exp/,/^/d" $trgo/config.json
+if [[ "${exp2}" -le "0" ]]; then
+sed -i "/^#tr# ${user} ${exp}/,/^},{/d" ${xray}/config.json
+sed -i "/^#tr# ${user} ${exp}/,/^},{/d" ${xray}/config.json
+sed -i "/^#trgo# ${user} ${exp}/d" ${trgo}/akun.conf
+sed -i "/^#trgo# ${user} ${exp}/d" ${trgo}/akun.conf
 fi
 done
 clear
@@ -73,22 +71,22 @@ data=( `cat /etc/shadowsocks-libev/akun.conf | grep '^#ss#' | cut -d ' ' -f 2 | 
 now=`date +"%Y-%m-%d"`
 for user in "${data[@]}"
 do
-exp=$(grep -w "^#ss# $user" "/etc/shadowsocks-libev/akun.conf" | cut -d ' ' -f 3 | sort | uniq)
-d1=$(date -d "$exp" +%s)
-d2=$(date -d "$now" +%s)
+exp=$(grep -w "^#ss# ${user}" "/etc/shadowsocks-libev/akun.conf" | cut -d ' ' -f 3 | sort | uniq)
+d1=$(date -d "${exp}" +%s)
+d2=$(date -d "${now}" +%s)
 exp2=$(( (d1 - d2) / 86400 ))
-if [[ "$exp2" -le "0" ]]; then
-sed -i "/^#ss# $user $exp/,/^port_http/d" "/etc/shadowsocks-libev/akun.conf"
-sed -i "/^#ss# $user $exp/,/^port_http/d" "/etc/shadowsocks-libev/akun.conf"
+if [[ "${exp2}" -le "0" ]]; then
+sed -i "/^#ss# ${user} ${exp}/,/^port_http/d" "/etc/shadowsocks-libev/akun.conf"
+sed -i "/^#ss# ${user} ${exp}/,/^port_http/d" "/etc/shadowsocks-libev/akun.conf"
 service cron restart
-systemctl disable shadowsocks-libev-server@$user-tls.service
-systemctl disable shadowsocks-libev-server@$user-http.service
-systemctl stop shadowsocks-libev-server@$user-tls.service
-systemctl stop shadowsocks-libev-server@$user-http.service
-rm -f "/etc/shadowsocks-libev/$user-tls.json"
-rm -f "/etc/shadowsocks-libev/$user-tls.json"
-rm -f "/etc/shadowsocks-libev/$user-http.json"
-rm -f "/etc/shadowsocks-libev/$user-http.json"
+systemctl disable shadowsocks-libev-server@${user}-tls.service
+systemctl disable shadowsocks-libev-server@${user}-http.service
+systemctl stop shadowsocks-libev-server@${user}-tls.service
+systemctl stop shadowsocks-libev-server@${user}-http.service
+rm -f "/etc/shadowsocks-libev/${user}-tls.json"
+rm -f "/etc/shadowsocks-libev/${user}-tls.json"
+rm -f "/etc/shadowsocks-libev/${user}-http.json"
+rm -f "/etc/shadowsocks-libev/${user}-http.json"
 fi
 done
 clear

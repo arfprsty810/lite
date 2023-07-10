@@ -2,14 +2,18 @@
 
 cd /root
 source /etc/os-release
-arfvpn="/etc/arfvpn"
 nginx="/etc/nginx"
-ipvps="/var/lib/arfvpn"
-vps="/home/vps/public_html"
+arfserver="/etc/arfvpn"
+arfportal="/home/arfportal/public_html"
 github="raw.githubusercontent.com/arfprsty810/lite/main"
-mkdir -p ${arfvpn}
+sleep 5
+clear
+
+mkdir -p ${arfserver}
 mkdir -p ${nginx}
-mkdir -p ${ipvps}
+touch ${arfserver}/IP
+touch ${arfserver}/domain
+touch ${arfserver}/scdomain
 clear
 
 cd /root
@@ -17,25 +21,21 @@ apt-get update
 apt update
 apt upgrade -y
 apt install curl jq -y
-apt install pwgen openssl socat -y
 apt install cron fail2ban vnstat -y
 apt install lolcat -y
 sleep 5
 clear
 
 read -rp "Input ur domain / sub-domain : " -e pp
-    if [ -z ${pp} ]; then
-	echo "${pp}" > ${arfvpn}/domain
-	echo "${pp}" > ${arfvpn}/scdomain
-    echo "IP=${pp}" > ${ipvps}/ipvps.conf
-	curl -s ipinfo.io/org/ > ${arfvpn}/ISP
-	curl -s https://ipinfo.io/ip/ > ${arfvpn}/IP
-fi
+	echo "${pp}" > ${arfserver}/domain
+	echo "${pp}" > ${arfserver}/scdomain
+    curl -s https://ipinfo.io/ip/ > ${arfserver}/IP
+sleep 5
 clear
 
-domain=$(cat ${arfvpn}/domain)
+domain=$(cat ${arfserver}/domain)
 DOMAIN2="s/domainxxx/${domain}/g";
-IP=$(cat ${arfvpn}/IP)
+IP=$(cat ${arfserver}/IP)
 MYIP2="s/ipxxx/${IP}/g";
 clear
 
@@ -48,21 +48,21 @@ apt-get remove --purge apache apache* -y
 rm ${nginx}/sites-enabled/*
 rm ${nginx}/sites-available/*
 wget -O ${nginx}/nginx.conf "https://${github}/nginx/nginx.conf"
-wget -O ${nginx}/conf.d/vps.conf "https://${github}/nginx/vps.conf"
+wget -O ${nginx}/conf.d/arf.conf "https://${github}/nginx/arf.conf"
 sed -i 's/listen = \/run\/php\/php7.2-fpm.sock/listen = 127.0.0.1:9000/g' /etc/php/8.1/fpm/pool.d/www.conf
-useradd -m vps;
-mkdir -p ${vps}
-echo "<?php phpinfo() ?>" > ${vps}/info.php
-chown -R www-data:www-data ${vps}
-chmod -R g+rw ${vps}
-cd ${vps}
-wget -O ${vps}/index.html "https://${github}/nginx/index.html"
+useradd -m arfportal;
+mkdir -p ${arfportal}
+echo "<?php phpinfo() ?>" > ${arfportal}/info.php
+chown -R www-data:www-data ${arfportal}
+chmod -R g+rw ${arfportal}
+wget -O ${arfportal}/index.html "https://${github}/nginx/index.html"
 sleep 5
 clear
 
 cd /root
 ## make a crt xray $domain
 systemctl stop nginx
+apt install pwgen openssl socat -y
 sudo lsof -t -i tcp:80 -s tcp:listen | sudo xargs kill
 mkdir /root/.acme.sh
 curl https://acme-install.netlify.app/acme.sh -o /root/.acme.sh/acme.sh
@@ -70,7 +70,7 @@ chmod +x /root/.acme.sh/acme.sh
 /root/.acme.sh/acme.sh --upgrade --auto-upgrade
 /root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
 /root/.acme.sh/acme.sh --issue --force -d ${domain} --standalone -k ec-256
-~/.acme.sh/acme.sh --installcert -d ${domain} --fullchainpath ${arfvpn}/arfvpn.crt --keypath ${arfvpn}/arfvpn.key --ecc
+~/.acme.sh/acme.sh --installcert -d ${domain} --fullchainpath ${arfserver}/arfvpn.crt --keypath ${arfserver}/arfvpn.key --ecc
 sleep 5
 clear
 

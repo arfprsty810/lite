@@ -66,81 +66,81 @@ clear
 echo -e "[ ${green}INFO$NC ] Update New Script ..."
 sleep 1
 #vmess
-wget -q -O /usr/bin/menu-vmess "$github/xray/vmess/menu-vmess.sh"
+wget -q -O /usr/bin/menu-vmess "${github}/xray/vmess/menu-vmess.sh"
 chmod +x /usr/bin/menu-vmess
-wget -q -O /usr/bin/add-ws "$github/xray/vmess/add-ws.sh"
+wget -q -O /usr/bin/add-ws "${github}/xray/vmess/add-ws.sh"
 chmod +x /usr/bin/add-ws
-wget -q -O /usr/bin/cek-ws "$github/xray/vmess/cek-ws.sh"
+wget -q -O /usr/bin/cek-ws "${github}/xray/vmess/cek-ws.sh"
 chmod +x /usr/bin/cek-ws
-wget -q -O /usr/bin/del-ws "$github/xray/vmess/del-ws.sh"
+wget -q -O /usr/bin/del-ws "${github}/xray/vmess/del-ws.sh"
 chmod +x /usr/bin/del-ws
-wget -q -O /usr/bin/renew-ws "$github/xray/vmess/renew-ws.sh"
+wget -q -O /usr/bin/renew-ws "${github}/xray/vmess/renew-ws.sh"
 chmod +x /usr/bin/renew-ws
 clear
 
 #vless
-wget -q -O /usr/bin/menu-vless "$github/xray/vless/menu-vless.sh"
+wget -q -O /usr/bin/menu-vless "${github}/xray/vless/menu-vless.sh"
 chmod +x /usr/bin/menu-vless
-wget -q -O /usr/bin/add-vless "$github/xray/vless/add-vless.sh"
+wget -q -O /usr/bin/add-vless "${github}/xray/vless/add-vless.sh"
 chmod +x /usr/bin/add-vless
-wget -q -O /usr/bin/cek-vless "$github/xray/vless/cek-vless.sh"
+wget -q -O /usr/bin/cek-vless "${github}/xray/vless/cek-vless.sh"
 chmod +x /usr/bin/cek-vless
-wget -q -O /usr/bin/del-vless "$github/xray/vless/del-vless.sh"
+wget -q -O /usr/bin/del-vless "${github}/xray/vless/del-vless.sh"
 chmod +x /usr/bin/del-vless
-wget -q -O /usr/bin/renew-vless "$github/xray/vless/renew-vless.sh"
+wget -q -O /usr/bin/renew-vless "${github}/xray/vless/renew-vless.sh"
 chmod +x /usr/bin/renew-vless
 clear
 
 #trojan
-wget -q -O /usr/bin/menu-trojan "$github/xray/trojan/menu-trojan.sh"
+wget -q -O /usr/bin/menu-trojan "${github}/xray/trojan/menu-trojan.sh"
 chmod +x /usr/bin/menu-trojan
-wget -q -O /usr/bin/add-tr "$github/xray/trojan/add-tr.sh"
+wget -q -O /usr/bin/add-tr "${github}/xray/trojan/add-tr.sh"
 chmod +x /usr/bin/add-tr
-wget -q -O /usr/bin/cek-tr "$github/xray/trojan/cek-tr.sh"
+wget -q -O /usr/bin/cek-tr "${github}/xray/trojan/cek-tr.sh"
 chmod +x /usr/bin/cek-tr
-wget -q -O /usr/bin/del-tr "$github/xray/trojan/del-tr.sh"
+wget -q -O /usr/bin/del-tr "${github}/xray/trojan/del-tr.sh"
 chmod +x /usr/bin/del-tr
-wget -q -O /usr/bin/renew-tr "$github/xray/trojan/renew-tr.sh"
+wget -q -O /usr/bin/renew-tr "${github}/xray/trojan/renew-tr.sh"
 chmod +x /usr/bin/renew-tr
 clear
 
 #shadowsocks-libev
-wget -q -O /usr/bin/menu-ss "$github/shadowsocks/menu-ss.sh"  
+wget -q -O /usr/bin/menu-ss "${github}/shadowsocks/menu-ss.sh"  
 chmod +x /usr/bin/menu-ss
-wget -q -O /usr/bin/addss "$github/shadowsocks/addss.sh"
+wget -q -O /usr/bin/addss "${github}/shadowsocks/addss.sh"
 chmod +x /usr/bin/addss
-wget -q -O /usr/bin/cekss "$github/shadowsocks/cekss.sh"
+wget -q -O /usr/bin/cekss "${github}/shadowsocks/cekss.sh"
 chmod +x /usr/bin/cekss
-wget -q -O /usr/bin/delss "$github/shadowsocks/delss.sh"
+wget -q -O /usr/bin/delss "${github}/shadowsocks/delss.sh"
 chmod +x /usr/bin/delss
-wget -q -O /usr/bin/renewss "$github/shadowsocks/renewss.sh"
+wget -q -O /usr/bin/renewss "${github}/shadowsocks/renewss.sh"
 chmod +x /usr/bin/renewss
 clear
 
 #--
-wget -q -O /usr/bin/cert "$github/cert/cert.sh"
+wget -q -O /usr/bin/cert "${github}/cert/cert.sh"
 chmod +x /usr/bin/cert
-wget -q -O /usr/bin/xp "$github/xray/xp.sh"
+wget -q -O /usr/bin/xp "${github}/xray/xp.sh"
 chmod +x /usr/bin/xp
-wget -q -O /usr/bin/cf "$github/services/cf.sh"
+wget -q -O /usr/bin/cf "${github}/services/cf.sh"
 chmod +x /usr/bin/cf
-wget -q -O /usr/bin/restart "$github/services/restart.sh"
+wget -q -O /usr/bin/restart "${github}/services/restart.sh"
 chmod +x /usr/bin/restart
-wget -q -O /usr/bin/running "$github/services/running.sh"
+wget -q -O /usr/bin/running "${github}/services/running.sh"
 chmod +x /usr/bin/running
-wget -q -O /usr/bin/cek-bandwidth "$github/services/cek-bandwidth.sh"
+wget -q -O /usr/bin/cek-bandwidth "${github}/services/cek-bandwidth.sh"
 chmod +x /usr/bin/cek-bandwidth
-wget -q -O /usr/bin/menu "$github/services/menu.sh"
+wget -q -O /usr/bin/menu "${github}/services/menu.sh"
 chmod +x /usr/bin/menu
-wget -q -O /usr/bin/speedtest "$github/services/speedtest_cli.py"
+wget -q -O /usr/bin/speedtest "${github}/services/speedtest_cli.py"
 chmod +x /usr/bin/speedtest
-wget -q -O /usr/bin/update "$github/services/update.sh"
+wget -q -O /usr/bin/update "${github}/services/update.sh"
 chmod +x /usr/bin/update
-wget -q -O /usr/bin/wbmn "$github/services/webmin.sh"
+wget -q -O /usr/bin/wbmn "${github}/services/webmin.sh"
 chmod +x /usr/bin/wbmn
-wget -q -O /usr/bin/update-xray "$github/services/update-xray.sh"
+wget -q -O /usr/bin/update-xray "${github}/services/update-xray.sh"
 chmod +x /usr/bin/update-xray
-wget -q -O /usr/bin/renew-domain "$github/backup/renew-domain.sh"
+wget -q -O /usr/bin/renew-domain "${github}/backup/renew-domain.sh"
 chmod +x /usr/bin/renew-domain
 clear
 

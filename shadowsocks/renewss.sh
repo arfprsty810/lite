@@ -36,26 +36,26 @@ NUMBER_OF_CLIENTS=$(grep -c -E "^#ss# " "/etc/shadowsocks-libev/akun.conf")
     red "tap enter to go back"
     echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 	read -rp "Input Username : " user
-    if [ -z $user ]; then
+    if [ -z ${user} ]; then
     menu-ss
     else
     read -p "Expired (days): " masaaktif
-    exp=$(grep -wE "^#ss# $user" "/etc/shadowsocks-libev/akun.conf" | cut -d ' ' -f 3 | sort | uniq)
+    exp=$(grep -wE "^#ss# ${user}" "/etc/shadowsocks-libev/akun.conf" | cut -d ' ' -f 3 | sort | uniq)
     now=$(date +%Y-%m-%d)
-    d1=$(date -d "$exp" +%s)
-    d2=$(date -d "$now" +%s)
+    d1=$(date -d "${exp}" +%s)
+    d2=$(date -d "${now}" +%s)
     exp2=$(( (d1 - d2) / 86400 ))
-    exp3=$(($exp2 + $masaaktif))
-    exp4=`date -d "$exp3 days" +"%Y-%m-%d"`
-    sed -i "s/#ss# $user $exp/#ss# $user $exp4/g" /etc/shadowsocks-libev/akun.conf
+    exp3=$((${exp2} + ${masaaktif}))
+    exp4=`date -d "${exp3} days" +"%Y-%m-%d"`
+    sed -i "s/#ss# ${user} ${exp}/#ss# ${user} ${exp4}/g" /etc/shadowsocks-libev/akun.conf
     systemctl restart xray > /dev/null 2>&1
     clear
     echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
     echo " Shadowsocks Account Was Successfully Renewed"
     echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
     echo ""
-    echo " Client Name : $user"
-    echo " Expired On  : $exp4"
+    echo " Client Name : ${user}"
+    echo " Expired On  : ${exp4}"
     echo ""
     echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
     echo ""

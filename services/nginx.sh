@@ -48,7 +48,7 @@ apt-get remove --purge apache apache* -y
 rm ${nginx}/sites-enabled/*
 rm ${nginx}/sites-available/*
 wget -O ${nginx}/nginx.conf "https://${github}/nginx/nginx.conf"
-wget -O ${nginx}/conf.d/arf.conf "https://${github}/nginx/arf.conf"
+wget -O ${nginx}/conf.d/arfportal.conf "https://${github}/nginx/arfportal.conf"
 sed -i 's/listen = \/run\/php\/php7.2-fpm.sock/listen = 127.0.0.1:9000/g' /etc/php/8.1/fpm/pool.d/www.conf
 useradd -m arfportal;
 mkdir -p ${arfportal}

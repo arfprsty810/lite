@@ -39,7 +39,7 @@ rm ${nginx}/sites-enabled/*
 rm ${nginx}/sites-available/*
 wget -O ${nginx}/nginx.conf "${github}/nginx/nginx.conf"
 wget -O ${nginx}/conf.d/vps.conf "${github}/nginx/vps.conf"
-sed -i 's/listen = \/run\/php\/php7.2-fpm.sock/listen = 127.0.0.1:9000/g' /etc/php/8.1/fpm/pool.d/www.conf
+sed -i 's/listen = \/run\/php\/php8.1-fpm.sock/listen = 127.0.0.1:9000/g' /etc/php/8.1/fpm/pool.d/www.conf
 useradd -m vps;
 mkdir -p ${vps}
 echo "<?php phpinfo() ?>" > ${vps}/info.php

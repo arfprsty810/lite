@@ -14,22 +14,22 @@ clear
 arfvpn="/etc/arfvpn"
 xray="/etc/xray"
 ipvps="/var/lib/arfvpn"
-source $ipvps/ipvps.conf
-if [[ "$IP" = "" ]]; then
-domain=$(cat $xray/domain)
+source ${ipvps}/ipvps.conf
+if [[ "${IP}" = "" ]]; then
+domain=$(cat ${xray}/domain)
 else
-domain=$IP
+domain=${IP}
 fi
 
 tls="$(cat ~/log-install.txt | grep -w "Vmess TLS" | cut -d: -f2|sed 's/ //g')"
 none="$(cat ~/log-install.txt | grep -w "Vmess None TLS" | cut -d: -f2|sed 's/ //g')"
-until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
+until [[ ${user} =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\\E[0;41;36m      Add Xray/Vmess Account      \E[0m"
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 
 		read -rp "User: " -e user
-		CLIENT_EXISTS=$(grep -w $user $xray/config.json | wc -l)
+		CLIENT_EXISTS=$(grep -w ${user} ${xray}/config.json | wc -l)
 
 		if [[ ${CLIENT_EXISTS} == '1' ]]; then
 clear
@@ -47,15 +47,15 @@ add-ws
 
 uuid=$(cat /proc/sys/kernel/random/uuid)
 read -p "Expired (days): " masaaktif
-exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
-sed -i '/#vmess$/a\#vm# '"$user $exp"'\
-},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' $xray/config.json
-sed -i '/#vmessworry$/a\#vm# '"$user $exp"'\
-},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' $xray/config.json
-sed -i '/#vmesskuota$/a\#vm# '"$user $exp"'\
-},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' $xray/config.json
-sed -i '/#vmessgrpc$/a\#vm# '"$user $exp"'\
-},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' $xray/config.json
+exp=`date -d "${masaaktif} days" +"%Y-%m-%d"`
+sed -i '/#vmess$/a\#vm# '"${user} ${exp}"'\
+},{"id": "'""${uuid}""'","alterId": '"0"',"email": "'""${user}""'"' ${xray}/config.json
+sed -i '/#vmessworry$/a\#vm# '"${user} ${exp}"'\
+},{"id": "'""${uuid}""'","alterId": '"0"',"email": "'""${user}""'"' ${xray}/config.json
+sed -i '/#vmesskuota$/a\#vm# '"${user} ${exp}"'\
+},{"id": "'""${uuid}""'","alterId": '"0"',"email": "'""${user}""'"' ${xray}/config.json
+sed -i '/#vmessgrpc$/a\#vm# '"${user} ${exp}"'\
+},{"id": "'""${uuid}""'","alterId": '"0"',"email": "'""${user}""'"' ${xray}/config.json
 asu=`cat<<EOF
       {
       "v": "2",
@@ -161,20 +161,20 @@ ami=`cat<<EOF
       "tls": "tls"
 }
 EOF`
-vmess_base641=$( base64 -w 0 <<< $vmess_json1)
-vmess_base642=$( base64 -w 0 <<< $vmess_json2)
-vmess_base643=$( base64 -w 0 <<< $vmess_json3)
-vmess_base644=$( base64 -w 0 <<< $vmess_json4)
-vmess_base645=$( base64 -w 0 <<< $vmess_json5)
-vmess_base646=$( base64 -w 0 <<< $vmess_json6)
-vmess_base647=$( base64 -w 0 <<< $vmess_json7)
-vmesslink1="vmess://$(echo $asu | base64 -w 0)"
-vmesslink2="vmess://$(echo $ask | base64 -w 0)"
-vmesslink3="vmess://$(echo $asi | base64 -w 0)"
-vmesslink4="vmess://$(echo $aso | base64 -w 0)"
-vmesslink5="vmess://$(echo $grpc | base64 -w 0)"
-vmesslink6="vmess://$(echo $ama | base64 -w 0)"
-vmesslink7="vmess://$(echo $ami | base64 -w 0)"
+vmess_base641=$( base64 -w 0 <<< ${vmess_json1})
+vmess_base642=$( base64 -w 0 <<< ${vmess_json2})
+vmess_base643=$( base64 -w 0 <<< ${vmess_json3})
+vmess_base644=$( base64 -w 0 <<< ${vmess_json4})
+vmess_base645=$( base64 -w 0 <<< ${vmess_json5})
+vmess_base646=$( base64 -w 0 <<< ${vmess_json6})
+vmess_base647=$( base64 -w 0 <<< ${vmess_json7})
+vmesslink1="vmess://$(echo ${asu} | base64 -w 0)"
+vmesslink2="vmess://$(echo ${ask} | base64 -w 0)"
+vmesslink3="vmess://$(echo ${asi} | base64 -w 0)"
+vmesslink4="vmess://$(echo ${aso} | base64 -w 0)"
+vmesslink5="vmess://$(echo ${grpc} | base64 -w 0)"
+vmesslink6="vmess://$(echo ${ama} | base64 -w 0)"
+vmesslink7="vmess://$(echo ${ami} | base64 -w 0)"
 systemctl restart xray > /dev/null 2>&1
 service cron restart > /dev/null 2>&1
 clear
@@ -206,7 +206,7 @@ echo -e "----------------------------------" | tee -a /etc/log-create-user.log
 echo -e "----------------------------------" | tee -a /etc/log-create-user.log
 echo -e "Link GRPC : ${vmesslink5}" | tee -a /etc/log-create-user.log
 echo -e "----------------------------------" | tee -a /etc/log-create-user.log
-echo -e "Expired On : $exp" | tee -a /etc/log-create-user.log
+echo -e "Expired On : ${exp}" | tee -a /etc/log-create-user.log
 echo -e "----------------------------------" | tee -a /etc/log-create-user.log
 echo "" | tee -a /etc/log-create-user.log
 read -n 1 -s -r -p "Press any key to back on menu"

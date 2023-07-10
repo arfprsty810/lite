@@ -59,11 +59,11 @@ if [ "${EUID}" -ne 0 ]; then
 		echo -e "${EROR} Please Run This Script As Root User !"
 		exit 1
 fi
-mkdir -p $arfvpn
-mkdir -p $ipvps
-mkdir -p $xray
-mkdir -p $trgo
-mkdir -p $nginx
+mkdir -p ${arfvpn}
+mkdir -p ${ipvps}
+mkdir -p ${xray}
+mkdir -p ${trgo}
+mkdir -p ${nginx}
 clear
 
 echo ""
@@ -81,20 +81,20 @@ echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━�
 echo " "
 echo -e "[ ${green}INFO$NC ]* BLANK INPUT FOR RANDOM SUB-DOMAIN ! "
 read -rp "Input ur domain / sub-domain : " -e pp
-    if [ -z $pp ]; then
+    if [ -z ${pp} ]; then
     echo -e "
     Nothing input for domain!
     Then a random sub-domain will be created"
     sleep 2
     clear
-    wget -q -O /usr/bin/cf "$github/services/cf.sh"
+    wget -q -O /usr/bin/cf "${github}/services/cf.sh"
     chmod +x /usr/bin/cf
     sed -i -e 's/\r$//' /usr/bin/cf
     cf
     else
-	echo "$pp" > $arfvpn/domain
-	echo "$pp" > $arfvpn/scdomain
-    echo "IP=$pp" > $ipvps/ipvps.conf
+	echo "${pp}" > ${arfvpn}/domain
+	echo "${pp}" > ${arfvpn}/scdomain
+    echo "IP=${pp}" > ${ipvps}/ipvps.conf
     curl -s ipinfo.io/org/ > ${arfvpn}/ISP
     curl -s https://ipinfo.io/ip/ > ${arfvpn}/IP
     fi
@@ -108,7 +108,7 @@ sleep 2
 cd
 
 #apete
-wget $github/services/apete.sh && chmod +x apete.sh && sed -i -e 's/\r$//' apete.sh && ./apete.sh
+wget ${github}/services/apete.sh && chmod +x apete.sh && sed -i -e 's/\r$//' apete.sh && ./apete.sh
 clear
 sleep 2
 
@@ -123,22 +123,22 @@ clear
 sleep 2
 
 #Instal Xray
-wget $github/xray/ins-xray.sh && chmod +x ins-xray.sh && sed -i -e 's/\r$//' ins-xray.sh && ./ins-xray.sh
+wget ${github}/xray/ins-xray.sh && chmod +x ins-xray.sh && sed -i -e 's/\r$//' ins-xray.sh && ./ins-xray.sh
 clear
 sleep 2
 
 #Instal Trojan-GO
-wget $github/xray/trojan/trojan-go.sh && chmod +x trojan-go.sh && sed -i -e 's/\r$//' trojan-go.sh && ./trojan-go.sh
+wget ${github}/xray/trojan/trojan-go.sh && chmod +x trojan-go.sh && sed -i -e 's/\r$//' trojan-go.sh && ./trojan-go.sh
 clear
 sleep 2
 
 #Instal Shadowsocks
-wget $github/shadowsocks/shadowsocks.sh && chmod +x shadowsocks.sh && sed -i -e 's/\r$//' shadowsocks.sh && ./shadowsocks.sh
+wget ${github}/shadowsocks/shadowsocks.sh && chmod +x shadowsocks.sh && sed -i -e 's/\r$//' shadowsocks.sh && ./shadowsocks.sh
 clear
 sleep 2
 
 #Instal Bbr
-wget $github/bbr/bbr.sh
+wget ${github}/bbr/bbr.sh
 chmod +x bbr.sh
 sed -i -e 's/\r$//' bbr.sh
 screen -S bbr ./bbr.sh
@@ -147,16 +147,16 @@ sleep 2
 
 echo -e "[ ${green}INFO$NC ] DOWNLOAD SCRIPT"
 sleep 2
-wget -q -O /usr/bin/restart "$github/services/restart.sh" && chmod +x /usr/bin/restart
-wget -q -O /usr/bin/running "$github/services/running.sh" && chmod +x /usr/bin/running
-wget -q -O /usr/bin/update-xray "$github/services/update-xray.sh" && chmod +x /usr/bin/update-xray
-wget -q -O /usr/bin/cek-bandwidth "$github/services/cek-bandwidth.sh" && chmod +x /usr/bin/cek-bandwidth
-wget -q -O /usr/bin/menu "$github/services/menu.sh" && chmod +x /usr/bin/menu
-wget -q -O /usr/bin/speedtest "$github/services/speedtest_cli.py" && chmod +x /usr/bin/speedtest
-wget -q -O /usr/bin/update "$github/services/update.sh" && chmod +x /usr/bin/update
-wget -q -O /usr/bin/wbmn "$github/services/webmin.sh" && chmod +x /usr/bin/wbmn
-wget -q -O /usr/bin/renew-domain "$github/backup/renew-domain.sh" && chmod +x /usr/bin/renew-domain
-wget -q -O /usr/bin/cf "$github/services/cf.sh" && chmod +x /usr/bin/cf
+wget -q -O /usr/bin/restart "${github}/services/restart.sh" && chmod +x /usr/bin/restart
+wget -q -O /usr/bin/running "${github}/services/running.sh" && chmod +x /usr/bin/running
+wget -q -O /usr/bin/update-xray "${github}/services/update-xray.sh" && chmod +x /usr/bin/update-xray
+wget -q -O /usr/bin/cek-bandwidth "${github}/services/cek-bandwidth.sh" && chmod +x /usr/bin/cek-bandwidth
+wget -q -O /usr/bin/menu "${github}/services/menu.sh" && chmod +x /usr/bin/menu
+wget -q -O /usr/bin/speedtest "${github}/services/speedtest_cli.py" && chmod +x /usr/bin/speedtest
+wget -q -O /usr/bin/update "${github}/services/update.sh" && chmod +x /usr/bin/update
+wget -q -O /usr/bin/wbmn "${github}/services/webmin.sh" && chmod +x /usr/bin/wbmn
+wget -q -O /usr/bin/renew-domain "${github}/backup/renew-domain.sh" && chmod +x /usr/bin/renew-domain
+wget -q -O /usr/bin/cf "${github}/services/cf.sh" && chmod +x /usr/bin/cf
 sed -i -e 's/\r$//' /usr/bin/menu
 sed -i -e 's/\r$//' /usr/bin/cek-bandwidth
 sed -i -e 's/\r$//' /usr/bin/wbmn
@@ -287,7 +287,8 @@ chmod 644 /root/.profile
 clear
 
 history -c
-echo "0 0 * * * root xp" >> /etc/crontab
+echo "0 0 * * * reboot" >> /etc/crontab
+echo "0 0 * * * xp" >> /etc/crontab
 echo "unset HISTFILE" >> .profile
 echo "clear" >> .profile
 echo "neofetch" >> .profile

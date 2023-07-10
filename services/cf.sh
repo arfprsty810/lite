@@ -22,9 +22,9 @@ SUB_DOMAIN=${sub}.sg.${DOMAIN}
 CF_ID=arief.prsty@gmail.com
 CF_KEY=3a3ac5ccc9e764de9129fbbb177c161b9dfbd
 set -euo pipefail
-mkdir -p $arfvpn
-mkdir -p $ipvps
-echo "IP=" >> $ipvps/ipvps.conf
+mkdir -p ${arfvpn}
+mkdir -p ${ipvps}
+echo "IP=" >> ${ipvps}/ipvps.conf
 curl -s ipinfo.io/org/ > ${arfvpn}/ISP
 curl -s https://ipinfo.io/ip/ > ${arfvpn}/IP
 IP=$(cat ${arfvpn}/IP);
@@ -83,9 +83,9 @@ RESULT=$(curl -sLX PUT "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_r
 #     -H "Content-Type: application/json" \
 #     --data '{"type":"A","name":"'${WILD_DOMAIN}'","content":"'${IP}'","ttl":120,"proxied":false}')
 clear
-echo "Your Sub-Domain : $SUB_DOMAIN"
+echo "Your Sub-Domain : ${SUB_DOMAIN}"
 sleep 5
-#echo "$SUB_DOMAIN" > $arfvpn/domain_cf
-echo "$SUB_DOMAIN" > $arfvpn/domain
-echo "$SUB_DOMAIN" > $arfvpn/scdomain
-echo "IP=$SUB_DOMAIN" > $ipvps/ipvps.conf
+#echo "${SUB_DOMAIN}" > ${arfvpn}/domain_cf
+echo "${SUB_DOMAIN}" > ${arfvpn}/domain
+echo "${SUB_DOMAIN}" > ${arfvpn}/scdomain
+echo "IP=${SUB_DOMAIN}" > ${ipvps}/ipvps.conf

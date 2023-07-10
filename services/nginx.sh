@@ -3,7 +3,7 @@
 cd /root
 source /etc/os-release
 nginx="/etc/nginx"
-arfserver="/etc/arfvpn"
+arfserver="/etc/arfserver"
 arfportal="/home/arfportal/public_html"
 github="raw.githubusercontent.com/arfprsty810/lite/main"
 sleep 5

@@ -58,7 +58,7 @@ clear
 apt-get --reinstall --fix-missing install -y screen rsyslog sed bc dirmngr libxml-parser-perl neofetch screenfetch lsof easy-rsa libsqlite3-dev 
 #apt install -y openvpn dropbear squid
 apt install -y cron fail2ban vnstat
-gem install lolcat
+apt install lolcat
 clear
 apt-get install --no-install-recommends build-essential autoconf libtool libssl-dev libpcre3-dev libev-dev asciidoc xmlto -y
 clear

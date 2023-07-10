@@ -13,10 +13,10 @@ clear
 
 arfvpn="/etc/arfvpn"
 github="https://raw.githubusercontent.com/arfprsty810/lite/main"
-domain=$(cat $arfvpn/domain)
-MYIP=$(cat $arfvpn/IP)
+domain=$(cat ${arfvpn}/domain)
+MYIP=$(cat ${arfvpn}/IP)
 clear
-#mkdir -p $arfvpn/nginx
+#mkdir -p ${arfvpn}/nginx
 apt install socat cron -y
 clear
 echo -e "\033[0;34m┌─────────────────────────────────────────────────────┐${NC}"
@@ -39,16 +39,16 @@ clear
 systemctl stop nginx
 sudo lsof -t -i tcp:80 -s tcp:listen | sudo xargs kill
 ## crt ssl cloudflare d-jumper.me *.d-jumper.me
-wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
-wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
+wget -O ${arfvpn}/arfvpn.crt "${github}/cert/arfvpn.crt"
+wget -O ${arfvpn}/arfvpn.key "${github}/cert/arfvpn.key"
 sleep 3
 
 echo -e "[ ${green}INFO$NC ] RENEW CERT SSL"
 # nginx renew ssl
 echo -n '#!/bin/bash
 /etc/init.d/nginx stop
-wget -O $arfvpn/arfvpn.crt "$github/cert/arfvpn.crt"
-wget -O $arfvpn/arfvpn.key "$github/cert/arfvpn.key"
+wget -O ${arfvpn}/arfvpn.crt "${github}/cert/arfvpn.crt"
+wget -O ${arfvpn}/arfvpn.key "${github}/cert/arfvpn.key"
 /etc/init.d/nginx start
 ' > /usr/bin/ssl_renew.sh
 chmod +x /usr/bin/ssl_renew.sh
@@ -65,8 +65,8 @@ curl https://acme-install.netlify.app/acme.sh -o /root/.acme.sh/acme.sh
 chmod +x /root/.acme.sh/acme.sh
 /root/.acme.sh/acme.sh --upgrade --auto-upgrade
 /root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
-/root/.acme.sh/acme.sh --issue --force -d $domain --standalone -k ec-256
-~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath $arfvpn/arfvpn.crt --keypath $arfvpn/arfvpn.key --ecc
+/root/.acme.sh/acme.sh --issue --force -d ${domain} --standalone -k ec-256
+~/.acme.sh/acme.sh --installcert -d ${domain} --fullchainpath ${arfvpn}/arfvpn.crt --keypath ${arfvpn}/arfvpn.key --ecc
 sleep 3
 
 echo -e "[ ${green}INFO$NC ] RENEW CERT SSL"

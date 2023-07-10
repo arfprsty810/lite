@@ -47,13 +47,13 @@ fi
 
 # // Exporting IP Address,Domain&ISP
 arfvpn="/etc/arfvpn"
-IP=$(cat $arfvpn/IP)
-ISP=$(cat $arfvpn/ISP)
-DOMAIN=$(cat $arfvpn/domain)
+IP=$(cat ${arfvpn}/IP)
+ISP=$(cat ${arfvpn}/ISP)
+DOMAIN=$(cat ${arfvpn}/domain)
 
 # // nginx
 nginx=$( systemctl status nginx | grep Active | awk '{print $3}' | sed 's/(//g' | sed 's/)//g' )
-if [[ $nginx == "running" ]]; then
+if [[ ${nginx} == "running" ]]; then
  status_nginx="${GREEN}ACTIVE${NC}"
 else
  status_nginx="${RED}FAILED${NC}"
@@ -66,9 +66,9 @@ echo -e "\033[0;34m└───────────────────�
 echo -e "  ❇️ \e[32;1m Sever Uptime\e[0m     : $( uptime -p  | cut -d " " -f 2-10000 ) "
 echo -e "  ❇️ \e[32;1m Current Time\e[0m     : $( date -d "0 days" +"%d-%m-%Y | %X" ) "
 echo -e "  ❇️ \e[32;1m Operating System\e[0m : $( cat /etc/os-release | grep -w PRETTY_NAME | sed 's/PRETTY_NAME//g' | sed 's/=//g' | sed 's/"//g' ) ( $( uname -m) ) "
-echo -e "  ❇️ \e[32;1m Current Domain\e[0m   : $DOMAIN "
-echo -e "  ❇️ \e[32;1m Current Isp Name\e[0m : $ISP "
-echo -e "  ❇️ \e[32;1m Server IP\e[0m        : $IP "
+echo -e "  ❇️ \e[32;1m Current Domain\e[0m   : ${DOMAIN} "
+echo -e "  ❇️ \e[32;1m Current Isp Name\e[0m : ${ISP} "
+echo -e "  ❇️ \e[32;1m Server IP\e[0m        : ${IP} "
 echo -e "  ❇️ \e[32;1m Time Reboot VPS\e[0m  : 00:00 ( Jam 12 Malam ) "
 echo -e ""
 echo -e "      🟢🟡🔴  SERVER STATUS     :    ${status_nginx}  🔴🟡🟢"

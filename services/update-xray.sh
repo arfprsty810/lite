@@ -33,15 +33,15 @@ echo ""
 sleep 2
 
 echo -e " Result :"
-echo -e " Now Version : Xray v$now_version "
-echo -e " Lastest Version : Xray v$lastest_version "
+echo -e " Now Version : Xray v${now_version} "
+echo -e " Lastest Version : Xray v${lastest_version} "
 echo ""
 sleep 2
 
-if [[ $now_version == $lastest_version ]]; then
+if [[ ${now_version} == ${lastest_version} ]]; then
 echo -e " Your Xray is Lastest Version!"
 echo -e " Your Xray Version is :"
-echo -e " Xray v$lastest_version"
+echo -e " Xray v${lastest_version}"
 sleep 2
 else
 echo -e " Your Xray is old version"
@@ -51,7 +51,7 @@ sleep 2
 
 mkdir -p /etc/arfvpn/backup/xray
 cp /etc/xray/config.json /etc/arfvpn/backup/xray
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version $lastest_version
+bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version ${lastest_version}
 sleep 2
 
 cp /etc/arfvpn/backup/xray/config.json /etc/xray
@@ -64,7 +64,7 @@ echo ""
 echo -e " XRAY SUCCESSFULLY UPDATE !"
 echo ""
 echo -e " Your Xray Version is :"
-echo -e " Xray v$lastest_version"
+echo -e " Xray v${lastest_version}"
 sleep 5
 fi
 clear

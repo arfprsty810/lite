@@ -16,37 +16,37 @@ logxray="/var/log/xray"
 
 clear
 echo -n > /tmp/other.txt
-data=( `cat $xray/config.json | grep '#vl#' | cut -d ' ' -f 2 | sort | uniq`);
+data=( `cat ${xray}/config.json | grep '#vl#' | cut -d ' ' -f 2 | sort | uniq`);
 echo "------------------------------------";
 echo "-----=[ XRAY User Login ]=-----";
 echo "------------------------------------";
 for akun in "${data[@]}"
 do
-if [[ -z "$akun" ]]; then
+if [[ -z "${akun}" ]]; then
 akun="tidakada"
 fi
 echo -n > /tmp/ipxray.txt
-data2=( `cat $logxray/access.log | tail -n 500 | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | sort | uniq`);
+data2=( `cat ${logxray}/access.log | tail -n 500 | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | sort | uniq`);
 for ip in "${data2[@]}"
 do
-jum=$(cat $logxray/access.log | grep -w "$akun" | tail -n 500 | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | grep -w "$ip" | sort | uniq)
-if [[ "$jum" = "$ip" ]]; then
-echo "$jum" >> /tmp/ipxray.txt
+jum=$(cat ${logxray}/access.log | grep -w "${akun}" | tail -n 500 | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | grep -w "${ip}" | sort | uniq)
+if [[ "${jum}" = "${ip}" ]]; then
+echo "${jum}" >> /tmp/ipxray.txt
 else
-echo "$ip" >> /tmp/other.txt
+echo "${ip}" >> /tmp/other.txt
 fi
 jum2=$(cat /tmp/ipxray.txt)
-sed -i "/$jum2/d" /tmp/other.txt > /dev/null 2>&1
+sed -i "/${jum2}/d" /tmp/other.txt > /dev/null 2>&1
 done
 jum=$(cat /tmp/ipxray.txt)
-if [[ -z "$jum" ]]; then
+if [[ -z "${jum}" ]]; then
 echo > /dev/null
 else
 jum2=$(cat /tmp/ipxray.txt | nl)
-lastlogin=$(cat $logxray/access.log | grep -w "$akun" | tail -n 500 | cut -d " " -f 2 | tail -1)
+lastlogin=$(cat ${logxray}/access.log | grep -w "${akun}" | tail -n 500 | cut -d " " -f 2 | tail -1)
 echo -e "user :${GREEN} ${akun} ${NC}
 ${RED}Online Jam ${NC}: ${lastlogin} wib";
-echo -e "$jum2";
+echo -e "${jum2}";
 echo "-------------------------------"
 fi
 rm -rf /tmp/ipxray.txt

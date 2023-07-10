@@ -13,9 +13,9 @@ clear
 
 arfvpn="/etc/arfvpn"
 # set random pwd
-#openssl rand -base64 16 > $arfvpn/passwd
-</dev/urandom tr -dc a-z0-9 | head -c16 > $arfvpn/passwd
-pwd=$(cat $arfvpn/passwd)
+#openssl rand -base64 16 > ${arfvpn}/passwd
+</dev/urandom tr -dc a-z0-9 | head -c16 > ${arfvpn}/passwd
+pwd=$(cat ${arfvpn}/passwd)
 github="https://raw.githubusercontent.com/arfprsty810/lite/main"
 clear
 
@@ -33,7 +33,7 @@ cat > /etc/shadowsocks-libev/config.json <<END
 {   
     "server":"0.0.0.0",
     "server_port":8488,
-    "password":"$pwd",
+    "password":"${pwd}",
     "timeout":60,
     "method":"aes-256-cfb",
     "fast_open":true,
@@ -50,7 +50,7 @@ cat > /etc/shadowsocks-libev.json <<END
     "server":"127.0.0.1",
     "server_port":8388,
     "local_port":1080,
-    "password":"$pwd",
+    "password":"${pwd}",
     "timeout":60,
     "method":"chacha20-ietf-poly1305",
     "mode":"tcp_and_udp",
@@ -65,11 +65,11 @@ clear
 
 echo -e "[ ${green}INFO$NC ] INSTALL SCRIPT ..."
 sleep 1
-wget -q -O /usr/bin/menu-ss "$github/shadowsocks/menu-ss.sh" && chmod +x /usr/bin/menu-ss
-wget -q -O /usr/bin/addss "$github/shadowsocks/addss.sh" && chmod +x /usr/bin/addss
-wget -q -O /usr/bin/cekss "$github/shadowsocks/cekss.sh" && chmod +x /usr/bin/cekss
-wget -q -O /usr/bin/delss "$github/shadowsocks/delss.sh" && chmod +x /usr/bin/delss
-wget -q -O /usr/bin/renewss "$github/shadowsocks/renewss.sh" && chmod +x /usr/bin/renewss
+wget -q -O /usr/bin/menu-ss "${github}/shadowsocks/menu-ss.sh" && chmod +x /usr/bin/menu-ss
+wget -q -O /usr/bin/addss "${github}/shadowsocks/addss.sh" && chmod +x /usr/bin/addss
+wget -q -O /usr/bin/cekss "${github}/shadowsocks/cekss.sh" && chmod +x /usr/bin/cekss
+wget -q -O /usr/bin/delss "${github}/shadowsocks/delss.sh" && chmod +x /usr/bin/delss
+wget -q -O /usr/bin/renewss "${github}/shadowsocks/renewss.sh" && chmod +x /usr/bin/renewss
 sed -i -e 's/\r$//' /usr/bin/menu-ss
 sed -i -e 's/\r$//' /usr/bin/addss
 sed -i -e 's/\r$//' /usr/bin/cekss
